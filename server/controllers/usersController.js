@@ -1,17 +1,26 @@
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
-
-exports.test = (req, res) => res.json({ msg: 'Users Works' });
+const createSendJwt = require('../utils/createSendJwt');
+const validateRegisterInput = require('../utils/validation/validateRegisterInput');
+const validateLoginInput = require('../utils/validation/validateLoginInput');
 
 // Create User
 exports.createUser = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
-        const user = await User.findOne({ email });
+        // Load input validation
+        const { errors, isValid } = validateRegisterInput(req.body);
 
+        // Check validation
+        if (!isValid) return res.status(400).json(errors);
+
+        let { name, email, password } = req.body;
+
+        // Check if a user with that email exists
+        const user = await User.findOne({ email });
         if (user) {
-            return res.status(400).json({ email: 'Email already exists' });
+            errors.email = 'Email already exists';
+            return res.status(400).json(errors);
         }
 
         // Get gravatar for that email & set a default
@@ -46,18 +55,46 @@ exports.createUser = async (req, res) => {
 // Login user / return JWT
 exports.loginUser = async (req, res) => {
     try {
+        // Load input validation
+        const { errors, isValid } = validateLoginInput(req.body);
+
+        // Check validation
+        if (!isValid) return res.status(400).json(errors);
+
         const { email, password } = req.body;
 
-        // Check user email
+        // Check user exists
         const user = await User.findOne({ email });
-        if (!user) return res.status(404).json({ email: 'User not found' });
+        if (!user) {
+            errors.email = 'User not found';
+            return res.status(404).json(errors);
+        }
 
-        // Check password
+        // Check password is correct
         const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) return res.status(400).json({ password: 'Password incorrect' });
+        if (!isMatch) {
+            errors.password = 'Password incorrect';
+            return res.status(400).json(errors);
+        }
 
-        // Return JWT
-        res.json({ msg: 'Success' });
+        // User matched - create and send JWT
+        createSendJwt(user, 200, res);
+    } catch (err) {
+        console.error(err);
+    }
+};
+
+exports.currentUser = async (req, res) => {
+    try {
+        const { _id, name, email, avatar } = req.user;
+
+        // Send current user info if authorized
+        res.json({
+            _id,
+            name,
+            email,
+            avatar,
+        });
     } catch (err) {
         console.error(err);
     }

@@ -5,17 +5,17 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
     name: {
         type: String,
-        required: [true, 'A user must have a name'],
+        required: true,
         trim: true,
-        minlength: [2, 'The name must have at least 2 characters'],
     },
     email: {
         type: String,
-        required: [true, 'A user must have an email'],
+        required: true,
+        lowercase: true,
     },
     password: {
         type: String,
-        required: [true, 'A user must have a password'],
+        required: true,
     },
     avatar: {
         type: String,

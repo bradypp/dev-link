@@ -3,8 +3,9 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
+const passport = require('passport');
 
-dotenv.config({ path: './.env.local' });
+dotenv.config({ path: './config/.env.local' });
 
 const postsRouter = require('./routes/postsRoutes');
 const profileRouter = require('./routes/profileRoutes');
@@ -34,6 +35,12 @@ if (process.env.NODE_ENV === 'development') {
 // Body Parser Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// Passport Middleware
+app.use(passport.initialize());
+
+// Passport Config
+require('./config/passport')(passport);
 
 // Routes
 app.use('/api/v1/posts', postsRouter);
