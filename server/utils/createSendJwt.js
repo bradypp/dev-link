@@ -2,8 +2,8 @@ const jwt = require('jsonwebtoken');
 
 const createSendJwt = (user, statusCode, res) => {
     // Create payload
-    const { _id, name, email, avatar } = user;
-    const payload = { _id, name, avatar };
+    const { id, name, email, avatar } = user;
+    const payload = { id, name, avatar };
 
     // Create JWT token
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
@@ -22,9 +22,9 @@ const createSendJwt = (user, statusCode, res) => {
     // Send token & user data in response
     res.status(statusCode).json({
         status: 'success',
-        token: 'Bearer ' + token,
+        token: `Bearer ${token}`,
         data: {
-            _id,
+            id,
             name,
             email,
             avatar,

@@ -8,13 +8,11 @@ const validateLoginInput = require('../utils/validation/validateLoginInput');
 // Create User
 exports.createUser = async (req, res) => {
     try {
-        // Load input validation
-        const { errors, isValid } = validateRegisterInput(req.body);
-
         // Check validation
+        const { errors, isValid } = validateRegisterInput(req.body);
         if (!isValid) return res.status(400).json(errors);
 
-        let { name, email, password } = req.body;
+        const { name, email, password } = req.body;
 
         // Check if a user with that email exists
         const user = await User.findOne({ email });
@@ -55,10 +53,8 @@ exports.createUser = async (req, res) => {
 // Login user / return JWT
 exports.loginUser = async (req, res) => {
     try {
-        // Load input validation
-        const { errors, isValid } = validateLoginInput(req.body);
-
         // Check validation
+        const { errors, isValid } = validateLoginInput(req.body);
         if (!isValid) return res.status(400).json(errors);
 
         const { email, password } = req.body;
@@ -84,13 +80,13 @@ exports.loginUser = async (req, res) => {
     }
 };
 
-exports.currentUser = async (req, res) => {
+exports.getCurrentUser = async (req, res) => {
     try {
-        const { _id, name, email, avatar } = req.user;
+        const { id, name, email, avatar } = req.user;
 
         // Send current user info if authorized
         res.json({
-            _id,
+            id,
             name,
             email,
             avatar,
