@@ -1,12 +1,23 @@
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './redux/store';
+import { Navbar } from 'components';
+import { Routes } from 'pages';
 import 'styles/main.scss';
 
-function App() {
+const App = () => {
     return (
-        <div className="App">
-            <h1>My React App</h1>
-        </div>
+        <Provider store={store}>
+            <PersistGate persistor={persistor}>
+                <Router>
+                    <Navbar />
+                    <Routes />
+                </Router>
+            </PersistGate>
+        </Provider>
     );
-}
+};
 
 export default App;

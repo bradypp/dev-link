@@ -1,11 +1,10 @@
-.landing {
-    position: relative;
+.home {
     background: url('../../assets/images/showcase.jpg') no-repeat center center/cover;
     height: 100vh;
 }
 
-.landing-inner {
-    color: var(color-white);
+.home-inner {
+    color: var(--color-white);
     height: 100%;
     width: 80%;
     margin: auto;

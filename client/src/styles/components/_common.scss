@@ -33,7 +33,7 @@
 .badge-primary,
 .alert-primary {
     background: var(--color-primary);
-    color: var(color-white);
+    color: var(--color-white);
 }
 
 .btn-light,
@@ -49,7 +49,7 @@
 .badge-dark,
 .alert-dark {
     background: var(--color-grey-dark);
-    color: var(color-white);
+    color: var(--color-white);
 }
 
 .btn-danger,
@@ -57,7 +57,7 @@
 .badge-danger,
 .alert-danger {
     background: var(--color-error);
-    color: var(color-white);
+    color: var(--color-white);
 }
 
 .btn-success,
@@ -65,14 +65,14 @@
 .badge-success,
 .alert-success {
     background: var(--color-success);
-    color: var(color-white);
+    color: var(--color-white);
 }
 
 .btn-white,
 .bg-white,
 .badge-white,
 .alert-white {
-    background: var(color-white);
+    background: var(--color-white);
     color: var(--color-grey-dark);
     border: var(--color-grey-light) solid 1px;
 }
