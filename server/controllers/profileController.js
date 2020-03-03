@@ -1,3 +1,4 @@
+const User = require('../models/User');
 const Profile = require('../models/Profile');
 const validateProfileInput = require('../utils/validation/validateProfileInput');
 const validateExperienceInput = require('../utils/validation/validateExperienceInput');
@@ -180,6 +181,64 @@ exports.addEducationToProfile = async (req, res) => {
         // Save profile and send response
         const savedProfile = await profile.save();
         res.json(savedProfile);
+    } catch (err) {
+        res.status(404).json(err);
+    }
+};
+
+exports.removeExperienceFromProfile = async (req, res) => {
+    try {
+        // Find profile
+        const { id } = req.user;
+        const profile = await Profile.findOne({ user: id });
+
+        // Get remove index
+        const { exp_id } = req.params;
+        const removeIndex = profile.experience.map(item => item.id).indexOf(exp_id);
+
+        // Splice out of array
+        profile.experience.splice(removeIndex, 1);
+
+        // Save profile and send response
+        const savedProfile = await profile.save();
+        res.json(savedProfile);
+    } catch (err) {
+        res.status(404).json(err);
+    }
+};
+
+exports.removeEducationFromProfile = async (req, res) => {
+    try {
+        // Find profile
+        const { id } = req.user;
+        const profile = await Profile.findOne({ user: id });
+
+        // Get remove index
+        const { edu_id } = req.params;
+        const removeIndex = profile.education.map(item => item.id).indexOf(edu_id);
+
+        // Splice out of array
+        profile.education.splice(removeIndex, 1);
+
+        // Save profile and send response
+        const savedProfile = await profile.save();
+        res.json(savedProfile);
+    } catch (err) {
+        res.status(404).json(err);
+    }
+};
+
+exports.deleteUserAndProfile = async (req, res) => {
+    try {
+        // Find and delete profile
+        const { id } = req.user;
+        const profile = await Profile.findOneAndRemove({ user: id });
+
+        // Find and delete user
+        const user = await User.findOneAndRemove({ _id: id });
+        console.log(user);
+        // Save profile and send response
+        res.json({ success: true });
     } catch (err) {
         res.status(404).json(err);
     }

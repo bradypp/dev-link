@@ -7,11 +7,14 @@ const router = express.Router();
 const {
     getCurrentUserProfile,
     createOrUpdateUserProfile,
+    deleteUserAndProfile,
     getAllUserProfiles,
     getProfileByHandle,
     getProfileByUserId,
     addExperienceToProfile,
+    removeExperienceFromProfile,
     addEducationToProfile,
+    removeEducationFromProfile,
 } = profileController;
 
 // Public routes
@@ -23,12 +26,19 @@ router.route('/user/:userid').get(getProfileByUserId);
 router
     .route('/')
     .get(passport.authenticate('jwt', { session: false }), getCurrentUserProfile)
-    .post(passport.authenticate('jwt', { session: false }), createOrUpdateUserProfile);
+    .post(passport.authenticate('jwt', { session: false }), createOrUpdateUserProfile)
+    .delete(passport.authenticate('jwt', { session: false }), deleteUserAndProfile);
 router
     .route('/experience')
     .post(passport.authenticate('jwt', { session: false }), addExperienceToProfile);
 router
+    .route('/experience/:exp_id')
+    .delete(passport.authenticate('jwt', { session: false }), removeExperienceFromProfile);
+router
     .route('/education')
     .post(passport.authenticate('jwt', { session: false }), addEducationToProfile);
+router
+    .route('/education/:edu_id')
+    .delete(passport.authenticate('jwt', { session: false }), removeEducationFromProfile);
 
 module.exports = router;
