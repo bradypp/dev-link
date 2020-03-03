@@ -1,11 +1,10 @@
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
-const createSendJwt = require('../utils/createSendJwt');
+const createSendJwt = require('../utils/auth/createSendJwt');
 const validateRegisterInput = require('../utils/validation/validateRegisterInput');
 const validateLoginInput = require('../utils/validation/validateLoginInput');
 
-// Create User
 exports.createUser = async (req, res) => {
     try {
         // Check validation
@@ -50,7 +49,6 @@ exports.createUser = async (req, res) => {
     }
 };
 
-// Login user / return JWT
 exports.loginUser = async (req, res) => {
     try {
         // Check validation

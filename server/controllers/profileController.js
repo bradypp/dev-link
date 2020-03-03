@@ -89,7 +89,7 @@ exports.createOrUpdateUserProfile = async (req, res) => {
         if (req.body.location) profileFields.location = req.body.location;
         if (req.body.bio) profileFields.bio = req.body.bio;
         if (req.body.status) profileFields.status = req.body.status;
-        if (req.body.githubusername) profileFields.githubusername = req.body.githubusername;
+        if (req.body.github_username) profileFields.github_username = req.body.github_username;
 
         // Split skills into an array
         if (typeof req.body.skills !== 'undefined') {

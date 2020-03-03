@@ -1,5 +1,5 @@
 const validator = require('validator');
-const isEmpty = require('../isEmpty');
+const isEmpty = require('../helpers/isEmpty');
 
 const validateRegisterInput = data => {
     let { name, email, password, password2 } = data;

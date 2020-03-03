@@ -1,5 +1,5 @@
 const validator = require('validator');
-const isEmpty = require('../isEmpty');
+const isEmpty = require('../helpers/isEmpty');
 
 module.exports = function validateExperienceInput(data) {
     let { school, degree, fieldofstudy, from } = data;

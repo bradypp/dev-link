@@ -1,5 +1,5 @@
 const validator = require('validator');
-const isEmpty = require('../isEmpty');
+const isEmpty = require('../helpers/isEmpty');
 
 const validateProfileInput = data => {
     let { handle, status, skills } = data;
