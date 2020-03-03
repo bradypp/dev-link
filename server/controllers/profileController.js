@@ -230,14 +230,9 @@ exports.removeEducationFromProfile = async (req, res) => {
 
 exports.deleteUserAndProfile = async (req, res) => {
     try {
-        // Find and delete profile
         const { id } = req.user;
-        const profile = await Profile.findOneAndRemove({ user: id });
-
-        // Find and delete user
-        const user = await User.findOneAndRemove({ _id: id });
-        console.log(user);
-        // Save profile and send response
+        await Profile.findOneAndRemove({ user: id });
+        await User.findOneAndRemove({ _id: id });
         res.json({ success: true });
     } catch (err) {
         res.status(404).json(err);
