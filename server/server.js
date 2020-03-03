@@ -5,7 +5,9 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const passport = require('passport');
 
-dotenv.config({ path: './config/.env.local' });
+dotenv.config({
+    path: './.env.local',
+});
 
 const postsRouter = require('./routes/postsRoutes');
 const profileRouter = require('./routes/profileRoutes');
