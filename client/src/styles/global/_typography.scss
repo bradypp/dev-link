@@ -1,0 +1,39 @@
+body {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1rem;
+    color: var(--color-grey-dark);
+}
+
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.x-large {
+    font-size: 4rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.large {
+    font-size: 3rem;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.lead {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-primary {
+    color: var(--color-primary);
+}
+
+.text-dark {
+    color: var(--color-grey-dark);
+}

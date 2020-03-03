@@ -7,7 +7,7 @@
     "start": "npm-run-all --parallel start:client start:server",
     "start:client": "cd ./client && yarn start",
     "start:server": "cd ./server && yarn server",
-    "install:all": "yarn && npm-run-all install:client install:server",
+    "install:all": "yarn && npm-run-all --parallel install:client install:server",
     "install:client": "cd ./client && yarn install",
     "install:server": "cd ./server && yarn install"
   },
