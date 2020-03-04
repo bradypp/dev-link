@@ -1,53 +1,8 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const dotenv = require('dotenv');
-const passport = require('passport');
+require('dotenv').config({ path: './config/.env.local' });
+const app = require('./app');
+const connectDB = require('./config/db');
 
-dotenv.config({
-    path: './.env.local',
-});
-
-const postsRouter = require('./routes/postsRoutes');
-const profileRouter = require('./routes/profileRoutes');
-const usersRouter = require('./routes/usersRoutes');
-
-const app = express();
-
-// DB Config
-const DB = process.env.DATABASE.replace('<password>', process.env.DATABASE_PASSWORD);
-
-// Connect to MongoDB
-mongoose
-    .connect(DB, {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useFindAndModify: false,
-        useUnifiedTopology: true,
-    })
-    .then(() => console.log('MongoDB connection successful!'))
-    .catch(err => console.error(err));
-
-// Logger Middleware
-if (process.env.NODE_ENV === 'development') {
-    app.use(morgan('dev'));
-}
-
-// Body Parser Middleware
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-// Passport Middleware
-app.use(passport.initialize());
-
-// Passport Config
-require('./config/passport')(passport);
-
-// Routes
-app.use('/api/v1/posts', postsRouter);
-app.use('/api/v1/profile', profileRouter);
-app.use('/api/v1/users', usersRouter);
+connectDB();
 
 const port = process.env.PORT || 5000;
 
