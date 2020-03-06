@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const authRouter = require('./routes/authRoutes');
 const postsRouter = require('./routes/postsRoutes');
 const profileRouter = require('./routes/profileRoutes');
-const usersRouter = require('./routes/usersRoutes');
+const userRouter = require('./routes/userRoutes');
 
 // 1) Start express app
 const app = express();
@@ -26,6 +26,6 @@ app.use(cookieParser());
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/posts', postsRouter);
 app.use('/api/v1/profile', profileRouter);
-app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/user', userRouter);
 
 module.exports = app;

@@ -5,23 +5,22 @@ const profileSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User',
     },
-    handle: {
-        type: String,
-        required: true,
-        max: 40,
-    },
     company: {
         type: String,
+        trim: true,
     },
     website: {
         type: String,
+        trim: true,
     },
     location: {
         type: String,
+        trim: true,
     },
     status: {
         type: String,
         required: true,
+        trim: true,
     },
     skills: {
         type: [String],
@@ -29,22 +28,27 @@ const profileSchema = new Schema({
     },
     bio: {
         type: String,
+        trim: true,
     },
     github_username: {
         type: String,
+        trim: true,
     },
     experience: [
         {
             title: {
                 type: String,
                 required: true,
+                trim: true,
             },
             company: {
                 type: String,
                 required: true,
+                trim: true,
             },
             location: {
                 type: String,
+                trim: true,
             },
             from: {
                 type: Date,
@@ -59,6 +63,7 @@ const profileSchema = new Schema({
             },
             description: {
                 type: String,
+                trim: true,
             },
         },
     ],
@@ -67,14 +72,17 @@ const profileSchema = new Schema({
             school: {
                 type: String,
                 required: true,
+                trim: true,
             },
             degree: {
                 type: String,
                 required: true,
+                trim: true,
             },
             field_of_study: {
                 type: String,
                 required: true,
+                trim: true,
             },
             from: {
                 type: Date,
@@ -89,24 +97,30 @@ const profileSchema = new Schema({
             },
             description: {
                 type: String,
+                trim: true,
             },
         },
     ],
     social: {
         youtube: {
             type: String,
+            trim: true,
         },
         twitter: {
             type: String,
+            trim: true,
         },
         facebook: {
             type: String,
+            trim: true,
         },
         linkedin: {
+            trim: true,
             type: String,
         },
         instagram: {
             type: String,
+            trim: true,
         },
     },
     date: {

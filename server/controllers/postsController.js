@@ -1,5 +1,6 @@
 const Profile = require('../models/User');
 const Post = require('../models/Post');
+const User = require('../models/User');
 
 exports.getAllPosts = async (req, res) => {
     try {
@@ -23,15 +24,24 @@ exports.getPostById = async (req, res) => {
 
 exports.createNewPost = async (req, res) => {
     try {
-        const { text, name, avatar } = req.body;
+        const { text } = req.body;
         const { id } = req.user;
+
+        // Get user
+        const user = await User.findById(id).select('-password');
+
+        if (!user) {
+            return res.status(400).json({ user: 'User not found' });
+        }
+
+        const { name, avatar } = user;
 
         // Create and save new post
         const savedPost = await new Post({ text, name, avatar, user: id }).save();
 
         res.json(savedPost);
     } catch (err) {
-        res.status(404).json(err);
+        res.status(500).send({ msg: 'Server Error' });
     }
 };
 

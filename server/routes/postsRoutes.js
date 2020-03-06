@@ -1,5 +1,4 @@
 const router = require('express').Router();
-
 const { protectedRoute } = require('../controllers/authController');
 const {
     getAllPosts,
@@ -11,13 +10,12 @@ const {
     addPostComment,
     removePostComment,
 } = require('../controllers/postsController');
-
-// Public routes
-router.route('/').get(getAllPosts);
-router.route('/:id').get(getPostById);
+const { validate, postValidationRules } = require('../validation');
 
 // Protected routes
-router.route('/').post(protectedRoute, createNewPost);
+router.route('/').get(protectedRoute, getAllPosts);
+router.route('/:id').get(protectedRoute, getPostById);
+router.route('/').post(protectedRoute, postValidationRules(), validate, createNewPost);
 router.route('/:id').delete(protectedRoute, deletePostById);
 router
     .route('/like/:id')

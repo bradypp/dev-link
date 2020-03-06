@@ -6,6 +6,4 @@ const { validate, registerValidationRules, loginValidationRules } = require('../
 router.route('/register').post(registerValidationRules(), validate, createUser);
 router.route('/login').post(loginValidationRules(), validate, loginUser);
 
-// Protected routes
-
 module.exports = router;
