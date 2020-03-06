@@ -16,7 +16,7 @@ const {
 router.route('/').get(getAllPosts);
 router.route('/:id').get(getPostById);
 
-// Private routes
+// Protected routes
 router.route('/').post(protectedRoute, createNewPost);
 router.route('/:id').delete(protectedRoute, deletePostById);
 router

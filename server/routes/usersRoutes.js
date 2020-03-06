@@ -4,7 +4,7 @@ const { protectedRoute } = require('../controllers/authController');
 
 // Public routes
 
-// Private routes
+// Protected routes
 router.route('/current').get(protectedRoute, getCurrentUser);
 
 module.exports = router;

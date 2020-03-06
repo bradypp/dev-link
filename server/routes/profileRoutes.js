@@ -12,17 +12,18 @@ const {
     addEducationToProfile,
     removeEducationFromProfile,
 } = require('../controllers/profileController');
+const { validate, profileValidationRules } = require('../validation');
 
 // Public routes
 router.route('/all').get(getAllUserProfiles);
 router.route('/handle/:handle').get(getProfileByHandle);
 router.route('/user/:userid').get(getProfileByUserId);
 
-// Private routes
+// Protected routes
 router
     .route('/')
     .get(protectedRoute, getCurrentUserProfile)
-    .post(protectedRoute, createOrUpdateUserProfile)
+    .post(protectedRoute, profileValidationRules(), validate, createOrUpdateUserProfile)
     .delete(protectedRoute, deleteUserAndProfile);
 router.route('/experience').post(protectedRoute, addExperienceToProfile);
 router.route('/experience/:exp_id').delete(protectedRoute, removeExperienceFromProfile);

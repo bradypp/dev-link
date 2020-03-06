@@ -1,6 +1,4 @@
-const mongoose = require('mongoose');
-
-const { Schema } = mongoose;
+const { Schema, model } = require('mongoose');
 
 const profileSchema = new Schema({
     user: {
@@ -117,6 +115,6 @@ const profileSchema = new Schema({
     },
 });
 
-const Profile = mongoose.model('Profile', profileSchema, 'profiles');
+const Profile = model('Profile', profileSchema, 'profiles');
 
 module.exports = Profile;

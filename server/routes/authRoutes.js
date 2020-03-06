@@ -1,12 +1,11 @@
 const router = require('express').Router();
 const { createUser, loginUser } = require('../controllers/authController');
-const { registerValidation } = require('../utils/validation/authValidation');
-const validate = require('../utils/validation');
+const { validate, registerValidationRules, loginValidationRules } = require('../validation');
 
 // Public routes
-router.route('/register').post(registerValidation(), validate, createUser);
-router.route('/login').post(loginUser);
+router.route('/register').post(registerValidationRules(), validate, createUser);
+router.route('/login').post(loginValidationRules(), validate, loginUser);
 
-// Private routes
+// Protected routes
 
 module.exports = router;

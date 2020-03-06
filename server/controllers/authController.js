@@ -3,7 +3,6 @@ const { promisify } = require('util');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
-const validateLoginInput = require('../utils/validation/validateLoginInput');
 
 const createSendJwt = (user, statusCode, res) => {
     // Create payload
@@ -37,14 +36,12 @@ const createSendJwt = (user, statusCode, res) => {
 
 exports.createUser = async (req, res) => {
     try {
-        const errors = {};
         const { name, email, password } = req.body;
 
         // Check if a user with that email exists
         let user = await User.findOne({ email });
         if (user) {
-            errors.email = 'User with this email already exists';
-            return res.status(400).json(errors);
+            return res.status(400).json({ user: 'User with this email already exists' });
         }
 
         // Get gravatar for that email & set a default
@@ -78,30 +75,24 @@ exports.createUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
     try {
-        // Check validation
-        const { errors, isValid } = validateLoginInput(req.body);
-        if (!isValid) return res.status(400).json(errors);
-
         const { email, password } = req.body;
 
         // Check user exists
         const user = await User.findOne({ email });
         if (!user) {
-            errors.email = 'User not found';
-            return res.status(404).json(errors);
+            return res.status(400).json({ user: 'Email or password incorrect' });
         }
 
         // Check password is correct
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            errors.password = 'Password incorrect';
-            return res.status(400).json(errors);
+            return res.status(400).json({ user: 'Email or password incorrect' });
         }
 
         // User matched - create and send JWT
         createSendJwt(user, 200, res);
     } catch (err) {
-        return res.status(500).json({ msg: 'Server Error' });
+        return res.status(500).json({ msg: 'Server error' });
     }
 };
 
@@ -117,13 +108,14 @@ exports.protectedRoute = async (req, res, next) => {
 
         // Check if token exists
         if (!token) {
-            return res.status(401).json({ msg: 'No token, authorization denied' });
+            return res.status(401).json({ token: 'No token, authorization denied' });
         }
 
         // Remove bearer from token if it exists
         if (token.startsWith('Bearer')) {
             token = req.headers.authorization.split(' ')[1];
         }
+
         // Verify token
         const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
@@ -133,12 +125,12 @@ exports.protectedRoute = async (req, res, next) => {
         if (!user) {
             return res
                 .status(401)
-                .json({ msg: 'The user belonging to this token no longer exists' });
+                .json({ user: 'The user belonging to this token no longer exists' });
         }
 
         req.user = user;
         next();
     } catch (err) {
-        res.status(500).json('Server error');
+        res.status(500).json({ msg: 'Server error' });
     }
 };

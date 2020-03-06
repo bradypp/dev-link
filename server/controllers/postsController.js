@@ -1,6 +1,5 @@
 const Profile = require('../models/User');
 const Post = require('../models/Post');
-const validatePostInput = require('../utils/validation/validatePostInput');
 
 exports.getAllPosts = async (req, res) => {
     try {
@@ -24,11 +23,6 @@ exports.getPostById = async (req, res) => {
 
 exports.createNewPost = async (req, res) => {
     try {
-        // Check post validation
-        const { errors, isValid } = validatePostInput(req.body);
-        console.log(errors, isValid);
-        if (!isValid) return res.status(404).json(errors);
-
         const { text, name, avatar } = req.body;
         const { id } = req.user;
 
@@ -88,11 +82,6 @@ exports.removePostLike = async (req, res) => {
 
 exports.addPostComment = async (req, res) => {
     try {
-        // Check post validation
-        const { errors, isValid } = validatePostInput(req.body);
-        console.log(errors, isValid);
-        if (!isValid) return res.status(404).json(errors);
-
         const { text, name, avatar } = req.body;
         const post = await Post.findById(req.params.id);
         const newComment = {

@@ -1,34 +1,27 @@
 const User = require('../models/User');
 const Profile = require('../models/Profile');
-const validateProfileInput = require('../utils/validation/validateProfileInput');
-const validateExperienceInput = require('../utils/validation/validateExperienceInput');
-const validateEducationInput = require('../utils/validation/validateEducationInput');
 
 exports.getCurrentUserProfile = async (req, res) => {
     try {
-        const errors = {};
         const { id } = req.user;
         const profile = await Profile.findOne({ user: id }).populate('user', ['name', 'avatar']);
 
         if (!profile) {
-            errors.no_profile = 'There is no profile for this user';
-            return res.status(404).json(errors);
+            return res.status(400).json({ no_profile: 'There is no profile for this user' });
         }
 
         res.json(profile);
     } catch (err) {
-        res.status(404).json(err);
+        res.status(500).json({ msg: 'Server error' });
     }
 };
 
 exports.getAllUserProfiles = async (req, res) => {
     try {
-        const errors = {};
         const profiles = await Profile.find().populate('user', ['name', 'avatar']);
 
         if (!profiles) {
-            errors.noprofiles = 'There are no profiles';
-            return res.status(404).json(errors);
+            return res.status(404).json({ no_profiles: 'There are no profiles' });
         }
 
         res.json(profiles);
@@ -39,13 +32,11 @@ exports.getAllUserProfiles = async (req, res) => {
 
 exports.getProfileByHandle = async (req, res) => {
     try {
-        const errors = {};
         const { handle } = req.params;
         const profile = await Profile.findOne({ handle }).populate('user', ['name', 'avatar']);
 
         if (!profile) {
-            errors.noprofile = 'There is no profile for this user';
-            return res.status(404).json(errors);
+            return res.status(404).json({ no_profile: 'There is no profile for this user' });
         }
 
         res.json(profile);
@@ -56,7 +47,6 @@ exports.getProfileByHandle = async (req, res) => {
 
 exports.getProfileByUserId = async (req, res) => {
     try {
-        const errors = {};
         const { user_id } = req.params;
         const profile = await Profile.findOne({ user: user_id }).populate('user', [
             'name',
@@ -64,22 +54,17 @@ exports.getProfileByUserId = async (req, res) => {
         ]);
 
         if (!profile) {
-            errors.noprofile = 'There is no profile for this user';
-            return res.status(404).json(errors);
+            return res.status(404).json({ no_profile: 'There is no profile for this user' });
         }
 
         res.json(profile);
     } catch (err) {
-        res.status(404).json({ profile: 'There is no profile for this user' });
+        res.status(404).json({ no_profile: 'There is no profile for this user' });
     }
 };
 
 exports.createOrUpdateUserProfile = async (req, res) => {
     try {
-        // Check validation
-        const { errors, isValid } = validateProfileInput(req.body);
-        if (!isValid) return res.status(400).json(errors);
-
         // Set fields
         const profileFields = {};
         profileFields.user = req.user.id;
@@ -123,8 +108,7 @@ exports.createOrUpdateUserProfile = async (req, res) => {
                 handle: profileFields.handle,
             });
             if (profileHandleCheck) {
-                errors.handle = 'That profile handle already exists';
-                return res.status(400).json(errors);
+                return res.status(400).json({ handle: 'That profile handle already exists' });
             }
 
             // Create and save new profile
@@ -138,10 +122,6 @@ exports.createOrUpdateUserProfile = async (req, res) => {
 
 exports.addExperienceToProfile = async (req, res) => {
     try {
-        // Check validation
-        const { errors, isValid } = validateExperienceInput(req.body);
-        if (!isValid) return res.status(400).json(errors);
-
         // Find profile
         const { id } = req.user;
         const profile = await Profile.findOne({ user: id });
@@ -163,10 +143,6 @@ exports.addExperienceToProfile = async (req, res) => {
 
 exports.addEducationToProfile = async (req, res) => {
     try {
-        // Check validation
-        const { errors, isValid } = validateEducationInput(req.body);
-        if (!isValid) return res.status(400).json(errors);
-
         // Find profile
         const { id } = req.user;
         const profile = await Profile.findOne({ user: id });
