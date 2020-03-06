@@ -1,16 +1,10 @@
-const express = require('express');
-const passport = require('passport');
-const usersController = require('../controllers/usersController');
-
-const router = express.Router();
-
-const { createUser, loginUser, getCurrentUser } = usersController;
+const router = require('express').Router();
+const { getCurrentUser } = require('../controllers/usersController');
+const { protectedRoute } = require('../controllers/authController');
 
 // Public routes
-router.route('/register').post(createUser);
-router.route('/login').post(loginUser);
 
 // Private routes
-router.route('/current').get(passport.authenticate('jwt', { session: false }), getCurrentUser);
+router.route('/current').get(protectedRoute, getCurrentUser);
 
 module.exports = router;

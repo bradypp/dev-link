@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const passport = require('passport');
+const cookieParser = require('cookie-parser');
+
 const authRouter = require('./routes/authRoutes');
 const postsRouter = require('./routes/postsRoutes');
 const profileRouter = require('./routes/profileRoutes');
@@ -16,13 +16,11 @@ if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 
-// Body Parser Middleware
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// Body-parsing Middleware
+app.use(express.json({ extended: false }));
 
-// Passport Middleware
-app.use(passport.initialize());
-require('./config/passport')(passport);
+// Cookie-parsing middleware
+app.use(cookieParser());
 
 // 3) Routes
 app.use('/api/v1/auth', authRouter);

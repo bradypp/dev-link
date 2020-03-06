@@ -17,7 +17,7 @@ module.exports = {
         'no-shadow': 0,
         'import/no-unresolved': 0,
         'no-nested-ternary': 0,
-        camelcase: [2, { ignoreDestructuring: true, properties: 'never' }],
+        camelcase: 0,
 
         // Node Rules
         'prefer-destructuring': [2, { object: true, array: false }],

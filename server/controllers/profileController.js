@@ -11,7 +11,7 @@ exports.getCurrentUserProfile = async (req, res) => {
         const profile = await Profile.findOne({ user: id }).populate('user', ['name', 'avatar']);
 
         if (!profile) {
-            errors.noprofile = 'There is no profile for this user';
+            errors.no_profile = 'There is no profile for this user';
             return res.status(404).json(errors);
         }
 
@@ -172,8 +172,8 @@ exports.addEducationToProfile = async (req, res) => {
         const profile = await Profile.findOne({ user: id });
 
         // Make new education object
-        const { school, degree, fieldofstudy, from, to, current, description } = req.body;
-        const newEdu = { school, degree, fieldofstudy, from, to, current, description };
+        const { school, degree, field_of_study, from, to, current, description } = req.body;
+        const newEdu = { school, degree, field_of_study, from, to, current, description };
 
         // Add education to profile
         profile.education.unshift(newEdu);

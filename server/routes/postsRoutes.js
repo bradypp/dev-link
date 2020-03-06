@@ -1,9 +1,6 @@
-const express = require('express');
-const passport = require('passport');
-const postsController = require('../controllers/postsController');
+const router = require('express').Router();
 
-const router = express.Router();
-
+const { protectedRoute } = require('../controllers/authController');
 const {
     getAllPosts,
     getPostById,
@@ -13,22 +10,20 @@ const {
     removePostLike,
     addPostComment,
     removePostComment,
-} = postsController;
+} = require('../controllers/postsController');
 
 // Public routes
 router.route('/').get(getAllPosts);
 router.route('/:id').get(getPostById);
 
 // Private routes
-router.route('/').post(passport.authenticate('jwt', { session: false }), createNewPost);
-router.route('/:id').delete(passport.authenticate('jwt', { session: false }), deletePostById);
+router.route('/').post(protectedRoute, createNewPost);
+router.route('/:id').delete(protectedRoute, deletePostById);
 router
     .route('/like/:id')
-    .post(passport.authenticate('jwt', { session: false }), addPostLike)
-    .delete(passport.authenticate('jwt', { session: false }), removePostLike);
-router.route('/comment/:id').post(passport.authenticate('jwt', { session: false }), addPostComment);
-router
-    .route('/comment/:id/:comment_id')
-    .delete(passport.authenticate('jwt', { session: false }), removePostComment);
+    .post(protectedRoute, addPostLike)
+    .delete(protectedRoute, removePostLike);
+router.route('/comment/:id').post(protectedRoute, addPostComment);
+router.route('/comment/:id/:comment_id').delete(protectedRoute, removePostComment);
 
 module.exports = router;

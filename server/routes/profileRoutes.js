@@ -1,9 +1,5 @@
-const express = require('express');
-const passport = require('passport');
-const profileController = require('../controllers/profileController');
-
-const router = express.Router();
-
+const router = require('express').Router();
+const { protectedRoute } = require('../controllers/authController');
 const {
     getCurrentUserProfile,
     createOrUpdateUserProfile,
@@ -15,7 +11,7 @@ const {
     removeExperienceFromProfile,
     addEducationToProfile,
     removeEducationFromProfile,
-} = profileController;
+} = require('../controllers/profileController');
 
 // Public routes
 router.route('/all').get(getAllUserProfiles);
@@ -25,20 +21,12 @@ router.route('/user/:userid').get(getProfileByUserId);
 // Private routes
 router
     .route('/')
-    .get(passport.authenticate('jwt', { session: false }), getCurrentUserProfile)
-    .post(passport.authenticate('jwt', { session: false }), createOrUpdateUserProfile)
-    .delete(passport.authenticate('jwt', { session: false }), deleteUserAndProfile);
-router
-    .route('/experience')
-    .post(passport.authenticate('jwt', { session: false }), addExperienceToProfile);
-router
-    .route('/experience/:exp_id')
-    .delete(passport.authenticate('jwt', { session: false }), removeExperienceFromProfile);
-router
-    .route('/education')
-    .post(passport.authenticate('jwt', { session: false }), addEducationToProfile);
-router
-    .route('/education/:edu_id')
-    .delete(passport.authenticate('jwt', { session: false }), removeEducationFromProfile);
+    .get(protectedRoute, getCurrentUserProfile)
+    .post(protectedRoute, createOrUpdateUserProfile)
+    .delete(protectedRoute, deleteUserAndProfile);
+router.route('/experience').post(protectedRoute, addExperienceToProfile);
+router.route('/experience/:exp_id').delete(protectedRoute, removeExperienceFromProfile);
+router.route('/education').post(protectedRoute, addEducationToProfile);
+router.route('/education/:edu_id').delete(protectedRoute, removeEducationFromProfile);
 
 module.exports = router;
