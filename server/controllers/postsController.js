@@ -1,4 +1,3 @@
-const Profile = require('../models/User');
 const Post = require('../models/Post');
 const User = require('../models/User');
 
@@ -6,9 +5,17 @@ exports.getAllPosts = async (req, res) => {
     try {
         // Find all posts and sort by date
         const posts = await Post.find().sort({ date: -1 });
+
+        if (!posts) {
+            return res.status(404).json({ posts: 'No posts found' });
+        }
+
         res.json(posts);
     } catch (err) {
-        res.status(404).json(err);
+        if (err.king === 'ObjectId') {
+            return res.status(404).json({ posts: 'No posts found' });
+        }
+        res.status(500).send({ msg: 'Server Error' });
     }
 };
 
@@ -16,9 +23,17 @@ exports.getPostById = async (req, res) => {
     try {
         const { id } = req.params;
         const post = await Post.findById(id);
+
+        if (!post) {
+            return res.status(404).json({ post: 'Post not found' });
+        }
+
         res.json(post);
     } catch (err) {
-        res.status(404).json({ posts: 'No posts found' });
+        if (err.kind === 'ObjectId') {
+            return res.status(404).json({ post: 'Post not found' });
+        }
+        res.status(500).send({ msg: 'Server Error' });
     }
 };
 
@@ -45,36 +60,67 @@ exports.createNewPost = async (req, res) => {
     }
 };
 
+exports.deletePostById = async (req, res) => {
+    try {
+        // Get and check post exists
+        const post = await Post.findById(req.params.id);
+        if (!post) {
+            return res.status(404).json({ post: 'Post not found' });
+        }
+
+        // Check user is authorized
+        if (post.user.toString() !== req.user.id) {
+            return res.status(401).json({ msg: 'User not authorized' });
+        }
+
+        // Remove post
+        await post.remove();
+        res.json({ msg: 'Post removed' });
+    } catch (err) {
+        if (err.kind === 'ObjectId') {
+            return res.status(404).json({ post: 'Post not found' });
+        }
+        res.status(500).json({ msg: 'Server Error' });
+    }
+};
+
 exports.addPostLike = async (req, res) => {
     try {
-        // Check profile and post exists
-        await Profile.findOne({ user: req.user.id });
+        // Get and check post exists
         const post = await Post.findById(req.params.id);
+        if (!post) {
+            return res.status(404).json({ post: 'Post not found' });
+        }
 
         // Check if post is already liked by user
         if (post.likes.filter(like => like.user.toString() === req.user.id).length > 0) {
-            return res.status(400).json({ already_liked: 'User has already liked this post' });
+            return res.status(400).json({ msg: 'User has already liked this post' });
         }
 
         // Add user id to likes array and save
         post.likes.unshift({ user: req.user.id });
-        const savedPost = await post.save();
+        await post.save();
 
-        res.json(savedPost);
+        res.json(post);
     } catch (err) {
-        res.status(404).json(err);
+        if (err.kind === 'ObjectId') {
+            return res.status(404).json({ post: 'Post not found' });
+        }
+        res.status(500).json({ msg: 'Server Error' });
     }
 };
 
 exports.removePostLike = async (req, res) => {
     try {
-        // Check profile and post exists
-        await Profile.findOne({ user: req.user.id });
+        // Get and check post exists
         const post = await Post.findById(req.params.id);
+        if (!post) {
+            return res.status(404).json({ post: 'Post not found' });
+        }
 
         // Check if post is liked by user
         if (post.likes.filter(like => like.user.toString() === req.user.id).length === 0) {
-            return res.status(400).json({ not_liked: 'User has not yet liked this post' });
+            return res.status(400).json({ msg: 'User has not yet liked this post' });
         }
 
         // Get like to remove index
@@ -82,32 +128,41 @@ exports.removePostLike = async (req, res) => {
 
         // Remove like from post likes array
         post.likes.splice(removeIndex, 1);
-        const savedPost = await post.save();
+        await post.save();
 
-        res.json(savedPost);
+        res.json(post);
     } catch (err) {
-        res.status(404).json(err);
+        if (err.kind === 'ObjectId') {
+            return res.status(404).json({ post: 'Post not found' });
+        }
+        res.status(500).json({ msg: 'Server Error' });
     }
 };
 
 exports.addPostComment = async (req, res) => {
     try {
-        const { text, name, avatar } = req.body;
+        // Get user and post
+        const user = await User.findById(req.user.id).select('-password');
         const post = await Post.findById(req.params.id);
+
+        // Create comment
         const newComment = {
-            text,
-            name,
-            avatar,
+            text: req.body.text,
+            name: user.name,
+            avatar: user.avatar,
             user: req.user.id,
         };
 
         // Add comment to comments array
         post.comments.unshift(newComment);
-        const savedPost = await post.save();
+        await post.save();
 
-        res.json(savedPost);
+        res.json(post);
     } catch (err) {
-        res.status(404).json({ post_not_found: 'No post found' });
+        if (err.kind === 'ObjectId') {
+            return res.status(404).json({ post: 'Post not found' });
+        }
+        res.status(500).json({ msg: 'Server Error' });
     }
 };
 
@@ -115,45 +170,33 @@ exports.removePostComment = async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
 
+        // Pull out comment
+        const comment = post.comments.find(comment => comment.id === req.params.comment_id);
+
         // Check comment exists
-        if (
-            post.comments.filter(comment => comment.id.toString() === req.params.comment_id)
-                .length === 0
-        ) {
-            return res.status(404).json({ comment_not_found: 'Comment does not exist' });
+        if (!comment) {
+            return res.status(404).json({ comment: 'Comment does not exist' });
         }
 
-        // Get comment to remove index
-        const removeIndex = post.comments
+        // Check user is authorized
+        if (comment.user.toString() !== req.user.id) {
+            return res.status(401).json({ msg: 'User not authorized' });
+        }
+
+        // Get comment index
+        const commentIndex = post.comments
             .map(comment => comment.id.toString())
             .indexOf(req.params.comment_id);
 
         // Remove comment from post comments array
-        post.comments.splice(removeIndex, 1);
-        const savedPost = await post.save();
+        post.comments.splice(commentIndex, 1);
+        await post.save();
 
-        res.json(savedPost);
+        res.json(post);
     } catch (err) {
-        res.status(404).json(err);
-    }
-};
-
-exports.deletePostById = async (req, res) => {
-    try {
-        // Check profile and post exists
-        await Profile.findOne({ user: req.user.id });
-        const post = await Post.findById(req.params.id);
-
-        // Check for post owner
-        if (post.user.toString() !== req.user.id) {
-            return res.status(401).json({ not_authorized: 'User not authorized' });
+        if (err.kind === 'ObjectId') {
+            return res.status(404).json({ post: 'Post not found' });
         }
-
-        // Remove post
-        await post.remove();
-
-        res.json({ success: true });
-    } catch (err) {
-        res.status(404).json({ post_not_found: 'No post found' });
+        res.status(500).json({ msg: 'Server Error' });
     }
 };

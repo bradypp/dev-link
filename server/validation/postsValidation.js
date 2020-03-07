@@ -6,3 +6,10 @@ exports.postValidationRules = () => {
             .notEmpty(),
     ];
 };
+
+exports.postCommentValidationRules = () => {
+    return [
+        body('text', 'Text is required')
+            .notEmpty(),
+    ];
+};

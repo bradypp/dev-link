@@ -1,6 +1,6 @@
 const validate = require('./validate');
 const { registerValidationRules, loginValidationRules } = require('./authValidation');
-const { postValidationRules } = require('./postsValidation');
+const { postValidationRules, postCommentValidationRules } = require('./postsValidation');
 const {
     profileValidationRules,
     experienceValidationRules,
@@ -15,4 +15,5 @@ module.exports = {
     experienceValidationRules,
     educationValidationRules,
     postValidationRules,
+    postCommentValidationRules,
 };
