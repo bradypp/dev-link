@@ -2,7 +2,8 @@ import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import sectionReducer from './section/reducer';
+import alertsReducer from './alerts/reducer';
+import authReducer from './auth/reducer';
 
 // Config options to customize persisted state include:
 // whitelist, blacklist, stateReconciler
@@ -12,7 +13,8 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-    section: sectionReducer,
+    alerts: alertsReducer,
+    auth: authReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);

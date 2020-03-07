@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 
@@ -11,6 +12,10 @@ const userRouter = require('./routes/userRoutes');
 const app = express();
 
 // 2) Global Middlewares
+// Implement CORS
+app.use(cors({ origin: 'http://localhost:3000' }));
+app.options('*', cors());
+
 // Logger Middleware
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));

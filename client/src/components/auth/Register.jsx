@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { setAlert } from 'redux/alerts/actions';
+import api from 'utils/api';
 
-const Register = () => {
+const Register = ({ setAlert }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         password: '',
         password2: '',
     });
+    const { name, email, password, password2 } = formData;
 
     const onChange = event => {
         setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -18,24 +21,23 @@ const Register = () => {
         event.preventDefault();
 
         if (password !== password2) {
-            console.log('Passwords do not match');
+            setAlert('Passwords do not match', 'danger');
         } else {
-            const newUser = {
-                name,
-                email,
-                password,
-            };
-
             try {
+                const body = JSON.stringify({
+                    name,
+                    email,
+                    password,
+                    password2,
+                });
+
                 const config = {
                     headers: {
                         'Content-Type': 'application/json',
                     },
                 };
 
-                const body = JSON.stringify(newUser);
-
-                const res = await axios.post('/api/v1/users/register', body, config);
+                const res = await api.post('auth/register', body, config);
                 console.log(res.data);
             } catch (err) {
                 console.log(err.response.data);
@@ -43,13 +45,11 @@ const Register = () => {
         }
     };
 
-    const { name, email, password, password2 } = formData;
-
     return (
         <>
             <h1 className="large text-primary">Sign Up</h1>
             <p className="lead">
-                <i className="fas fa-user"></i> Create Your Account
+                <i className="fas fa-user" /> Create Your Account
             </p>
             <form className="form" onSubmit={onSubmit}>
                 <div className="form-group">
@@ -70,7 +70,6 @@ const Register = () => {
                         value={email}
                         onChange={onChange}
                     />
-                    {/* // FIXME: remove this and allow image upload */}
                     <small className="form-text">
                         This site uses Gravatar so if you want a profile image, use a Gravatar email
                     </small>
@@ -80,7 +79,7 @@ const Register = () => {
                         type="password"
                         placeholder="Password"
                         name="password"
-                        minlength="6"
+                        minLength="8"
                         value={password}
                         onChange={onChange}
                     />
@@ -90,7 +89,7 @@ const Register = () => {
                         type="password"
                         placeholder="Confirm Password"
                         name="password2"
-                        minlength="6"
+                        minLength="8"
                         value={password2}
                         onChange={onChange}
                     />
@@ -104,4 +103,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default connect(null, { setAlert })(Register);

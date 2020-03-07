@@ -1,10 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { store, persistor } from './redux/store';
 import { Navbar } from 'components';
-import { Routes } from 'pages';
+import { Routes, HomePage } from 'pages';
+import { store, persistor } from './redux/store';
 import 'styles/app.scss';
 
 const App = () => {
@@ -13,7 +13,10 @@ const App = () => {
             <PersistGate persistor={persistor}>
                 <Router>
                     <Navbar />
-                    <Routes />
+                    <Switch>
+                        <Route exact path="/" component={HomePage} />
+                        <Routes />
+                    </Switch>
                 </Router>
             </PersistGate>
         </Provider>

@@ -100,8 +100,8 @@ exports.protectedRoute = async (req, res, next) => {
     try {
         // Get token from header or cookies
         let token;
-        if (req.headers.authorization) {
-            token = req.headers.authorization;
+        if (req.header('x-auth-token')) {
+            token = req.header('x-auth-token');
         } else if (req.cookies.jwt) {
             token = req.cookies.jwt;
         }
@@ -113,7 +113,7 @@ exports.protectedRoute = async (req, res, next) => {
 
         // Remove bearer from token if it exists
         if (token.startsWith('Bearer')) {
-            token = req.headers.authorization.split(' ')[1];
+            token = req.header('x-auth-token').split(' ')[1];
         }
 
         // Verify token

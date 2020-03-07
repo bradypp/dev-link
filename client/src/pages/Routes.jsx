@@ -1,16 +1,15 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Login, Register } from 'components';
-import { HomePage } from 'pages';
+import { Login, Register, Alert } from 'components';
 
 const Routes = () => (
-    <Switch>
-        <Route exact path="/" component={HomePage} />
-        <section className="container">
+    <section className="container">
+        <Alert />
+        <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
-        </section>
-    </Switch>
+        </Switch>
+    </section>
 );
 
 export default Routes;
