@@ -22,7 +22,7 @@ const Login = () => {
             <p className="lead">
                 <i className="fas fa-user" /> Sign Into Your Account
             </p>
-            <form className="form" onSubmit={onSubmit}>
+            <form className="form" onSubmit={onSubmit} noValidate>
                 <div className="form-group">
                     <input
                         type="email"

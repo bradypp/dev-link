@@ -13,24 +13,23 @@ const createSendJwt = (user, statusCode, res) => {
         expiresIn: process.env.JWT_EXPIRES_IN,
     });
 
-    // Cookie options
-    const cookieOptions = {
-        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
-        httpOnly: true,
-    };
-    if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+    // TODO: Add cookie options?
+    // const cookieOptions = {
+    //     expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
+    //     httpOnly: true,
+    // };
+    // if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
 
-    res.cookie('jwt', token, cookieOptions);
+    // res.cookie('jwt', token, cookieOptions);
 
-    // Specify data to send in response
-    const data = { user };
-    data.user.password = undefined;
+    // Remove password from response data
+    // eslint-disable-next-line no-param-reassign
+    user.password = undefined;
 
     // Send token & user data in response
     res.status(statusCode).json({
-        success: true,
         token,
-        data,
+        user,
     });
 };
 
@@ -102,9 +101,12 @@ exports.protectedRoute = async (req, res, next) => {
         let token;
         if (req.header('x-auth-token')) {
             token = req.header('x-auth-token');
-        } else if (req.cookies.jwt) {
-            token = req.cookies.jwt;
         }
+
+        // TODO: Add cookie options?
+        // else if (req.cookies.jwt) {
+        //     token = req.cookies.jwt;
+        // }
 
         // Check if token exists
         if (!token) {

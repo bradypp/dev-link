@@ -1,58 +1,33 @@
 import api from 'utils/api';
-import setAuthToken from 'utils/setAuthToken';
-// import jwt_decode from 'jwt-decode';
+import { setAlert } from 'redux/alerts/actions';
+import { REGISTER_SUCCESS, REGISTER_FAILURE } from './actionTypes';
 
-import { GET_ERRORS, SET_CURRENT_USER } from './actionTypes';
+// TODO: Implement more elegant error alerts
 
-// Register User
-export const registerUser = (userData, history) => dispatch => {
-    api.post('/api/users/register', userData)
-        .then(res => history.push('/login'))
-        .catch(err =>
-            dispatch({
-                type: GET_ERRORS,
-                payload: err.response.data,
-            }),
-        );
-};
+export const registerUser = ({ name, email, password, password2 }) => async dispatch => {
+    try {
+        const body = JSON.stringify({ name, email, password, password2 });
 
-// Login - Get User Token
-export const loginUser = userData => dispatch => {
-    api.post('/api/users/login', userData)
-        .then(res => {
-            // Save to localStorage
-            const { token } = res.data;
-            // Set token to ls
-            localStorage.setItem('jwtToken', token);
-            // Set token to Auth header
-            setAuthToken(token);
-            // Decode token to get user data
-            const decoded = jwt_decode(token);
-            // Set current user
-            dispatch(setCurrentUser(decoded));
-        })
-        .catch(err =>
-            dispatch({
-                type: GET_ERRORS,
-                payload: err.response.data,
-            }),
-        );
-};
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
 
-// Set logged in user
-export const setCurrentUser = decoded => {
-    return {
-        type: SET_CURRENT_USER,
-        payload: decoded,
-    };
-};
+        const res = await api.post('auth/register', body, config);
 
-// Log user out
-export const logoutUser = () => dispatch => {
-    // Remove token from localStorage
-    localStorage.removeItem('jwtToken');
-    // Remove auth header for future requests
-    setAuthToken(false);
-    // Set current user to {} which will set isAuthenticated to false
-    dispatch(setCurrentUser({}));
+        dispatch({
+            type: REGISTER_SUCCESS,
+            payload: res.data,
+        });
+    } catch (err) {
+        const errors = Object.values(err.response.data);
+        if (errors) {
+            errors.forEach(error => dispatch(setAlert(error, 'danger')));
+        }
+
+        dispatch({
+            type: REGISTER_FAILURE,
+        });
+    }
 };
