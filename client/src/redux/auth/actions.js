@@ -1,6 +1,5 @@
-import { api } from 'utils';
+import { api, setAuthToken } from 'utils';
 import { setAlert } from 'redux/alerts/actions';
-import setAuthToken from 'utils/auth/setAuthToken';
 import { REGISTER_SUCCESS, REGISTER_FAILURE, USER_LOADED, AUTH_ERROR } from './actionTypes';
 
 export const loadUser = () => async dispatch => {
