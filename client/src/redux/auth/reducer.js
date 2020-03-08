@@ -1,4 +1,5 @@
-import { REGISTER_SUCCESS, REGISTER_FAILURE } from './actionTypes';
+import { setAuthToken } from 'utils';
+import { REGISTER_SUCCESS, REGISTER_FAILURE, USER_LOADED, AUTH_ERROR } from './actionTypes';
 
 // TODO: Get errors from response and maptoprops on registration & login form to show correct message
 
@@ -12,15 +13,25 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
     switch (type) {
-        case REGISTER_SUCCESS:
-            localStorage.setItem('token', payload.token);
+        case USER_LOADED:
             return {
                 ...state,
-                ...payload,
+                isAuthenticated: true,
+                loading: false,
+                user: payload,
+            };
+        case REGISTER_SUCCESS:
+            localStorage.setItem('token', payload.token);
+            setAuthToken(payload.token);
+            return {
+                ...state,
+                token: payload.token,
+                user: payload.user,
                 isAuthenticated: true,
                 loading: false,
             };
         case REGISTER_FAILURE:
+        case AUTH_ERROR:
             localStorage.removeItem('token');
             return {
                 ...state,

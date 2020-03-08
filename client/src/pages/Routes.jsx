@@ -7,7 +7,7 @@ const Routes = () => (
     <Router>
         <Navbar />
         <Switch>
-            <Route path="/" component={Landing} />
+            <Route exact path="/" component={Landing} />
         </Switch>
         <section className="container">
             <Alert />

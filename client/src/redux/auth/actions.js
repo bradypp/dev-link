@@ -1,19 +1,38 @@
-import api from 'utils/api';
+import { api } from 'utils';
 import { setAlert } from 'redux/alerts/actions';
-import { REGISTER_SUCCESS, REGISTER_FAILURE } from './actionTypes';
+import setAuthToken from 'utils/auth/setAuthToken';
+import { REGISTER_SUCCESS, REGISTER_FAILURE, USER_LOADED, AUTH_ERROR } from './actionTypes';
+
+export const loadUser = () => async dispatch => {
+    if (localStorage.token) {
+        setAuthToken(localStorage.token);
+    }
+
+    try {
+        const res = await api.get('/user');
+
+        dispatch({
+            type: USER_LOADED,
+            payload: res.data,
+        });
+    } catch (err) {
+        dispatch({
+            type: AUTH_ERROR,
+        });
+    }
+};
 
 // TODO: Implement more elegant error alerts
-
 export const registerUser = ({ name, email, password, password2 }) => async dispatch => {
+    const body = JSON.stringify({ name, email, password, password2 });
+
+    const config = {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
     try {
-        const body = JSON.stringify({ name, email, password, password2 });
-
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        };
-
         const res = await api.post('auth/register', body, config);
 
         dispatch({
