@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
+import { loginUser } from 'redux/auth';
+import { selectAlerts } from 'redux/alerts';
 
-const Login = () => {
+const Login = ({ loginUser }) => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -10,10 +15,12 @@ const Login = () => {
 
     const onChange = event => {
         setFormData({ ...formData, [event.target.name]: event.target.value });
+        console.log(formData);
     };
 
     const onSubmit = async event => {
         event.preventDefault();
+        loginUser(formData);
     };
 
     return (
@@ -51,4 +58,12 @@ const Login = () => {
     );
 };
 
-export default Login;
+Login.propTypes = {
+    loginUser: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = createStructuredSelector({
+    alerts: selectAlerts,
+});
+
+export default connect(mapStateToProps, { loginUser })(Login);

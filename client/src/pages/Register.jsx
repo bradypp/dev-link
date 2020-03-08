@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { setAlert } from 'redux/alerts/actions';
-import { registerUser } from 'redux/auth/actions';
+import { setAlert } from 'redux/alerts';
+import { registerUser } from 'redux/auth';
 
 const Register = ({ setAlert, registerUser }) => {
     const [formData, setFormData] = useState({
@@ -24,7 +24,7 @@ const Register = ({ setAlert, registerUser }) => {
         if (password !== password2) {
             setAlert('Passwords do not match', 'danger');
         } else {
-            registerUser({ name, email, password, password2 });
+            registerUser(formData);
         }
     };
 
