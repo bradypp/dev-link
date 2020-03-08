@@ -2,10 +2,12 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
+// Redirect prop should be in the following format:
 // redirect = [{ condition: bool, path: string, conditions: [bool], allConditions: bool }];
+
 const WithRedirect = WrappedComponent => ({ redirect, ...otherProps }) => {
-    let componentToReturn = <WrappedComponent {...otherProps} />;
-    if (!redirect) return componentToReturn;
+    let componentToRender = <WrappedComponent {...otherProps} />;
+    if (!redirect) return componentToRender;
 
     redirect.forEach(({ condition, conditionsArr, path, allConditions }) => {
         const shouldRedirect = conditionsArr
@@ -20,10 +22,10 @@ const WithRedirect = WrappedComponent => ({ redirect, ...otherProps }) => {
                   }, false)
             : condition;
 
-        if (shouldRedirect) componentToReturn = <Redirect to={path} />;
+        if (shouldRedirect) componentToRender = <Redirect to={path} />;
     });
 
-    return componentToReturn;
+    return componentToRender;
 };
 
 export default WithRedirect;
