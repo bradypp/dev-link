@@ -25,7 +25,6 @@ export const registerUser = ({ name, email, password, password2 }) => async disp
         if (errors) {
             errors.forEach(error => dispatch(setAlert(error, 'danger')));
         }
-
         dispatch({
             type: REGISTER_FAILURE,
         });
