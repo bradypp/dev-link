@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Alert, Navbar } from 'components';
-import { Landing, Login, Register } from 'pages';
+import { Landing, Login, Register, Dashboard } from 'pages';
+import PrivateRoute from './PrivateRoute';
 
 const Routes = () => (
     <Router>
@@ -14,6 +15,7 @@ const Routes = () => (
             <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
+                <PrivateRoute exact path="/dashboard" component={Dashboard} />
             </Switch>
         </section>
     </Router>

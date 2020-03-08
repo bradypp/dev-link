@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { WithRedirect } from 'components';
 import { setAlert } from 'redux/alerts';
-import { registerUser } from 'redux/auth';
+import { registerUser, selectIsAuthenticated } from 'redux/auth';
 
 const Register = ({ setAlert, registerUser }) => {
     const [formData, setFormData] = useState({
@@ -91,4 +94,11 @@ Register.propTypes = {
     registerUser: PropTypes.func.isRequired,
 };
 
-export default connect(null, { setAlert, registerUser })(Register);
+const mapStateToProps = createStructuredSelector({
+    redirect: state => [selectIsAuthenticated(state), '/dashboard'],
+});
+
+export default compose(
+    connect(mapStateToProps, { setAlert, registerUser }),
+    WithRedirect,
+)(Register);

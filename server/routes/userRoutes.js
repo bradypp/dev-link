@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const { getCurrentUser, deleteUser } = require('../controllers/userController');
-const { protectedRoute } = require('../controllers/authController');
+const { privateRoute } = require('../controllers/authController');
 
-// Protected routes
+// Private routes
 router
     .route('/')
-    .get(protectedRoute, getCurrentUser)
-    .delete(protectedRoute, deleteUser);
+    .get(privateRoute, getCurrentUser)
+    .delete(privateRoute, deleteUser);
 
 module.exports = router;

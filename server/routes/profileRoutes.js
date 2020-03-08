@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { protectedRoute } = require('../controllers/authController');
+const { privateRoute } = require('../controllers/authController');
 const {
     getCurrentUserProfile,
     createOrUpdateUserProfile,
@@ -23,18 +23,18 @@ router.route('/all').get(getAllUserProfiles);
 router.route('/user/:user_id').get(getProfileByUserId);
 router.route('/github/:github_username').get(getUserGithubRepos);
 
-// Protected routes
+// Private routes
 router
     .route('/')
-    .get(protectedRoute, getCurrentUserProfile)
-    .post(protectedRoute, profileValidationRules(), validate, createOrUpdateUserProfile);
+    .get(privateRoute, getCurrentUserProfile)
+    .post(privateRoute, profileValidationRules(), validate, createOrUpdateUserProfile);
 router
     .route('/experience')
-    .put(protectedRoute, experienceValidationRules(), validate, addExperienceToProfile);
-router.route('/experience/:exp_id').delete(protectedRoute, removeExperienceFromProfile);
+    .put(privateRoute, experienceValidationRules(), validate, addExperienceToProfile);
+router.route('/experience/:exp_id').delete(privateRoute, removeExperienceFromProfile);
 router
     .route('/education')
-    .put(protectedRoute, educationValidationRules(), validate, addEducationToProfile);
-router.route('/education/:edu_id').delete(protectedRoute, removeEducationFromProfile);
+    .put(privateRoute, educationValidationRules(), validate, addEducationToProfile);
+router.route('/education/:edu_id').delete(privateRoute, removeEducationFromProfile);
 
 module.exports = router;

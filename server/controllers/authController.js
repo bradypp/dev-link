@@ -95,7 +95,7 @@ exports.loginUser = async (req, res) => {
     }
 };
 
-exports.protectedRoute = async (req, res, next) => {
+exports.privateRoute = async (req, res, next) => {
     try {
         // Get token from header or cookies
         let token;

@@ -85,3 +85,38 @@
 .badge-light {
     border: var(--color-grey-light) solid 1px;
 }
+
+.spinner-overlay {
+    height: 60vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner {
+    display: inline-block;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    color: #636767;
+    border: 5px solid #aaa;
+    border-top-color: #666;
+    animation: spin 1s ease-in-out infinite;
+
+    &--small {
+        width: 30px;
+        height: 30px;
+    }
+
+    @keyframes spin {
+        to {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+    @-webkit-keyframes spin {
+        to {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+}

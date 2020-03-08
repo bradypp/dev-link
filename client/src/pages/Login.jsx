@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
-import { loginUser } from 'redux/auth';
-import { selectAlerts } from 'redux/alerts';
+import { compose } from 'redux';
+import { loginUser, selectIsAuthenticated } from 'redux/auth';
+import { WithRedirect } from 'components';
 
 const Login = ({ loginUser }) => {
     const [formData, setFormData] = useState({
@@ -12,10 +13,8 @@ const Login = ({ loginUser }) => {
         password: '',
     });
     const { email, password } = formData;
-
     const onChange = event => {
         setFormData({ ...formData, [event.target.name]: event.target.value });
-        console.log(formData);
     };
 
     const onSubmit = async event => {
@@ -63,7 +62,12 @@ Login.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-    alerts: selectAlerts,
+    redirect: state => [
+        {
+            condition: selectIsAuthenticated(state),
+            path: '/dashboard',
+        },
+    ],
 });
 
-export default connect(mapStateToProps, { loginUser })(Login);
+export default compose(connect(mapStateToProps, { loginUser }), WithRedirect)(Login);

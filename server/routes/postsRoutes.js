@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { protectedRoute } = require('../controllers/authController');
+const { privateRoute } = require('../controllers/authController');
 const {
     getAllPosts,
     getPostById,
@@ -12,20 +12,20 @@ const {
 } = require('../controllers/postsController');
 const { validate, postValidationRules, postCommentValidationRules } = require('../validation');
 
-// Protected routes
+// Private routes
 router
     .route('/')
-    .get(protectedRoute, getAllPosts)
-    .post(protectedRoute, postValidationRules(), validate, createNewPost);
+    .get(privateRoute, getAllPosts)
+    .post(privateRoute, postValidationRules(), validate, createNewPost);
 router
     .route('/:id')
-    .get(protectedRoute, getPostById)
-    .delete(protectedRoute, deletePostById);
-router.route('/like/:id').put(protectedRoute, addPostLike);
-router.route('/unlike/:id').put(protectedRoute, removePostLike);
+    .get(privateRoute, getPostById)
+    .delete(privateRoute, deletePostById);
+router.route('/like/:id').put(privateRoute, addPostLike);
+router.route('/unlike/:id').put(privateRoute, removePostLike);
 router
     .route('/comment/:id')
-    .post(protectedRoute, postCommentValidationRules(), validate, addPostComment);
-router.route('/comment/:id/:comment_id').delete(protectedRoute, removePostComment);
+    .post(privateRoute, postCommentValidationRules(), validate, addPostComment);
+router.route('/comment/:id/:comment_id').delete(privateRoute, removePostComment);
 
 module.exports = router;
