@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
-export const selectAuth = state => state.auth;
+export const selectProfile = state => state.profile;
 
-export const selectIsAuthenticated = createSelector([selectAuth], auth => auth.isAuthenticated);
+export const selectProfileLoading = createSelector([selectProfile], profile => profile.isLoading);
 
-export const selectIsLoading = createSelector([selectAuth], auth => auth.isLoading);
+export const selectProfileInfo = createSelector([selectProfile], profile => profile.profile);

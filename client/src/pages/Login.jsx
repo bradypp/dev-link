@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
-import { compose } from 'redux';
 import { loginUser, selectIsAuthenticated } from 'redux/auth';
-import { WithRedirect } from 'components';
 
-const Login = ({ loginUser }) => {
+const Login = ({ loginUser, isAuthenticated }) => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
     });
+
     const { email, password } = formData;
+
     const onChange = event => {
         setFormData({ ...formData, [event.target.name]: event.target.value });
     };
@@ -21,6 +21,8 @@ const Login = ({ loginUser }) => {
         event.preventDefault();
         loginUser(formData);
     };
+
+    if (isAuthenticated) return <Redirect to="/dashboard" />;
 
     return (
         <>
@@ -59,15 +61,11 @@ const Login = ({ loginUser }) => {
 
 Login.propTypes = {
     loginUser: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-    redirect: state => [
-        {
-            condition: selectIsAuthenticated(state),
-            path: '/dashboard',
-        },
-    ],
+    isAuthenticated: selectIsAuthenticated,
 });
 
-export default compose(connect(mapStateToProps, { loginUser }), WithRedirect)(Login);
+export default connect(mapStateToProps, { loginUser })(Login);

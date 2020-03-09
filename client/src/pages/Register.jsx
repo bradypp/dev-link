@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { WithRedirect } from 'components';
 import { setAlert } from 'redux/alerts';
 import { registerUser, selectIsAuthenticated } from 'redux/auth';
 
-const Register = ({ setAlert, registerUser }) => {
+const Register = ({ setAlert, registerUser, isAuthenticated }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -30,6 +28,8 @@ const Register = ({ setAlert, registerUser }) => {
             registerUser(formData);
         }
     };
+
+    if (isAuthenticated) return <Redirect to="/dashboard" />;
 
     return (
         <>
@@ -92,13 +92,11 @@ const Register = ({ setAlert, registerUser }) => {
 Register.propTypes = {
     setAlert: PropTypes.func.isRequired,
     registerUser: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-    redirect: state => [selectIsAuthenticated(state), '/dashboard'],
+    isAuthenticated: selectIsAuthenticated,
 });
 
-export default compose(
-    connect(mapStateToProps, { setAlert, registerUser }),
-    WithRedirect,
-)(Register);
+export default connect(mapStateToProps, { setAlert, registerUser })(Register);

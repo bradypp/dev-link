@@ -8,7 +8,8 @@ import {
     USER_LOADED,
     USER_LOADING,
     AUTH_ERROR,
-} from '../actionTypes';
+    ACCOUNT_DELETED,
+} from 'redux/actionTypes';
 
 // TODO: Get errors from response and maptoprops on registration & login form to show correct message
 
@@ -17,7 +18,7 @@ const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: false,
     isLoading: false,
-    user: {},
+    user: null,
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -34,7 +35,7 @@ export default (state = initialState, { type, payload }) => {
                 ...state,
                 isAuthenticated: false,
                 isLoading: true,
-                user: {},
+                user: null,
             };
         case REGISTER_SUCCESS:
         case LOGIN_SUCCESS:
@@ -49,13 +50,14 @@ export default (state = initialState, { type, payload }) => {
         case LOGIN_FAILURE:
         case AUTH_ERROR:
         case LOGOUT:
+        case ACCOUNT_DELETED:
             localStorage.removeItem('token');
             return {
                 ...state,
                 token: null,
                 isAuthenticated: false,
                 isLoading: false,
-                user: {},
+                user: null,
             };
         default:
             return state;

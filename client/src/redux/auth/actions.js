@@ -10,7 +10,7 @@ import {
     LOGIN_FAILURE,
     CLEAR_PROFILE,
     LOGOUT,
-} from '../actionTypes';
+} from 'redux/actionTypes';
 
 export const loadUser = () => async dispatch => {
     try {
@@ -50,7 +50,6 @@ export const registerUser = ({ name, email, password, password2 }) => async disp
             type: REGISTER_SUCCESS,
             payload: res.data,
         });
-        dispatch(loadUser());
     } catch (err) {
         const errors = Object.values(err.response.data);
         if (errors) {
@@ -82,7 +81,6 @@ export const loginUser = ({ email, password }) => async dispatch => {
             type: LOGIN_SUCCESS,
             payload: res.data,
         });
-        dispatch(loadUser());
     } catch (err) {
         const errors = Object.values(err.response.data);
         if (errors) {

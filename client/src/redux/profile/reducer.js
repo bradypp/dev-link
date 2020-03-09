@@ -1,61 +1,60 @@
-import { setAuthToken } from 'utils';
 import {
-    REGISTER_SUCCESS,
-    REGISTER_FAILURE,
-    LOGIN_SUCCESS,
-    LOGIN_FAILURE,
-    LOGOUT,
-    USER_LOADED,
-    USER_LOADING,
-    AUTH_ERROR,
-} from '../actionTypes';
+    GET_PROFILE,
+    PROFILE_ERROR,
+    CLEAR_PROFILE,
+    UPDATE_PROFILE,
+    GET_PROFILES,
+    GET_REPOS,
+    PROFILE_LOADING,
+} from 'redux/actionTypes';
 
-// TODO: Get errors from response and maptoprops on registration & login form to show correct message
-
-// TODO: add cookies token get?
 const initialState = {
-    token: localStorage.getItem('token'),
-    isAuthenticated: false,
+    profile: null,
+    profiles: [],
+    repos: [],
     isLoading: false,
-    user: {},
+    error: {},
 };
 
 export default (state = initialState, { type, payload }) => {
     switch (type) {
-        case USER_LOADED:
+        case GET_PROFILE:
+        case UPDATE_PROFILE:
             return {
                 ...state,
-                isAuthenticated: true,
+                profile: payload,
                 isLoading: false,
-                user: payload,
             };
-        case USER_LOADING:
+        case PROFILE_LOADING:
             return {
                 ...state,
-                isAuthenticated: false,
                 isLoading: true,
-                user: {},
             };
-        case REGISTER_SUCCESS:
-        case LOGIN_SUCCESS:
-            localStorage.setItem('token', payload.token);
-            setAuthToken(payload.token);
+        case GET_PROFILES:
             return {
                 ...state,
-                ...payload,
-                isAuthenticated: true,
-            };
-        case REGISTER_FAILURE:
-        case LOGIN_FAILURE:
-        case AUTH_ERROR:
-        case LOGOUT:
-            localStorage.removeItem('token');
-            return {
-                ...state,
-                token: null,
-                isAuthenticated: false,
+                profiles: payload,
                 isLoading: false,
-                user: {},
+            };
+        case PROFILE_ERROR:
+            return {
+                ...state,
+                error: payload,
+                isLoading: false,
+                profile: null,
+            };
+        case CLEAR_PROFILE:
+            return {
+                ...state,
+                profile: null,
+                repos: [],
+                isLoading: false,
+            };
+        case GET_REPOS:
+            return {
+                ...state,
+                repos: payload,
+                isLoading: false,
             };
         default:
             return state;
