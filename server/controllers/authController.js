@@ -29,7 +29,7 @@ const createSendJwt = (user, statusCode, res) => {
     // Send token & user data in response
     res.status(statusCode).json({
         token,
-        user,
+        // user,
     });
 };
 

@@ -4,15 +4,19 @@ import {
     REGISTER_SUCCESS,
     REGISTER_FAILURE,
     USER_LOADED,
+    USER_LOADING,
     AUTH_ERROR,
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
     CLEAR_PROFILE,
     LOGOUT,
-} from './actionTypes';
+} from '../actionTypes';
 
 export const loadUser = () => async dispatch => {
     try {
+        dispatch({
+            type: USER_LOADING,
+        });
         const res = await api.get('/user');
 
         dispatch({
@@ -28,6 +32,10 @@ export const loadUser = () => async dispatch => {
 
 // TODO: Implement more elegant error alerts
 export const registerUser = ({ name, email, password, password2 }) => async dispatch => {
+    dispatch({
+        type: USER_LOADING,
+    });
+
     const body = JSON.stringify({ name, email, password, password2 });
     const config = {
         headers: {
@@ -42,6 +50,7 @@ export const registerUser = ({ name, email, password, password2 }) => async disp
             type: REGISTER_SUCCESS,
             payload: res.data,
         });
+        dispatch(loadUser());
     } catch (err) {
         const errors = Object.values(err.response.data);
         if (errors) {
@@ -55,6 +64,10 @@ export const registerUser = ({ name, email, password, password2 }) => async disp
 };
 
 export const loginUser = ({ email, password }) => async dispatch => {
+    dispatch({
+        type: USER_LOADING,
+    });
+
     const body = JSON.stringify({ email, password });
     const config = {
         headers: {
@@ -69,6 +82,7 @@ export const loginUser = ({ email, password }) => async dispatch => {
             type: LOGIN_SUCCESS,
             payload: res.data,
         });
+        dispatch(loadUser());
     } catch (err) {
         const errors = Object.values(err.response.data);
         if (errors) {
