@@ -83,14 +83,14 @@ exports.createOrUpdateUserProfile = async (req, res) => {
             bio,
             status,
             github_username,
-            website: website ? normalize(website, { forceHttps: true }) : undefined,
+            website: website ? normalize(website, { forceHttps: true }) : '',
             skills: skills.split(',').map(skill => skill.trim()),
             social: {
-                youtube: youtube ? normalize(youtube, { forceHttps: true }) : undefined,
-                twitter: twitter ? normalize(twitter, { forceHttps: true }) : undefined,
-                facebook: facebook ? normalize(facebook, { forceHttps: true }) : undefined,
-                linkedin: linkedin ? normalize(linkedin, { forceHttps: true }) : undefined,
-                instagram: instagram ? normalize(instagram, { forceHttps: true }) : undefined,
+                youtube: youtube ? normalize(youtube, { forceHttps: true }) : '',
+                twitter: twitter ? normalize(twitter, { forceHttps: true }) : '',
+                facebook: facebook ? normalize(facebook, { forceHttps: true }) : '',
+                linkedin: linkedin ? normalize(linkedin, { forceHttps: true }) : '',
+                instagram: instagram ? normalize(instagram, { forceHttps: true }) : '',
             },
         };
 
