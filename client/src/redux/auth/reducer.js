@@ -12,17 +12,16 @@ import {
 } from 'redux/actionTypes';
 
 // TODO: Get errors from response and maptoprops on registration & login form to show correct message
-
 // TODO: add getting token from cookies?
 const initialState = {
-    token: null,
-    // token: localStorage.getItem('token'),
+    token: '',
     isAuthenticated: false,
     isLoading: false,
-    user: null,
+    user: {},
 };
 
 export default (state = initialState, { type, payload }) => {
+    const { token, isAuthenticated, isLoading, user } = initialState;
     switch (type) {
         case USER_LOADED:
             return {
@@ -34,33 +33,32 @@ export default (state = initialState, { type, payload }) => {
         case USER_LOADING:
             return {
                 ...state,
-                isAuthenticated: false,
                 isLoading: true,
-                user: null,
+                isAuthenticated,
+                user,
             };
         case REGISTER_SUCCESS:
         case LOGIN_SUCCESS:
-            // localStorage.setItem('token', payload.token);
             setAuthToken(payload.token);
             return {
                 ...state,
-                ...payload,
+                token: payload.token,
+                user: payload.user,
                 isAuthenticated: true,
-                isLoading: false,
+                isLoading,
             };
         case REGISTER_FAILURE:
         case LOGIN_FAILURE:
         case AUTH_ERROR:
         case LOGOUT_USER:
         case ACCOUNT_DELETED:
-            // localStorage.removeItem('token');
-            setAuthToken(null);
+            setAuthToken('');
             return {
                 ...state,
-                token: null,
-                isAuthenticated: false,
-                isLoading: false,
-                user: null,
+                token,
+                isAuthenticated,
+                isLoading,
+                user,
             };
         default:
             return state;
