@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash.isempty';
-import { Spinner, DashboardActions, Education, Experience } from 'components';
+import { Spinner, DashboardActions, AddEducation, AddExperience } from 'components';
 import { selectUserFirstName } from 'redux/auth';
 import {
     getCurrentProfile,
@@ -42,8 +42,8 @@ const Dashboard = ({
                     {profileInfo !== null ? (
                         <>
                             <DashboardActions />
-                            {profileExperience && <Experience experience={profileExperience} />}
-                            {profileEducation && <Education education={profileEducation} />}
+                            {profileExperience && <AddExperience experience={profileExperience} />}
+                            {profileEducation && <AddEducation education={profileEducation} />}
                             <div className="my-2">
                                 <button
                                     className="btn btn-danger"

@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Alert, Navbar } from 'components';
-import { Landing, Login, Register, Dashboard, CreateProfile } from 'pages';
+import { Landing, Login, Register, Dashboard, CreateProfile, Alert, Navbar } from 'components';
 import PrivateRoute from './PrivateRoute';
 
 const Routes = () => {
@@ -17,8 +16,6 @@ const Routes = () => {
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/register" component={Register} />
                     <PrivateRoute exact path="/profile/dashboard" component={Dashboard} />
-                    <PrivateRoute exact path="/profile/create" component={CreateProfile} />
-                    <PrivateRoute exact path="/profile/create" component={Education} />
                     <PrivateRoute exact path="/profile/create" component={CreateProfile} />
                 </Switch>
             </section>
