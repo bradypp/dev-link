@@ -13,9 +13,10 @@ import {
 
 // TODO: Get errors from response and maptoprops on registration & login form to show correct message
 
-// TODO: add cookies token get?
+// TODO: add getting token from cookies?
 const initialState = {
-    token: localStorage.getItem('token'),
+    token: null,
+    // token: localStorage.getItem('token'),
     isAuthenticated: false,
     isLoading: false,
     user: null,
@@ -39,7 +40,7 @@ export default (state = initialState, { type, payload }) => {
             };
         case REGISTER_SUCCESS:
         case LOGIN_SUCCESS:
-            localStorage.setItem('token', payload.token);
+            // localStorage.setItem('token', payload.token);
             setAuthToken(payload.token);
             return {
                 ...state,
@@ -52,7 +53,8 @@ export default (state = initialState, { type, payload }) => {
         case AUTH_ERROR:
         case LOGOUT_USER:
         case ACCOUNT_DELETED:
-            localStorage.removeItem('token');
+            // localStorage.removeItem('token');
+            setAuthToken(null);
             return {
                 ...state,
                 token: null,

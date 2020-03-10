@@ -8,14 +8,14 @@ const useLoadUser = () => {
     const token = useSelector(selectToken);
     const user = useSelector(selectUser);
 
-    if (!token && localStorage.token) {
-        setAuthToken(localStorage.token);
+    if (token) {
+        setAuthToken(token);
     }
 
     useEffect(() => {
         if (!user) dispatch(loadUser());
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [user]);
 };
 
 export default useLoadUser;

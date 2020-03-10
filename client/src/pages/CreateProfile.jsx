@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Spinner } from 'components';
@@ -11,13 +11,7 @@ import {
     selectProfileInfo,
 } from 'redux/profile';
 
-const CreateProfile = ({
-    createProfile,
-    getCurrentProfile,
-    profileInfo,
-    profileLoading,
-    history,
-}) => {
+const CreateProfile = ({ createProfile, getCurrentProfile, profileInfo, profileLoading }) => {
     const [formData, setFormData] = useState({
         company: '',
         website: '',
@@ -34,6 +28,7 @@ const CreateProfile = ({
     });
 
     const [displaySocialInputs, toggleSocialInputs] = useState(false);
+    const history = useHistory();
 
     const {
         company,
@@ -134,7 +129,8 @@ const CreateProfile = ({
                                 onChange={e => onChange(e)}
                             />
                             <small className="form-text">
-                                Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
+                                Please separate your skills by commas (eg. HTML, CSS, JavaScript,
+                                PHP)
                             </small>
                         </div>
                         <div className="form-group">
@@ -167,7 +163,6 @@ const CreateProfile = ({
                                 className="btn btn-light">
                                 Add Social Network Links
                             </button>
-                            <span>Optional</span>
                         </div>
                         {displaySocialInputs && (
                             <>
@@ -229,7 +224,7 @@ const CreateProfile = ({
                         )}
 
                         <input type="submit" className="btn btn-primary my-1" />
-                        <Link className="btn btn-light my-1" to="/dashboard">
+                        <Link className="btn btn-light my-1" to="/profile/dashboard">
                             Go Back
                         </Link>
                     </form>
@@ -244,7 +239,6 @@ CreateProfile.propTypes = {
     getCurrentProfile: PropTypes.func.isRequired,
     profileLoading: PropTypes.bool.isRequired,
     profileInfo: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -252,6 +246,4 @@ const mapStateToProps = createStructuredSelector({
     profileInfo: selectProfileInfo,
 });
 
-export default connect(mapStateToProps, { createProfile, getCurrentProfile })(
-    withRouter(CreateProfile),
-);
+export default connect(mapStateToProps, { createProfile, getCurrentProfile })(CreateProfile);
