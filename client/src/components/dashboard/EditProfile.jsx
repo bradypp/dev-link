@@ -1,18 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Spinner } from 'components';
 import { createStructuredSelector } from 'reselect';
+import isEmpty from 'lodash.isempty';
+import { Spinner } from 'components';
 import {
     createProfile,
     getCurrentProfile,
     selectProfileLoading,
-    selectProfileInfo,
+    selectProfileData,
+    selectProfileSocial,
 } from 'redux/profile';
 
-const CreateProfile = ({ createProfile, getCurrentProfile, profileInfo, profileLoading }) => {
-    const [formData, setFormData] = useState({
+const EditProfile = ({
+    createProfile,
+    getCurrentProfile,
+    profileData,
+    profileLoading,
+    profileSocial,
+}) => {
+    const initialState = {
         company: '',
         website: '',
         location: '',
@@ -25,10 +33,42 @@ const CreateProfile = ({ createProfile, getCurrentProfile, profileInfo, profileL
         linkedin: '',
         youtube: '',
         instagram: '',
-    });
-
+    };
+    const [formData, setFormData] = useState(initialState);
     const [displaySocialInputs, toggleSocialInputs] = useState(false);
     const history = useHistory();
+
+    useEffect(() => {
+        // Set initial form data
+        if (isEmpty(profileData)) getCurrentProfile();
+        if (!profileLoading) {
+            const {
+                company,
+                website,
+                location,
+                status,
+                skills,
+                github_username,
+                bio,
+            } = profileData;
+            const { twitter, facebook, linkedin, youtube, instagram } = profileSocial;
+
+            setFormData({
+                company,
+                website,
+                location,
+                status,
+                skills: skills.join(','),
+                github_username,
+                bio,
+                twitter,
+                facebook,
+                linkedin,
+                youtube,
+                instagram,
+            });
+        }
+    }, [getCurrentProfile, profileData, profileLoading, profileSocial]);
 
     const {
         company,
@@ -49,27 +89,23 @@ const CreateProfile = ({ createProfile, getCurrentProfile, profileInfo, profileL
 
     const onSubmit = e => {
         e.preventDefault();
-        createProfile(formData, history);
+        createProfile(formData, history, true);
     };
-
-    useEffect(() => {
-        getCurrentProfile();
-    }, [getCurrentProfile]);
 
     return (
         <>
-            {profileLoading && profileInfo === null ? (
+            {profileLoading && isEmpty(profileData) ? (
                 <Spinner />
             ) : (
                 <>
-                    <h1 className="large text-primary">Create Your Profile</h1>
+                    <h1 className="large text-primary">Edit Your Profile</h1>
                     <p className="lead">
-                        <i className="fas fa-user" /> Make yourself stand out!
+                        <i className="fas fa-user" /> Add some changes to your profile
                     </p>
                     <small>* = required field</small>
-                    <form className="form" onSubmit={e => onSubmit(e)}>
+                    <form className="form" onSubmit={onSubmit}>
                         <div className="form-group">
-                            <select name="status" value={status} onChange={e => onChange(e)}>
+                            <select name="status" value={status} onChange={onChange}>
                                 <option value="0">* Select Professional Status</option>
                                 <option value="Student or Learning">Student or Learning</option>
                                 <option value="Intern">Intern</option>
@@ -90,7 +126,7 @@ const CreateProfile = ({ createProfile, getCurrentProfile, profileInfo, profileL
                                 placeholder="Company"
                                 name="company"
                                 value={company}
-                                onChange={e => onChange(e)}
+                                onChange={onChange}
                             />
                             <small className="form-text">
                                 What company do you currently work for?
@@ -102,7 +138,7 @@ const CreateProfile = ({ createProfile, getCurrentProfile, profileInfo, profileL
                                 placeholder="Website"
                                 name="website"
                                 value={website}
-                                onChange={e => onChange(e)}
+                                onChange={onChange}
                             />
                             <small className="form-text">
                                 What is your personal or company website?
@@ -114,7 +150,7 @@ const CreateProfile = ({ createProfile, getCurrentProfile, profileInfo, profileL
                                 placeholder="Location"
                                 name="location"
                                 value={location}
-                                onChange={e => onChange(e)}
+                                onChange={onChange}
                             />
                             <small className="form-text">
                                 City & country suggested (eg. Manchester, UK)
@@ -126,7 +162,7 @@ const CreateProfile = ({ createProfile, getCurrentProfile, profileInfo, profileL
                                 placeholder="* Skills"
                                 name="skills"
                                 value={skills}
-                                onChange={e => onChange(e)}
+                                onChange={onChange}
                             />
                             <small className="form-text">
                                 Please separate your skills by commas (eg. HTML, CSS, JavaScript,
@@ -139,7 +175,7 @@ const CreateProfile = ({ createProfile, getCurrentProfile, profileInfo, profileL
                                 placeholder="Github Username"
                                 name="github_username"
                                 value={github_username}
-                                onChange={e => onChange(e)}
+                                onChange={onChange}
                             />
                             <small className="form-text">
                                 To include your latest GitHub repos and a link to your GitHub
@@ -148,10 +184,10 @@ const CreateProfile = ({ createProfile, getCurrentProfile, profileInfo, profileL
                         </div>
                         <div className="form-group">
                             <textarea
-                                placeholder="A short bio of yourself"
+                                placeholder="A short bio about yourself"
                                 name="bio"
                                 value={bio}
-                                onChange={e => onChange(e)}
+                                onChange={onChange}
                             />
                             <small className="form-text">Tell us a little about yourself</small>
                         </div>
@@ -173,7 +209,7 @@ const CreateProfile = ({ createProfile, getCurrentProfile, profileInfo, profileL
                                         placeholder="Twitter URL"
                                         name="twitter"
                                         value={twitter}
-                                        onChange={e => onChange(e)}
+                                        onChange={onChange}
                                     />
                                 </div>
 
@@ -184,7 +220,7 @@ const CreateProfile = ({ createProfile, getCurrentProfile, profileInfo, profileL
                                         placeholder="Facebook URL"
                                         name="facebook"
                                         value={facebook}
-                                        onChange={e => onChange(e)}
+                                        onChange={onChange}
                                     />
                                 </div>
 
@@ -195,7 +231,7 @@ const CreateProfile = ({ createProfile, getCurrentProfile, profileInfo, profileL
                                         placeholder="YouTube URL"
                                         name="youtube"
                                         value={youtube}
-                                        onChange={e => onChange(e)}
+                                        onChange={onChange}
                                     />
                                 </div>
 
@@ -206,7 +242,7 @@ const CreateProfile = ({ createProfile, getCurrentProfile, profileInfo, profileL
                                         placeholder="Linkedin URL"
                                         name="linkedin"
                                         value={linkedin}
-                                        onChange={e => onChange(e)}
+                                        onChange={onChange}
                                     />
                                 </div>
 
@@ -217,13 +253,15 @@ const CreateProfile = ({ createProfile, getCurrentProfile, profileInfo, profileL
                                         placeholder="Instagram URL"
                                         name="instagram"
                                         value={instagram}
-                                        onChange={e => onChange(e)}
+                                        onChange={onChange}
                                     />
                                 </div>
                             </>
                         )}
 
-                        <input type="submit" className="btn btn-primary my-1" />
+                        <button type="submit" className="btn btn-primary my-1">
+                            Update
+                        </button>
                         <Link className="btn btn-light my-1" to="/profile/dashboard">
                             Go Back
                         </Link>
@@ -234,16 +272,18 @@ const CreateProfile = ({ createProfile, getCurrentProfile, profileInfo, profileL
     );
 };
 
-CreateProfile.propTypes = {
+EditProfile.propTypes = {
     createProfile: PropTypes.func.isRequired,
     getCurrentProfile: PropTypes.func.isRequired,
     profileLoading: PropTypes.bool.isRequired,
-    profileInfo: PropTypes.object.isRequired,
+    profileData: PropTypes.object.isRequired,
+    profileSocial: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
     profileLoading: selectProfileLoading,
-    profileInfo: selectProfileInfo,
+    profileData: selectProfileData,
+    profileSocial: selectProfileSocial,
 });
 
-export default connect(mapStateToProps, { createProfile, getCurrentProfile })(CreateProfile);
+export default connect(mapStateToProps, { createProfile, getCurrentProfile })(EditProfile);

@@ -10,7 +10,7 @@ import { selectUserFirstName } from 'redux/auth';
 import {
     getCurrentProfile,
     deleteAccount,
-    selectProfileInfo,
+    selectProfileData,
     selectProfileLoading,
     selectProfileEducation,
     selectProfileExperience,
@@ -20,7 +20,7 @@ const Dashboard = ({
     getCurrentProfile,
     deleteAccount,
     userFirstName,
-    profileInfo,
+    profileData,
     profileLoading,
     profileEducation,
     profileExperience,
@@ -32,18 +32,20 @@ const Dashboard = ({
     return (
         <>
             <h1 className="large text-primary">Dashboard</h1>
-            {profileLoading && !isEmpty(profileInfo) ? (
+            {profileLoading && isEmpty(profileData) ? (
                 <Spinner />
             ) : (
                 <>
                     <p className="lead">
                         <i className="fas fa-user" /> Welcome {userFirstName && userFirstName}!
                     </p>
-                    {profileInfo !== null ? (
+                    {!isEmpty(profileData) ? (
                         <>
                             <DashboardActions />
                             {profileExperience && <AddExperience experience={profileExperience} />}
-                            {profileEducation && <AddEducation education={profileEducation} />}
+                            {!isEmpty(profileEducation) && (
+                                <AddEducation education={!isEmpty(profileEducation)} />
+                            )}
                             <div className="my-2">
                                 <button
                                     className="btn btn-danger"
@@ -71,15 +73,15 @@ Dashboard.propTypes = {
     getCurrentProfile: PropTypes.func.isRequired,
     deleteAccount: PropTypes.func.isRequired,
     userFirstName: PropTypes.string.isRequired,
-    profileInfo: PropTypes.object.isRequired,
+    profileData: PropTypes.object.isRequired,
     profileLoading: PropTypes.bool.isRequired,
-    profileEducation: PropTypes.object.isRequired,
-    profileExperience: PropTypes.object.isRequired,
+    profileEducation: PropTypes.array.isRequired,
+    profileExperience: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
     userFirstName: selectUserFirstName,
-    profileInfo: selectProfileInfo,
+    profileData: selectProfileData,
     profileLoading: selectProfileLoading,
     profileEducation: selectProfileEducation,
     profileExperience: selectProfileExperience,

@@ -10,7 +10,7 @@ import profileReducer from './profile/reducer';
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['auth'],
+    whitelist: ['auth', 'profile'],
     stateReconciler: autoMergeLevel2,
 };
 

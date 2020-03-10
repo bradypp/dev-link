@@ -9,7 +9,7 @@ import {
 } from 'redux/actionTypes';
 
 const initialState = {
-    profileInfo: {},
+    profileData: {},
     profiles: [],
     repos: [],
     isLoading: false,
@@ -17,13 +17,13 @@ const initialState = {
 };
 
 export default (state = initialState, { type, payload }) => {
-    const { profileInfo, repos, isLoading } = initialState;
+    const { profileData, repos, isLoading } = initialState;
     switch (type) {
         case GET_PROFILE:
         case UPDATE_PROFILE:
             return {
                 ...state,
-                profileInfo: payload,
+                profileData: payload,
                 isLoading,
             };
         case PROFILE_LOADING:
@@ -42,12 +42,12 @@ export default (state = initialState, { type, payload }) => {
                 ...state,
                 error: payload,
                 isLoading,
-                profileInfo,
+                profileData,
             };
         case CLEAR_PROFILE:
             return {
                 ...state,
-                profileInfo,
+                profileData,
                 repos,
                 isLoading,
             };
