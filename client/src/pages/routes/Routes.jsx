@@ -18,6 +18,8 @@ const Routes = () => {
                     <Route exact path="/register" component={Register} />
                     <PrivateRoute exact path="/profile/dashboard" component={Dashboard} />
                     <PrivateRoute exact path="/profile/create" component={CreateProfile} />
+                    <PrivateRoute exact path="/profile/create" component={Education} />
+                    <PrivateRoute exact path="/profile/create" component={CreateProfile} />
                 </Switch>
             </section>
         </Router>

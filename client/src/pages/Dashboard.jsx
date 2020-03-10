@@ -4,13 +4,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import { Spinner } from 'components';
+import isEmpty from 'lodash.isempty';
+import { Spinner, DashboardActions, Education, Experience } from 'components';
 import { selectUserFirstName } from 'redux/auth';
 import {
     getCurrentProfile,
     deleteAccount,
     selectProfileInfo,
     selectProfileLoading,
+    selectProfileEducation,
+    selectProfileExperience,
 } from 'redux/profile';
 
 const Dashboard = ({
@@ -19,6 +22,8 @@ const Dashboard = ({
     userFirstName,
     profileInfo,
     profileLoading,
+    profileEducation,
+    profileExperience,
 }) => {
     useEffect(() => {
         getCurrentProfile();
@@ -27,7 +32,7 @@ const Dashboard = ({
     return (
         <>
             <h1 className="large text-primary">Dashboard</h1>
-            {profileLoading && !profileInfo ? (
+            {profileLoading && !isEmpty(profileInfo) ? (
                 <Spinner />
             ) : (
                 <>
@@ -36,9 +41,9 @@ const Dashboard = ({
                     </p>
                     {profileInfo !== null ? (
                         <>
-                            {/* <DashboardActions />
-                    <Experience experience={profile.experience} />
-                    <Education education={profile.education} /> */}
+                            <DashboardActions />
+                            {profileExperience && <Experience experience={profileExperience} />}
+                            {profileEducation && <Education education={profileEducation} />}
                             <div className="my-2">
                                 <button
                                     className="btn btn-danger"
@@ -68,13 +73,16 @@ Dashboard.propTypes = {
     userFirstName: PropTypes.string.isRequired,
     profileInfo: PropTypes.object.isRequired,
     profileLoading: PropTypes.bool.isRequired,
+    profileEducation: PropTypes.object.isRequired,
+    profileExperience: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
     userFirstName: selectUserFirstName,
-    deleteAccount,
     profileInfo: selectProfileInfo,
     profileLoading: selectProfileLoading,
+    profileEducation: selectProfileEducation,
+    profileExperience: selectProfileExperience,
 });
 
-export default compose(connect(mapStateToProps, { getCurrentProfile }))(Dashboard);
+export default compose(connect(mapStateToProps, { getCurrentProfile, deleteAccount }))(Dashboard);
