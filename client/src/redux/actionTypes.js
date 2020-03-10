@@ -10,8 +10,8 @@ export const USER_LOADING = 'USER_LOADING';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
-export const LOGOUT = 'LOGOUT';
-export const ACCOUNT_DELETED = 'LOGOUT';
+export const LOGOUT_USER = 'LOGOUT_USER';
+export const ACCOUNT_DELETED = 'LOGOUT_USER';
 
 // PROFILE
 export const GET_PROFILE = 'GET_PROFILE';

@@ -7,7 +7,6 @@ import { selectIsAuthenticated } from 'redux/auth';
 
 const Landing = ({ isAuthenticated }) => {
     if (isAuthenticated) return <Redirect to="/dashboard" />;
-
     return (
         <section className="home">
             <div className="dark-overlay">

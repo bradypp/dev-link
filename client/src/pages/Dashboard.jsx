@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { Spinner } from 'components';
-import { selectUser } from 'redux/auth';
+import { selectUserFirstName } from 'redux/auth';
 import {
     getCurrentProfile,
     deleteAccount,
@@ -13,7 +13,13 @@ import {
     selectProfileLoading,
 } from 'redux/profile';
 
-const Dashboard = ({ getCurrentProfile, deleteAccount, user, profileInfo, profileLoading }) => {
+const Dashboard = ({
+    getCurrentProfile,
+    deleteAccount,
+    userFirstName,
+    profileInfo,
+    profileLoading,
+}) => {
     useEffect(() => {
         getCurrentProfile();
     }, [getCurrentProfile]);
@@ -26,7 +32,7 @@ const Dashboard = ({ getCurrentProfile, deleteAccount, user, profileInfo, profil
             ) : (
                 <>
                     <p className="lead">
-                        <i className="fas fa-user" /> Welcome {'name'}
+                        <i className="fas fa-user" /> Welcome {userFirstName && userFirstName}!
                     </p>
                     {profileInfo !== null ? (
                         <>
@@ -34,7 +40,10 @@ const Dashboard = ({ getCurrentProfile, deleteAccount, user, profileInfo, profil
                     <Experience experience={profile.experience} />
                     <Education education={profile.education} /> */}
                             <div className="my-2">
-                                <button className="btn btn-danger" onClick={deleteAccount}>
+                                <button
+                                    className="btn btn-danger"
+                                    onClick={deleteAccount}
+                                    type="button">
                                     <i className="fas fa-user-minus" /> Delete My Account
                                 </button>
                             </div>
@@ -42,7 +51,7 @@ const Dashboard = ({ getCurrentProfile, deleteAccount, user, profileInfo, profil
                     ) : (
                         <>
                             <p>You have not yet setup a profile, please add some info</p>
-                            <Link to="/create-profile" className="btn btn-primary my-1">
+                            <Link to="/profile/create" className="btn btn-primary my-1">
                                 Create Profile
                             </Link>
                         </>
@@ -56,13 +65,13 @@ const Dashboard = ({ getCurrentProfile, deleteAccount, user, profileInfo, profil
 Dashboard.propTypes = {
     getCurrentProfile: PropTypes.func.isRequired,
     deleteAccount: PropTypes.func.isRequired,
-    user: PropTypes.object.isRequired,
+    userFirstName: PropTypes.string.isRequired,
     profileInfo: PropTypes.object.isRequired,
     profileLoading: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-    user: selectUser,
+    userFirstName: selectUserFirstName,
     deleteAccount,
     profileInfo: selectProfileInfo,
     profileLoading: selectProfileLoading,

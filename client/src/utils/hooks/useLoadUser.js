@@ -1,14 +1,20 @@
 import { useEffect } from 'react';
-import { store } from 'redux/store';
-import { loadUser } from 'redux/auth/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadUser, selectToken, selectUser } from 'redux/auth';
 import { setAuthToken } from 'utils';
 
 const useLoadUser = () => {
-    if (localStorage.token) {
+    const dispatch = useDispatch();
+    const token = useSelector(selectToken);
+    const user = useSelector(selectUser);
+
+    if (!token && localStorage.token) {
         setAuthToken(localStorage.token);
     }
+
     useEffect(() => {
-        store.dispatch(loadUser());
+        if (!user) dispatch(loadUser());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 };
 

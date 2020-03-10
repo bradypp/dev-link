@@ -22,7 +22,7 @@ module.exports = {
         'no-shadow': 0,
         'import/no-unresolved': 0,
         'no-nested-ternary': 0,
-        camelcase: [2, { ignoreDestructuring: true, properties: 'never' }],
+        camelcase: 0,
 
         // React Rules
         'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx'] }],

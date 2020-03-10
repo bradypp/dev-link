@@ -9,7 +9,7 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAILURE,
     CLEAR_PROFILE,
-    LOGOUT,
+    LOGOUT_USER,
 } from 'redux/actionTypes';
 
 export const loadUser = () => async dispatch => {
@@ -93,7 +93,7 @@ export const loginUser = ({ email, password }) => async dispatch => {
     }
 };
 
-export const logout = () => dispatch => {
+export const logoutUser = () => dispatch => {
     dispatch({ type: CLEAR_PROFILE });
-    dispatch({ type: LOGOUT });
+    dispatch({ type: LOGOUT_USER });
 };

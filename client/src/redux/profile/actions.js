@@ -110,7 +110,7 @@ export const createProfile = (formData, history, edit = false) => async dispatch
         const errors = Object.values(err.response.data);
 
         if (errors) {
-            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+            errors.forEach(error => dispatch(setAlert(error, 'danger')));
         }
 
         dispatch({
@@ -143,7 +143,7 @@ export const addExperience = (formData, history) => async dispatch => {
         const errors = Object.values(err.response.data);
 
         if (errors) {
-            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+            errors.forEach(error => dispatch(setAlert(error, 'danger')));
         }
 
         dispatch({
@@ -176,7 +176,7 @@ export const addEducation = (formData, history) => async dispatch => {
         const errors = Object.values(err.response.data);
 
         if (errors) {
-            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+            errors.forEach(error => dispatch(setAlert(error, 'danger')));
         }
 
         dispatch({
@@ -235,6 +235,7 @@ export const deleteAccount = () => async dispatch => {
 
             dispatch(setAlert('Your account has been permanently deleted'));
         } catch (err) {
+            console.error(err);
             dispatch({
                 type: PROFILE_ERROR,
                 payload: { msg: err.response.statusText, status: err.response.status },

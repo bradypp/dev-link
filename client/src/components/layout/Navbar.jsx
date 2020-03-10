@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
-import { selectIsLoading, selectIsAuthenticated, logout } from 'redux/auth';
+import { selectIsLoading, selectIsAuthenticated, logoutUser } from 'redux/auth';
 
-const Navbar = ({ isLoading, isAuthenticated, logout }) => {
+const Navbar = ({ isLoading, isAuthenticated, logoutUser }) => {
     const authLinks = (
         <ul>
             <li>
@@ -20,7 +20,7 @@ const Navbar = ({ isLoading, isAuthenticated, logout }) => {
                 </Link>
             </li>
             <li>
-                <a onClick={logout} href="#!">
+                <a onClick={logoutUser} href="#!">
                     <i className="fas fa-sign-out-alt" /> <span className="hide-sm">Logout</span>
                 </a>
             </li>
@@ -54,7 +54,7 @@ const Navbar = ({ isLoading, isAuthenticated, logout }) => {
 };
 
 Navbar.propTypes = {
-    logout: PropTypes.func.isRequired,
+    logoutUser: PropTypes.func.isRequired,
     isLoading: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
 };
@@ -64,4 +64,4 @@ const mapStateToProps = createStructuredSelector({
     isAuthenticated: selectIsAuthenticated,
 });
 
-export default connect(mapStateToProps, { logout })(Navbar);
+export default connect(mapStateToProps, { logoutUser })(Navbar);
