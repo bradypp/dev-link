@@ -1,4 +1,4 @@
-require('dotenv').config({ path: './config/.env.local' });
+require('dotenv').config({ path: './.env.local' });
 
 const app = require('./app');
 const connectDB = require('./config/db');
