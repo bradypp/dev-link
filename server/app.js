@@ -13,7 +13,7 @@ const app = express();
 
 // 2) Global Middlewares
 // Implement CORS
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors());
 app.options('*', cors());
 
 // Logger Middleware

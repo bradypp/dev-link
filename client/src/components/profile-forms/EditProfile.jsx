@@ -10,7 +10,7 @@ import {
     getCurrentProfile,
     selectProfileLoading,
     selectProfileData,
-    selectProfileSocial,
+    selectProfileInfoAndSocial,
 } from 'redux/profile';
 
 const EditProfile = ({
@@ -18,9 +18,9 @@ const EditProfile = ({
     getCurrentProfile,
     profileData,
     profileLoading,
-    profileSocial,
+    profileInfoAndSocial,
 }) => {
-    const initialState = {
+    const [formData, setFormData] = useState({
         company: '',
         website: '',
         location: '',
@@ -33,42 +33,9 @@ const EditProfile = ({
         linkedin: '',
         youtube: '',
         instagram: '',
-    };
-    const [formData, setFormData] = useState(initialState);
+    });
     const [displaySocialInputs, toggleSocialInputs] = useState(false);
     const history = useHistory();
-
-    useEffect(() => {
-        // Set initial form data
-        if (isEmpty(profileData)) getCurrentProfile();
-        if (!profileLoading) {
-            const {
-                company,
-                website,
-                location,
-                status,
-                skills,
-                github_username,
-                bio,
-            } = profileData;
-            const { twitter, facebook, linkedin, youtube, instagram } = profileSocial;
-
-            setFormData({
-                company,
-                website,
-                location,
-                status,
-                skills: skills.join(','),
-                github_username,
-                bio,
-                twitter,
-                facebook,
-                linkedin,
-                youtube,
-                instagram,
-            });
-        }
-    }, [getCurrentProfile, profileData, profileLoading, profileSocial]);
 
     const {
         company,
@@ -84,6 +51,11 @@ const EditProfile = ({
         youtube,
         instagram,
     } = formData;
+
+    useEffect(() => {
+        if (isEmpty(profileData)) getCurrentProfile();
+        setFormData(profileInfoAndSocial);
+    }, [getCurrentProfile, profileData, profileInfoAndSocial]);
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -277,13 +249,13 @@ EditProfile.propTypes = {
     getCurrentProfile: PropTypes.func.isRequired,
     profileLoading: PropTypes.bool.isRequired,
     profileData: PropTypes.object.isRequired,
-    profileSocial: PropTypes.object.isRequired,
+    profileInfoAndSocial: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
     profileLoading: selectProfileLoading,
     profileData: selectProfileData,
-    profileSocial: selectProfileSocial,
+    profileInfoAndSocial: selectProfileInfoAndSocial,
 });
 
 export default connect(mapStateToProps, { createProfile, getCurrentProfile })(EditProfile);

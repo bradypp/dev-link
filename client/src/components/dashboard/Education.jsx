@@ -5,14 +5,14 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import { deleteEducation } from 'redux/profile';
 
-const AddEducation = ({ education, deleteEducation }) => {
+const Education = ({ education, deleteEducation }) => {
     const educations = education.map(({ _id, school, degree, from, to }) => (
         <tr key={_id}>
             <td>{school}</td>
             <td className="hide-sm">{degree}</td>
             <td>
-                <Moment format="YYYY/MM/DD">{moment.utc(from)}</Moment> -{' '}
-                {to === null ? ' Now' : <Moment format="YYYY/MM/DD">{moment.utc(to)}</Moment>}
+                <Moment format="DD/MM/YYYY">{moment.utc(from)}</Moment> -{' '}
+                {to === null ? 'Now' : <Moment format="DD/MM/YYYY">{moment.utc(to)}</Moment>}
             </td>
             <td>
                 <button
@@ -33,8 +33,7 @@ const AddEducation = ({ education, deleteEducation }) => {
                     <tr>
                         <th>School</th>
                         <th className="hide-sm">Degree</th>
-                        <th className="hide-sm">Years</th>
-                        <th />
+                        <th className="hide-sm">Time period</th>
                     </tr>
                 </thead>
                 <tbody>{educations}</tbody>
@@ -43,9 +42,9 @@ const AddEducation = ({ education, deleteEducation }) => {
     );
 };
 
-AddEducation.propTypes = {
+Education.propTypes = {
     education: PropTypes.array.isRequired,
     deleteEducation: PropTypes.func.isRequired,
 };
 
-export default connect(null, { deleteEducation })(AddEducation);
+export default connect(null, { deleteEducation })(Education);

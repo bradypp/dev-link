@@ -9,6 +9,8 @@ import {
     EditProfile,
     Alert,
     Navbar,
+    AddExperience,
+    AddEducation,
 } from 'components';
 import PrivateRoute from './PrivateRoute';
 
@@ -27,6 +29,8 @@ const Routes = () => {
                     <PrivateRoute exact path="/profile/dashboard" component={Dashboard} />
                     <PrivateRoute exact path="/profile/create" component={CreateProfile} />
                     <PrivateRoute exact path="/profile/edit" component={EditProfile} />
+                    <PrivateRoute exact path="/profile/add-experience" component={AddExperience} />
+                    <PrivateRoute exact path="/profile/add-education" component={AddEducation} />
                 </Switch>
             </section>
         </Router>
