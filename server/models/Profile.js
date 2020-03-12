@@ -123,7 +123,7 @@ const profileSchema = new Schema({
             trim: true,
         },
     },
-    date: {
+    createdAt: {
         type: Date,
         default: Date.now(),
     },
