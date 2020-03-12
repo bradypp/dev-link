@@ -4,7 +4,7 @@ const User = require('../models/User');
 exports.getAllPosts = async (req, res) => {
     try {
         // Find all posts and sort by date
-        const posts = await Post.find().sort({ date: -1 });
+        const posts = await Post.find().sort('-createdAt');
 
         if (!posts) {
             return res.status(404).json({ posts: 'No posts found' });

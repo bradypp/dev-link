@@ -119,7 +119,7 @@ exports.addExperienceToProfile = async (req, res) => {
         const newExp = { title, company, location, from, to, current, description };
 
         // Add experience to profile
-        profile.experience.unshift(newExp);
+        profile.experience.push(newExp);
 
         // Save profile and send response
         await profile.save();
@@ -163,7 +163,7 @@ exports.addEducationToProfile = async (req, res) => {
         const newEdu = { school, degree, field_of_study, from, to, current, description };
 
         // Add education to profile
-        profile.education.unshift(newEdu);
+        profile.education.push(newEdu);
 
         // Save profile and send response
         await profile.save();
@@ -198,7 +198,7 @@ exports.removeEducationFromProfile = async (req, res) => {
 exports.getUserGithubRepos = async (req, res) => {
     try {
         const githubRes = await axios.get(
-            `https://api.github.com/users/${req.params.github_username}/repos?per_page=5&sort=created:asc`,
+            `https://api.github.com/users/${req.params.github_username}/repos?per_page=10&sort=created:asc`,
             {
                 headers: {
                     'user-agent': 'node.js',

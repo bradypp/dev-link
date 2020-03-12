@@ -2,7 +2,7 @@
 // const features = new APIFeatures(User.find(), req.params).filter().sort().limit().paginate()
 // const user = await features.query
 class APIFeatures {
-    constructor(query, queryParams = null) {
+    constructor(query, queryParams = {}) {
         // The query model e.g. User.find()
         this.query = query;
         // Object containing query fields e.g. req.params
@@ -49,7 +49,9 @@ class APIFeatures {
             // Limit the fields to query and return from the database
             // E.g. localhost:5000/api/user?field=name,age (only return the name and age)
             const fields = this.queryParams.fields.split(',').join(' ');
-            this.query = this.query.select(fields);
+
+            // Remove the fields & the mongodb field __v
+            this.query = this.query.select(`${fields} -__v`);
         } else {
             // Select and return everything except the mongodb field __v
             this.query = this.query.select('-__v');
@@ -73,4 +75,5 @@ class APIFeatures {
         return this;
     }
 }
+
 module.exports = APIFeatures;

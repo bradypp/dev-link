@@ -23,8 +23,6 @@ const userSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now(),
-        // False to remove from all queries:
-        select: false,
     },
 });
 

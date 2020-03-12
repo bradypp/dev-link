@@ -117,8 +117,8 @@ exports.privateRoute = async (req, res, next) => {
         // Verify token
         const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
-        // Check if user still exists
-        const user = await User.findById(decoded.id).select('-password');
+        // Get user and check if user still exists
+        const user = await User.findById(decoded.id).select('-password -createdAt');
 
         if (!user) {
             return res
