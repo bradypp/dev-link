@@ -13,11 +13,9 @@ exports.getCurrentUser = (req, res) => {
 exports.deleteUser = async (req, res) => {
     try {
         const { id } = req.user;
-        // Remove user posts
+
         await Post.deleteMany({ user: id });
-        // Remove profile
         await Profile.findOneAndRemove({ user: id });
-        // Remove user
         await User.findOneAndRemove({ _id: id });
 
         res.json({ success: true, msg: 'User deleted' });
