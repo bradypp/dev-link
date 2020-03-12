@@ -7,11 +7,11 @@ import authReducer from './auth/reducer';
 import profileReducer from './profile/reducer';
 import postsReducer from './posts/reducer';
 
-// Config options include whitelist, blacklist, stateReconciler
 const persistConfig = {
     key: 'root',
     storage,
     stateReconciler: autoMergeLevel2,
+    blacklist: 'auth',
 };
 
 const rootReducer = combineReducers({
