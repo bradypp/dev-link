@@ -52,9 +52,9 @@ exports.createNewPost = async (req, res) => {
         const { name, avatar } = user;
 
         // Create and save new post
-        const savedPost = await new Post({ text, name, avatar, user: id }).save();
+        const post = await new Post({ text, name, avatar, user: id }).save();
 
-        res.json(savedPost);
+        res.json(post);
     } catch (err) {
         res.status(500).send({ msg: 'Server Error' });
     }
@@ -157,7 +157,7 @@ exports.addPostComment = async (req, res) => {
         post.comments.unshift(newComment);
         await post.save();
 
-        res.json(post);
+        res.json(post.comments);
     } catch (err) {
         if (err.kind === 'ObjectId') {
             return res.status(404).json({ post: 'Post not found' });
@@ -192,7 +192,7 @@ exports.removePostComment = async (req, res) => {
         post.comments.splice(commentIndex, 1);
         await post.save();
 
-        res.json(post);
+        res.json(post.comments);
     } catch (err) {
         if (err.kind === 'ObjectId') {
             return res.status(404).json({ post: 'Post not found' });
