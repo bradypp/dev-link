@@ -10,7 +10,6 @@ export const selectToken = createSelector([selectAuth], auth => auth.token);
 
 export const selectUserData = createSelector([selectAuth], auth => auth.user);
 
-export const selectUserFirstName = createSelector(
-    [selectUserData],
-    user => user.name.split(' ')[0],
+export const selectUserFirstName = createSelector([selectUserData], user =>
+    user.name ? user.name.split(' ')[0] : '',
 );

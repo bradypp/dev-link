@@ -17,6 +17,7 @@ export const loadUser = () => async dispatch => {
         dispatch({
             type: USER_LOADING,
         });
+
         const res = await api.get('/user');
 
         dispatch({
@@ -32,24 +33,25 @@ export const loadUser = () => async dispatch => {
 
 // TODO: Implement more elegant error alerts
 export const registerUser = ({ name, email, password, password2 }) => async dispatch => {
-    dispatch({
-        type: USER_LOADING,
-    });
-
-    const body = JSON.stringify({ name, email, password, password2 });
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
-
     try {
+        dispatch({
+            type: USER_LOADING,
+        });
+
+        const body = JSON.stringify({ name, email, password, password2 });
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
         const res = await api.post('auth/register', body, config);
 
         dispatch({
             type: REGISTER_SUCCESS,
             payload: res.data,
         });
+        dispatch(loadUser());
     } catch (err) {
         const errors = Object.values(err.response.data);
         if (errors) {
@@ -63,24 +65,25 @@ export const registerUser = ({ name, email, password, password2 }) => async disp
 };
 
 export const loginUser = ({ email, password }) => async dispatch => {
-    dispatch({
-        type: USER_LOADING,
-    });
-
-    const body = JSON.stringify({ email, password });
-    const config = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
-
     try {
+        dispatch({
+            type: USER_LOADING,
+        });
+        const body = JSON.stringify({ email, password });
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
         const res = await api.post('/auth/login', body, config);
+        console.log({ email, password });
 
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data,
         });
+        dispatch(loadUser());
     } catch (err) {
         const errors = Object.values(err.response.data);
         if (errors) {
