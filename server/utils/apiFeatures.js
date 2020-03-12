@@ -9,11 +9,11 @@ class APIFeatures {
         this.queryParams = queryParams;
     }
 
-    filter(excludedFilterParams = null) {
+    filter(excludedFilterParams = []) {
         const queryObj = { ...this.queryParams };
 
         // queryParams to exclude from filter
-        this.excludedFilterParams = [...excludedFilterParams, 'page', 'sort', 'limit', 'fields'];
+        excludedFilterParams.push('page', 'sort', 'limit', 'fields');
 
         // Remove query params not wanted in filter
         this.excludedFilterParams.forEach(el => delete queryObj[el]);
