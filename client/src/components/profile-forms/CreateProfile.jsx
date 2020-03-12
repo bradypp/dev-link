@@ -7,12 +7,12 @@ import { createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash.isempty';
 import {
     createProfile,
-    getCurrentProfile,
+    getCurrentUserProfile,
     selectProfileLoading,
     selectProfileData,
 } from 'redux/profile';
 
-const CreateProfile = ({ createProfile, getCurrentProfile, profileData, profileLoading }) => {
+const CreateProfile = ({ createProfile, getCurrentUserProfile, profileData, profileLoading }) => {
     const [formData, setFormData] = useState({
         company: '',
         website: '',
@@ -54,8 +54,8 @@ const CreateProfile = ({ createProfile, getCurrentProfile, profileData, profileL
     };
 
     useEffect(() => {
-        getCurrentProfile();
-    }, [getCurrentProfile]);
+        getCurrentUserProfile();
+    }, [getCurrentUserProfile]);
 
     return (
         <>
@@ -239,7 +239,7 @@ const CreateProfile = ({ createProfile, getCurrentProfile, profileData, profileL
 
 CreateProfile.propTypes = {
     createProfile: PropTypes.func.isRequired,
-    getCurrentProfile: PropTypes.func.isRequired,
+    getCurrentUserProfile: PropTypes.func.isRequired,
     profileLoading: PropTypes.bool.isRequired,
     profileData: PropTypes.object.isRequired,
 };
@@ -249,4 +249,4 @@ const mapStateToProps = createStructuredSelector({
     profileData: selectProfileData,
 });
 
-export default connect(mapStateToProps, { createProfile, getCurrentProfile })(CreateProfile);
+export default connect(mapStateToProps, { createProfile, getCurrentUserProfile })(CreateProfile);

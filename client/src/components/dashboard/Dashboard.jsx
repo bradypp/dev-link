@@ -8,7 +8,7 @@ import isEmpty from 'lodash.isempty';
 import { Spinner, DashboardActions, Education, Experience } from 'components';
 import { selectUserFirstName } from 'redux/auth';
 import {
-    getCurrentProfile,
+    getCurrentUserProfile,
     deleteAccount,
     selectProfileData,
     selectProfileLoading,
@@ -17,7 +17,7 @@ import {
 } from 'redux/profile';
 
 const Dashboard = ({
-    getCurrentProfile,
+    getCurrentUserProfile,
     deleteAccount,
     userFirstName,
     profileData,
@@ -26,8 +26,8 @@ const Dashboard = ({
     profileExperience,
 }) => {
     useEffect(() => {
-        getCurrentProfile();
-    }, [getCurrentProfile]);
+        getCurrentUserProfile();
+    }, [getCurrentUserProfile]);
 
     return (
         <>
@@ -72,7 +72,7 @@ const Dashboard = ({
 };
 
 Dashboard.propTypes = {
-    getCurrentProfile: PropTypes.func.isRequired,
+    getCurrentUserProfile: PropTypes.func.isRequired,
     deleteAccount: PropTypes.func.isRequired,
     userFirstName: PropTypes.string.isRequired,
     profileData: PropTypes.object.isRequired,
@@ -89,4 +89,6 @@ const mapStateToProps = createStructuredSelector({
     profileExperience: selectProfileExperience,
 });
 
-export default compose(connect(mapStateToProps, { getCurrentProfile, deleteAccount }))(Dashboard);
+export default compose(connect(mapStateToProps, { getCurrentUserProfile, deleteAccount }))(
+    Dashboard,
+);

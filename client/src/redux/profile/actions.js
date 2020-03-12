@@ -12,7 +12,7 @@ import {
 } from 'redux/actionTypes';
 
 // Get current users profile
-export const getCurrentProfile = () => async dispatch => {
+export const getCurrentUserProfile = () => async dispatch => {
     try {
         dispatch({
             type: PROFILE_LOADING,
@@ -103,7 +103,7 @@ export const createProfile = (formData, history, edit = false) => async dispatch
 
         dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created', 'success'));
 
-        history.push('/profile/dashboard');
+        history.push('/dashboard');
     } catch (err) {
         const errors = Object.values(err.response.data);
 
@@ -136,7 +136,7 @@ export const addExperience = (formData, history) => async dispatch => {
 
         dispatch(setAlert('Experience Added', 'success'));
 
-        history.push('/profile/dashboard');
+        history.push('/dashboard');
     } catch (err) {
         const errors = Object.values(err.response.data);
 
@@ -169,7 +169,7 @@ export const addEducation = (formData, history) => async dispatch => {
 
         dispatch(setAlert('Education Added', 'success'));
 
-        history.push('/profile/dashboard');
+        history.push('/dashboard');
     } catch (err) {
         const errors = Object.values(err.response.data);
 

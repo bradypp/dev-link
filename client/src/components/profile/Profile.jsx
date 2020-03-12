@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -14,7 +14,7 @@ import {
 } from 'components';
 import {
     getProfileById,
-    getCurrentProfile,
+    getCurrentUserProfile,
     selectProfileLoading,
     selectProfileUser,
     selectProfileData,
@@ -28,6 +28,7 @@ import { selectIsAuthenticated, selectIsAuthLoading, selectUserData } from 'redu
 
 const Profile = ({
     getProfileById,
+    getCurrentUserProfile,
     profileLoading,
     profileData,
     profileUser,
@@ -41,18 +42,17 @@ const Profile = ({
     userData,
 }) => {
     const params = useParams();
+    const [isFirstRender, setIsFirstRender] = useState(true);
 
     useEffect(() => {
-        if (params.id) {
-            getProfileById(params.id);
-        } else {
-            getCurrentProfile();
-        }
-    }, [getProfileById, params.id]);
-    console.log(profileUser);
+        getProfileById(params.id);
+    }, [getCurrentUserProfile, getProfileById, params.id]);
+
+    // TODO: Redirect with an alert saying profile couldn't be found?
+    console.log(isFirstRender);
     return (
         <>
-            {isEmpty(profileData) || isAuthLoading || profileLoading ? (
+            {isFirstRender || isEmpty(profileData) || isAuthLoading || profileLoading ? (
                 <Spinner />
             ) : (
                 <>
@@ -121,13 +121,14 @@ const Profile = ({
 
 Profile.propTypes = {
     getProfileById: PropTypes.func.isRequired,
+    getCurrentUserProfile: PropTypes.func.isRequired,
     profileLoading: PropTypes.bool.isRequired,
     profileUser: PropTypes.object.isRequired,
     profileData: PropTypes.object.isRequired,
     profileInfo: PropTypes.object.isRequired,
     profileSocial: PropTypes.object.isRequired,
-    profileEducation: PropTypes.object.isRequired,
-    profileExperience: PropTypes.object.isRequired,
+    profileEducation: PropTypes.array.isRequired,
+    profileExperience: PropTypes.array.isRequired,
     profileSkillsArr: PropTypes.array.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
     isAuthLoading: PropTypes.bool.isRequired,
@@ -148,4 +149,4 @@ const mapStateToProps = createStructuredSelector({
     userData: selectUserData,
 });
 
-export default connect(mapStateToProps, { getProfileById, getCurrentProfile })(Profile);
+export default connect(mapStateToProps, { getProfileById, getCurrentUserProfile })(Profile);

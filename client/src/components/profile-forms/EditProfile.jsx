@@ -7,7 +7,7 @@ import isEmpty from 'lodash.isempty';
 import { Spinner } from 'components';
 import {
     createProfile,
-    getCurrentProfile,
+    getCurrentUserProfile,
     selectProfileLoading,
     selectProfileData,
     selectProfileInfoAndSocial,
@@ -15,7 +15,7 @@ import {
 
 const EditProfile = ({
     createProfile,
-    getCurrentProfile,
+    getCurrentUserProfile,
     profileData,
     profileLoading,
     profileInfoAndSocial,
@@ -53,9 +53,9 @@ const EditProfile = ({
     } = formData;
 
     useEffect(() => {
-        if (isEmpty(profileData)) getCurrentProfile();
+        if (isEmpty(profileData)) getCurrentUserProfile();
         setFormData(profileInfoAndSocial);
-    }, [getCurrentProfile, profileData, profileInfoAndSocial]);
+    }, [getCurrentUserProfile, profileData, profileInfoAndSocial]);
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -246,7 +246,7 @@ const EditProfile = ({
 
 EditProfile.propTypes = {
     createProfile: PropTypes.func.isRequired,
-    getCurrentProfile: PropTypes.func.isRequired,
+    getCurrentUserProfile: PropTypes.func.isRequired,
     profileLoading: PropTypes.bool.isRequired,
     profileData: PropTypes.object.isRequired,
     profileInfoAndSocial: PropTypes.object.isRequired,
@@ -258,4 +258,4 @@ const mapStateToProps = createStructuredSelector({
     profileInfoAndSocial: selectProfileInfoAndSocial,
 });
 
-export default connect(mapStateToProps, { createProfile, getCurrentProfile })(EditProfile);
+export default connect(mapStateToProps, { createProfile, getCurrentUserProfile })(EditProfile);

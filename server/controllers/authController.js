@@ -1,5 +1,6 @@
 const gravatar = require('gravatar');
 const { promisify } = require('util');
+const normalize = require('normalize-url');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
@@ -54,7 +55,7 @@ exports.createUser = async (req, res) => {
         user = new User({
             name,
             email,
-            avatar,
+            avatar: normalize(avatar),
             password,
         });
 
