@@ -12,6 +12,7 @@ import {
     AddExperience,
     AddEducation,
     Profile,
+    Profiles,
 } from 'components';
 import PrivateRoute from './PrivateRoute';
 
@@ -28,6 +29,7 @@ const Routes = () => {
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/profile/:id" component={Profile} />
+                    <Route exact path="/profiles" component={Profiles} />
                     <PrivateRoute exact path="/dashboard" component={Dashboard} />
                     <PrivateRoute exact path="/create" component={CreateProfile} />
                     <PrivateRoute exact path="/edit" component={EditProfile} />

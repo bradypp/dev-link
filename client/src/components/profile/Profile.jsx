@@ -14,7 +14,6 @@ import {
 } from 'components';
 import {
     getProfileById,
-    getCurrentUserProfile,
     selectProfileLoading,
     selectProfileUser,
     selectProfileData,
@@ -28,7 +27,6 @@ import { selectIsAuthenticated, selectIsAuthLoading, selectUserData } from 'redu
 
 const Profile = ({
     getProfileById,
-    getCurrentUserProfile,
     profileLoading,
     profileData,
     profileUser,
@@ -44,12 +42,12 @@ const Profile = ({
     const params = useParams();
     const [isFirstRender, setIsFirstRender] = useState(true);
 
+    // TODO: Redirect with an alert saying profile couldn't be found?
     useEffect(() => {
         getProfileById(params.id);
-    }, [getCurrentUserProfile, getProfileById, params.id]);
+        setIsFirstRender(false);
+    }, [getProfileById, params.id]);
 
-    // TODO: Redirect with an alert saying profile couldn't be found?
-    console.log(isFirstRender);
     return (
         <>
             {isFirstRender || isEmpty(profileData) || isAuthLoading || profileLoading ? (
@@ -121,7 +119,6 @@ const Profile = ({
 
 Profile.propTypes = {
     getProfileById: PropTypes.func.isRequired,
-    getCurrentUserProfile: PropTypes.func.isRequired,
     profileLoading: PropTypes.bool.isRequired,
     profileUser: PropTypes.object.isRequired,
     profileData: PropTypes.object.isRequired,
@@ -149,4 +146,4 @@ const mapStateToProps = createStructuredSelector({
     userData: selectUserData,
 });
 
-export default connect(mapStateToProps, { getProfileById, getCurrentUserProfile })(Profile);
+export default connect(mapStateToProps, { getProfileById })(Profile);

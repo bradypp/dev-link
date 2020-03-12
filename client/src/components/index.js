@@ -24,3 +24,6 @@ export { default as CreateProfile } from './profile-forms/CreateProfile';
 export { default as EditProfile } from './profile-forms/EditProfile';
 export { default as AddExperience } from './profile-forms/AddExperience';
 export { default as AddEducation } from './profile-forms/AddEducation';
+
+export { default as Profiles } from './profiles/Profiles';
+export { default as ProfileItem } from './profiles/ProfileItem';
