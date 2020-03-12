@@ -23,14 +23,9 @@ const createSendJwt = (user, statusCode, res) => {
 
     // res.cookie('jwt', token, cookieOptions);
 
-    // Remove password from response data
-    // eslint-disable-next-line no-param-reassign
-    user.password = undefined;
-
     // Send token & user data in response
     res.status(statusCode).json({
         token,
-        user,
     });
 };
 
