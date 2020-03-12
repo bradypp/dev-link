@@ -14,7 +14,7 @@ import {
 } from 'components';
 import {
     getProfileById,
-    selectProfileLoading,
+    selectIsProfileLoading,
     selectProfileUser,
     selectProfileData,
     selectProfileInfo,
@@ -27,7 +27,7 @@ import { selectIsAuthenticated, selectIsAuthLoading, selectUserData } from 'redu
 
 const Profile = ({
     getProfileById,
-    profileLoading,
+    isProfileLoading,
     profileData,
     profileUser,
     profileInfo,
@@ -50,7 +50,7 @@ const Profile = ({
 
     return (
         <>
-            {isFirstRender || isEmpty(profileData) || isAuthLoading || profileLoading ? (
+            {isFirstRender || isEmpty(profileData) || isAuthLoading || isProfileLoading ? (
                 <Spinner />
             ) : (
                 <>
@@ -119,7 +119,7 @@ const Profile = ({
 
 Profile.propTypes = {
     getProfileById: PropTypes.func.isRequired,
-    profileLoading: PropTypes.bool.isRequired,
+    isProfileLoading: PropTypes.bool.isRequired,
     profileUser: PropTypes.object.isRequired,
     profileData: PropTypes.object.isRequired,
     profileInfo: PropTypes.object.isRequired,
@@ -133,7 +133,7 @@ Profile.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-    profileLoading: selectProfileLoading,
+    isProfileLoading: selectIsProfileLoading,
     profileUser: selectProfileUser,
     profileData: selectProfileData,
     profileInfo: selectProfileInfo,

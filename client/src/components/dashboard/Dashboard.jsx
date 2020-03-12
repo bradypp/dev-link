@@ -11,7 +11,7 @@ import {
     getCurrentUserProfile,
     deleteAccount,
     selectProfileData,
-    selectProfileLoading,
+    selectIsProfileLoading,
     selectProfileEducation,
     selectProfileExperience,
 } from 'redux/profile';
@@ -21,7 +21,7 @@ const Dashboard = ({
     deleteAccount,
     userFirstName,
     profileData,
-    profileLoading,
+    isProfileLoading,
     profileEducation,
     profileExperience,
 }) => {
@@ -32,7 +32,7 @@ const Dashboard = ({
     return (
         <>
             <h1 className="large text-primary">Dashboard</h1>
-            {profileLoading && isEmpty(profileData) ? (
+            {isProfileLoading && isEmpty(profileData) ? (
                 <Spinner />
             ) : (
                 <>
@@ -76,7 +76,7 @@ Dashboard.propTypes = {
     deleteAccount: PropTypes.func.isRequired,
     userFirstName: PropTypes.string.isRequired,
     profileData: PropTypes.object.isRequired,
-    profileLoading: PropTypes.bool.isRequired,
+    isProfileLoading: PropTypes.bool.isRequired,
     profileEducation: PropTypes.array.isRequired,
     profileExperience: PropTypes.array.isRequired,
 };
@@ -84,7 +84,7 @@ Dashboard.propTypes = {
 const mapStateToProps = createStructuredSelector({
     userFirstName: selectUserFirstName,
     profileData: selectProfileData,
-    profileLoading: selectProfileLoading,
+    isProfileLoading: selectIsProfileLoading,
     profileEducation: selectProfileEducation,
     profileExperience: selectProfileExperience,
 });

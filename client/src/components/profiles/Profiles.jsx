@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Spinner, ProfileItem } from 'components';
-import { getProfiles, selectProfileLoading, selectAllProfiles } from 'redux/profile';
+import { getProfiles, selectIsProfileLoading, selectAllProfiles } from 'redux/profile';
 
 const Profiles = ({ getProfiles, profilesLoading, allProfiles }) => {
     useEffect(() => {
@@ -41,7 +41,7 @@ Profiles.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-    profilesLoading: selectProfileLoading,
+    profilesLoading: selectIsProfileLoading,
     allProfiles: selectAllProfiles,
 });
 

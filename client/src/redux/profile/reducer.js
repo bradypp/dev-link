@@ -8,6 +8,8 @@ import {
     PROFILE_LOADING,
 } from 'redux/actionTypes';
 
+// TODO: Have separate user profile saved
+// TODO: If going to profile from profiles list, use the already gathered profile data to fill current profile data
 const initialState = {
     profileData: {},
     profiles: [],

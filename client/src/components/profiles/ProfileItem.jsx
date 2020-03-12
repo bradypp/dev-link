@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
 
 const ProfileItem = ({ profileData }) => {
-    console.log(profileData);
     const { user, status, company, location, skills } = profileData;
     const { _id, name, avatar } = user;
 

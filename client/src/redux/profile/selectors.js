@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 export const selectProfile = state => state.profile;
 
-export const selectProfileLoading = createSelector([selectProfile], profile => profile.isLoading);
+export const selectIsProfileLoading = createSelector([selectProfile], profile => profile.isLoading);
 
 export const selectAllProfiles = createSelector([selectProfile], profile => profile.profiles || []);
 

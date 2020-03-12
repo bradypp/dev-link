@@ -13,6 +13,7 @@ import {
 
 // TODO: Get errors from response and maptoprops on registration & login form to show correct message
 // TODO: add getting token from cookies?
+// TODO: Move user and user profile to its own object/reducer?
 const initialState = {
     token: '',
     isAuthenticated: false,
@@ -21,7 +22,6 @@ const initialState = {
 };
 
 export default (state = initialState, { type, payload }) => {
-    const { token, isAuthenticated, isLoading, user } = initialState;
     switch (type) {
         case USER_LOADED:
             return {
@@ -34,7 +34,7 @@ export default (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 isLoading: true,
-                isAuthenticated,
+                isAuthenticated: false,
                 user: {},
             };
         case REGISTER_SUCCESS:
@@ -56,7 +56,7 @@ export default (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 token: '',
-                isAuthenticated,
+                isAuthenticated: false,
                 isLoading: false,
                 user: {},
             };

@@ -5,18 +5,19 @@ import storage from 'redux-persist/lib/storage';
 import alertsReducer from './alerts/reducer';
 import authReducer from './auth/reducer';
 import profileReducer from './profile/reducer';
+import postsReducer from './posts/reducer';
 
 // Config options include whitelist, blacklist, stateReconciler
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['auth', 'profile'],
     stateReconciler: autoMergeLevel2,
 };
 
 const rootReducer = combineReducers({
     alerts: alertsReducer,
     auth: authReducer,
+    posts: postsReducer,
     profile: profileReducer,
 });
 

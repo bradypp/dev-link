@@ -22,3 +22,13 @@ export const GET_PROFILES = 'GET_PROFILES';
 export const GET_REPOS = 'GET_REPOS';
 export const PROFILE_LOADING = 'PROFILE_LOADING,';
 export const PROFILES_LOADING = 'PROFILES_LOADING';
+
+// POSTS
+export const GET_POSTS = 'GET_POSTS';
+export const GET_POST = 'GET_POST';
+export const POST_ERROR = 'POST_ERROR';
+export const UPDATE_LIKES = 'UPDATE_LIKES';
+export const DELETE_POST = 'DELETE_POST';
+export const ADD_POST = 'ADD_POST';
+export const ADD_COMMENT = 'ADD_COMMENT';
+export const REMOVE_COMMENT = 'REMOVE_COMMENT';

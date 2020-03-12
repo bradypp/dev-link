@@ -8,11 +8,11 @@ import isEmpty from 'lodash.isempty';
 import {
     createProfile,
     getCurrentUserProfile,
-    selectProfileLoading,
+    selectIsProfileLoading,
     selectProfileData,
 } from 'redux/profile';
 
-const CreateProfile = ({ createProfile, getCurrentUserProfile, profileData, profileLoading }) => {
+const CreateProfile = ({ createProfile, getCurrentUserProfile, profileData, isProfileLoading }) => {
     const [formData, setFormData] = useState({
         company: '',
         website: '',
@@ -59,7 +59,7 @@ const CreateProfile = ({ createProfile, getCurrentUserProfile, profileData, prof
 
     return (
         <>
-            {profileLoading && isEmpty(profileData) ? (
+            {isProfileLoading && isEmpty(profileData) ? (
                 <Spinner />
             ) : (
                 <>
@@ -240,12 +240,12 @@ const CreateProfile = ({ createProfile, getCurrentUserProfile, profileData, prof
 CreateProfile.propTypes = {
     createProfile: PropTypes.func.isRequired,
     getCurrentUserProfile: PropTypes.func.isRequired,
-    profileLoading: PropTypes.bool.isRequired,
+    isProfileLoading: PropTypes.bool.isRequired,
     profileData: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-    profileLoading: selectProfileLoading,
+    isProfileLoading: selectIsProfileLoading,
     profileData: selectProfileData,
 });
 

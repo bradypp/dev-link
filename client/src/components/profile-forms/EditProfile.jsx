@@ -8,7 +8,7 @@ import { Spinner } from 'components';
 import {
     createProfile,
     getCurrentUserProfile,
-    selectProfileLoading,
+    selectIsProfileLoading,
     selectProfileData,
     selectProfileInfoAndSocial,
 } from 'redux/profile';
@@ -17,7 +17,7 @@ const EditProfile = ({
     createProfile,
     getCurrentUserProfile,
     profileData,
-    profileLoading,
+    isProfileLoading,
     profileInfoAndSocial,
 }) => {
     const [formData, setFormData] = useState({
@@ -66,7 +66,7 @@ const EditProfile = ({
 
     return (
         <>
-            {profileLoading && isEmpty(profileData) ? (
+            {isProfileLoading && isEmpty(profileData) ? (
                 <Spinner />
             ) : (
                 <>
@@ -247,13 +247,13 @@ const EditProfile = ({
 EditProfile.propTypes = {
     createProfile: PropTypes.func.isRequired,
     getCurrentUserProfile: PropTypes.func.isRequired,
-    profileLoading: PropTypes.bool.isRequired,
+    isProfileLoading: PropTypes.bool.isRequired,
     profileData: PropTypes.object.isRequired,
     profileInfoAndSocial: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-    profileLoading: selectProfileLoading,
+    isProfileLoading: selectIsProfileLoading,
     profileData: selectProfileData,
     profileInfoAndSocial: selectProfileInfoAndSocial,
 });

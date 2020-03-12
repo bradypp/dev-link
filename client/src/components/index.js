@@ -8,8 +8,18 @@ export { default as DashboardActions } from './dashboard/DashboardActions';
 export { default as Education } from './dashboard/Education';
 export { default as Experience } from './dashboard/Experience';
 
+export { default as Alert } from './layout/Alert';
 export { default as Landing } from './layout/Landing';
 export { default as Navbar } from './layout/Navbar';
+export { default as NotFound } from './layout/NotFound';
+
+export { default as Post } from './post/Post';
+export { default as CommentItem } from './post/CommentItem';
+export { default as CommentForm } from './post/CommentForm';
+
+export { default as PostForm } from './posts/PostForm';
+export { default as PostItem } from './posts/PostItem';
+export { default as Posts } from './posts/Posts';
 
 export { default as Profile } from './profile/Profile';
 export { default as ProfileAbout } from './profile/ProfileAbout';
@@ -17,8 +27,6 @@ export { default as ProfileEducation } from './profile/ProfileEducation';
 export { default as ProfileExperience } from './profile/ProfileExperience';
 export { default as ProfileGithub } from './profile/ProfileGithub';
 export { default as ProfileTop } from './profile/ProfileTop';
-
-export { default as Alert } from './layout/Alert';
 
 export { default as CreateProfile } from './profile-forms/CreateProfile';
 export { default as EditProfile } from './profile-forms/EditProfile';
