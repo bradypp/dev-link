@@ -35,7 +35,7 @@ export default (state = initialState, { type, payload }) => {
                 ...state,
                 isLoading: true,
                 isAuthenticated,
-                user,
+                user: {},
             };
         case REGISTER_SUCCESS:
         case LOGIN_SUCCESS:
@@ -45,7 +45,7 @@ export default (state = initialState, { type, payload }) => {
                 token: payload.token,
                 user: payload.user,
                 isAuthenticated: true,
-                isLoading,
+                isLoading: false,
             };
         case REGISTER_FAILURE:
         case LOGIN_FAILURE:
@@ -55,10 +55,10 @@ export default (state = initialState, { type, payload }) => {
             setAuthToken('');
             return {
                 ...state,
-                token,
+                token: '',
                 isAuthenticated,
-                isLoading,
-                user,
+                isLoading: false,
+                user: {},
             };
         default:
             return state;

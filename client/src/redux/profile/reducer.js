@@ -17,14 +17,13 @@ const initialState = {
 };
 
 export default (state = initialState, { type, payload }) => {
-    const { profileData, repos, isLoading } = initialState;
     switch (type) {
         case GET_PROFILE:
         case UPDATE_PROFILE:
             return {
                 ...state,
                 profileData: payload,
-                isLoading,
+                isLoading: false,
             };
         case PROFILE_LOADING:
             return {
@@ -35,27 +34,27 @@ export default (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 profiles: payload,
-                isLoading,
+                isLoading: false,
             };
         case PROFILE_ERROR:
             return {
                 ...state,
                 error: payload,
-                isLoading,
-                profileData,
+                isLoading: false,
+                profileData: {},
             };
         case CLEAR_PROFILE:
             return {
                 ...state,
-                profileData,
-                repos,
-                isLoading,
+                profileData: {},
+                repos: [],
+                isLoading: false,
             };
         case GET_REPOS:
             return {
                 ...state,
                 repos: payload,
-                isLoading,
+                isLoading: false,
             };
         default:
             return state;
