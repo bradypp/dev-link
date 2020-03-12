@@ -32,7 +32,7 @@ const Dashboard = ({
     return (
         <>
             <h1 className="large text-primary">Dashboard</h1>
-            {isProfileLoading && isEmpty(profileData) ? (
+            {isProfileLoading || isEmpty(profileData) ? (
                 <Spinner />
             ) : (
                 <>
