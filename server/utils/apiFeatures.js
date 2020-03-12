@@ -1,6 +1,9 @@
+// Example use:
+// const features = new APIFeatures(User.find(), req.params).filter().sort().limit().paginate()
+// const user = await features.query
 class APIFeatures {
     constructor(query, queryParams = null) {
-        // The query model e.g. User
+        // The query model e.g. User.find()
         this.query = query;
         // Object containing query fields e.g. req.params
         this.queryParams = queryParams;
@@ -13,7 +16,6 @@ class APIFeatures {
         this.excludedFilterParams = [...excludedFilterParams, 'page', 'sort', 'limit', 'fields'];
 
         // Remove query params not wanted in filter
-
         this.excludedFilterParams.forEach(el => delete queryObj[el]);
 
         // Allow filtering by gte|gt|lte|lt if they exist in queryParams by adding the mongodb $ operator
