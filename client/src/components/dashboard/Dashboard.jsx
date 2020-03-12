@@ -42,10 +42,10 @@ const Dashboard = ({
                     {!isEmpty(profileData) ? (
                         <>
                             <DashboardActions />
-                            {!isEmpty(profileExperience) && (
+                            {profileExperience.length > 0 && (
                                 <Experience experience={profileExperience} />
                             )}
-                            {!isEmpty(profileEducation) && (
+                            {profileEducation.length > 0 && (
                                 <Education education={profileEducation} />
                             )}
                             <div className="my-2">
@@ -60,7 +60,7 @@ const Dashboard = ({
                     ) : (
                         <>
                             <p>You have not yet setup a profile, please add some info</p>
-                            <Link to="/profile/create" className="btn btn-primary my-1">
+                            <Link to="/create" className="btn btn-primary my-1">
                                 Create Profile
                             </Link>
                         </>

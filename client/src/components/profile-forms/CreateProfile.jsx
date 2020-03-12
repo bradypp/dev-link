@@ -227,7 +227,7 @@ const CreateProfile = ({ createProfile, getCurrentProfile, profileData, profileL
                         <button type="submit" className="btn btn-primary my-1">
                             Submit
                         </button>
-                        <Link className="btn btn-light my-1" to="/profile/dashboard">
+                        <Link className="btn btn-light my-1" to="/dashboard">
                             Go Back
                         </Link>
                     </form>

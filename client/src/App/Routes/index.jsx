@@ -11,6 +11,7 @@ import {
     Navbar,
     AddExperience,
     AddEducation,
+    Profile,
 } from 'components';
 import PrivateRoute from './PrivateRoute';
 
@@ -26,11 +27,12 @@ const Routes = () => {
                 <Switch>
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/register" component={Register} />
-                    <PrivateRoute exact path="/profile/dashboard" component={Dashboard} />
-                    <PrivateRoute exact path="/profile/create" component={CreateProfile} />
-                    <PrivateRoute exact path="/profile/edit" component={EditProfile} />
-                    <PrivateRoute exact path="/profile/add-experience" component={AddExperience} />
-                    <PrivateRoute exact path="/profile/add-education" component={AddEducation} />
+                    <Route exact path="/profile/:id" component={Profile} />
+                    <PrivateRoute exact path="/dashboard" component={Dashboard} />
+                    <PrivateRoute exact path="/create" component={CreateProfile} />
+                    <PrivateRoute exact path="/edit" component={EditProfile} />
+                    <PrivateRoute exact path="/add-experience" component={AddExperience} />
+                    <PrivateRoute exact path="/add-education" component={AddEducation} />
                 </Switch>
             </section>
         </Router>

@@ -23,6 +23,7 @@ module.exports = {
         'import/no-unresolved': 0,
         'no-nested-ternary': 0,
         camelcase: 0,
+        'no-underscore-dangle': 0,
 
         // React Rules
         'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx'] }],

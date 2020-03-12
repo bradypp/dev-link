@@ -234,7 +234,7 @@ const EditProfile = ({
                         <button type="submit" className="btn btn-primary my-1">
                             Update
                         </button>
-                        <Link className="btn btn-light my-1" to="/profile/dashboard">
+                        <Link className="btn btn-light my-1" to="/dashboard">
                             Go Back
                         </Link>
                     </form>

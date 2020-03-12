@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
-import { selectIsLoading, selectIsAuthenticated, logoutUser } from 'redux/auth';
+import { selectIsAuthLoading, selectIsAuthenticated, logoutUser } from 'redux/auth';
 
-const Navbar = ({ isLoading, isAuthenticated, logoutUser }) => {
+const Navbar = ({ isAuthLoading, isAuthenticated, logoutUser }) => {
     const authLinks = (
         <ul>
             <li>
@@ -15,7 +15,7 @@ const Navbar = ({ isLoading, isAuthenticated, logoutUser }) => {
                 <Link to="/posts">Posts</Link>
             </li>
             <li>
-                <Link to="/profile/dashboard">
+                <Link to="/dashboard">
                     <i className="fas fa-user" /> <span className="hide-sm">Dashboard</span>
                 </Link>
             </li>
@@ -48,19 +48,19 @@ const Navbar = ({ isLoading, isAuthenticated, logoutUser }) => {
                     <i className="fas fa-code" /> DevLink
                 </Link>
             </h1>
-            {!isLoading && <>{isAuthenticated ? authLinks : guestLinks}</>}
+            {!isAuthLoading && <>{isAuthenticated ? authLinks : guestLinks}</>}
         </nav>
     );
 };
 
 Navbar.propTypes = {
     logoutUser: PropTypes.func.isRequired,
-    isLoading: PropTypes.bool.isRequired,
+    isAuthLoading: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-    isLoading: selectIsLoading,
+    isAuthLoading: selectIsAuthLoading,
     isAuthenticated: selectIsAuthenticated,
 });
 

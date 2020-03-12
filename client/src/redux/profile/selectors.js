@@ -9,21 +9,33 @@ export const selectProfileData = createSelector(
     profile => profile.profileData || {},
 );
 
-export const selectProfileInfo = createSelector([selectProfileData], profileData => {
-    const { company, website, location, status, skills, github_username, bio } = profileData;
-    return {
-        company: company || '',
-        website: website || '',
-        location: location || '',
-        status: status || '',
-        skills: skills.join(','),
-        github_username: github_username || '',
-        bio: bio || '',
-    };
-});
+export const selectProfileUser = createSelector([selectProfile], profile => profile.user || {});
 
-export const selectProfileSocial = createSelector([selectProfileData], profileData => {
-    const { twitter, facebook, linkedin, youtube, instagram } = profileData.social;
+export const selectProfileRepos = createSelector([selectProfile], profile => profile.repos || []);
+
+export const selectProfileSkillsArr = createSelector(
+    [selectProfileData],
+    profileData => profileData.skills || [],
+);
+
+export const selectProfileInfo = createSelector(
+    [selectProfileData],
+    ({ company, website, location, status, skills, github_username, bio }) => {
+        return {
+            company: company || '',
+            website: website || '',
+            location: location || '',
+            status: status || '',
+            skills: skills ? skills.join(',') : '',
+            github_username: github_username || '',
+            bio: bio || '',
+        };
+    },
+);
+
+export const selectProfileSocial = createSelector([selectProfileData], ({ social }) => {
+    if (!social) return {};
+    const { twitter, facebook, linkedin, youtube, instagram } = social;
     return {
         twitter: twitter || '',
         facebook: facebook || '',
