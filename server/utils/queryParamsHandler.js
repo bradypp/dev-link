@@ -1,7 +1,7 @@
 // Example use:
-// const features = new APIFeatures(User.find(), req.params).filter().sort().limit().paginate()
+// const features = new queryParamsHandler(User.find(), req.params).filter().sort().limit().paginate()
 // const user = await features.query
-class APIFeatures {
+class queryParamsHandler {
     constructor(query, queryParams = {}) {
         // The query model e.g. User.find()
         this.query = query;
@@ -76,4 +76,4 @@ class APIFeatures {
     }
 }
 
-module.exports = APIFeatures;
+module.exports = queryParamsHandler;
