@@ -2,16 +2,17 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
-
+const AppError = require('./utils/appError');
+const globalErrorHandler = require('./controllers/handlers/errorController');
 const authRouter = require('./routes/authRoutes');
 const postsRouter = require('./routes/postsRoutes');
 const profileRouter = require('./routes/profileRoutes');
 const userRouter = require('./routes/userRoutes');
 
-// 1) Start express app
+// Start express app
 const app = express();
 
-// 2) Global Middlewares
+// Global Middlewares
 // Implement CORS
 app.use(cors());
 app.options('*', cors());
@@ -24,10 +25,10 @@ if (process.env.NODE_ENV === 'development') {
 // Body-parsing Middleware
 app.use(express.json({ extended: false }));
 
-// Cookie-parsing middleware
+// Cookie-parsing Middleware
 app.use(cookieParser());
 
-// 3) Routes
+// Routes
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/posts', postsRouter);
 app.use('/api/v1/profile', profileRouter);
@@ -35,10 +36,10 @@ app.use('/api/v1/user', userRouter);
 
 // Unhandled route handler
 app.all('*', (req, res, next) =>
-    res.status(404).json({
-        status: 'fail',
-        message: `Can't find ${req.originalUrl} on this server!`,
-    }),
+    next(new AppError(`Can't find ${req.originalUrl} on this server!}`, 404)),
 );
+
+// Global Error Handling Middleware
+app.use(globalErrorHandler);
 
 module.exports = app;
