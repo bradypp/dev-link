@@ -10,7 +10,7 @@ const {
     addPostComment,
     removePostComment,
 } = require('../controllers/api/postsController');
-const { postValidation, postCommentValidation } = require('./validation/postsValidation');
+const { postValidation, postCommentValidation } = require('./validation/posts');
 
 // Private routes
 router

@@ -15,7 +15,7 @@ const {
     profileValidation,
     experienceValidation,
     educationValidation,
-} = require('./validation/profileValidation');
+} = require('./validation/profile');
 
 // Public routes
 router.route('/all').get(getAllUserProfiles);

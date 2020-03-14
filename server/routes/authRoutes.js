@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { createUser, loginUser } = require('../controllers/api/authController');
-const { registerValidation, loginValidation } = require('./validation/authValidation');
+const { registerValidation, loginValidation } = require('./validation/auth');
 
 // Public routes
 router.route('/register').post(registerValidation(), createUser);
