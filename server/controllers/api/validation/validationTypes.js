@@ -1,0 +1,7 @@
+exports.REGISTER = 'REGISTER';
+exports.LOGIN = 'LOGIN';
+exports.POST = 'POST';
+exports.POST_COMMENT = 'POST_COMMENT';
+exports.PROFILE = 'PROFILE';
+exports.EXPERIENCE = 'EXPERIENCE';
+exports.EDUCATION = 'EDUCATION';

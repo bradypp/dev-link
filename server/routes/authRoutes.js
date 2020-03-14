@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const { createUser, loginUser } = require('../controllers/api/authController');
-const { registerValidation, loginValidation } = require('./validation/auth');
+const validation = require('../controllers/api/validation');
+const { REGISTER, LOGIN } = require('../controllers/api/validation/validationTypes');
 
 // Public routes
-router.route('/register').post(registerValidation(), createUser);
-router.route('/login').post(loginValidation(), loginUser);
+router.route('/register').post(validation(REGISTER), createUser);
+router.route('/login').post(validation(LOGIN), loginUser);
 
 module.exports = router;

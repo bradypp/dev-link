@@ -11,11 +11,8 @@ const {
     removeEducationFromProfile,
     getUserGithubRepos,
 } = require('../controllers/api/profileController');
-const {
-    profileValidation,
-    experienceValidation,
-    educationValidation,
-} = require('./validation/profile');
+const validation = require('../controllers/api/validation');
+const { PROFILE, EXPERIENCE, EDUCATION } = require('../controllers/api/validation/validationTypes');
 
 // Public routes
 router.route('/all').get(getAllUserProfiles);
@@ -26,10 +23,10 @@ router.route('/github/:github_username').get(getUserGithubRepos);
 router
     .route('/')
     .get(privateRoute, getCurrentUserProfile)
-    .post(privateRoute, profileValidation(), createOrUpdateUserProfile);
-router.route('/experience').put(privateRoute, experienceValidation(), addExperienceToProfile);
+    .post(privateRoute, validation(PROFILE), createOrUpdateUserProfile);
+router.route('/experience').put(privateRoute, validation(EXPERIENCE), addExperienceToProfile);
 router.route('/experience/:exp_id').delete(privateRoute, removeExperienceFromProfile);
-router.route('/education').put(privateRoute, educationValidation(), addEducationToProfile);
+router.route('/education').put(privateRoute, validation(EDUCATION), addEducationToProfile);
 router.route('/education/:edu_id').delete(privateRoute, removeEducationFromProfile);
 
 module.exports = router;

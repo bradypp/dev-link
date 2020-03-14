@@ -23,10 +23,10 @@ const createSendJwt = (user, statusCode, res) => {
 
     // res.cookie('jwt', token, cookieOptions);
 
+    const { name, email, avatar } = user;
+
     // Send token & user data in response
-    res.status(statusCode).json({
-        token,
-    });
+    res.status(statusCode).json({ token, user: { name, email, avatar } });
 };
 
 exports.createUser = async (req, res) => {
@@ -110,7 +110,7 @@ exports.privateRoute = async (req, res, next) => {
         }
 
         // Remove bearer from token if it exists
-        if (token.startsWith('Bearer')) {
+        if (token.startsWith('Bearer') || token.startsWith('Token')) {
             token = req.header('x-auth-token').split(' ')[1];
         }
 

@@ -43,6 +43,7 @@ export default (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 token: payload.token,
+                user: payload.user,
                 isAuthenticated: true,
                 isLoading: false,
             };

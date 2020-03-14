@@ -98,7 +98,7 @@ exports.addPostLike = async (req, res) => {
         }
 
         // Add user id to likes array and save
-        post.likes.unshift({ user: req.user.id });
+        post.likes.push({ user: req.user.id });
         await post.save();
 
         res.json(post);
@@ -154,7 +154,7 @@ exports.addPostComment = async (req, res) => {
         };
 
         // Add comment to comments array
-        post.comments.unshift(newComment);
+        post.comments.push(newComment);
         await post.save();
 
         res.json(post.comments);
