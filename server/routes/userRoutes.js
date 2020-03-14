@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const { getCurrentUser, deleteUser } = require('../controllers/userController');
-const { privateRoute } = require('../controllers/authController');
+const { getCurrentUser, deleteUser } = require('../controllers/api/userController');
+const { privateRoute } = require('../controllers/api/authController');
 
 // Private routes
 router

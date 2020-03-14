@@ -1,6 +1,6 @@
-const User = require('../models/User');
-const Profile = require('../models/Profile');
-const Post = require('../models/Post');
+const User = require('../../models/User');
+const Profile = require('../../models/Profile');
+const Post = require('../../models/Post');
 
 exports.getCurrentUser = (req, res) => {
     if (!req.user) {

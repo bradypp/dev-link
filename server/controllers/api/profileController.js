@@ -1,6 +1,6 @@
 const normalize = require('normalize-url');
 const axios = require('axios');
-const Profile = require('../models/Profile');
+const Profile = require('../../models/Profile');
 
 exports.getCurrentUserProfile = async (req, res) => {
     try {

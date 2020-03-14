@@ -3,7 +3,7 @@ const { promisify } = require('util');
 const normalize = require('normalize-url');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const User = require('../../models/User');
 
 const createSendJwt = (user, statusCode, res) => {
     // Create payload
