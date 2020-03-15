@@ -15,7 +15,6 @@ const initialState = {
     profiles: [],
     repos: [],
     isLoading: false,
-    error: {},
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -41,7 +40,6 @@ export default (state = initialState, { type, payload }) => {
         case PROFILE_ERROR:
             return {
                 ...state,
-                error: payload,
                 isLoading: false,
                 profileData: {},
             };

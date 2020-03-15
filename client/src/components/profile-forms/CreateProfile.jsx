@@ -68,7 +68,7 @@ const CreateProfile = ({ createProfile, getCurrentUserProfile, profileData, isPr
                         <i className="fas fa-user" /> Make yourself stand out!
                     </p>
                     <small>* = required field</small>
-                    <form className="form" onSubmit={onSubmit}>
+                    <form className="form" onSubmit={onSubmit} noValidate>
                         <div className="form-group">
                             <select name="status" value={status} onChange={onChange}>
                                 <option value="0">* Select Professional Status</option>

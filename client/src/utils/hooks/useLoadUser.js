@@ -14,8 +14,7 @@ const useLoadUser = () => {
 
     useEffect(() => {
         if (!user) dispatch(loadUser());
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [user]);
+    }, [dispatch, user]);
 };
 
 export default useLoadUser;

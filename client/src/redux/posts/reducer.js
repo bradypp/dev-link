@@ -13,7 +13,6 @@ const initialState = {
     posts: [],
     post: {},
     isLoading: true,
-    error: {},
 };
 
 export default function(state = initialState, { type, payload }) {
@@ -45,18 +44,14 @@ export default function(state = initialState, { type, payload }) {
         case POST_ERROR:
             return {
                 ...state,
-                error: payload,
                 isLoading: false,
             };
         case UPDATE_LIKES:
             return {
                 ...state,
-                posts: state.posts.map(post => {
-                    console.log(post);
-                    return post._id === payload._id
-                        ? { ...post, likes: payload.likes }
-                        : post.likes;
-                }),
+                posts: state.posts.map(post =>
+                    post._id === payload._id ? { ...post, likes: payload.likes } : post.likes,
+                ),
                 isLoading: false,
             };
         case ADD_COMMENT:

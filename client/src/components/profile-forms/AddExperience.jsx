@@ -35,7 +35,7 @@ const AddExperience = ({ addExperience }) => {
                 you have had in the past
             </p>
             <small>* = required field</small>
-            <form className="form" onSubmit={onSubmit}>
+            <form className="form" onSubmit={onSubmit} noValidate>
                 <div className="form-group">
                     <input
                         type="text"

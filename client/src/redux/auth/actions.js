@@ -1,17 +1,22 @@
-import { api } from 'utils';
-import { setAlert } from 'redux/alerts/actions';
+import { api, errorHandler } from 'utils';
 import {
     REGISTER_SUCCESS,
-    REGISTER_FAILURE,
     USER_LOADED,
     USER_LOADING,
     AUTH_ERROR,
     LOGIN_SUCCESS,
-    LOGIN_FAILURE,
     CLEAR_PROFILE,
     LOGOUT_USER,
 } from 'redux/actionTypes';
 
+// Auth error
+export const authError = () => async dispatch => {
+    dispatch({
+        type: AUTH_ERROR,
+    });
+};
+
+// Load user
 export const loadUser = () => async dispatch => {
     try {
         dispatch({
@@ -25,18 +30,14 @@ export const loadUser = () => async dispatch => {
             payload: res.data,
         });
     } catch (err) {
-        dispatch({
-            type: AUTH_ERROR,
-        });
+        errorHandler(err, dispatch, authError);
     }
 };
 
 // TODO: Implement more elegant error alerts
 export const registerUser = ({ name, email, password, password2 }) => async dispatch => {
     try {
-        dispatch({
-            type: USER_LOADING,
-        });
+        dispatch({ type: USER_LOADING });
 
         const body = JSON.stringify({ name, email, password, password2 });
         const config = {
@@ -51,23 +52,15 @@ export const registerUser = ({ name, email, password, password2 }) => async disp
             type: REGISTER_SUCCESS,
             payload: res.data,
         });
+        dispatch(loadUser());
     } catch (err) {
-        const errors = Object.values(err.response.data);
-        if (errors) {
-            errors.forEach(error => dispatch(setAlert(error, 'danger')));
-        }
-
-        dispatch({
-            type: REGISTER_FAILURE,
-        });
+        errorHandler(err, dispatch, authError, true);
     }
 };
 
 export const loginUser = ({ email, password }) => async dispatch => {
     try {
-        dispatch({
-            type: USER_LOADING,
-        });
+        dispatch({ type: USER_LOADING });
         const body = JSON.stringify({ email, password });
         const config = {
             headers: {
@@ -76,21 +69,14 @@ export const loginUser = ({ email, password }) => async dispatch => {
         };
 
         const res = await api.post('/auth/login', body, config);
-        console.log({ email, password });
 
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data,
         });
+        dispatch(loadUser());
     } catch (err) {
-        const errors = Object.values(err.response.data);
-        if (errors) {
-            errors.forEach(error => dispatch(setAlert(error, 'danger')));
-        }
-
-        dispatch({
-            type: LOGIN_FAILURE,
-        });
+        errorHandler(err, dispatch, authError, true);
     }
 };
 

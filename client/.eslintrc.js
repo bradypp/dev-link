@@ -24,6 +24,7 @@ module.exports = {
         'no-nested-ternary': 0,
         camelcase: 0,
         'no-underscore-dangle': 0,
+        'no-console': [2, { allow: ['warn', 'error'] }],
 
         // React Rules
         'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx'] }],

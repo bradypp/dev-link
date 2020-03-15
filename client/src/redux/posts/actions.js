@@ -1,4 +1,4 @@
-import { api } from 'utils';
+import { api, errorHandler } from 'utils';
 import { setAlert } from 'redux/alerts';
 import {
     GET_POSTS,
@@ -11,6 +11,13 @@ import {
     REMOVE_COMMENT,
 } from 'redux/actionTypes';
 
+// Post error
+export const postError = () => async dispatch => {
+    dispatch({
+        type: POST_ERROR,
+    });
+};
+
 // Get posts
 export const getPosts = () => async dispatch => {
     try {
@@ -21,10 +28,7 @@ export const getPosts = () => async dispatch => {
             payload: res.data,
         });
     } catch (err) {
-        dispatch({
-            type: POST_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status },
-        });
+        errorHandler(err, dispatch, postError);
     }
 };
 
@@ -32,16 +36,13 @@ export const getPosts = () => async dispatch => {
 export const addLike = id => async dispatch => {
     try {
         const res = await api.put(`/posts/like/${id}`);
-        console.log(res.data.likes);
+
         dispatch({
             type: UPDATE_LIKES,
             payload: { _id: res.data._id, likes: res.data.likes },
         });
     } catch (err) {
-        dispatch({
-            type: POST_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status },
-        });
+        errorHandler(err, dispatch, postError);
     }
 };
 
@@ -55,10 +56,7 @@ export const removeLike = id => async dispatch => {
             payload: { _id: res.data._id, likes: res.data.likes },
         });
     } catch (err) {
-        dispatch({
-            type: POST_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status },
-        });
+        errorHandler(err, dispatch, postError);
     }
 };
 
@@ -74,10 +72,7 @@ export const deletePost = id => async dispatch => {
 
         dispatch(setAlert('Post Removed', 'success'));
     } catch (err) {
-        dispatch({
-            type: POST_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status },
-        });
+        errorHandler(err, dispatch, postError);
     }
 };
 
@@ -99,10 +94,7 @@ export const addPost = formData => async dispatch => {
 
         dispatch(setAlert('Post Created', 'success'));
     } catch (err) {
-        dispatch({
-            type: POST_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status },
-        });
+        errorHandler(err, dispatch, postError, true);
     }
 };
 
@@ -116,10 +108,7 @@ export const getPost = id => async dispatch => {
             payload: res.data,
         });
     } catch (err) {
-        dispatch({
-            type: POST_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status },
-        });
+        errorHandler(err, dispatch, postError);
     }
 };
 
@@ -140,10 +129,7 @@ export const addComment = (postId, formData) => async dispatch => {
 
         dispatch(setAlert('Comment Added', 'success'));
     } catch (err) {
-        dispatch({
-            type: POST_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status },
-        });
+        errorHandler(err, dispatch, postError, true);
     }
 };
 
@@ -159,9 +145,6 @@ export const deleteComment = (postId, commentId) => async dispatch => {
 
         dispatch(setAlert('Comment Removed', 'success'));
     } catch (err) {
-        dispatch({
-            type: POST_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status },
-        });
+        errorHandler(err, dispatch, postError);
     }
 };

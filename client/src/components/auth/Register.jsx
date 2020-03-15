@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { setAlert } from 'redux/alerts';
+import { setAlert, clearAlerts, selectAlerts } from 'redux/alerts';
 import { registerUser, selectIsAuthenticated } from 'redux/auth';
 
-const Register = ({ setAlert, registerUser, isAuthenticated }) => {
+const Register = ({ setAlert, clearAlerts, registerUser, isAuthenticated, alerts }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -28,6 +28,13 @@ const Register = ({ setAlert, registerUser, isAuthenticated }) => {
             registerUser(formData);
         }
     };
+
+    useEffect(() => {
+        if (alerts.length > 0) {
+            clearAlerts();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     if (isAuthenticated) return <Redirect to="/dashboard" />;
 
@@ -91,12 +98,15 @@ const Register = ({ setAlert, registerUser, isAuthenticated }) => {
 
 Register.propTypes = {
     setAlert: PropTypes.func.isRequired,
+    clearAlerts: PropTypes.func.isRequired,
     registerUser: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
+    alerts: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
     isAuthenticated: selectIsAuthenticated,
+    alerts: selectAlerts,
 });
 
-export default connect(mapStateToProps, { setAlert, registerUser })(Register);
+export default connect(mapStateToProps, { setAlert, registerUser, clearAlerts })(Register);

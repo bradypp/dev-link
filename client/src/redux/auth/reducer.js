@@ -1,9 +1,7 @@
 import { setAuthToken } from 'utils';
 import {
     REGISTER_SUCCESS,
-    REGISTER_FAILURE,
     LOGIN_SUCCESS,
-    LOGIN_FAILURE,
     LOGOUT_USER,
     USER_LOADED,
     USER_LOADING,
@@ -12,8 +10,7 @@ import {
 } from 'redux/actionTypes';
 
 // TODO: Get errors from response and maptoprops on registration & login form to show correct message
-// TODO: add getting token from cookies?
-// TODO: Move user and user profile to its own object/reducer?
+// TODO: Add getting token from cookies?
 const initialState = {
     token: '',
     isAuthenticated: false,
@@ -43,12 +40,9 @@ export default (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 token: payload.token,
-                user: payload.user,
                 isAuthenticated: true,
                 isLoading: false,
             };
-        case REGISTER_FAILURE:
-        case LOGIN_FAILURE:
         case AUTH_ERROR:
         case LOGOUT_USER:
         case ACCOUNT_DELETED:

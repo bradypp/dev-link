@@ -6,6 +6,7 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash.isempty';
 import { Spinner, DashboardActions, Education, Experience } from 'components';
+import { clearAlerts, selectAlerts } from 'redux/alerts';
 import { selectUserFirstName } from 'redux/auth';
 import {
     getCurrentUserProfile,
@@ -24,10 +25,19 @@ const Dashboard = ({
     isProfileLoading,
     profileEducation,
     profileExperience,
+    clearAlerts,
+    alerts,
 }) => {
     useEffect(() => {
         getCurrentUserProfile();
     }, [getCurrentUserProfile]);
+
+    useEffect(() => {
+        if (alerts.length > 0) {
+            clearAlerts();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <>
@@ -72,6 +82,7 @@ const Dashboard = ({
 };
 
 Dashboard.propTypes = {
+    clearAlerts: PropTypes.func.isRequired,
     getCurrentUserProfile: PropTypes.func.isRequired,
     deleteAccount: PropTypes.func.isRequired,
     userFirstName: PropTypes.string.isRequired,
@@ -79,6 +90,7 @@ Dashboard.propTypes = {
     isProfileLoading: PropTypes.bool.isRequired,
     profileEducation: PropTypes.array.isRequired,
     profileExperience: PropTypes.array.isRequired,
+    alerts: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -87,8 +99,9 @@ const mapStateToProps = createStructuredSelector({
     isProfileLoading: selectIsProfileLoading,
     profileEducation: selectProfileEducation,
     profileExperience: selectProfileExperience,
+    alerts: selectAlerts,
 });
 
-export default compose(connect(mapStateToProps, { getCurrentUserProfile, deleteAccount }))(
-    Dashboard,
-);
+export default compose(
+    connect(mapStateToProps, { getCurrentUserProfile, clearAlerts, deleteAccount }),
+)(Dashboard);

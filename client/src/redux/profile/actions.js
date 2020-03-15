@@ -1,4 +1,4 @@
-import { api } from 'utils';
+import { api, errorHandler } from 'utils';
 import { setAlert } from 'redux/alerts/actions';
 import {
     GET_PROFILE,
@@ -11,12 +11,17 @@ import {
     PROFILE_LOADING,
 } from 'redux/actionTypes';
 
+// Profile error
+export const profileError = () => async dispatch => {
+    dispatch({
+        type: PROFILE_ERROR,
+    });
+};
+
 // Get current users profile
 export const getCurrentUserProfile = () => async dispatch => {
     try {
-        dispatch({
-            type: PROFILE_LOADING,
-        });
+        dispatch({ type: PROFILE_LOADING });
 
         const res = await api.get('/profile');
 
@@ -25,18 +30,15 @@ export const getCurrentUserProfile = () => async dispatch => {
             payload: res.data,
         });
     } catch (err) {
-        dispatch({
-            type: PROFILE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status },
-        });
+        errorHandler(err, dispatch, profileError);
     }
 };
 
 // Get all profiles
 export const getProfiles = () => async dispatch => {
-    dispatch({ type: CLEAR_PROFILE });
-
     try {
+        dispatch({ type: CLEAR_PROFILE });
+
         const res = await api.get('/profile/all');
 
         dispatch({
@@ -44,10 +46,7 @@ export const getProfiles = () => async dispatch => {
             payload: res.data,
         });
     } catch (err) {
-        dispatch({
-            type: PROFILE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status },
-        });
+        errorHandler(err, dispatch, profileError);
     }
 };
 
@@ -61,10 +60,7 @@ export const getProfileById = userId => async dispatch => {
             payload: res.data,
         });
     } catch (err) {
-        dispatch({
-            type: PROFILE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status },
-        });
+        errorHandler(err, dispatch, profileError);
     }
 };
 
@@ -78,10 +74,7 @@ export const getGithubRepos = username => async dispatch => {
             payload: res.data,
         });
     } catch (err) {
-        dispatch({
-            type: PROFILE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status },
-        });
+        errorHandler(err, dispatch, profileError);
     }
 };
 
@@ -105,16 +98,7 @@ export const createProfile = (formData, history, edit = false) => async dispatch
 
         history.push('/dashboard');
     } catch (err) {
-        const errors = Object.values(err.response.data);
-
-        if (errors) {
-            errors.forEach(error => dispatch(setAlert(error, 'danger')));
-        }
-
-        dispatch({
-            type: PROFILE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status },
-        });
+        errorHandler(err, dispatch, profileError, true);
     }
 };
 
@@ -138,16 +122,7 @@ export const addExperience = (formData, history) => async dispatch => {
 
         history.push('/dashboard');
     } catch (err) {
-        const errors = Object.values(err.response.data);
-
-        if (errors) {
-            errors.forEach(error => dispatch(setAlert(error, 'danger')));
-        }
-
-        dispatch({
-            type: PROFILE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status },
-        });
+        errorHandler(err, dispatch, profileError, true);
     }
 };
 
@@ -171,16 +146,7 @@ export const addEducation = (formData, history) => async dispatch => {
 
         history.push('/dashboard');
     } catch (err) {
-        const errors = Object.values(err.response.data);
-
-        if (errors) {
-            errors.forEach(error => dispatch(setAlert(error, 'danger')));
-        }
-
-        dispatch({
-            type: PROFILE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status },
-        });
+        errorHandler(err, dispatch, profileError, true);
     }
 };
 
@@ -196,10 +162,7 @@ export const deleteExperience = id => async dispatch => {
 
         dispatch(setAlert('Experience Removed', 'success'));
     } catch (err) {
-        dispatch({
-            type: PROFILE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status },
-        });
+        errorHandler(err, dispatch, profileError);
     }
 };
 
@@ -215,13 +178,11 @@ export const deleteEducation = id => async dispatch => {
 
         dispatch(setAlert('Education Removed', 'success'));
     } catch (err) {
-        dispatch({
-            type: PROFILE_ERROR,
-            payload: { msg: err.response.statusText, status: err.response.status },
-        });
+        errorHandler(err, dispatch, profileError);
     }
 };
 
+// TODO: Custom confirm modal/notification
 // Delete account & profile
 export const deleteAccount = () => async dispatch => {
     if (window.confirm('Are you sure? This can NOT be undone!')) {
@@ -233,11 +194,7 @@ export const deleteAccount = () => async dispatch => {
 
             dispatch(setAlert('Your account has been permanently deleted'));
         } catch (err) {
-            console.error(err);
-            dispatch({
-                type: PROFILE_ERROR,
-                payload: { msg: err.response.statusText, status: err.response.status },
-            });
+            errorHandler(err, dispatch, profileError);
         }
     }
 };
