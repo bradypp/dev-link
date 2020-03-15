@@ -3,7 +3,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const AppError = require('./utils/appError');
-const globalErrorHandler = require('./controllers/handlers/errorController');
+const globalErrorHandler = require('./controllers/handlers/globalErrorHandler');
 const authRouter = require('./routes/authRoutes');
 const postsRouter = require('./routes/postsRoutes');
 const profileRouter = require('./routes/profileRoutes');
@@ -36,7 +36,7 @@ app.use('/api/v1/user', userRouter);
 
 // Unhandled route handler
 app.all('*', (req, res, next) =>
-    next(new AppError(`Can't find ${req.originalUrl} on this server!}`, 404)),
+    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404)),
 );
 
 // Global Error Handling Middleware

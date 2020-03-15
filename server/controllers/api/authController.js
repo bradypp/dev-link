@@ -3,6 +3,8 @@ const { promisify } = require('util');
 const normalize = require('normalize-url');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const catchAsync = require('../../utils/catchAsync');
+const AppError = require('../../utils/appError');
 const User = require('../../models/User');
 
 const createSendJwt = (user, statusCode, res) => {
@@ -23,112 +25,96 @@ const createSendJwt = (user, statusCode, res) => {
 
     // res.cookie('jwt', token, cookieOptions);
 
-    const { name, email, avatar } = user;
-
     // Send token & user data in response
-    res.status(statusCode).json({ token, user: { name, email, avatar } });
+    res.status(statusCode).json({ token });
 };
 
-exports.createUser = async (req, res) => {
-    try {
-        const { name, email, password } = req.body;
+exports.createUser = catchAsync(async (req, res, next) => {
+    const { name, email, password } = req.body;
 
-        // Check if a user with that email exists
-        let user = await User.findOne({ email });
-        if (user) {
-            return res.status(400).json({ user: 'User with this email already exists' });
-        }
-
-        // Get gravatar for that email & set a default
-        const avatar = gravatar.url(email, {
-            s: '200', // Size
-            r: 'pg', // Rating
-            d: 'mm', // Default
-        });
-
-        // Create new user
-        user = new User({
-            name,
-            email,
-            avatar: normalize(avatar),
-            password,
-        });
-
-        // Encrypt password
-        const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(password, salt);
-
-        // Save user to database
-        await user.save();
-
-        // Return JWT
-        createSendJwt(user, 200, res);
-    } catch (err) {
-        return res.status(500).json({ msg: 'Server Error' });
+    // Check if a user with that email exists
+    let user = await User.findOne({ email });
+    if (user) {
+        return next(new AppError('User with this email already exists', 400));
     }
-};
 
-exports.loginUser = async (req, res) => {
-    try {
-        const { email, password } = req.body;
+    // Get gravatar for that email & set a default
+    const avatar = gravatar.url(email, {
+        s: '200', // Size
+        r: 'pg', // Rating
+        d: 'mm', // Default
+    });
 
-        // Check user exists
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(400).json({ user: 'Email or password incorrect' });
-        }
+    // Create new user
+    user = new User({
+        name,
+        email,
+        avatar: normalize(avatar),
+        password,
+    });
 
-        // Check password is correct
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(400).json({ user: 'Email or password incorrect' });
-        }
+    // Encrypt password
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
 
-        // User matched - create and send JWT
-        createSendJwt(user, 200, res);
-    } catch (err) {
-        return res.status(500).json({ msg: 'Server error' });
+    // Save user to database
+    await user.save();
+
+    // Return JWT
+    createSendJwt(user, 200, res);
+});
+
+exports.loginUser = catchAsync(async (req, res, next) => {
+    const { email, password } = req.body;
+
+    // Check user exists
+    const user = await User.findOne({ email });
+    if (!user) {
+        return next(new AppError('Email or password incorrect', 400));
     }
-};
 
-exports.privateRoute = async (req, res, next) => {
-    try {
-        // Get token from header or cookies
-        let token;
-        if (req.header('x-auth-token')) {
-            token = req.header('x-auth-token');
-        }
-
-        // TODO: Add cookie options?
-        // else if (req.cookies.jwt) {
-        //     token = req.cookies.jwt;
-        // }
-
-        // Check if token exists
-        if (!token) {
-            return res.status(401).json({ token: 'No token, authorization denied' });
-        }
-
-        // Remove bearer from token if it exists
-        if (token.startsWith('Bearer') || token.startsWith('Token')) {
-            token = req.header('x-auth-token').split(' ')[1];
-        }
-
-        // Verify token
-        const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-
-        // Get user and check if user still exists
-        const user = await User.findById(decoded.id).select('-password -createdAt');
-
-        if (!user) {
-            return res
-                .status(401)
-                .json({ user: 'The user belonging to this token no longer exists' });
-        }
-
-        req.user = user;
-        next();
-    } catch (err) {
-        res.status(500).json({ msg: 'Server error' });
+    // Check password is correct
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+        return next(new AppError('Email or password incorrect', 400));
     }
-};
+
+    // User matched - create and send JWT
+    createSendJwt(user, 200, res);
+});
+
+exports.privateRoute = catchAsync(async (req, res, next) => {
+    // Get token from header or cookies
+    let token;
+    if (req.header('x-auth-token')) {
+        token = req.header('x-auth-token');
+    }
+
+    // TODO: Add cookie options?
+    // else if (req.cookies.jwt) {
+    //     token = req.cookies.jwt;
+    // }
+
+    // Remove bearer from token if it exists
+    if (token.startsWith('Bearer') || token.startsWith('Token')) {
+        token = req.header('x-auth-token').split(' ')[1];
+    }
+
+    // Check if token exists
+    if (!token) {
+        return next(new AppError('No token, authorization denied', 401));
+    }
+
+    // Verify token
+    const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+    // Get user and check if user still exists
+    const user = await User.findById(decoded.id).select('-password -createdAt');
+
+    if (!user) {
+        return next(new AppError('The user belonging to this token no longer exists', 401));
+    }
+
+    req.user = user;
+    next();
+});

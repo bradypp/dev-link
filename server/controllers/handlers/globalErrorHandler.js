@@ -81,15 +81,16 @@ const sendErrorProd = (err, req, res) => {
     });
 };
 
-module.exports = (err, req, res, next) => {
-    const error = {
-        status: err.status || 'error',
-        statusCode: err.statusCode || 500,
-        message: err.message,
-    };
-
+const globalErrorHandler = (err, req, res, next) => {
     if (process.env.NODE_ENV === 'development') {
-        sendErrorDev(error, req, res);
+        // TODO: Use this error?
+        // const error = {
+        //     status: err.status || 'error',
+        //     statusCode: err.statusCode || 500,
+        //     message: err.message,
+        //     stack: err.stack,
+        // };
+        sendErrorDev(err, req, res);
     } else if (process.env.NODE_ENV === 'production') {
         let error = {
             ...err,
@@ -105,3 +106,5 @@ module.exports = (err, req, res, next) => {
         sendErrorProd(error, req, res);
     }
 };
+
+module.exports = globalErrorHandler;

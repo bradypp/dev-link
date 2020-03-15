@@ -18,6 +18,7 @@ module.exports = {
         'import/no-unresolved': 0,
         'no-nested-ternary': 0,
         camelcase: 0,
+        'no-console': [2, { allow: ['warn', 'error'] }],
 
         // Node Rules
         'prefer-destructuring': [2, { object: true, array: false }],

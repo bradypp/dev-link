@@ -13,8 +13,11 @@ exports.registerRules = () => {
             'password',
             'Password must contain a mix of letters, numbers and symbols',
         ).custom(value => value.match(/^(?=.*[a-z])(?=.*[0-9])(?=.*[^0-9a-zA-Z]).{8,}$/g)),
-        body('password', 'Password must contain at least 8 characters').isLength({ min: 8 }),
+        body('password', 'Password must contain at least 8 characters')
+            .notEmpty()
+            .isLength({ min: 8 }),
         body('password2', 'Passwords must match')
+            .notEmpty()
             .exists()
             .custom((value, { req }) => value === req.body.password),
     ];
@@ -26,6 +29,8 @@ exports.loginRules = () => {
             .trim()
             .normalizeEmail()
             .isEmail(),
-        body('password', 'Password is required').exists(),
+        body('password', 'Password is required')
+            .notEmpty()
+            .exists(),
     ];
 };

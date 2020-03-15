@@ -1,8 +1,9 @@
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
 const Post = require('../../models/Post');
+const catchAsync = require('../../utils/catchAsync');
 
-exports.getCurrentUser = (req, res) => {
+exports.getCurrentUser = (req, res, next) => {
     if (!req.user) {
         return res.status(400).json({ user: 'User not found' });
     }
@@ -10,16 +11,12 @@ exports.getCurrentUser = (req, res) => {
     res.json(req.user);
 };
 
-exports.deleteUser = async (req, res) => {
-    try {
-        const { id } = req.user;
+exports.deleteUser = catchAsync(async (req, res, next) => {
+    const { id } = req.user;
 
-        await Post.deleteMany({ user: id });
-        await Profile.findOneAndRemove({ user: id });
-        await User.findOneAndRemove({ _id: id });
+    await Post.deleteMany({ user: id });
+    await Profile.findOneAndRemove({ user: id });
+    await User.findOneAndRemove({ _id: id });
 
-        res.json({ success: true, msg: 'User deleted' });
-    } catch (err) {
-        res.status(404).json(err);
-    }
-};
+    res.json({ success: true, msg: 'User deleted' });
+});
