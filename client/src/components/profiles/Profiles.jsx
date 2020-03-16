@@ -9,6 +9,16 @@ const Profiles = ({ getProfiles, profilesLoading, allProfiles }) => {
     useEffect(() => {
         getProfiles();
     }, [getProfiles]);
+
+    const renderProfiles = () =>
+        allProfiles.length > 0 ? (
+            allProfiles.map(profileData => (
+                <ProfileItem key={profileData._id} profileData={profileData} />
+            ))
+        ) : (
+            <h4>No profiles found...</h4>
+        );
+
     return (
         <>
             {profilesLoading ? (
@@ -19,15 +29,7 @@ const Profiles = ({ getProfiles, profilesLoading, allProfiles }) => {
                     <p className="lead">
                         <i className="fab fa-connectdevelop" /> Browse and connect with developers
                     </p>
-                    <div className="profiles">
-                        {allProfiles.length > 0 ? (
-                            allProfiles.map(profileData => (
-                                <ProfileItem key={profileData._id} profileData={profileData} />
-                            ))
-                        ) : (
-                            <h4>No profiles found...</h4>
-                        )}
-                    </div>
+                    <div className="profiles">{renderProfiles()}</div>
                 </>
             )}
         </>

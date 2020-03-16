@@ -10,6 +10,13 @@ const Posts = ({ getPosts, posts, isPostsLoading }) => {
         getPosts();
     }, [getPosts]);
 
+    const renderPosts = () =>
+        posts.length > 0 ? (
+            posts.map(post => <PostItem key={post._id} post={post} />)
+        ) : (
+            <h4>There are no posts...</h4>
+        );
+
     return isPostsLoading ? (
         <Spinner />
     ) : (
@@ -19,11 +26,7 @@ const Posts = ({ getPosts, posts, isPostsLoading }) => {
                 <i className="fas fa-user" /> Welcome to the community
             </p>
             <PostForm />
-            <div className="posts">
-                {posts.map(post => (
-                    <PostItem key={post._id} post={post} />
-                ))}
-            </div>
+            <div className="posts">{renderPosts()}</div>
         </>
     );
 };
