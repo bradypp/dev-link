@@ -1,38 +1,10 @@
 const gravatar = require('gravatar');
 const { promisify } = require('util');
 const normalize = require('normalize-url');
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const catchAsync = require('../../utils/catchAsync');
 const AppError = require('../../utils/appError');
 const User = require('../../models/User');
-
-const createSendJwt = (user, statusCode, res) => {
-    // Create payload
-    const payload = { id: user.id };
-
-    // Create JWT token
-    const token = jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES_IN,
-    });
-
-    // TODO: Add cookie options?
-    // const cookieOptions = {
-    //     expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
-    //     httpOnly: true,
-    // };
-    // if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
-
-    // res.cookie('jwt', token, cookieOptions);
-
-    // Send token & user data in response
-    res.status(statusCode).json({
-        status: 'success',
-        data: {
-            token,
-        },
-    });
-};
 
 exports.createUser = catchAsync(async (req, res, next) => {
     const { name, email, password } = req.body;
@@ -59,35 +31,25 @@ exports.createUser = catchAsync(async (req, res, next) => {
         password,
     });
 
-    // Encrypt password
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(password, salt);
-
-    // Save user to database
+    user.password = await User.encryptPassword(password);
     await user.save();
 
-    // Return JWT
-    createSendJwt(user, 200, res);
+    // Create and send JWT
+    user.createSendJwt(res);
 });
 
 exports.loginUser = catchAsync(async (req, res, next) => {
     const { email, password } = req.body;
 
-    // Check user exists
     const user = await User.findOne({ email }).select('+password');
+    const isPasswordValid = await user.checkPassword(password);
 
-    if (!user) {
+    if (!user || !isPasswordValid) {
         return next(new AppError('Email or password incorrect', 400));
     }
 
-    // Check password is correct
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-        return next(new AppError('Email or password incorrect', 400));
-    }
-
-    // User matched - create and send JWT
-    createSendJwt(user, 200, res);
+    // Create and send JWT
+    user.createSendJwt(res);
 });
 
 exports.protected = catchAsync(async (req, res, next) => {

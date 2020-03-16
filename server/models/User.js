@@ -56,12 +56,12 @@ userSchema.methods.createSendJwt = function(res) {
 };
 
 userSchema.methods.checkPassword = async function(password) {
-    return await bcrypt.compare(password, this.password);
+    return bcrypt.compare(password, this.password);
 };
 
-userSchema.methods.encryptPassword = async function(password) {
+userSchema.statics.encryptPassword = async function(password) {
     const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(password, salt);
+    return bcrypt.hash(password, salt);
 };
 
 module.exports = model('User', userSchema, 'users');
