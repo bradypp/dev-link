@@ -1,15 +1,11 @@
 const Post = require('../../models/Post');
 const User = require('../../models/User');
 const catchAsync = require('../../utils/catchAsync');
+const AppError = require('../../utils/appError');
 
 exports.getAllPosts = catchAsync(async (req, res, next) => {
     // Find all posts and sort by date
     const posts = await Post.find().sort('-createdAt');
-
-    if (!posts) {
-        return res.status(404).json({ posts: 'No posts found' });
-    }
-
     res.json(posts);
 });
 
@@ -18,7 +14,7 @@ exports.getPostById = catchAsync(async (req, res, next) => {
     const post = await Post.findById(id);
 
     if (!post) {
-        return res.status(404).json({ post: 'Post not found' });
+        return next(new AppError('Post not found', 404));
     }
 
     res.json(post);
@@ -32,13 +28,17 @@ exports.createNewPost = catchAsync(async (req, res, next) => {
     const user = await User.findById(id).select('-password');
 
     if (!user) {
-        return res.status(400).json({ user: 'User not found' });
+        return next(new AppError('User not found', 404));
     }
 
     const { name, avatar } = user;
 
     // Create and save new post
-    const post = await new Post({ text, name, avatar, user: id }).save();
+    const post = await Post.create(
+        { text, name, avatar, user: id },
+        { new: true, runValidators: true },
+    );
+    // const post = await new Post({ text, name, avatar, user: id }).save();
 
     res.json(post);
 });
@@ -46,13 +46,14 @@ exports.createNewPost = catchAsync(async (req, res, next) => {
 exports.deletePostById = catchAsync(async (req, res, next) => {
     // Get and check post exists
     const post = await Post.findById(req.params.id);
+
     if (!post) {
-        return res.status(404).json({ post: 'Post not found' });
+        return next(new AppError('Post not found', 404));
     }
 
     // Check user is authorized
     if (post.user.toString() !== req.user.id) {
-        return res.status(401).json({ msg: 'User not authorized' });
+        return next(new AppError('User not authorized', 401));
     }
 
     // Remove post
@@ -63,13 +64,14 @@ exports.deletePostById = catchAsync(async (req, res, next) => {
 exports.addPostLike = catchAsync(async (req, res, next) => {
     // Get and check post exists
     const post = await Post.findById(req.params.id);
+
     if (!post) {
-        return res.status(404).json({ post: 'Post not found' });
+        return next(new AppError('Post not found', 404));
     }
 
     // Check if post is already liked by user
     if (post.likes.filter(like => like.user.toString() === req.user.id).length > 0) {
-        return res.status(400).json({ msg: 'User has already liked this post' });
+        return next(new AppError('User has already liked this post', 400));
     }
 
     // Add user id to likes array and save
@@ -82,13 +84,14 @@ exports.addPostLike = catchAsync(async (req, res, next) => {
 exports.removePostLike = catchAsync(async (req, res, next) => {
     // Get and check post exists
     const post = await Post.findById(req.params.id);
+
     if (!post) {
-        return res.status(404).json({ post: 'Post not found' });
+        return next(new AppError('Post not found', 404));
     }
 
     // Check if post is liked by user
     if (post.likes.filter(like => like.user.toString() === req.user.id).length === 0) {
-        return res.status(400).json({ msg: 'User has not yet liked this post' });
+        return next(new AppError('User has not yet liked this post', 400));
     }
 
     // Get like to remove index
@@ -105,6 +108,10 @@ exports.addPostComment = catchAsync(async (req, res, next) => {
     // Get user and post
     const user = await User.findById(req.user.id).select('-password');
     const post = await Post.findById(req.params.id);
+
+    if (!post) {
+        return next(new AppError('Post not found', 404));
+    }
 
     // Create comment
     const newComment = {
@@ -124,12 +131,16 @@ exports.addPostComment = catchAsync(async (req, res, next) => {
 exports.removePostComment = catchAsync(async (req, res, next) => {
     const post = await Post.findById(req.params.id);
 
+    if (!post) {
+        return next(new AppError('Post not found', 404));
+    }
+
     // Pull out comment
     const comment = post.comments.find(comment => comment.id === req.params.comment_id);
 
     // Check comment exists
     if (!comment) {
-        return res.status(404).json({ comment: 'Comment does not exist' });
+        return next(new AppError('Comment does not exist', 404));
     }
 
     // Check user is authorized

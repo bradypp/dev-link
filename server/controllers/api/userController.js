@@ -2,12 +2,12 @@ const User = require('../../models/User');
 const Profile = require('../../models/Profile');
 const Post = require('../../models/Post');
 const catchAsync = require('../../utils/catchAsync');
+const AppError = require('../../utils/appError');
 
 exports.getCurrentUser = (req, res, next) => {
     if (!req.user) {
-        return res.status(400).json({ user: 'User not found' });
+        return next(new AppError('User not found', 404));
     }
-
     res.json(req.user);
 };
 

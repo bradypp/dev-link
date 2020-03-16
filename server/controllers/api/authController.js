@@ -34,6 +34,7 @@ exports.createUser = catchAsync(async (req, res, next) => {
 
     // Check if a user with that email exists
     let user = await User.findOne({ email });
+
     if (user) {
         return next(new AppError('User with this email already exists', 400));
     }
@@ -69,6 +70,7 @@ exports.loginUser = catchAsync(async (req, res, next) => {
 
     // Check user exists
     const user = await User.findOne({ email });
+
     if (!user) {
         return next(new AppError('Email or password incorrect', 400));
     }
@@ -95,14 +97,13 @@ exports.privateRoute = catchAsync(async (req, res, next) => {
     //     token = req.cookies.jwt;
     // }
 
-    // Remove bearer from token if it exists
-    if (token.startsWith('Bearer') || token.startsWith('Token')) {
-        token = req.header('x-auth-token').split(' ')[1];
-    }
-
     // Check if token exists
     if (!token) {
         return next(new AppError('No token, authorization denied', 401));
+    }
+    // Remove bearer from token if it exists
+    if (token.startsWith('Bearer') || token.startsWith('Token')) {
+        token = req.header('x-auth-token').split(' ')[1];
     }
 
     // Verify token

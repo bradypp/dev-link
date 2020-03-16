@@ -2,6 +2,7 @@ const normalize = require('normalize-url');
 const axios = require('axios');
 const Profile = require('../../models/Profile');
 const catchAsync = require('../../utils/catchAsync');
+const AppError = require('../../utils/appError');
 
 exports.getCurrentUserProfile = catchAsync(async (req, res, next) => {
     const { id } = req.user;
@@ -12,7 +13,7 @@ exports.getCurrentUserProfile = catchAsync(async (req, res, next) => {
     ]);
 
     if (!profile) {
-        return res.status(400).json({ profile: 'There is no profile for this user' });
+        return next(new AppError('There is no profile for this user', 404));
     }
 
     res.json(profile);
@@ -20,10 +21,6 @@ exports.getCurrentUserProfile = catchAsync(async (req, res, next) => {
 
 exports.getAllUserProfiles = catchAsync(async (req, res, next) => {
     const profiles = await Profile.find().populate('user', ['name', 'email', 'avatar']);
-
-    if (!profiles) {
-        return res.status(400).json({ profiles: 'There are no profiles' });
-    }
 
     res.json(profiles);
 });
@@ -37,7 +34,7 @@ exports.getProfileByUserId = catchAsync(async (req, res, next) => {
     ]);
 
     if (!profile) {
-        return res.status(400).json({ profile: 'Profile not found' });
+        return next(new AppError('Profile not found', 404));
     }
 
     res.json(profile);
@@ -68,14 +65,14 @@ exports.createOrUpdateUserProfile = catchAsync(async (req, res, next) => {
         bio,
         status,
         github_username,
-        website: website ? normalize(website, { forceHttps: true }) : '',
-        skills: skills.split(',').map(skill => skill.trim()),
+        website: website ? normalize(website, { forceHttps: true }) : null,
+        skills: skills ? skills.split(',').map(skill => skill.trim()) : null,
         social: {
-            youtube: youtube ? normalize(youtube, { forceHttps: true }) : '',
-            twitter: twitter ? normalize(twitter, { forceHttps: true }) : '',
-            facebook: facebook ? normalize(facebook, { forceHttps: true }) : '',
-            linkedin: linkedin ? normalize(linkedin, { forceHttps: true }) : '',
-            instagram: instagram ? normalize(instagram, { forceHttps: true }) : '',
+            youtube: youtube ? normalize(youtube, { forceHttps: true }) : null,
+            twitter: twitter ? normalize(twitter, { forceHttps: true }) : null,
+            facebook: facebook ? normalize(facebook, { forceHttps: true }) : null,
+            linkedin: linkedin ? normalize(linkedin, { forceHttps: true }) : null,
+            instagram: instagram ? normalize(instagram, { forceHttps: true }) : null,
         },
     };
 
@@ -96,6 +93,10 @@ exports.addExperienceToProfile = catchAsync(async (req, res, next) => {
     // Find profile
     const profile = await Profile.findOne({ user: id });
 
+    if (!profile) {
+        return next(new AppError('Profile not found', 404));
+    }
+
     // Make new experience object
     const newExp = { title, company, location, from, to, current, description };
 
@@ -113,6 +114,10 @@ exports.removeExperienceFromProfile = catchAsync(async (req, res, next) => {
 
     // Find profile
     const profile = await Profile.findOne({ user: id });
+
+    if (!profile) {
+        return next(new AppError('Profile not found', 404));
+    }
 
     // Get remove index
     const removeIndex = profile.experience.map(item => item.id).indexOf(exp_id);
@@ -132,6 +137,10 @@ exports.addEducationToProfile = catchAsync(async (req, res, next) => {
     // Find profile
     const profile = await Profile.findOne({ user: id });
 
+    if (!profile) {
+        return next(new AppError('Profile not found', 404));
+    }
+
     // Make new education object
     const newEdu = { school, degree, field_of_study, from, to, current, description };
 
@@ -149,6 +158,10 @@ exports.removeEducationFromProfile = catchAsync(async (req, res, next) => {
 
     // Find profile
     const profile = await Profile.findOne({ user: id });
+
+    if (!profile) {
+        return next(new AppError('Profile not found', 404));
+    }
 
     // Get remove index
     const removeIndex = profile.education.map(item => item.id).indexOf(edu_id);

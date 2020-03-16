@@ -1,7 +1,7 @@
 const { registerRules, loginRules } = require('./authRules');
 const { postRules, postCommentRules } = require('./postsRules');
 const { profileRules, experienceRules, educationRules } = require('./profileRules');
-const validationHandler = require('./validationHandler');
+const validate = require('./validate');
 
 const {
     REGISTER,
@@ -35,7 +35,7 @@ const validationRules = type => {
 };
 
 const validation = type => {
-    return [validationRules(type), validationHandler];
+    return [validationRules(type), validate];
 };
 
 module.exports = validation;
