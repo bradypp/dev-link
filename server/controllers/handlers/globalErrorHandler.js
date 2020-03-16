@@ -113,11 +113,11 @@ const globalErrorHandler = (err, req, res, next) => {
     // Handle and send validation errors
     if (err.name === 'ExpressValidationErrors') {
         error = handleExpressValidationErrors(err);
-        sendValidationErrors(error, req, res);
+        return sendValidationErrors(error, req, res);
     }
     if (err.name === 'ValidationError') {
         error = handleValidationErrorsDB(err);
-        sendValidationErrors(error, req, res);
+        return sendValidationErrors(error, req, res);
     }
 
     error = {
