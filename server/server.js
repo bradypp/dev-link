@@ -1,5 +1,13 @@
+/* eslint-disable no-console */
 /* eslint-disable no-process-exit */
 require('dotenv').config({ path: './.env.local' });
+
+// Handle any uncaught ex
+process.on('uncaughtException', err => {
+    console.log('UNCAUGHT EXCEPTION! Shutting down...');
+    console.error(err.name, err.message);
+    process.exit(1);
+});
 
 const app = require('./app');
 const connectDB = require('./config/db');
@@ -8,12 +16,11 @@ connectDB();
 
 const port = process.env.PORT || 5000;
 
-// eslint-disable-next-line no-console
 const server = app.listen(port, () => console.log(`Server running on port ${port}...`));
 
-// Server error handling event
+// Final error handling safety net
 process.on('unhandledRejection', err => {
+    console.log('UNHANDLED REJECTION! Shutting down...');
     console.error(err.name, err.message);
-    // Close server and exit the app
     server.close(() => process.exit(1));
 });
