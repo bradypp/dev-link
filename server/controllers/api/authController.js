@@ -55,8 +55,8 @@ exports.loginUser = catchAsync(async (req, res, next) => {
 exports.protected = catchAsync(async (req, res, next) => {
     // Get token from header or cookies
     let token;
-    if (req.header('x-auth-token')) {
-        token = req.header('x-auth-token');
+    if (req.header('Authorization')) {
+        token = req.header('Authorization');
     }
 
     // TODO: Add cookie options?
@@ -70,7 +70,7 @@ exports.protected = catchAsync(async (req, res, next) => {
     }
     // Remove bearer from token if it exists
     if (token.startsWith('Bearer') || token.startsWith('Token')) {
-        token = req.header('x-auth-token').split(' ')[1];
+        token = req.header('Authorization').split(' ')[1];
     }
 
     // Verify token
@@ -81,6 +81,11 @@ exports.protected = catchAsync(async (req, res, next) => {
 
     if (!user) {
         return next(new AppError('The user belonging to this token no longer exists', 401));
+    }
+
+    // Check if user has changed password since token was issued
+    if (user.changedPasswordSinceJWT(decoded.iat)) {
+        return next(new AppError('User recently changed password! Please login again.', 401));
     }
 
     req.user = user;

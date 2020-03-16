@@ -2,9 +2,9 @@ import { api } from 'utils';
 
 const setAuthToken = token => {
     if (token) {
-        api.defaults.headers.common['x-auth-token'] = token;
+        api.defaults.headers.common.Authorization = token;
     } else {
-        delete api.defaults.headers.common['x-auth-token'];
+        delete api.defaults.headers.common.Authorization;
     }
 };
 

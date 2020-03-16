@@ -18,7 +18,6 @@ const PostItem = ({
     showActions,
 }) => {
     const { _id, text, name, avatar, user, likes, comments, date } = post;
-    console.log(post);
     return (
         <div className="post bg-white p-1 my-1">
             <div>
