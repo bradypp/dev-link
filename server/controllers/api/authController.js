@@ -74,7 +74,7 @@ exports.loginUser = catchAsync(async (req, res, next) => {
     const { email, password } = req.body;
 
     // Check user exists
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select('+password');
 
     if (!user) {
         return next(new AppError('Email or password incorrect', 400));
@@ -115,7 +115,7 @@ exports.protected = catchAsync(async (req, res, next) => {
     const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
     // Get user and check if user still exists
-    const user = await User.findById(decoded.id).select('-password -createdAt');
+    const user = await User.findById(decoded.id);
 
     if (!user) {
         return next(new AppError('The user belonging to this token no longer exists', 401));

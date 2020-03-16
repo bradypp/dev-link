@@ -16,6 +16,14 @@ const handleJWTError = () => new AppError('Invalid token. Please log in again!',
 const handleJWTExpiredError = () =>
     new AppError('Your token has expired! Please log in again.', 401);
 
+const handleUnhandledError = () => {
+    const error = new AppError('Something went very wrong!', 500);
+    return {
+        ...error,
+        stack: error.stack,
+    };
+};
+
 const handleValidationErrors = err => {
     if (process.env.NODE_ENV === 'development') {
         return {
@@ -130,6 +138,7 @@ const globalErrorHandler = (err, req, res, next) => {
     if (error.code === 11000) error = handleDuplicateFieldsDB(error);
     if (error.name === 'JsonWebTokenError') error = handleJWTError();
     if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
+    if (!error.statusCode || !error.status || !error.message) error = handleUnhandledError();
 
     // Send error to the client
     if (process.env.NODE_ENV === 'development') {
