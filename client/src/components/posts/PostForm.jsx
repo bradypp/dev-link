@@ -17,7 +17,8 @@ const PostForm = ({ addPost }) => {
                     e.preventDefault();
                     addPost({ text });
                     setText('');
-                }}>
+                }}
+                noValidate>
                 <textarea
                     name="text"
                     cols="30"

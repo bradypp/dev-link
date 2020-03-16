@@ -7,6 +7,7 @@ import {
     GET_POST,
     ADD_COMMENT,
     REMOVE_COMMENT,
+    POSTS_LOADING,
 } from 'redux/actionTypes';
 
 const initialState = {
@@ -17,18 +18,28 @@ const initialState = {
 
 export default function(state = initialState, { type, payload }) {
     switch (type) {
-        case GET_POSTS:
+        case POSTS_LOADING: {
             return {
                 ...state,
-                posts: payload,
-                isLoading: false,
+                isLoading: true,
             };
-        case GET_POST:
+        }
+        case GET_POSTS: {
+            const { posts } = payload.data;
             return {
                 ...state,
-                post: payload,
                 isLoading: false,
+                posts,
             };
+        }
+        case GET_POST: {
+            const { post } = payload.data;
+            return {
+                ...state,
+                isLoading: false,
+                post,
+            };
+        }
         case ADD_POST:
             return {
                 ...state,
@@ -46,20 +57,22 @@ export default function(state = initialState, { type, payload }) {
                 ...state,
                 isLoading: false,
             };
-        case UPDATE_LIKES:
+        case UPDATE_LIKES: {
+            const { _id, likes } = payload.data.post;
             return {
                 ...state,
-                posts: state.posts.map(post =>
-                    post._id === payload._id ? { ...post, likes: payload.likes } : post.likes,
-                ),
+                posts: state.posts.map(post => (post._id === _id ? { ...post, likes } : post)),
                 isLoading: false,
             };
-        case ADD_COMMENT:
+        }
+        case ADD_COMMENT: {
+            const { comments } = payload.data;
             return {
                 ...state,
-                post: { ...state.post, comments: payload },
+                post: { ...state.post, comments },
                 isLoading: false,
             };
+        }
         case REMOVE_COMMENT:
             return {
                 ...state,

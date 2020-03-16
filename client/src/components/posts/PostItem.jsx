@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
+import isEmpty from 'lodash.isempty';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { addLike, removeLike, deletePost } from 'redux/posts';
@@ -17,6 +18,7 @@ const PostItem = ({
     showActions,
 }) => {
     const { _id, text, name, avatar, user, likes, comments, date } = post;
+    console.log(post);
     return (
         <div className="post bg-white p-1 my-1">
             <div>
@@ -38,7 +40,7 @@ const PostItem = ({
                             type="button"
                             className="btn btn-light">
                             <i className="fas fa-thumbs-up" />{' '}
-                            <span>{likes.length > 0 && likes.length}</span>
+                            <span>{!isEmpty(likes) && likes.length}</span>
                         </button>
                         <button
                             onClick={() => removeLike(_id)}
@@ -48,7 +50,7 @@ const PostItem = ({
                         </button>
                         <Link to={`/posts/${_id}`} className="btn btn-primary">
                             Discussion{' '}
-                            {comments.length > 0 && (
+                            {!isEmpty(comments) && (
                                 <span className="comment-count">{comments.length}</span>
                             )}
                         </Link>

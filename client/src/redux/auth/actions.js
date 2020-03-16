@@ -1,4 +1,5 @@
 import { api, errorHandler } from 'utils';
+import { setAlert } from 'redux/alerts';
 import {
     REGISTER_SUCCESS,
     USER_LOADED,
@@ -7,6 +8,7 @@ import {
     LOGIN_SUCCESS,
     CLEAR_PROFILE,
     LOGOUT_USER,
+    ACCOUNT_DELETED,
 } from 'redux/actionTypes';
 
 // Auth error
@@ -83,4 +85,21 @@ export const loginUser = ({ email, password }) => async dispatch => {
 export const logoutUser = () => dispatch => {
     dispatch({ type: CLEAR_PROFILE });
     dispatch({ type: LOGOUT_USER });
+};
+
+// TODO: Custom confirm modal/notification
+// Delete account & profile
+export const deleteAccount = () => async dispatch => {
+    if (window.confirm('Are you sure? This can NOT be undone!')) {
+        try {
+            await api.delete('/user');
+
+            dispatch({ type: CLEAR_PROFILE });
+            dispatch({ type: ACCOUNT_DELETED });
+
+            dispatch(setAlert('Your account has been permanently deleted'));
+        } catch (err) {
+            errorHandler(err, dispatch, authError);
+        }
+    }
 };

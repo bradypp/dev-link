@@ -17,7 +17,8 @@ const CommentForm = ({ postId, addComment }) => {
                     e.preventDefault();
                     addComment(postId, { text });
                     setText('');
-                }}>
+                }}
+                noValidate>
                 <textarea
                     name="text"
                     cols="30"

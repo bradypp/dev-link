@@ -6,7 +6,6 @@ import {
     PROFILE_ERROR,
     UPDATE_PROFILE,
     CLEAR_PROFILE,
-    ACCOUNT_DELETED,
     GET_REPOS,
     PROFILE_LOADING,
 } from 'redux/actionTypes';
@@ -179,22 +178,5 @@ export const deleteEducation = id => async dispatch => {
         dispatch(setAlert('Education Removed', 'success'));
     } catch (err) {
         errorHandler(err, dispatch, profileError);
-    }
-};
-
-// TODO: Custom confirm modal/notification
-// Delete account & profile
-export const deleteAccount = () => async dispatch => {
-    if (window.confirm('Are you sure? This can NOT be undone!')) {
-        try {
-            await api.delete('/user');
-
-            dispatch({ type: CLEAR_PROFILE });
-            dispatch({ type: ACCOUNT_DELETED });
-
-            dispatch(setAlert('Your account has been permanently deleted'));
-        } catch (err) {
-            errorHandler(err, dispatch, profileError);
-        }
     }
 };

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Spinner, ProfileItem } from 'components';
@@ -12,9 +13,7 @@ const Profiles = ({ getProfiles, profilesLoading, allProfiles }) => {
 
     const renderProfiles = () =>
         allProfiles.length > 0 ? (
-            allProfiles.map(profileData => (
-                <ProfileItem key={profileData._id} profileData={profileData} />
-            ))
+            allProfiles.map(profileData => <ProfileItem key={uuidv4()} profileData={profileData} />)
         ) : (
             <h4>No profiles found...</h4>
         );

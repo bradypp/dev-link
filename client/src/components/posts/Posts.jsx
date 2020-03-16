@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import isEmpty from 'lodash.isempty';
+import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Spinner, PostItem, PostForm } from 'components';
@@ -11,22 +13,26 @@ const Posts = ({ getPosts, posts, isPostsLoading }) => {
     }, [getPosts]);
 
     const renderPosts = () =>
-        posts.length > 0 ? (
-            posts.map(post => <PostItem key={post._id} post={post} />)
+        !isEmpty(posts) ? (
+            posts.map(post => <PostItem key={uuidv4()} post={post} />)
         ) : (
             <h4>There are no posts...</h4>
         );
 
-    return isPostsLoading ? (
-        <Spinner />
-    ) : (
+    return (
         <>
             <h1 className="large text-primary">Posts</h1>
             <p className="lead">
                 <i className="fas fa-user" /> Welcome to the community
             </p>
             <PostForm />
-            <div className="posts">{renderPosts()}</div>
+            {isPostsLoading ? (
+                <Spinner />
+            ) : (
+                <>
+                    <div className="posts">{renderPosts()}</div>
+                </>
+            )}
         </>
     );
 };

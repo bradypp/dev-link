@@ -9,6 +9,7 @@ import {
     GET_POST,
     ADD_COMMENT,
     REMOVE_COMMENT,
+    POSTS_LOADING,
 } from 'redux/actionTypes';
 
 // Post error
@@ -21,6 +22,10 @@ export const postError = () => async dispatch => {
 // Get posts
 export const getPosts = () => async dispatch => {
     try {
+        dispatch({
+            type: POSTS_LOADING,
+        });
+
         const res = await api.get('/posts');
 
         dispatch({
@@ -39,7 +44,7 @@ export const addLike = id => async dispatch => {
 
         dispatch({
             type: UPDATE_LIKES,
-            payload: { _id: res.data._id, likes: res.data.likes },
+            payload: res.data,
         });
     } catch (err) {
         errorHandler(err, dispatch, postError);
@@ -53,7 +58,7 @@ export const removeLike = id => async dispatch => {
 
         dispatch({
             type: UPDATE_LIKES,
-            payload: { _id: res.data._id, likes: res.data.likes },
+            payload: res.data,
         });
     } catch (err) {
         errorHandler(err, dispatch, postError);

@@ -20,13 +20,15 @@ const initialState = {
 
 export default (state = initialState, { type, payload }) => {
     switch (type) {
-        case USER_LOADED:
+        case USER_LOADED: {
+            const { user } = payload.data;
             return {
                 ...state,
                 isAuthenticated: true,
                 isLoading: false,
-                user: payload,
+                user,
             };
+        }
         case USER_LOADING:
             return {
                 ...state,
@@ -35,14 +37,16 @@ export default (state = initialState, { type, payload }) => {
                 user: {},
             };
         case REGISTER_SUCCESS:
-        case LOGIN_SUCCESS:
-            setAuthToken(payload.token);
+        case LOGIN_SUCCESS: {
+            const { token } = payload.data;
+            setAuthToken(token);
             return {
                 ...state,
-                token: payload.token,
                 isAuthenticated: true,
                 isLoading: false,
+                token,
             };
+        }
         case AUTH_ERROR:
         case LOGOUT_USER:
         case ACCOUNT_DELETED:

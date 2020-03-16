@@ -7,10 +7,9 @@ import { createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash.isempty';
 import { Spinner, DashboardActions, Education, Experience } from 'components';
 import { clearAlerts, selectAlerts } from 'redux/alerts';
-import { selectUserFirstName } from 'redux/auth';
+import { selectUserFirstName, deleteAccount } from 'redux/auth';
 import {
     getCurrentUserProfile,
-    deleteAccount,
     selectProfileData,
     selectIsProfileLoading,
     selectProfileEducation,
@@ -42,7 +41,7 @@ const Dashboard = ({
     return (
         <>
             <h1 className="large text-primary">Dashboard</h1>
-            {isProfileLoading || isEmpty(profileData) ? (
+            {isProfileLoading && isEmpty(profileData) ? (
                 <Spinner />
             ) : (
                 <>
