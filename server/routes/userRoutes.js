@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const { getCurrentUser, deleteUser } = require('../controllers/api/userController');
-const { privateRoute } = require('../controllers/api/authController');
+const { protected } = require('../controllers/api/authController');
 
-// All routes after this middleware are private
-router.use(privateRoute);
+// All routes after this middleware are protected
+router.use(protected);
 
 router
     .route('/')

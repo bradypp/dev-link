@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { privateRoute } = require('../controllers/api/authController');
+const { protected } = require('../controllers/api/authController');
 const {
     getAllPosts,
     getPostById,
@@ -13,8 +13,8 @@ const {
 const validation = require('../controllers/api/validation');
 const { POST, POST_COMMENT } = require('../controllers/api/validation/validationTypes');
 
-// All routes after this middleware are private
-router.use(privateRoute);
+// All routes after this middleware are protected
+router.use(protected);
 
 router
     .route('/')

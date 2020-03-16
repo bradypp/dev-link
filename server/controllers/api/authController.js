@@ -85,7 +85,7 @@ exports.loginUser = catchAsync(async (req, res, next) => {
     createSendJwt(user, 200, res);
 });
 
-exports.privateRoute = catchAsync(async (req, res, next) => {
+exports.protected = catchAsync(async (req, res, next) => {
     // Get token from header or cookies
     let token;
     if (req.header('x-auth-token')) {
