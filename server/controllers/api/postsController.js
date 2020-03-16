@@ -6,7 +6,12 @@ const AppError = require('../../utils/appError');
 exports.getAllPosts = catchAsync(async (req, res, next) => {
     // Find all posts and sort by date
     const posts = await Post.find().sort('-createdAt');
-    res.json(posts);
+    res.json({
+        status: 'success',
+        data: {
+            posts,
+        },
+    });
 });
 
 exports.getPostById = catchAsync(async (req, res, next) => {
@@ -17,7 +22,12 @@ exports.getPostById = catchAsync(async (req, res, next) => {
         return next(new AppError('Post not found', 404));
     }
 
-    res.json(post);
+    res.json({
+        status: 'success',
+        data: {
+            post,
+        },
+    });
 });
 
 exports.createNewPost = catchAsync(async (req, res, next) => {
@@ -32,15 +42,15 @@ exports.createNewPost = catchAsync(async (req, res, next) => {
     }
 
     const { name, avatar } = user;
-
     // Create and save new post
-    const post = await Post.create(
-        { text, name, avatar, user: id },
-        { new: true, runValidators: true },
-    );
-    // const post = await new Post({ text, name, avatar, user: id }).save();
+    const post = await new Post({ text, name, avatar, user: id }).save();
 
-    res.json(post);
+    res.json({
+        status: 'success',
+        data: {
+            post,
+        },
+    });
 });
 
 exports.deletePostById = catchAsync(async (req, res, next) => {
@@ -58,7 +68,10 @@ exports.deletePostById = catchAsync(async (req, res, next) => {
 
     // Remove post
     await post.remove();
-    res.json({ msg: 'Post removed' });
+    res.json({
+        status: 'success',
+        message: 'Post removed',
+    });
 });
 
 exports.addPostLike = catchAsync(async (req, res, next) => {
@@ -78,7 +91,12 @@ exports.addPostLike = catchAsync(async (req, res, next) => {
     post.likes.push({ user: req.user.id });
     await post.save();
 
-    res.json(post);
+    res.json({
+        status: 'success',
+        data: {
+            post,
+        },
+    });
 });
 
 exports.removePostLike = catchAsync(async (req, res, next) => {
@@ -101,7 +119,12 @@ exports.removePostLike = catchAsync(async (req, res, next) => {
     post.likes.splice(removeIndex, 1);
     await post.save();
 
-    res.json(post);
+    res.json({
+        status: 'success',
+        data: {
+            post,
+        },
+    });
 });
 
 exports.addPostComment = catchAsync(async (req, res, next) => {
@@ -125,7 +148,12 @@ exports.addPostComment = catchAsync(async (req, res, next) => {
     post.comments.push(newComment);
     await post.save();
 
-    res.json(post.comments);
+    res.json({
+        status: 'success',
+        data: {
+            comments: post.comments,
+        },
+    });
 });
 
 exports.removePostComment = catchAsync(async (req, res, next) => {
@@ -157,5 +185,10 @@ exports.removePostComment = catchAsync(async (req, res, next) => {
     post.comments.splice(commentIndex, 1);
     await post.save();
 
-    res.json(post.comments);
+    res.json({
+        status: 'success',
+        data: {
+            comments: post.comments,
+        },
+    });
 });

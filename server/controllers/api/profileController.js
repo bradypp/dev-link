@@ -16,13 +16,23 @@ exports.getCurrentUserProfile = catchAsync(async (req, res, next) => {
         return next(new AppError('There is no profile for this user', 404));
     }
 
-    res.json(profile);
+    res.json({
+        status: 'success',
+        data: {
+            profile,
+        },
+    });
 });
 
 exports.getAllUserProfiles = catchAsync(async (req, res, next) => {
     const profiles = await Profile.find().populate('user', ['name', 'email', 'avatar']);
 
-    res.json(profiles);
+    res.json({
+        status: 'success',
+        data: {
+            profiles,
+        },
+    });
 });
 
 exports.getProfileByUserId = catchAsync(async (req, res, next) => {
@@ -37,7 +47,12 @@ exports.getProfileByUserId = catchAsync(async (req, res, next) => {
         return next(new AppError('Profile not found', 404));
     }
 
-    res.json(profile);
+    res.json({
+        status: 'success',
+        data: {
+            profile,
+        },
+    });
 });
 
 exports.createOrUpdateUserProfile = catchAsync(async (req, res, next) => {
@@ -83,7 +98,12 @@ exports.createOrUpdateUserProfile = catchAsync(async (req, res, next) => {
         { new: true, upsert: true },
     );
 
-    res.json(profile);
+    res.json({
+        status: 'success',
+        data: {
+            profile,
+        },
+    });
 });
 
 exports.addExperienceToProfile = catchAsync(async (req, res, next) => {
@@ -105,7 +125,12 @@ exports.addExperienceToProfile = catchAsync(async (req, res, next) => {
 
     // Save profile and send response
     await profile.save();
-    res.json(profile);
+    res.json({
+        status: 'success',
+        data: {
+            profile,
+        },
+    });
 });
 
 exports.removeExperienceFromProfile = catchAsync(async (req, res, next) => {
@@ -127,7 +152,12 @@ exports.removeExperienceFromProfile = catchAsync(async (req, res, next) => {
 
     // Save profile and send response
     await profile.save();
-    res.json(profile);
+    res.json({
+        status: 'success',
+        data: {
+            profile,
+        },
+    });
 });
 
 exports.addEducationToProfile = catchAsync(async (req, res, next) => {
@@ -149,7 +179,12 @@ exports.addEducationToProfile = catchAsync(async (req, res, next) => {
 
     // Save profile and send response
     await profile.save();
-    res.json(profile);
+    res.json({
+        status: 'success',
+        data: {
+            profile,
+        },
+    });
 });
 
 exports.removeEducationFromProfile = catchAsync(async (req, res, next) => {
@@ -171,7 +206,12 @@ exports.removeEducationFromProfile = catchAsync(async (req, res, next) => {
 
     // Save profile and send response
     await profile.save();
-    res.json(profile);
+    res.json({
+        status: 'success',
+        data: {
+            profile,
+        },
+    });
 });
 
 exports.getUserGithubRepos = catchAsync(async (req, res, next) => {
@@ -186,5 +226,10 @@ exports.getUserGithubRepos = catchAsync(async (req, res, next) => {
             },
         },
     );
-    res.json(githubRes.data);
+    res.json({
+        status: 'success',
+        data: {
+            repos: githubRes.data,
+        },
+    });
 });

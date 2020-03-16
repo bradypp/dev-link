@@ -5,10 +5,16 @@ const catchAsync = require('../../utils/catchAsync');
 const AppError = require('../../utils/appError');
 
 exports.getCurrentUser = (req, res, next) => {
-    if (!req.user) {
+    const { user } = req;
+    if (!user) {
         return next(new AppError('User not found', 404));
     }
-    res.json(req.user);
+    res.json({
+        status: 'success',
+        data: {
+            user,
+        },
+    });
 };
 
 exports.deleteUser = catchAsync(async (req, res, next) => {
@@ -18,5 +24,8 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
     await Profile.findOneAndRemove({ user: id });
     await User.findOneAndRemove({ _id: id });
 
-    res.json({ success: true, msg: 'User deleted' });
+    res.json({
+        status: 'success',
+        message: 'User deleted',
+    });
 });

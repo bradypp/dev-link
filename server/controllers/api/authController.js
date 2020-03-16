@@ -26,7 +26,12 @@ const createSendJwt = (user, statusCode, res) => {
     // res.cookie('jwt', token, cookieOptions);
 
     // Send token & user data in response
-    res.status(statusCode).json({ token });
+    res.status(statusCode).json({
+        status: 'success',
+        data: {
+            token,
+        },
+    });
 };
 
 exports.createUser = catchAsync(async (req, res, next) => {
