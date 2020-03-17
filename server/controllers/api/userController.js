@@ -4,16 +4,8 @@ const Post = require('../../models/Post');
 const catchAsync = require('../../utils/catchAsync');
 const AppError = require('../../utils/appError');
 
-const filterObj = (obj, ...allowedFields) => {
-    const newObj = {};
-    Object.keys(obj).forEach(el => {
-        if (allowedFields.includes(el)) newObj[el] = obj[el];
-    });
-    return newObj;
-};
-
 exports.getCurrentUser = (req, res, next) => {
-    res.json({
+    res.status(200).json({
         status: 'success',
         data: {
             user: req.user,
@@ -95,7 +87,7 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
     await Profile.findOneAndRemove({ user: id });
     await User.findOneAndRemove({ _id: id });
 
-    res.json({
+    res.status(200).json({
         status: 'success',
         message: 'User deleted',
     });

@@ -6,7 +6,7 @@ const AppError = require('../../utils/appError');
 exports.getAllPosts = catchAsync(async (req, res, next) => {
     // Find all posts and sort by date
     const posts = await Post.find().sort('-createdAt');
-    res.json({
+    res.status(200).json({
         status: 'success',
         data: {
             posts,
@@ -22,7 +22,7 @@ exports.getPostById = catchAsync(async (req, res, next) => {
         return next(new AppError('Post not found', 404));
     }
 
-    res.json({
+    res.status(200).json({
         status: 'success',
         data: {
             post,
@@ -46,7 +46,7 @@ exports.createNewPost = catchAsync(async (req, res, next) => {
     // Create and save new post
     const post = await new Post({ text, name, avatar, user: id }).save();
 
-    res.json({
+    res.status(200).json({
         status: 'success',
         data: {
             post,
@@ -69,7 +69,7 @@ exports.deletePostById = catchAsync(async (req, res, next) => {
 
     // Remove post
     await post.remove();
-    res.json({
+    res.status(200).json({
         status: 'success',
         message: 'Post removed',
     });
@@ -92,7 +92,7 @@ exports.addPostLike = catchAsync(async (req, res, next) => {
     post.likes.push({ user: req.user.id });
     await post.save();
 
-    res.json({
+    res.status(200).json({
         status: 'success',
         data: {
             post,
@@ -120,7 +120,7 @@ exports.removePostLike = catchAsync(async (req, res, next) => {
     post.likes.splice(removeIndex, 1);
     await post.save();
 
-    res.json({
+    res.status(200).json({
         status: 'success',
         data: {
             post,
@@ -149,7 +149,7 @@ exports.addPostComment = catchAsync(async (req, res, next) => {
     post.comments.push(newComment);
     await post.save();
 
-    res.json({
+    res.status(200).json({
         status: 'success',
         data: {
             comments: post.comments,
@@ -186,7 +186,7 @@ exports.removePostComment = catchAsync(async (req, res, next) => {
     post.comments.splice(commentIndex, 1);
     await post.save();
 
-    res.json({
+    res.status(200).json({
         status: 'success',
         data: {
             comments: post.comments,
