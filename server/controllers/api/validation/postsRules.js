@@ -1,9 +1,9 @@
-const { body } = require('express-validator');
+const { fieldRequired } = require('./utils');
 
 exports.postRules = () => {
-    return [body('text', 'Text is required').notEmpty()];
+    return [fieldRequired('text', 'Text is required')];
 };
 
 exports.postCommentRules = () => {
-    return [body('text', 'Text is required').notEmpty()];
+    return [fieldRequired('text', 'Text is required')];
 };

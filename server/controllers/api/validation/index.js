@@ -3,6 +3,7 @@ const {
     loginRules,
     forgotPasswordRules,
     resetPasswordRules,
+    updatePasswordRules,
 } = require('./authRules');
 const { postRules, postCommentRules } = require('./postsRules');
 const { profileRules, experienceRules, educationRules } = require('./profileRules');
@@ -13,6 +14,7 @@ const {
     LOGIN,
     FORGOT_PASSWORD,
     RESET_PASSWORD,
+    UPDATE_PASSWORD,
     POST,
     POST_COMMENT,
     PROFILE,
@@ -30,6 +32,8 @@ const validationRules = type => {
             return forgotPasswordRules();
         case RESET_PASSWORD:
             return resetPasswordRules();
+        case UPDATE_PASSWORD:
+            return updatePasswordRules();
         case POST:
             return postRules();
         case POST_COMMENT:
