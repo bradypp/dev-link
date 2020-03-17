@@ -1,4 +1,9 @@
-const { registerRules, loginRules } = require('./authRules');
+const {
+    registerRules,
+    loginRules,
+    forgotPasswordRules,
+    resetPasswordRules,
+} = require('./authRules');
 const { postRules, postCommentRules } = require('./postsRules');
 const { profileRules, experienceRules, educationRules } = require('./profileRules');
 const validate = require('./validate');
@@ -6,6 +11,8 @@ const validate = require('./validate');
 const {
     REGISTER,
     LOGIN,
+    FORGOT_PASSWORD,
+    RESET_PASSWORD,
     POST,
     POST_COMMENT,
     PROFILE,
@@ -19,6 +26,10 @@ const validationRules = type => {
             return registerRules();
         case LOGIN:
             return loginRules();
+        case FORGOT_PASSWORD:
+            return forgotPasswordRules();
+        case RESET_PASSWORD:
+            return resetPasswordRules();
         case POST:
             return postRules();
         case POST_COMMENT:

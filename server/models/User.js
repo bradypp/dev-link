@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -23,23 +24,43 @@ const userSchema = new Schema({
     avatar: {
         type: String,
     },
+    passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
+    active: {
+        type: Boolean,
+        default: true,
+        select: false,
+    },
     createdAt: {
         type: Date,
         default: Date.now(),
     },
 });
 
+userSchema.statics.encryptPassword = async function(password) {
+    const salt = await bcrypt.genSalt(10);
+    return bcrypt.hash(password, salt);
+};
+
+userSchema.statics.encryptPasswordResetToken = function(token) {
+    return crypto
+        .createHash('sha256')
+        .update(token)
+        .digest('hex');
+};
+
 userSchema.methods.createSendJwt = function(res) {
     const payload = { id: this.id };
 
     // Create JWT token
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES_IN,
+        expiresIn: process.env.JWT_EXPIRES_DAYS,
     });
 
     // TODO: Add cookie options?
     // const cookieOptions = {
-    //     expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
+    //     expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_DAYS * 24 * 60 * 60 * 1000),
     //     httpOnly: true,
     // };
     // if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
@@ -55,13 +76,27 @@ userSchema.methods.createSendJwt = function(res) {
     });
 };
 
-userSchema.methods.checkPassword = async function(password) {
+userSchema.methods.checkPassword = function(password) {
     return bcrypt.compare(password, this.password);
 };
 
-userSchema.statics.encryptPassword = async function(password) {
-    const salt = await bcrypt.genSalt(10);
-    return bcrypt.hash(password, salt);
+userSchema.methods.changedPasswordSinceJWT = function(JWTTimestamp) {
+    let hasPasswordChanged = false;
+    if (this.passwordChangedAt) {
+        const changedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
+        hasPasswordChanged = JWTTimestamp < changedTimestamp;
+    }
+    return hasPasswordChanged;
+};
+
+userSchema.methods.createPasswordResetToken = function() {
+    const resetToken = crypto.randomBytes(32).toString('hex');
+
+    this.passwordResetToken = this.constructor.encryptPasswordResetToken(resetToken);
+
+    this.passwordResetExpires = Date.now() + process.env.PASSWORD_RESET_EXPIRY_MINUTES * 60 * 1000;
+
+    return resetToken;
 };
 
 module.exports = model('User', userSchema, 'users');
