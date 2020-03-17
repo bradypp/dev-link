@@ -42,6 +42,7 @@ exports.createNewPost = catchAsync(async (req, res, next) => {
     }
 
     const { name, avatar } = user;
+
     // Create and save new post
     const post = await new Post({ text, name, avatar, user: id }).save();
 

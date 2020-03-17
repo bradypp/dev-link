@@ -24,18 +24,9 @@ const userSchema = new Schema({
     avatar: {
         type: String,
     },
-    passwordChangedAt: {
-        type: Date,
-        select: false,
-    },
-    passwordResetToken: {
-        type: String,
-        select: false,
-    },
-    passwordResetExpires: {
-        type: Date,
-        select: false,
-    },
+    passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
     active: {
         type: Boolean,
         default: true,
@@ -105,6 +96,7 @@ userSchema.methods.checkPassword = function(password) {
 
 userSchema.methods.changedPasswordSinceJWT = function(JWTTimestamp) {
     let hasPasswordChanged = false;
+
     if (this.passwordChangedAt) {
         const changedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
         hasPasswordChanged = JWTTimestamp < changedTimestamp;
