@@ -66,19 +66,21 @@ userSchema.statics.encryptPasswordResetToken = function(token) {
 userSchema.methods.createSendJwt = function(res, statusCode = 200) {
     const payload = { id: this.id };
 
+    const jwtExpiryMilliseconds = process.env.JWT_EXPIRES_MINUTES * 60 * 1000;
+
     // Create JWT token
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES_DAYS,
+        expiresIn: jwtExpiryMilliseconds,
     });
 
-    // TODO: Add cookie options?
-    // const cookieOptions = {
-    //     expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_DAYS * 24 * 60 * 60 * 1000),
-    //     httpOnly: true,
-    // };
-    // if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+    const cookieOptions = {
+        expires: new Date(Date.now() + jwtExpiryMilliseconds),
+        httpOnly: true,
+    };
 
-    // res.cookie('jwt', token, cookieOptions);
+    if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+
+    res.cookie('jwt', token, cookieOptions);
 
     // Send token & user data in response
     res.status(statusCode).json({

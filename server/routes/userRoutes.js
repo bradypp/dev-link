@@ -12,6 +12,5 @@ router
     .get(getCurrentUser)
     .patch(validation(UPDATE_ME), updateUser)
     .delete(deleteUser);
-// router.route('/active').patch(toggleActiveStatus);
 
 module.exports = router;

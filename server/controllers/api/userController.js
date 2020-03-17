@@ -35,12 +35,6 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     }
 
     if (email) {
-        // Check that the new email is different from the old one
-        const user = await User.findById(req.user.id);
-        if (user.email === email) {
-            return next(new AppError('Please enter a new email address!', 400));
-        }
-
         // Check user with this email doesn't exist
         if (await User.findOne({ email })) {
             return next(new AppError('This email is already taken!', 400));

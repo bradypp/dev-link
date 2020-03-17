@@ -66,16 +66,13 @@ exports.protected = catchAsync(async (req, res, next) => {
     let token;
     if (req.header('Authorization')) {
         token = req.header('Authorization');
+    } else if (req.cookies.jwt) {
+        token = req.cookies.jwt;
     }
-
-    // TODO: Add cookie options?
-    // else if (req.cookies.jwt) {
-    //     token = req.cookies.jwt;
-    // }
 
     // Check if token exists
     if (!token) {
-        return next(new AppError('No token, authorization denied', 401));
+        return next(new AppError('You are not logged in! Please log in to gain access.', 401));
     }
     // Remove bearer from token if it exists
     if (token.startsWith('Bearer') || token.startsWith('Token')) {
