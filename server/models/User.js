@@ -38,10 +38,24 @@ const userSchema = new Schema({
     },
 });
 
-userSchema.statics.encryptPassword = async function(password) {
+// Encrypt password on registration and password update
+userSchema.pre('save', async function(next) {
+    // Only run this middleware if password was modified
+    if (!this.isModified('password')) return next();
+
+    // Hash the password before saving
     const salt = await bcrypt.genSalt(10);
-    return bcrypt.hash(password, salt);
-};
+    this.password = await bcrypt.hash(this.password, salt);
+
+    next();
+});
+
+userSchema.pre('save', function(next) {
+    if (!this.isModified('password') || this.isNew) return next();
+
+    this.passwordChangedAt = Date.now() - 1000;
+    next();
+});
 
 userSchema.statics.encryptPasswordResetToken = function(token) {
     return crypto
@@ -50,7 +64,7 @@ userSchema.statics.encryptPasswordResetToken = function(token) {
         .digest('hex');
 };
 
-userSchema.methods.createSendJwt = function(res) {
+userSchema.methods.createSendJwt = function(res, statusCode = 200) {
     const payload = { id: this.id };
 
     // Create JWT token
@@ -68,7 +82,7 @@ userSchema.methods.createSendJwt = function(res) {
     // res.cookie('jwt', token, cookieOptions);
 
     // Send token & user data in response
-    res.json({
+    res.status(statusCode).json({
         status: 'success',
         data: {
             token,

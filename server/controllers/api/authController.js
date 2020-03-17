@@ -11,7 +11,9 @@ exports.createUser = catchAsync(async (req, res, next) => {
     const { name, email, password } = req.body;
 
     // Check if a user with that email exists
-    let user = await User.findOne({ email });
+    let user = await User.findOne({
+        email,
+    });
 
     if (user) {
         return next(new AppError('User with this email already exists', 400));
@@ -32,21 +34,27 @@ exports.createUser = catchAsync(async (req, res, next) => {
         password,
     });
 
-    user.password = await User.encryptPassword(password);
     await user.save();
 
     // Create and send JWT
-    user.createSendJwt(res);
+    user.createSendJwt(res, 201);
 });
 
 exports.loginUser = catchAsync(async (req, res, next) => {
     const { email, password } = req.body;
 
-    const user = await User.findOne({ email }).select('+password');
-    const isPasswordValid = await user.checkPassword(password);
+    const validationError = new AppError('Email or password incorrect', 400);
 
-    if (!user || !isPasswordValid) {
-        return next(new AppError('Email or password incorrect', 400));
+    // Check user exists
+    const user = await User.findOne({ email }).select('+password');
+    if (!user) {
+        return next(validationError);
+    }
+
+    // Check password is valid
+    const isPasswordValid = await user.checkPassword(password);
+    if (!isPasswordValid) {
+        return next(validationError);
     }
 
     // Create and send JWT
@@ -155,31 +163,33 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
     // Set the new password
     user.password = req.body.password;
-    user.passwordChangedAt = Date.now();
     user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
+
+    // Need to use user.save to make sure the pre-save middleware for encryption runs
     await user.save();
 
     // Create and send JWT
     user.createSendJwt(res);
 });
 
-// exports.updatePassword = catchAsync(async (req, res, next) => {
-//     // Get user from collection
-//     const user = await User.findById(req.user.id).select('+password');
+exports.updatePassword = catchAsync(async (req, res, next) => {
+    const { current_password, password } = req.body;
 
-//     // Check if current password is correct
-//     if (!(await user.correctPassword(req.body.passwordCurrent, user.password))) {
-//         return next(new AppError('Your current password is wrong.', 401));
-//     }
+    // Get user
+    const user = await User.findById(req.user.id).select('+password');
 
-//     // Update password
-//     user.password = req.body.password;
-//     user.passwordConfirm = req.body.passwordConfirm;
+    // Check if current password is correct
+    if (!(await user.checkPassword(current_password))) {
+        return next(new AppError('Current password incorrect', 401));
+    }
 
-//     // User.findByIdAndUpdate will NOT work as intended!
-//     await user.save();
+    // Update password
+    user.password = password;
 
-//     // Create and send JWT
-//     user.createSendJwt(res);
-// });
+    // Need to use user.save to make sure the pre-save middleware for encryption runs
+    await user.save();
+
+    // Create and send JWT
+    user.createSendJwt(res);
+});
