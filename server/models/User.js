@@ -11,7 +11,7 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
-        required: true,
+        required: [true, 'Please enter a valid email address'],
         trim: true,
         unique: true,
         lowercase: true,
@@ -30,7 +30,6 @@ const userSchema = new Schema({
     active: {
         type: Boolean,
         default: true,
-        select: false,
     },
     createdAt: {
         type: Date,
@@ -92,6 +91,10 @@ userSchema.methods.createSendJwt = function(res, statusCode = 200) {
 
 userSchema.methods.checkPassword = function(password) {
     return bcrypt.compare(password, this.password);
+};
+
+userSchema.methods.this = function() {
+    return this;
 };
 
 userSchema.methods.changedPasswordSinceJWT = function(JWTTimestamp) {
