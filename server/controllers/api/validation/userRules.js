@@ -1,5 +1,9 @@
 const { emailRules, nameRules } = require('./utils');
 
-exports.updateMeRules = () => {
-    return [nameRules, emailRules];
+exports.updateNameRules = () => {
+    return [nameRules];
+};
+
+exports.updateEmailRules = () => {
+    return [emailRules];
 };
