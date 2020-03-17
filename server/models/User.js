@@ -24,9 +24,18 @@ const userSchema = new Schema({
     avatar: {
         type: String,
     },
-    passwordChangedAt: Date,
-    passwordResetToken: String,
-    passwordResetExpires: Date,
+    passwordChangedAt: {
+        type: Date,
+        select: false,
+    },
+    passwordResetToken: {
+        type: String,
+        select: false,
+    },
+    passwordResetExpires: {
+        type: Date,
+        select: false,
+    },
     active: {
         type: Boolean,
         default: true,
