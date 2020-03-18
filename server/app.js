@@ -22,8 +22,25 @@ const app = express();
 app.use(helmet());
 
 // Implement CORS
-app.use(cors());
+app.use(
+    cors({
+        origin: 'http://localhost:3000',
+        optionsSuccessStatus: 200,
+        credentials: true,
+    }),
+);
 app.options('*', cors());
+
+// app.use(function(req, res, next) {
+//     res.header('Access-Control-Allow-Credentials', true);
+//     res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
+//     res.header(
+//         'Access-Control-Allow-Headers',
+//         'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept',
+//     );
+//     next();
+// });
 
 // Logger middleware
 if (process.env.NODE_ENV === 'development') {
@@ -33,11 +50,14 @@ if (process.env.NODE_ENV === 'development') {
 // Rate limiting middlewares
 if (process.env.NODE_ENV === 'production') {
     app.use('/api', rateLimiter({ maxAttempts: 200, windowMinutes: 15 }));
-    app.use('/api/v1/auth/login', rateLimiter());
-    app.use('/api/v1/auth/register', rateLimiter());
-    app.use('/api/v1/auth/forgot-password', rateLimiter());
-    app.use('/api/v1/auth/reset-password', rateLimiter());
-    app.use('/api/v1/auth/update-password', rateLimiter());
+    app.use(
+        '/api/v1/auth/login',
+        rateLimiter({ message: 'Too many login attempts, please try again later!' }),
+    );
+    app.use(
+        '/api/v1/auth/forgot-password',
+        rateLimiter({ message: 'Too many password recovery attempts, please try again later!' }),
+    );
 }
 
 // Body-parsing middlewares

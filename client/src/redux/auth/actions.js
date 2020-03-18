@@ -1,4 +1,4 @@
-import { api, errorHandler } from 'utils';
+import { api, globalErrorHandler } from 'utils';
 import { setAlert } from 'redux/alerts';
 import {
     REGISTER_SUCCESS,
@@ -32,7 +32,7 @@ export const loadUser = () => async dispatch => {
             payload: res.data,
         });
     } catch (err) {
-        errorHandler(err, dispatch, authError);
+        globalErrorHandler(err, dispatch, authError);
     }
 };
 
@@ -56,7 +56,7 @@ export const registerUser = ({ name, email, password, password2 }) => async disp
         });
         dispatch(loadUser());
     } catch (err) {
-        errorHandler(err, dispatch, authError, true);
+        globalErrorHandler(err, dispatch, authError, true);
     }
 };
 
@@ -78,7 +78,7 @@ export const loginUser = ({ email, password }) => async dispatch => {
         });
         dispatch(loadUser());
     } catch (err) {
-        errorHandler(err, dispatch, authError, true);
+        globalErrorHandler(err, dispatch, authError, true);
     }
 };
 
@@ -99,7 +99,7 @@ export const deleteAccount = () => async dispatch => {
 
             dispatch(setAlert('Your account has been permanently deleted'));
         } catch (err) {
-            errorHandler(err, dispatch, authError);
+            globalErrorHandler(err, dispatch, authError);
         }
     }
 };

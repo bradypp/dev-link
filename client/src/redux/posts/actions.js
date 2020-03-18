@@ -1,4 +1,4 @@
-import { api, errorHandler } from 'utils';
+import { api, globalErrorHandler } from 'utils';
 import { setAlert } from 'redux/alerts';
 import {
     GET_POSTS,
@@ -33,7 +33,7 @@ export const getPosts = () => async dispatch => {
             payload: res.data,
         });
     } catch (err) {
-        errorHandler(err, dispatch, postError);
+        globalErrorHandler(err, dispatch, postError);
     }
 };
 
@@ -47,7 +47,7 @@ export const addLike = id => async dispatch => {
             payload: res.data,
         });
     } catch (err) {
-        errorHandler(err, dispatch, postError);
+        globalErrorHandler(err, dispatch, postError);
     }
 };
 
@@ -61,7 +61,7 @@ export const removeLike = id => async dispatch => {
             payload: res.data,
         });
     } catch (err) {
-        errorHandler(err, dispatch, postError);
+        globalErrorHandler(err, dispatch, postError);
     }
 };
 
@@ -77,7 +77,7 @@ export const deletePost = id => async dispatch => {
 
         dispatch(setAlert('Post Removed', 'success'));
     } catch (err) {
-        errorHandler(err, dispatch, postError);
+        globalErrorHandler(err, dispatch, postError);
     }
 };
 
@@ -99,7 +99,7 @@ export const addPost = formData => async dispatch => {
 
         dispatch(setAlert('Post Created', 'success'));
     } catch (err) {
-        errorHandler(err, dispatch, postError, true);
+        globalErrorHandler(err, dispatch, postError, true);
     }
 };
 
@@ -113,7 +113,7 @@ export const getPost = id => async dispatch => {
             payload: res.data,
         });
     } catch (err) {
-        errorHandler(err, dispatch, postError);
+        globalErrorHandler(err, dispatch, postError);
     }
 };
 
@@ -134,7 +134,7 @@ export const addComment = (postId, formData) => async dispatch => {
 
         dispatch(setAlert('Comment Added', 'success'));
     } catch (err) {
-        errorHandler(err, dispatch, postError, true);
+        globalErrorHandler(err, dispatch, postError, true);
     }
 };
 
@@ -150,6 +150,6 @@ export const deleteComment = (postId, commentId) => async dispatch => {
 
         dispatch(setAlert('Comment Removed', 'success'));
     } catch (err) {
-        errorHandler(err, dispatch, postError);
+        globalErrorHandler(err, dispatch, postError);
     }
 };

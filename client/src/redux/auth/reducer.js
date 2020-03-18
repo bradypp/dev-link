@@ -38,7 +38,7 @@ export default (state = initialState, { type, payload }) => {
             };
         case REGISTER_SUCCESS:
         case LOGIN_SUCCESS: {
-            const token = `Bearer ${payload.data.token}`;
+            const { token } = payload.data;
             setAuthToken(token);
             return {
                 ...state,

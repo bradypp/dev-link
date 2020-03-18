@@ -10,7 +10,7 @@ const handleError = (err, dispatch, shouldSendAlert, alertType) => {
                     dispatch(setAlert(el.message, alertType));
                 });
             } else {
-                dispatch(setAlert(err.message, alertType));
+                dispatch(setAlert(error.message, alertType));
             }
         }
     }
@@ -18,7 +18,7 @@ const handleError = (err, dispatch, shouldSendAlert, alertType) => {
 };
 
 // TODO: Refactor so that it's possible to specify what to do with each type of error. E.g. specify when to send alerts and their type depending on error type not generalized in method params. Might need to put a name on the errors on the backend so that you can specify what to do with each.
-const errorHandler = (
+const globalErrorHandler = (
     err,
     dispatch = null,
     action = null,
@@ -26,10 +26,9 @@ const errorHandler = (
     alertType = 'danger',
 ) => {
     if (process.env.NODE_ENV === 'development') console.error(err);
-
     handleError(err, dispatch, shouldSendAlert, alertType);
 
     if (action) dispatch(action());
 };
 
-export default errorHandler;
+export default globalErrorHandler;

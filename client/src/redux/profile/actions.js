@@ -1,4 +1,4 @@
-import { api, errorHandler } from 'utils';
+import { api, globalErrorHandler } from 'utils';
 import { setAlert } from 'redux/alerts/actions';
 import {
     GET_PROFILE,
@@ -29,7 +29,7 @@ export const getCurrentUserProfile = () => async dispatch => {
             payload: res.data,
         });
     } catch (err) {
-        errorHandler(err, dispatch, profileError);
+        globalErrorHandler(err, dispatch, profileError);
     }
 };
 
@@ -45,7 +45,7 @@ export const getProfiles = () => async dispatch => {
             payload: res.data,
         });
     } catch (err) {
-        errorHandler(err, dispatch, profileError);
+        globalErrorHandler(err, dispatch, profileError);
     }
 };
 
@@ -59,7 +59,7 @@ export const getProfileById = userId => async dispatch => {
             payload: res.data,
         });
     } catch (err) {
-        errorHandler(err, dispatch, profileError);
+        globalErrorHandler(err, dispatch, profileError);
     }
 };
 
@@ -73,7 +73,7 @@ export const getGithubRepos = username => async dispatch => {
             payload: res.data,
         });
     } catch (err) {
-        errorHandler(err, dispatch, profileError);
+        globalErrorHandler(err, dispatch, profileError);
     }
 };
 
@@ -97,7 +97,7 @@ export const createProfile = (formData, history, edit = false) => async dispatch
 
         history.push('/dashboard');
     } catch (err) {
-        errorHandler(err, dispatch, profileError, true);
+        globalErrorHandler(err, dispatch, profileError, true);
     }
 };
 
@@ -121,7 +121,7 @@ export const addExperience = (formData, history) => async dispatch => {
 
         history.push('/dashboard');
     } catch (err) {
-        errorHandler(err, dispatch, profileError, true);
+        globalErrorHandler(err, dispatch, profileError, true);
     }
 };
 
@@ -145,7 +145,7 @@ export const addEducation = (formData, history) => async dispatch => {
 
         history.push('/dashboard');
     } catch (err) {
-        errorHandler(err, dispatch, profileError, true);
+        globalErrorHandler(err, dispatch, profileError, true);
     }
 };
 
@@ -161,7 +161,7 @@ export const deleteExperience = id => async dispatch => {
 
         dispatch(setAlert('Experience Removed', 'success'));
     } catch (err) {
-        errorHandler(err, dispatch, profileError);
+        globalErrorHandler(err, dispatch, profileError);
     }
 };
 
@@ -177,6 +177,6 @@ export const deleteEducation = id => async dispatch => {
 
         dispatch(setAlert('Education Removed', 'success'));
     } catch (err) {
-        errorHandler(err, dispatch, profileError);
+        globalErrorHandler(err, dispatch, profileError);
     }
 };
