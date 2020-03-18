@@ -7,7 +7,8 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const AppError = require('./utils/appError');
-const rateLimiter = require('./utils/rateLimiter');
+const rateLimiter = require('./config/rateLimiter');
+const hppConfig = require('./config/hppConfig');
 const globalErrorHandler = require('./controllers/handlers/globalErrorHandler');
 const authRouter = require('./routes/authRoutes');
 const postsRouter = require('./routes/postsRoutes');
@@ -41,25 +42,14 @@ if (process.env.NODE_ENV === 'production') {
 
 // Body-parsing middlewares
 app.use(express.json({ limit: '10kb' }));
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 
 // Data sanitization against NoSQL query injection & XSS
 app.use(mongoSanitize());
 app.use(xss());
 
-// Prevent parameter pollution
-app.use(
-    hpp({
-        whitelist: [
-            'duration',
-            'ratingsQuantity',
-            'ratingsAverage',
-            'maxGroupSize',
-            'difficulty',
-            'price',
-        ],
-    }),
-);
+// Prevent parameter pollution errors by disabling duplicates in the query string (unless whitelisted in the config)
+app.use(hpp(hppConfig));
 
 // Cookie-parsing middleware
 app.use(cookieParser());

@@ -117,7 +117,7 @@ const sendErrorProd = (err, req, res) => {
 
 const globalErrorHandler = (err, req, res, next) => {
     let error;
-    console.log('object');
+
     // Handle and send validation errors
     if (err.name === 'ExpressValidationErrors') {
         error = handleExpressValidationErrors(err);
