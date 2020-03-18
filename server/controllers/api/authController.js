@@ -64,8 +64,9 @@ exports.loginUser = catchAsync(async (req, res, next) => {
 exports.protected = catchAsync(async (req, res, next) => {
     // Get token from header or cookies
     let token;
-    if (req.header('Authorization')) {
-        token = req.header('Authorization');
+    if (req.header('Authorization') && req.header('Authorization').startsWith('Bearer')) {
+        // Remove bearer from token
+        token = req.header('Authorization').split(' ')[1];
     } else if (req.cookies.jwt) {
         token = req.cookies.jwt;
     }
@@ -73,10 +74,6 @@ exports.protected = catchAsync(async (req, res, next) => {
     // Check if token exists
     if (!token) {
         return next(new AppError('You are not logged in! Please log in to gain access.', 401));
-    }
-    // Remove bearer from token if it exists
-    if (token.startsWith('Bearer') || token.startsWith('Token')) {
-        token = req.header('Authorization').split(' ')[1];
     }
 
     // Verify token

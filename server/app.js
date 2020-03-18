@@ -2,7 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const helmet = require('helmet');
 const AppError = require('./utils/appError');
+const rateLimiter = require('./utils/rateLimiter');
 const globalErrorHandler = require('./controllers/handlers/globalErrorHandler');
 const authRouter = require('./routes/authRoutes');
 const postsRouter = require('./routes/postsRoutes');
@@ -12,7 +14,9 @@ const userRouter = require('./routes/userRoutes');
 // Start express app
 const app = express();
 
-// Global Middlewares
+// Set security HTTP headers
+app.use(helmet());
+
 // Implement CORS
 app.use(cors());
 app.options('*', cors());
@@ -20,6 +24,16 @@ app.options('*', cors());
 // Logger Middleware
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
+}
+
+// Rate limiting middlewares
+if (process.env.NODE_ENV === 'production') {
+    app.use('/api/v1/auth/login', rateLimiter());
+    app.use('/api/v1/auth/register', rateLimiter());
+    app.use('/api/v1/auth/forgot-password', rateLimiter());
+    app.use('/api/v1/auth/reset-password', rateLimiter());
+    app.use('/api/v1/auth/update-password', rateLimiter());
+    app.use('/api', rateLimiter({ maxAttempts: 200, windowMinutes: 15 }));
 }
 
 // Body-parsing Middleware

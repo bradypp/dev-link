@@ -76,6 +76,7 @@ userSchema.methods.createSendJwt = function(res, statusCode = 200) {
     const cookieOptions = {
         expires: new Date(Date.now() + jwtExpiryMilliseconds),
         httpOnly: true,
+        sameSite: 'strict',
     };
 
     if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
