@@ -1,4 +1,5 @@
 const rateLimit = require('express-rate-limit');
+const AppError = require('./appError');
 
 const rateLimiter = (
     config = {
@@ -12,6 +13,7 @@ const rateLimiter = (
         max: maxAttempts,
         windowMs: windowMinutes * 60 * 1000,
         message,
+        handler: (req, res, next) => next(new AppError(message, 429)),
     });
 };
 

@@ -28,12 +28,12 @@ if (process.env.NODE_ENV === 'development') {
 
 // Rate limiting middlewares
 if (process.env.NODE_ENV === 'production') {
+    app.use('/api', rateLimiter({ maxAttempts: 200, windowMinutes: 15 }));
     app.use('/api/v1/auth/login', rateLimiter());
     app.use('/api/v1/auth/register', rateLimiter());
     app.use('/api/v1/auth/forgot-password', rateLimiter());
     app.use('/api/v1/auth/reset-password', rateLimiter());
     app.use('/api/v1/auth/update-password', rateLimiter());
-    app.use('/api', rateLimiter({ maxAttempts: 200, windowMinutes: 15 }));
 }
 
 // Body-parsing Middleware
