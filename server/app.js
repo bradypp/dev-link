@@ -31,17 +31,6 @@ app.use(
 );
 app.options('*', cors());
 
-// app.use(function(req, res, next) {
-//     res.header('Access-Control-Allow-Credentials', true);
-//     res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-//     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
-//     res.header(
-//         'Access-Control-Allow-Headers',
-//         'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept',
-//     );
-//     next();
-// });
-
 // Logger middleware
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
@@ -60,9 +49,10 @@ if (process.env.NODE_ENV === 'production') {
     );
 }
 
-// Body-parsing middlewares
+// Body-parsing & cookie parsing middlewares
 app.use(express.json({ limit: '10kb' }));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+app.use(cookieParser());
 
 // Data sanitization against NoSQL query injection & XSS
 app.use(mongoSanitize());
@@ -70,9 +60,6 @@ app.use(xss());
 
 // Prevent parameter pollution errors by disabling duplicates in the query string (unless whitelisted in the config)
 app.use(hpp(hppConfig));
-
-// Cookie-parsing middleware
-app.use(cookieParser());
 
 // Routes
 app.use('/api/v1/auth', authRouter);
