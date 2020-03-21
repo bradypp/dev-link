@@ -7,7 +7,7 @@ const AppError = require('../../utils/appError');
 const sendEmail = require('../../utils/sendEmail');
 const User = require('../../models/User');
 
-exports.createUser = catchAsync(async (req, res, next) => {
+exports.signUp = catchAsync(async (req, res, next) => {
     const { name, email, password } = req.body;
 
     // Check if a user with that email exists
@@ -40,7 +40,7 @@ exports.createUser = catchAsync(async (req, res, next) => {
     user.createSendJwt(res, 201);
 });
 
-exports.loginUser = catchAsync(async (req, res, next) => {
+exports.signIn = catchAsync(async (req, res, next) => {
     const { email, password } = req.body;
 
     const validationError = new AppError('Email or password incorrect', 400);

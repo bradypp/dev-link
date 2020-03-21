@@ -7,11 +7,11 @@ const {
     fieldRequired,
 } = require('./utils');
 
-exports.registerRules = () => {
+exports.signUpRules = () => {
     return [nameRules, emailRules, passwordRegexRules, passwordLengthRules, password2Rules];
 };
 
-exports.loginRules = () => {
+exports.signInRules = () => {
     return [emailRules, fieldRequired('password', 'Password is required')];
 };
 

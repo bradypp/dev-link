@@ -1,13 +1,13 @@
 import { api, globalErrorHandler } from 'utils';
 import { setAlert } from 'redux/alerts';
 import {
-    REGISTER_SUCCESS,
+    SIGNUP_SUCCESS,
     USER_LOADED,
     USER_LOADING,
     AUTH_ERROR,
-    LOGIN_SUCCESS,
+    SIGNIN_SUCCESS,
     CLEAR_PROFILE,
-    LOGOUT_USER,
+    SIGNOUT_SUCCESS,
     ACCOUNT_DELETED,
 } from 'redux/actionTypes';
 
@@ -37,7 +37,7 @@ export const loadUser = () => async dispatch => {
 };
 
 // TODO: Implement more elegant error alerts
-export const registerUser = ({ name, email, password, password2 }) => async dispatch => {
+export const signUp = ({ name, email, password, password2 }) => async dispatch => {
     try {
         dispatch({ type: USER_LOADING });
 
@@ -48,10 +48,10 @@ export const registerUser = ({ name, email, password, password2 }) => async disp
             },
         };
 
-        const res = await api.post('auth/register', body, config);
+        const res = await api.post('/user/sign-up', body, config);
 
         dispatch({
-            type: REGISTER_SUCCESS,
+            type: SIGNUP_SUCCESS,
             payload: res.data,
         });
         dispatch(loadUser());
@@ -60,7 +60,7 @@ export const registerUser = ({ name, email, password, password2 }) => async disp
     }
 };
 
-export const loginUser = ({ email, password }) => async dispatch => {
+export const signIn = ({ email, password }) => async dispatch => {
     try {
         dispatch({ type: USER_LOADING });
         const body = JSON.stringify({ email, password });
@@ -70,10 +70,10 @@ export const loginUser = ({ email, password }) => async dispatch => {
             },
         };
 
-        const res = await api.post('/auth/login', body, config);
+        const res = await api.post('/user/sign-in', body, config);
 
         dispatch({
-            type: LOGIN_SUCCESS,
+            type: SIGNIN_SUCCESS,
             payload: res.data,
         });
         dispatch(loadUser());
@@ -82,9 +82,9 @@ export const loginUser = ({ email, password }) => async dispatch => {
     }
 };
 
-export const logoutUser = () => dispatch => {
+export const signOut = () => dispatch => {
     dispatch({ type: CLEAR_PROFILE });
-    dispatch({ type: LOGOUT_USER });
+    dispatch({ type: SIGNOUT_SUCCESS });
 };
 
 // TODO: Custom confirm modal/notification

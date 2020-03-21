@@ -1,6 +1,6 @@
 const {
-    registerRules,
-    loginRules,
+    signUpRules,
+    signInRules,
     forgotPasswordRules,
     resetPasswordRules,
     updatePasswordRules,
@@ -11,8 +11,8 @@ const { profileRules, experienceRules, educationRules } = require('./profileRule
 const validate = require('./validate');
 
 const {
-    REGISTER,
-    LOGIN,
+    SIGN_UP,
+    SIGN_IN,
     FORGOT_PASSWORD,
     RESET_PASSWORD,
     UPDATE_PASSWORD,
@@ -26,10 +26,10 @@ const {
 
 const validationRules = type => {
     switch (type) {
-        case REGISTER:
-            return registerRules();
-        case LOGIN:
-            return loginRules();
+        case SIGN_UP:
+            return signUpRules();
+        case SIGN_IN:
+            return signInRules();
         case FORGOT_PASSWORD:
             return forgotPasswordRules();
         case RESET_PASSWORD:
