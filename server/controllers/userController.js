@@ -1,8 +1,8 @@
-const User = require('../../models/User');
-const Profile = require('../../models/Profile');
-const Post = require('../../models/Post');
-const catchAsync = require('../../utils/catchAsync');
-const AppError = require('../../utils/appError');
+const User = require('../models/User');
+const Profile = require('../models/Profile');
+const Post = require('../models/Post');
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
 const filterObj = (obj, ...allowedFields) => {
     const newObj = {};

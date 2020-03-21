@@ -11,8 +11,6 @@ import {
     AddEducation,
     Profile,
     Profiles,
-    Posts,
-    Post,
     NotFound,
 } from 'components';
 import PrivateRoute from './PrivateRoute';
@@ -31,8 +29,6 @@ const Routes = () => {
                 <PrivateRoute exact path="/edit" component={EditProfile} />
                 <PrivateRoute exact path="/add-experience" component={AddExperience} />
                 <PrivateRoute exact path="/add-education" component={AddEducation} />
-                <PrivateRoute exact path="/posts" component={Posts} />
-                <PrivateRoute exact path="/posts/:id" component={Post} />
                 <Route component={NotFound} />
             </Switch>
         </section>

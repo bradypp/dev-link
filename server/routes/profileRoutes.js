@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { protected } = require('../controllers/api/authController');
+const { protected } = require('../controllers/authController');
 const {
     getCurrentUserProfile,
     createOrUpdateUserProfile,
@@ -10,9 +10,9 @@ const {
     addEducationToProfile,
     removeEducationFromProfile,
     getUserGithubRepos,
-} = require('../controllers/api/profileController');
-const validation = require('../controllers/api/validation');
-const { PROFILE, EXPERIENCE, EDUCATION } = require('../controllers/api/validation/validationTypes');
+} = require('../controllers/profileController');
+const validation = require('../utils/validation');
+const { PROFILE, EXPERIENCE, EDUCATION } = require('../utils/validation/validationTypes');
 
 router.route('/all').get(getAllUserProfiles);
 router.route('/user/:user_id').get(getProfileByUserId);

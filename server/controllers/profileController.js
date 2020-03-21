@@ -1,8 +1,8 @@
 const normalize = require('normalize-url');
 const axios = require('axios');
-const Profile = require('../../models/Profile');
-const catchAsync = require('../../utils/catchAsync');
-const AppError = require('../../utils/appError');
+const Profile = require('../models/Profile');
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
 exports.getCurrentUserProfile = catchAsync(async (req, res, next) => {
     const { id } = req.user;

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { protected } = require('../controllers/api/authController');
+const { protected } = require('../controllers/authController');
 const {
     getAllPosts,
     getPostById,
@@ -9,9 +9,9 @@ const {
     removePostLike,
     addPostComment,
     removePostComment,
-} = require('../controllers/api/postsController');
-const validation = require('../controllers/api/validation');
-const { POST, POST_COMMENT } = require('../controllers/api/validation/validationTypes');
+} = require('../controllers/postsController');
+const validation = require('../utils/validation');
+const { POST, POST_COMMENT } = require('../utils/validation/validationTypes');
 
 // All routes after this middleware are protected
 router.use(protected);

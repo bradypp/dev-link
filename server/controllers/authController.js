@@ -2,10 +2,10 @@ const gravatar = require('gravatar');
 const { promisify } = require('util');
 const normalize = require('normalize-url');
 const jwt = require('jsonwebtoken');
-const catchAsync = require('../../utils/catchAsync');
-const AppError = require('../../utils/appError');
-const sendEmail = require('../../utils/sendEmail');
-const User = require('../../models/User');
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
+const sendEmail = require('../utils/sendEmail');
+const User = require('../models/User');
 
 exports.signUp = catchAsync(async (req, res, next) => {
     const { name, email, password } = req.body;

@@ -1,5 +1,5 @@
-const catchAsync = require('../../utils/catchAsync');
-const AppError = require('../../utils/appError');
+const catchAsync = require('./catchAsync');
+const AppError = require('./appError');
 const QueryParamsHandler = require('./queryParamsHandler');
 
 exports.deleteOne = Model =>

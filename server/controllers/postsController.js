@@ -1,7 +1,7 @@
-const Post = require('../../models/Post');
-const User = require('../../models/User');
-const catchAsync = require('../../utils/catchAsync');
-const AppError = require('../../utils/appError');
+const Post = require('../models/Post');
+const User = require('../models/User');
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
 exports.getAllPosts = catchAsync(async (req, res, next) => {
     // Find all posts and sort by date

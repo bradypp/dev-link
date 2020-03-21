@@ -6,9 +6,9 @@ const {
     resetPassword,
     protected,
     updatePassword,
-} = require('../controllers/api/authController');
-const { getCurrentUser, deleteUser, updateUser } = require('../controllers/api/userController');
-const validation = require('../controllers/api/validation');
+} = require('../controllers/authController');
+const { getCurrentUser, deleteUser, updateUser } = require('../controllers/userController');
+const validation = require('../utils/validation');
 const {
     SIGN_UP,
     SIGN_IN,
@@ -16,7 +16,7 @@ const {
     RESET_PASSWORD,
     UPDATE_PASSWORD,
     UPDATE_ME,
-} = require('../controllers/api/validation/validationTypes');
+} = require('../utils/validation/validationTypes');
 
 router.route('/sign-up').post(validation(SIGN_UP), signUp);
 router.route('/sign-in').post(validation(SIGN_IN), signIn);
