@@ -1,13 +1,13 @@
 import { api, globalErrorHandler } from 'utils';
 import { setAlert } from 'redux/alerts';
 import {
-    SIGNUP_SUCCESS,
+    SIGN_UP_SUCCESS,
     USER_LOADED,
     USER_LOADING,
     AUTH_ERROR,
-    SIGNIN_SUCCESS,
+    SIGN_IN_SUCCESS,
     CLEAR_PROFILE,
-    SIGNOUT_SUCCESS,
+    SIGN_OUT_SUCCESS,
     ACCOUNT_DELETED,
 } from 'redux/actionTypes';
 
@@ -51,7 +51,7 @@ export const signUp = ({ name, email, password, password2 }) => async dispatch =
         const res = await api.post('/user/sign-up', body, config);
 
         dispatch({
-            type: SIGNUP_SUCCESS,
+            type: SIGN_UP_SUCCESS,
             payload: res.data,
         });
         dispatch(loadUser());
@@ -73,7 +73,7 @@ export const signIn = ({ email, password }) => async dispatch => {
         const res = await api.post('/user/sign-in', body, config);
 
         dispatch({
-            type: SIGNIN_SUCCESS,
+            type: SIGN_IN_SUCCESS,
             payload: res.data,
         });
         dispatch(loadUser());
@@ -84,7 +84,7 @@ export const signIn = ({ email, password }) => async dispatch => {
 
 export const signOut = () => dispatch => {
     dispatch({ type: CLEAR_PROFILE });
-    dispatch({ type: SIGNOUT_SUCCESS });
+    dispatch({ type: SIGN_OUT_SUCCESS });
 };
 
 // TODO: Custom confirm modal/notification

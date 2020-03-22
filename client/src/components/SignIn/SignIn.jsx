@@ -61,7 +61,7 @@ const SignIn = ({ signIn, clearAlerts, isAuthenticated, alerts }) => {
                 <input type="submit" className="btn btn-primary" value="Sign In" />
             </form>
             <p className="my-1">
-                Don't have an account? <Link to="/register">Sign Up</Link>
+                Don't have an account? <Link to="/sign-up">Sign Up</Link>
             </p>
         </>
     );

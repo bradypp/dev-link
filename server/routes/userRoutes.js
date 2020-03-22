@@ -32,3 +32,5 @@ router
     .patch(validation(UPDATE_ME), updateUser)
     .delete(deleteUser);
 router.route('/update-password').patch(validation(UPDATE_PASSWORD), updatePassword);
+
+module.exports = router;

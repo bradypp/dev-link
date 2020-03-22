@@ -13,10 +13,12 @@ import {
     Profiles,
     NotFound,
 } from 'components';
-import PrivateRoute from './PrivateRoute';
+import { PrivateRoute } from 'components/shared';
 
 const Routes = () => {
     return (
+        // TODO: Remove container & use section styled component instead
+        // TODO: Move alert to App.jsx
         <section className="container">
             <Alert />
             <Switch>

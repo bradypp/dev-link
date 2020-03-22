@@ -90,7 +90,7 @@ const SignUp = ({ setAlert, clearAlerts, signUp, isAuthenticated, alerts }) => {
                 <input type="submit" className="btn btn-primary" value="Sign Up" />
             </form>
             <p className="my-1">
-                Already have an account? <Link to="/login">Sign In</Link>
+                Already have an account? <Link to="/sign-in">Sign In</Link>
             </p>
         </>
     );

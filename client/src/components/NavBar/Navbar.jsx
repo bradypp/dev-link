@@ -12,9 +12,6 @@ const Navbar = ({ isAuthLoading, isAuthenticated, signOut }) => {
                 <Link to="/profiles">Developers</Link>
             </li>
             <li>
-                <Link to="/posts">Posts</Link>
-            </li>
-            <li>
                 <Link to="/dashboard">
                     <i className="fas fa-user" /> <span className="hide-sm">Dashboard</span>
                 </Link>
@@ -33,10 +30,10 @@ const Navbar = ({ isAuthLoading, isAuthenticated, signOut }) => {
                 <Link to="/profiles">Developers</Link>
             </li>
             <li>
-                <Link to="/register">Sign Up</Link>
+                <Link to="/sign-up">Sign Up</Link>
             </li>
             <li>
-                <Link to="/login">Sign In</Link>
+                <Link to="/sign-in">Sign In</Link>
             </li>
         </ul>
     );

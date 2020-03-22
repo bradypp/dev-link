@@ -1,8 +1,8 @@
 import { setAuthToken } from 'utils';
 import {
-    SIGNUP_SUCCESS,
-    SIGNIN_SUCCESS,
-    SIGNOUT_SUCCESS,
+    SIGN_UP_SUCCESS,
+    SIGN_IN_SUCCESS,
+    SIGN_OUT_SUCCESS,
     USER_LOADED,
     USER_LOADING,
     AUTH_ERROR,
@@ -36,8 +36,8 @@ export default (state = initialState, { type, payload }) => {
                 isAuthenticated: false,
                 user: {},
             };
-        case SIGNUP_SUCCESS:
-        case SIGNIN_SUCCESS: {
+        case SIGN_UP_SUCCESS:
+        case SIGN_IN_SUCCESS: {
             const { token } = payload.data;
             setAuthToken(token);
             return {
@@ -48,7 +48,7 @@ export default (state = initialState, { type, payload }) => {
             };
         }
         case AUTH_ERROR:
-        case SIGNOUT_SUCCESS:
+        case SIGN_OUT_SUCCESS:
         case ACCOUNT_DELETED:
             setAuthToken('');
             return {
