@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
-import { selectIsAuthLoading, selectIsAuthenticated, signOut } from 'redux/auth';
+import { selectIsAuthLoading, selectIsAuthenticated, signOut } from 'redux/profile/auth';
 
 const Navbar = ({ isAuthLoading, isAuthenticated, signOut }) => {
     const authLinks = (

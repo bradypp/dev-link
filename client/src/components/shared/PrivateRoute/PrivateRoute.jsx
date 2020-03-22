@@ -3,7 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
-import { selectIsAuthenticated } from 'redux/auth';
+import { selectIsAuthenticated } from 'redux/profile/auth';
 
 const PrivateRoute = ({ component: Component, isAuthenticated, ...otherProps }) => {
     return (

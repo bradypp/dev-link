@@ -1,3 +1,4 @@
+// TODO: Delete posts redux folder?
 import { api, globalErrorHandler } from 'utils';
 import { setAlert } from 'redux/alerts';
 import {

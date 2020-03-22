@@ -1,3 +1,4 @@
+// TODO: Delete posts routes?
 const router = require('express').Router();
 const { protected } = require('../controllers/authController');
 const {

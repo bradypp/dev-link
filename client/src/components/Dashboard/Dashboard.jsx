@@ -7,7 +7,7 @@ import { createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash.isempty';
 import { Spinner } from 'components/shared';
 import { clearAlerts, selectAlerts } from 'redux/alerts';
-import { selectUserFirstName, deleteAccount } from 'redux/auth';
+import { selectUserFirstName, deleteAccount } from 'redux/profile/auth';
 import {
     getCurrentUserProfile,
     selectProfileData,

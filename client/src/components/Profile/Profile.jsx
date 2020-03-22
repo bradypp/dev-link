@@ -16,7 +16,7 @@ import {
     selectProfileExperience,
     selectProfileSkillsArr,
 } from 'redux/profile';
-import { selectIsAuthenticated, selectIsAuthLoading, selectUserData } from 'redux/auth';
+import { selectIsAuthenticated, selectIsAuthLoading, selectUserData } from 'redux/profile/auth';
 import ProfileTop from './ProfileTop/ProfileTop';
 import ProfileAbout from './ProfileAbout/ProfileAbout';
 import ProfileExperience from './ProfileExperience/ProfileExperience';

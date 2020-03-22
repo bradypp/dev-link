@@ -5,7 +5,7 @@
         'about about'
         'exp edu'
         'github github';
-    grid-gap: 1rem;
+    grid-gap: 1.6rem;
 }
 
 .profile-top {
@@ -52,13 +52,13 @@
 
 .profile-exp h2,
 .profile-edu h2 {
-    margin-bottom: 1rem;
+    margin-bottom: 1.6rem;
 }
 
 .profile-exp > div,
 .profile-edu > div {
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
+    margin-bottom: 1.6rem;
+    padding-bottom: 1.6rem;
     border-bottom: var(--color-grey-light) 1px dotted;
 }
 

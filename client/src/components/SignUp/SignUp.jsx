@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { setAlert, clearAlerts, selectAlerts } from 'redux/alerts';
-import { signUp, selectIsAuthenticated } from 'redux/auth';
+import { signUp, selectIsAuthenticated } from 'redux/profile/auth';
 
 const SignUp = ({ setAlert, clearAlerts, signUp, isAuthenticated, alerts }) => {
     const [formData, setFormData] = useState({

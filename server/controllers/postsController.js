@@ -1,3 +1,4 @@
+// TODO: Delete posts controller?
 const Post = require('../models/Post');
 const User = require('../models/User');
 const catchAsync = require('../utils/catchAsync');

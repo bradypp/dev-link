@@ -1,3 +1,4 @@
+// TODO: Delete posts model?
 const { Schema, model } = require('mongoose');
 
 const postSchema = new Schema({

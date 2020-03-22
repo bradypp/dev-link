@@ -1,27 +1,29 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import {
+    Home,
     SignIn,
     SignUp,
     Dashboard,
     CreateProfile,
     EditProfile,
-    Alert,
     AddExperience,
     AddEducation,
     Profile,
     Profiles,
+    Navbar,
+    Alert,
     NotFound,
 } from 'components';
 import { PrivateRoute } from 'components/shared';
 
 const Routes = () => {
     return (
-        // TODO: Remove container & use section styled component instead
-        // TODO: Move alert to App.jsx
-        <section className="container">
+        <Router>
+            <Navbar />
             <Alert />
             <Switch>
+                <Route exact path="/" component={Home} />
                 <Route exact path="/sign-in" component={SignIn} />
                 <Route exact path="/sign-up" component={SignUp} />
                 <Route exact path="/profile/:id" component={Profile} />
@@ -33,7 +35,7 @@ const Routes = () => {
                 <PrivateRoute exact path="/add-education" component={AddEducation} />
                 <Route component={NotFound} />
             </Switch>
-        </section>
+        </Router>
     );
 };
 
