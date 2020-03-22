@@ -1,20 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { StyledSpinner, SpinnerOverlay } from './SpinnerStyles';
 
-const Spinner = ({ overlayActive, size }) => (
-    <div className={`${overlayActive && 'spinner-overlay'}`}>
-        <div className={`spinner ${size === 'small' && 'spinner--medium'}`} />
-    </div>
-);
+const propTypes = {
+    overlayActive: PropTypes.bool,
+    size: PropTypes.string,
+};
 
-Spinner.defaultProps = {
+const defaultProps = {
     overlayActive: true,
     size: 'default',
 };
 
-Spinner.propTypes = {
-    overlayActive: PropTypes.bool,
-    size: PropTypes.string,
-};
+const Spinner = ({ overlayActive, size }) => (
+    <SpinnerOverlay overlayActive={overlayActive}>
+        <StyledSpinner size={size} />
+    </SpinnerOverlay>
+);
+
+Spinner.propTypes = propTypes;
+Spinner.defaultProps = defaultProps;
 
 export default Spinner;
