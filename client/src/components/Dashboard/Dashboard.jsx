@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash.isempty';
-import { Spinner } from 'components/shared';
+import { Spinner, Button } from 'shared/components';
 import { clearAlerts, selectAlerts } from 'redux/alerts';
 import { selectUserFirstName, deleteAccount } from 'redux/auth';
 import {
@@ -59,12 +59,9 @@ const Dashboard = ({
                                 <Education education={profileEducation} />
                             )}
                             <div className="my-2">
-                                <button
-                                    className="btn btn-danger"
-                                    onClick={deleteAccount}
-                                    type="button">
+                                <Button onClick={deleteAccount} variant="danger">
                                     Delete My Account
-                                </button>
+                                </Button>
                             </div>
                         </>
                     ) : (

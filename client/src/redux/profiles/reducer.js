@@ -8,13 +8,12 @@ import {
     PROFILE_LOADING,
 } from 'redux/actionTypes';
 
-// TODO: Have separate user profile saved
-// TODO: If going to profile from profiles list, use the already gathered profile data to fill current profile data
 const initialState = {
     profile: {},
     profiles: [],
-    repos: [],
-    isLoading: false,
+    profileLoading: false,
+    profilesLoading: false,
+    userProfile: {},
     error: {},
 };
 
@@ -37,8 +36,10 @@ export default (state = initialState, { type, payload }) => {
         case GET_PROFILES: {
             return {
                 ...state,
-                isLoading: false,
+                profilesLoading: false,
+                profileLoading: false,
                 profiles: payload,
+                profile: {},
                 error: {},
             };
         }
@@ -61,7 +62,10 @@ export default (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 isLoading: false,
-                repos: payload,
+                profile: {
+                    ...state.profile,
+                    repos: payload,
+                },
                 error: {},
             };
         }

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import isEmpty from 'lodash.isempty';
 import { loadUser, selectToken, selectUser } from 'redux/auth';
-import { setAuthToken } from 'utils';
+import { setAuthToken } from 'shared/utils';
 
 const useLoadUser = () => {
     const dispatch = useDispatch();

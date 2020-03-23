@@ -1,4 +1,4 @@
-import { api, errorHandler } from 'utils';
+import { api, errorHandler } from 'shared/utils';
 import { setAlert } from 'redux/alerts';
 import { clearProfile } from 'redux/profiles';
 import {
@@ -24,7 +24,6 @@ export const loadUser = () => async dispatch => {
     }
 };
 
-// TODO: Implement better error alerts
 export const signUp = ({ name, email, password, password2 }) => async dispatch => {
     try {
         dispatch(userLoading());
@@ -71,8 +70,6 @@ export const signOut = () => dispatch => {
     dispatch(signOutSuccess());
 };
 
-// TODO: Custom confirm modal/notification
-// Delete account & profile
 export const deleteAccount = () => async dispatch => {
     if (window.confirm('Are you sure? This can NOT be undone!')) {
         try {

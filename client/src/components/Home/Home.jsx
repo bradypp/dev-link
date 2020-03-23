@@ -5,6 +5,10 @@ import { Link, Redirect } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { selectIsAuthenticated } from 'redux/auth';
 
+const propTypes = {
+    isAuthenticated: PropTypes.bool.isRequired,
+};
+
 const Home = ({ isAuthenticated }) => {
     if (isAuthenticated) return <Redirect to="/dashboard" />;
     return (
@@ -30,9 +34,7 @@ const Home = ({ isAuthenticated }) => {
     );
 };
 
-Home.propTypes = {
-    isAuthenticated: PropTypes.bool.isRequired,
-};
+Home.propTypes = propTypes;
 
 const mapStateToProps = createStructuredSelector({
     isAuthenticated: selectIsAuthenticated,

@@ -1,4 +1,4 @@
-import { setAuthToken } from 'utils';
+import { setAuthToken } from 'shared/utils';
 import {
     SIGN_UP_SUCCESS,
     SIGN_IN_SUCCESS,
@@ -9,8 +9,6 @@ import {
     ACCOUNT_DELETED,
 } from 'redux/actionTypes';
 
-// TODO: Get errors from response and maptoprops on registration & login form to show correct message
-// TODO: Add getting token from cookies?
 const initialState = {
     token: '',
     isAuthenticated: false,

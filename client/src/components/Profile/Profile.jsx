@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
 import isEmpty from 'lodash.isempty';
 import { createStructuredSelector } from 'reselect';
-import { Spinner } from 'components/shared';
+import { Spinner } from 'shared/components';
 import {
     getProfileById,
     selectIsProfileLoading,
@@ -40,7 +40,6 @@ const Profile = ({
     const params = useParams();
     const [isFirstRender, setIsFirstRender] = useState(true);
 
-    // TODO: Redirect with an alert saying profile couldn't be found?
     useEffect(() => {
         getProfileById(params.id);
         setIsFirstRender(false);

@@ -1,4 +1,4 @@
-import { api, errorHandler } from 'utils';
+import { api, errorHandler } from 'shared/utils';
 import { setAlert } from 'redux/alerts/actions';
 import {
     GET_PROFILE,

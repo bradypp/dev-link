@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { Spinner } from 'components/shared';
+import { Spinner } from 'shared/components';
 import { getGithubRepos, selectProfileRepos } from 'redux/profiles';
 
 const ProfileGithub = ({ githubUsername, getGithubRepos, profileRepos }) => {

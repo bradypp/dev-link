@@ -1,25 +1,31 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { selectIsAuthLoading, selectIsAuthenticated, signOut } from 'redux/auth';
+import { StyledNav, Logo, StyledLink, StyledButton } from './NavBarStyles';
+
+const propTypes = {
+    signOut: PropTypes.func.isRequired,
+    isAuthLoading: PropTypes.bool.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
+};
 
 const Navbar = ({ isAuthLoading, isAuthenticated, signOut }) => {
     const authLinks = (
         <ul>
             <li>
-                <Link to="/profiles">Developers</Link>
+                <StyledLink to="/profiles">Developers</StyledLink>
             </li>
             <li>
-                <Link to="/dashboard">
+                <StyledLink to="/dashboard">
                     <span className="hide-sm">Dashboard</span>
-                </Link>
+                </StyledLink>
             </li>
             <li>
-                <a onClick={signOut} href="#!">
+                <StyledButton onClick={signOut}>
                     <span className="hide-sm">Sign Out</span>
-                </a>
+                </StyledButton>
             </li>
         </ul>
     );
@@ -27,33 +33,30 @@ const Navbar = ({ isAuthLoading, isAuthenticated, signOut }) => {
     const guestLinks = (
         <ul>
             <li>
-                <Link to="/sign-up">Join Now</Link>
+                <StyledLink styles="bordered" to="/sign-in">
+                    Sign In
+                </StyledLink>
             </li>
             <li>
-                <Link to="/sign-in">Sign In</Link>
+                <StyledLink to="/sign-up">Join Now</StyledLink>
             </li>
+            <li>Options Dropdown</li>
         </ul>
     );
 
     return (
-        <nav className="navbar bg-dark">
-            <h1>
-                <Link to="/">DevLink</Link>
-            </h1>
+        <StyledNav className="navbar bg-dark">
+            <Logo to="/">DevLink</Logo>
             {!isAuthLoading && <>{isAuthenticated ? authLinks : guestLinks}</>}
-        </nav>
+        </StyledNav>
     );
-};
-
-Navbar.propTypes = {
-    signOut: PropTypes.func.isRequired,
-    isAuthLoading: PropTypes.bool.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
     isAuthLoading: selectIsAuthLoading,
     isAuthenticated: selectIsAuthenticated,
 });
+
+Navbar.propTypes = propTypes;
 
 export default connect(mapStateToProps, { signOut })(Navbar);

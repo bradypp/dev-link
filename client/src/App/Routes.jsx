@@ -15,7 +15,7 @@ import {
     Alert,
     NotFound,
 } from 'components';
-import { PrivateRoute } from 'components/shared';
+import { PrivateRoute } from 'shared/components';
 
 const Routes = () => {
     return (

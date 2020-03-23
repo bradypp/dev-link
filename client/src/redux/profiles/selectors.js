@@ -16,7 +16,7 @@ export const selectProfile = createSelector([selectProfiles], profile => profile
 
 export const selectProfileUser = createSelector([selectProfiles], profile => profile.user || {});
 
-export const selectProfileRepos = createSelector([selectProfiles], profile => profile.repos || []);
+export const selectProfileRepos = createSelector([selectProfile], profile => profile.repos || []);
 
 export const selectProfileSkillsArr = createSelector(
     [selectProfile],

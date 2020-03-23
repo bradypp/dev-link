@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash.isempty';
-import { Spinner } from 'components/shared';
+import { Spinner } from 'shared/components';
 import {
     createProfile,
     getCurrentUserProfile,

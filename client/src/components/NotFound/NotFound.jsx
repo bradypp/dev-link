@@ -1,4 +1,5 @@
 import React from 'react';
+
 // TODO: update to make look better and add button to home/feed
 const NotFound = () => {
     return (

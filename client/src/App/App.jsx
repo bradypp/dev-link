@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLoadUser } from 'utils';
+import { useLoadUser } from 'shared/utils';
 import Routes from './Routes';
 import ThemeProvider from './ThemeProvider';
 import GlobalStyle from './GlobalStyle';

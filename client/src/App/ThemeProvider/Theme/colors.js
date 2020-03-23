@@ -1,30 +1,31 @@
-const colors = {
+const base = {
     primary: '#0052cc',
-    secondary: '#F4F5F7',
+    secondary: '',
     success: '#0B875B',
     danger: '#E13C3C',
     warning: '#F89C1C',
-    button: {
-        primary: '#0052cc',
-        secondary: '#F4F5F7',
-        success: '#0B875B',
-        danger: '#E13C3C',
-        empty: '#fff',
-    },
-    text: {
-        dark: '#42526E',
-        medium: '#5E6C84',
-        light: '#8993a4',
-        white: '#f7f7f7',
-        link: '#0052cc',
-    },
-    background: {
-        dark: '#0747A6',
-        medium: '#dfe1e6',
-        light1: '#D2E5FE',
-        light2: '#ebecf0',
-        light3: '#F4F5F7',
-    },
+    white: '#f4f5f7',
+    greyDark1: '#333',
+    greyDark2: '#555',
+    greyDark3: '#777',
+    greyLight1: '#e7e4e4',
+    greyLight2: '#ddd',
+    greyLight3: '#ccc',
+    link: '#0052cc',
+};
+
+const button = {
+    primary: base.primary,
+    secondary: base.secondary,
+    grey: '#f1f1f1',
+    white: base.white,
+    success: base.success,
+    danger: base.danger,
+};
+
+const colors = {
+    ...base,
+    button,
 };
 
 export default colors;
