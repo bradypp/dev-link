@@ -1,6 +1,6 @@
 const colors = {
-    primary: '',
-    secondary: '',
+    primary: '#0052cc',
+    secondary: '#F4F5F7',
     success: '#0B875B',
     danger: '#E13C3C',
     warning: '#F89C1C',
@@ -15,6 +15,7 @@ const colors = {
         dark: '#42526E',
         medium: '#5E6C84',
         light: '#8993a4',
+        white: '#f7f7f7',
         link: '#0052cc',
     },
     background: {
@@ -23,11 +24,6 @@ const colors = {
         light1: '#D2E5FE',
         light2: '#ebecf0',
         light3: '#F4F5F7',
-    },
-    border: {
-        light1: '#C1C7D0',
-        light2: '#dfe1e6',
-        inputFocus: '#4c9aff',
     },
 };
 

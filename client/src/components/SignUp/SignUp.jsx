@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { setAlert, clearAlerts, selectAlerts } from 'redux/alerts';
-import { signUp, selectIsAuthenticated } from 'redux/profile/auth';
+import { signUp, selectIsAuthenticated } from 'redux/auth';
 
 const SignUp = ({ setAlert, clearAlerts, signUp, isAuthenticated, alerts }) => {
     const [formData, setFormData] = useState({
@@ -41,9 +41,7 @@ const SignUp = ({ setAlert, clearAlerts, signUp, isAuthenticated, alerts }) => {
     return (
         <>
             <h1 className="large text-primary">Sign Up</h1>
-            <p className="lead">
-                <i className="fas fa-user" /> Create Your Account
-            </p>
+            <p className="lead">Create Your Account</p>
             <form className="form" onSubmit={onSubmit} noValidate>
                 <div className="form-group">
                     <input

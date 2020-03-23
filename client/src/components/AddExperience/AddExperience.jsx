@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addExperience } from 'redux/profile';
+import { addExperience } from 'redux/profiles';
 
 const AddExperience = ({ addExperience }) => {
     const [formData, setFormData] = useState({
@@ -31,8 +31,7 @@ const AddExperience = ({ addExperience }) => {
         <>
             <h1 className="large text-primary">Add An Experience</h1>
             <p className="lead">
-                <i className="fas fa-code-branch" /> Add any developer/programming positions that
-                you have had in the past
+                Add any developer/programming positions that you have had in the past
             </p>
             <small>* = required field</small>
             <form className="form" onSubmit={onSubmit} noValidate>

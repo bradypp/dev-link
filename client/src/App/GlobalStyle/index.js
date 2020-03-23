@@ -38,9 +38,9 @@ const GlobalStyle = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     font-family: ${({ theme }) => theme.fonts.primary};
-    font-size: 1.6rem;
+    font-size: ${({ theme }) => theme.fontSize.base};
     background-color: ${({ theme }) => theme.colors.background.light3};
-    color: ${({ theme }) => theme.colors.text.dark};
+    color: ${({ theme }) => theme.colors.text.dark2};
     line-height: 1.7;
   }
 

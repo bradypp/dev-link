@@ -7,14 +7,14 @@ import { createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash.isempty';
 import { Spinner } from 'components/shared';
 import { clearAlerts, selectAlerts } from 'redux/alerts';
-import { selectUserFirstName, deleteAccount } from 'redux/profile/auth';
+import { selectUserFirstName, deleteAccount } from 'redux/auth';
 import {
     getCurrentUserProfile,
-    selectProfileData,
+    selectProfile,
     selectIsProfileLoading,
     selectProfileEducation,
     selectProfileExperience,
-} from 'redux/profile';
+} from 'redux/profiles';
 import Education from './Education/Education';
 import DashboardActions from './DashboardActions/DashboardActions';
 import Experience from './Experience/Experience';
@@ -48,9 +48,7 @@ const Dashboard = ({
                 <Spinner />
             ) : (
                 <>
-                    <p className="lead">
-                        <i className="fas fa-user" /> Welcome {userFirstName && userFirstName}!
-                    </p>
+                    <p className="lead">Welcome {userFirstName && userFirstName}!</p>
                     {!isEmpty(profileData) ? (
                         <>
                             <DashboardActions />
@@ -65,7 +63,7 @@ const Dashboard = ({
                                     className="btn btn-danger"
                                     onClick={deleteAccount}
                                     type="button">
-                                    <i className="fas fa-user-minus" /> Delete My Account
+                                    Delete My Account
                                 </button>
                             </div>
                         </>
@@ -97,7 +95,7 @@ Dashboard.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
     userFirstName: selectUserFirstName,
-    profileData: selectProfileData,
+    profileData: selectProfile,
     isProfileLoading: selectIsProfileLoading,
     profileEducation: selectProfileEducation,
     profileExperience: selectProfileExperience,

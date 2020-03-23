@@ -17,32 +17,32 @@ const ProfileTop = ({ profileInfo, profileUser, profileSocial }) => {
             <div className="icons my-1">
                 {website && (
                     <a href={website} target="_blank" rel="noopener noreferrer">
-                        <i className="fas fa-globe fa-2x" />
+                        website
                     </a>
                 )}
                 {!isEmpty(profileSocial) && twitter && (
                     <a href={twitter} target="_blank" rel="noopener noreferrer">
-                        <i className="fab fa-twitter fa-2x" />
+                        twitter
                     </a>
                 )}
                 {!isEmpty(profileSocial) && facebook && (
                     <a href={facebook} target="_blank" rel="noopener noreferrer">
-                        <i className="fab fa-facebook fa-2x" />
+                        facebook
                     </a>
                 )}
                 {!isEmpty(profileSocial) && linkedin && (
                     <a href={linkedin} target="_blank" rel="noopener noreferrer">
-                        <i className="fab fa-linkedin fa-2x" />
+                        linkedin
                     </a>
                 )}
                 {!isEmpty(profileSocial) && youtube && (
                     <a href={youtube} target="_blank" rel="noopener noreferrer">
-                        <i className="fab fa-youtube fa-2x" />
+                        youtube
                     </a>
                 )}
                 {!isEmpty(profileSocial) && instagram && (
                     <a href={instagram} target="_blank" rel="noopener noreferrer">
-                        <i className="fab fa-instagram fa-2x" />
+                        instagram
                     </a>
                 )}
             </div>

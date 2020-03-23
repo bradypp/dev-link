@@ -1,45 +1,33 @@
-import { api, globalErrorHandler } from 'utils';
+import { api, errorHandler } from 'utils';
 import { setAlert } from 'redux/alerts';
+import { clearProfile } from 'redux/profiles';
 import {
     SIGN_UP_SUCCESS,
     USER_LOADED,
     USER_LOADING,
     AUTH_ERROR,
     SIGN_IN_SUCCESS,
-    CLEAR_PROFILE,
     SIGN_OUT_SUCCESS,
     ACCOUNT_DELETED,
 } from 'redux/actionTypes';
 
-// Auth error
-export const authError = () => async dispatch => {
-    dispatch({
-        type: AUTH_ERROR,
-    });
-};
-
-// Load user
 export const loadUser = () => async dispatch => {
     try {
-        dispatch({
-            type: USER_LOADING,
-        });
+        dispatch(userLoading());
 
         const res = await api.get('/user');
 
-        dispatch({
-            type: USER_LOADED,
-            payload: res.data,
-        });
+        dispatch(userLoaded(res.data.data.user));
     } catch (err) {
-        globalErrorHandler(err, dispatch, authError);
+        dispatch(errorHandler(err));
+        dispatch(authError(err));
     }
 };
 
-// TODO: Implement more elegant error alerts
+// TODO: Implement better error alerts
 export const signUp = ({ name, email, password, password2 }) => async dispatch => {
     try {
-        dispatch({ type: USER_LOADING });
+        dispatch(userLoading());
 
         const body = JSON.stringify({ name, email, password, password2 });
         const config = {
@@ -50,19 +38,17 @@ export const signUp = ({ name, email, password, password2 }) => async dispatch =
 
         const res = await api.post('/user/sign-up', body, config);
 
-        dispatch({
-            type: SIGN_UP_SUCCESS,
-            payload: res.data,
-        });
+        dispatch(signUpSuccess(res.data.data.token));
         dispatch(loadUser());
     } catch (err) {
-        globalErrorHandler(err, dispatch, authError, true);
+        dispatch(errorHandler(err));
+        dispatch(authError(err));
     }
 };
 
 export const signIn = ({ email, password }) => async dispatch => {
     try {
-        dispatch({ type: USER_LOADING });
+        dispatch(userLoading());
         const body = JSON.stringify({ email, password });
         const config = {
             headers: {
@@ -72,19 +58,17 @@ export const signIn = ({ email, password }) => async dispatch => {
 
         const res = await api.post('/user/sign-in', body, config);
 
-        dispatch({
-            type: SIGN_IN_SUCCESS,
-            payload: res.data,
-        });
+        dispatch(signInSuccess(res.data.data.token));
         dispatch(loadUser());
     } catch (err) {
-        globalErrorHandler(err, dispatch, authError, true);
+        dispatch(errorHandler(err));
+        dispatch(authError(err));
     }
 };
 
 export const signOut = () => dispatch => {
-    dispatch({ type: CLEAR_PROFILE });
-    dispatch({ type: SIGN_OUT_SUCCESS });
+    dispatch(clearProfile());
+    dispatch(signOutSuccess());
 };
 
 // TODO: Custom confirm modal/notification
@@ -93,13 +77,45 @@ export const deleteAccount = () => async dispatch => {
     if (window.confirm('Are you sure? This can NOT be undone!')) {
         try {
             await api.delete('/user');
-
-            dispatch({ type: CLEAR_PROFILE });
-            dispatch({ type: ACCOUNT_DELETED });
+            dispatch(clearProfile());
+            dispatch(accountDeleted());
 
             dispatch(setAlert('Your account has been permanently deleted'));
         } catch (err) {
-            globalErrorHandler(err, dispatch, authError);
+            dispatch(errorHandler(err));
+            dispatch(authError(err));
         }
     }
 };
+
+export const authError = payload => ({
+    type: AUTH_ERROR,
+    payload,
+});
+
+export const userLoading = () => ({
+    type: USER_LOADING,
+});
+
+export const userLoaded = payload => ({
+    type: USER_LOADED,
+    payload,
+});
+
+export const signUpSuccess = payload => ({
+    type: SIGN_UP_SUCCESS,
+    payload,
+});
+
+export const signInSuccess = payload => ({
+    type: SIGN_IN_SUCCESS,
+    payload,
+});
+
+export const signOutSuccess = () => ({
+    type: SIGN_OUT_SUCCESS,
+});
+
+export const accountDeleted = () => ({
+    type: ACCOUNT_DELETED,
+});

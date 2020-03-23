@@ -8,8 +8,8 @@ export const selectIsAuthLoading = createSelector([selectAuth], auth => auth.isL
 
 export const selectToken = createSelector([selectAuth], auth => auth.token);
 
-export const selectUserData = createSelector([selectAuth], auth => auth.user);
+export const selectUser = createSelector([selectAuth], auth => auth.user);
 
-export const selectUserFirstName = createSelector([selectUserData], user =>
+export const selectUserFirstName = createSelector([selectUser], user =>
     user.name ? user.name.split(' ')[0] : '',
 );

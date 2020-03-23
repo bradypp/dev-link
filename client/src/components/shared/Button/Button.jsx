@@ -15,14 +15,13 @@ const propTypes = {
 const defaultProps = {
     className: undefined,
     children: undefined,
-    variant: 'secondary',
+    variant: 'primary',
     Icon: undefined,
     disabled: false,
     isWorking: false,
     onClick: () => {},
 };
 
-//FIXME: spinner
 const Button = forwardRef(
     ({ children, variant, Icon, disabled, isWorking, onClick, className }, ref) => {
         const handleClick = () => {
@@ -40,7 +39,7 @@ const Button = forwardRef(
                 isWorking={isWorking}
                 iconOnly={!children}
                 ref={ref}>
-                {/* {isWorking && <StyledSpinner size={26} />} */}
+                {isWorking && <StyledSpinner size={25} />}
                 {Icon && <Icon />}
                 {children && <Text withPadding={isWorking || Icon}>{children}</Text>}
             </StyledButton>

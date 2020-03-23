@@ -1,6 +1,6 @@
 import {
     GET_PROFILE,
-    PROFILE_ERROR,
+    PROFILES_ERROR,
     CLEAR_PROFILE,
     UPDATE_PROFILE,
     GET_PROFILES,
@@ -11,21 +11,22 @@ import {
 // TODO: Have separate user profile saved
 // TODO: If going to profile from profiles list, use the already gathered profile data to fill current profile data
 const initialState = {
-    profileData: {},
+    profile: {},
     profiles: [],
     repos: [],
     isLoading: false,
+    error: {},
 };
 
 export default (state = initialState, { type, payload }) => {
     switch (type) {
         case GET_PROFILE:
         case UPDATE_PROFILE: {
-            const { profile } = payload.data;
             return {
                 ...state,
-                profileData: profile,
+                profile: payload,
                 isLoading: false,
+                error: {},
             };
         }
         case PROFILE_LOADING:
@@ -34,32 +35,34 @@ export default (state = initialState, { type, payload }) => {
                 isLoading: true,
             };
         case GET_PROFILES: {
-            const { profiles } = payload.data;
             return {
                 ...state,
                 isLoading: false,
-                profiles,
+                profiles: payload,
+                error: {},
             };
         }
-        case PROFILE_ERROR:
+        case PROFILES_ERROR:
             return {
                 ...state,
                 isLoading: false,
-                profileData: {},
+                profile: {},
+                error: payload,
             };
         case CLEAR_PROFILE:
             return {
                 ...state,
-                profileData: {},
+                profile: {},
                 repos: [],
                 isLoading: false,
+                error: {},
             };
         case GET_REPOS: {
-            const { repos } = payload.data;
             return {
                 ...state,
                 isLoading: false,
-                repos,
+                repos: payload,
+                error: {},
             };
         }
         default:

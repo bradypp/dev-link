@@ -9,10 +9,10 @@ import {
     createProfile,
     getCurrentUserProfile,
     selectIsProfileLoading,
-    selectProfileData,
-} from 'redux/profile';
+    selectProfile,
+} from 'redux/profiles';
 
-const CreateProfile = ({ createProfile, getCurrentUserProfile, profileData, isProfileLoading }) => {
+const CreateProfile = ({ createProfile, getCurrentUserProfile, profile, isProfileLoading }) => {
     const [formData, setFormData] = useState({
         company: '',
         website: '',
@@ -59,14 +59,12 @@ const CreateProfile = ({ createProfile, getCurrentUserProfile, profileData, isPr
 
     return (
         <>
-            {isProfileLoading && isEmpty(profileData) ? (
+            {isProfileLoading && isEmpty(profile) ? (
                 <Spinner />
             ) : (
                 <>
                     <h1 className="large text-primary">Create Your Profile</h1>
-                    <p className="lead">
-                        <i className="fas fa-user" /> Make yourself stand out!
-                    </p>
+                    <p className="lead">Make yourself stand out!</p>
                     <small>* = required field</small>
                     <form className="form" onSubmit={onSubmit} noValidate>
                         <div className="form-group">
@@ -168,7 +166,6 @@ const CreateProfile = ({ createProfile, getCurrentUserProfile, profileData, isPr
                         {displaySocialInputs && (
                             <>
                                 <div className="form-group social-input">
-                                    <i className="fab fa-twitter fa-2x" />
                                     <input
                                         type="text"
                                         placeholder="Twitter URL"
@@ -179,7 +176,6 @@ const CreateProfile = ({ createProfile, getCurrentUserProfile, profileData, isPr
                                 </div>
 
                                 <div className="form-group social-input">
-                                    <i className="fab fa-facebook fa-2x" />
                                     <input
                                         type="text"
                                         placeholder="Facebook URL"
@@ -190,7 +186,6 @@ const CreateProfile = ({ createProfile, getCurrentUserProfile, profileData, isPr
                                 </div>
 
                                 <div className="form-group social-input">
-                                    <i className="fab fa-youtube fa-2x" />
                                     <input
                                         type="text"
                                         placeholder="YouTube URL"
@@ -201,7 +196,6 @@ const CreateProfile = ({ createProfile, getCurrentUserProfile, profileData, isPr
                                 </div>
 
                                 <div className="form-group social-input">
-                                    <i className="fab fa-linkedin fa-2x" />
                                     <input
                                         type="text"
                                         placeholder="Linkedin URL"
@@ -212,7 +206,6 @@ const CreateProfile = ({ createProfile, getCurrentUserProfile, profileData, isPr
                                 </div>
 
                                 <div className="form-group social-input">
-                                    <i className="fab fa-instagram fa-2x" />
                                     <input
                                         type="text"
                                         placeholder="Instagram URL"
@@ -241,12 +234,12 @@ CreateProfile.propTypes = {
     createProfile: PropTypes.func.isRequired,
     getCurrentUserProfile: PropTypes.func.isRequired,
     isProfileLoading: PropTypes.bool.isRequired,
-    profileData: PropTypes.object.isRequired,
+    profile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
     isProfileLoading: selectIsProfileLoading,
-    profileData: selectProfileData,
+    profile: selectProfile,
 });
 
 export default connect(mapStateToProps, { createProfile, getCurrentUserProfile })(CreateProfile);

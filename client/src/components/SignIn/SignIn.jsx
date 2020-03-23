@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
-import { signIn, selectIsAuthenticated } from 'redux/profile/auth';
+import { signIn, selectIsAuthenticated } from 'redux/auth';
 import { clearAlerts, selectAlerts } from 'redux/alerts';
 
 const SignIn = ({ signIn, clearAlerts, isAuthenticated, alerts }) => {
@@ -35,9 +35,7 @@ const SignIn = ({ signIn, clearAlerts, isAuthenticated, alerts }) => {
     return (
         <>
             <h1 className="large text-primary">Sign In</h1>
-            <p className="lead">
-                <i className="fas fa-user" /> Sign Into Your Account
-            </p>
+            <p className="lead">Sign Into Your Account</p>
             <form className="form" onSubmit={onSubmit} noValidate>
                 <div className="form-group">
                     <input

@@ -1,27 +1,30 @@
 import { createSelector } from 'reselect';
 
-export const selectProfile = state => state.profile;
+export const selectProfiles = state => state.profiles;
 
-export const selectIsProfileLoading = createSelector([selectProfile], profile => profile.isLoading);
-
-export const selectAllProfiles = createSelector([selectProfile], profile => profile.profiles || []);
-
-export const selectProfileData = createSelector(
-    [selectProfile],
-    profile => profile.profileData || {},
+export const selectIsProfileLoading = createSelector(
+    [selectProfiles],
+    profile => profile.isLoading,
 );
 
-export const selectProfileUser = createSelector([selectProfile], profile => profile.user || {});
+export const selectAllProfiles = createSelector(
+    [selectProfiles],
+    profile => profile.profiles || [],
+);
 
-export const selectProfileRepos = createSelector([selectProfile], profile => profile.repos || []);
+export const selectProfile = createSelector([selectProfiles], profile => profile.profile || {});
+
+export const selectProfileUser = createSelector([selectProfiles], profile => profile.user || {});
+
+export const selectProfileRepos = createSelector([selectProfiles], profile => profile.repos || []);
 
 export const selectProfileSkillsArr = createSelector(
-    [selectProfileData],
-    profileData => profileData.skills || [],
+    [selectProfile],
+    profile => profile.skills || [],
 );
 
 export const selectProfileInfo = createSelector(
-    [selectProfileData],
+    [selectProfile],
     ({ company, website, location, status, skills, github_username, bio }) => {
         return {
             company: company || '',
@@ -35,7 +38,7 @@ export const selectProfileInfo = createSelector(
     },
 );
 
-export const selectProfileSocial = createSelector([selectProfileData], ({ social }) => {
+export const selectProfileSocial = createSelector([selectProfile], ({ social }) => {
     if (!social) return {};
     const { twitter, facebook, linkedin, youtube, instagram } = social;
     return {
@@ -55,11 +58,11 @@ export const selectProfileInfoAndSocial = createSelector(
 );
 
 export const selectProfileEducation = createSelector(
-    [selectProfileData],
+    [selectProfile],
     profileData => profileData.education || [],
 );
 
 export const selectProfileExperience = createSelector(
-    [selectProfileData],
+    [selectProfile],
     profileData => profileData.experience || [],
 );

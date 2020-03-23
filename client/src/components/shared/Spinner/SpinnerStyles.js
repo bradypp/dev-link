@@ -6,16 +6,14 @@ export const SpinnerOverlay = styled.div`
         css`
             height: 60vh;
             width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         `}
+    ${({ theme }) => theme.mixins.flexCenter}
 `;
 
 export const StyledSpinner = styled.div`
     display: inline-block;
-    width: ${({ size }) => (size === 'default' && 4.5) || (size === 'small' && 3)}rem;
-    height: ${({ size }) => (size === 'default' && 4.5) || (size === 'small' && 3)}rem;
+    width: ${({ size }) => size}px;
+    height: ${({ size }) => size}px;
     border-radius: 50%;
     color: #636767;
     border: 5px solid #aaa;

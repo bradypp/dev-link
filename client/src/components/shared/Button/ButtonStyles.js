@@ -1,8 +1,7 @@
 import styled, { css } from 'styled-components/macro';
 import { Spinner } from 'components/shared';
 
-// TODO: test this works with theme & customise
-const buttonColor = css`
+const darkButtonColor = css`
     color: #fff;
     background: ${({ theme, variant }) => theme.colors.button[variant]};
     &:not(:disabled) {
@@ -47,37 +46,36 @@ const lightButtonColor = css`
 `;
 
 const buttonVariants = {
-    primary: buttonColor,
-    success: buttonColor,
-    danger: buttonColor,
+    primary: darkButtonColor,
+    success: darkButtonColor,
+    danger: darkButtonColor,
     secondary: lightButtonColor,
     empty: lightButtonColor,
 };
 
-// FIXME
-// export const StyledSpinner = styled(Spinner)`
-//     position: relative;
-//     top: 1px;
-// `;
+export const StyledSpinner = styled(Spinner)`
+    position: relative;
+    top: 1px;
+`;
 
 export const Text = styled.div`
-    padding-left: ${props => (props.withPadding ? 7 : 0)}px;
+    padding-left: ${({ withPadding }) => (withPadding ? 7 : 0)}px;
 `;
 
 export const StyledButton = styled.button`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 32px;
+    height: 35px;
     vertical-align: middle;
     line-height: 1;
-    padding: 0 ${props => (props.iconOnly ? 9 : 12)}px;
+    padding: 0 ${({ iconOnly }) => (iconOnly ? 10 : 15)}px;
     white-space: nowrap;
     border-radius: 3px;
-    transition: all 0.1s;
+    transition: ${({ theme }) => theme.animation.transition};
     appearance: none;
-    font-size: 1.4rem;
-    ${props => buttonVariants[props.variant]}
+    font-size: ${({ theme }) => theme.fontSize.base};
+    ${({ variant }) => buttonVariants[variant]}
 
     &:disabled {
         opacity: 0.6;

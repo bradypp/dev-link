@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
-import { selectIsAuthenticated } from 'redux/profile/auth';
-import { Button } from 'components/shared';
+import { selectIsAuthenticated } from 'redux/auth';
 
 const Home = ({ isAuthenticated }) => {
     if (isAuthenticated) return <Redirect to="/dashboard" />;

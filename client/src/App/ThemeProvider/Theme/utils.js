@@ -1,11 +1,11 @@
 const utils = {
     spacing: {
+        tiny: `5px`,
+        small: `10px`,
         base: `20px`,
-        xs: `5px`,
-        sm: `10px`,
-        md: `30px`,
-        lg: `50px`,
-        xl: `100px`,
+        large: `30px`,
+        xl: `50px`,
+        xxl: `100px`,
     },
     zIndex: {
         modal: 100,

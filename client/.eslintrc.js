@@ -25,6 +25,7 @@ module.exports = {
         camelcase: 0,
         'no-underscore-dangle': 0,
         'no-console': [2, { allow: ['warn', 'error'] }],
+        'no-use-before-define': 0,
 
         // React Rules
         'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx'] }],

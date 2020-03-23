@@ -9,14 +9,14 @@ import {
     getProfileById,
     selectIsProfileLoading,
     selectProfileUser,
-    selectProfileData,
+    selectProfile,
     selectProfileInfo,
     selectProfileSocial,
     selectProfileEducation,
     selectProfileExperience,
     selectProfileSkillsArr,
-} from 'redux/profile';
-import { selectIsAuthenticated, selectIsAuthLoading, selectUserData } from 'redux/profile/auth';
+} from 'redux/profiles';
+import { selectIsAuthenticated, selectIsAuthLoading, selectUser } from 'redux/auth';
 import ProfileTop from './ProfileTop/ProfileTop';
 import ProfileAbout from './ProfileAbout/ProfileAbout';
 import ProfileExperience from './ProfileExperience/ProfileExperience';
@@ -35,7 +35,7 @@ const Profile = ({
     profileSkillsArr,
     isAuthenticated,
     isAuthLoading,
-    userData,
+    user,
 }) => {
     const params = useParams();
     const [isFirstRender, setIsFirstRender] = useState(true);
@@ -55,13 +55,11 @@ const Profile = ({
                     <Link to="/profiles" className="btn btn-light">
                         Back To Profiles
                     </Link>
-                    {isAuthenticated &&
-                        isAuthLoading === false &&
-                        userData._id === profileUser._id && (
-                            <Link to="/edit" className="btn btn-dark">
-                                Edit Profile
-                            </Link>
-                        )}
+                    {isAuthenticated && isAuthLoading === false && user._id === profileUser._id && (
+                        <Link to="/edit" className="btn btn-dark">
+                            Edit Profile
+                        </Link>
+                    )}
                     <div className="profile-grid my-1">
                         <ProfileTop
                             profileInfo={profileInfo}
@@ -127,13 +125,13 @@ Profile.propTypes = {
     profileSkillsArr: PropTypes.array.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
     isAuthLoading: PropTypes.bool.isRequired,
-    userData: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
     isProfileLoading: selectIsProfileLoading,
     profileUser: selectProfileUser,
-    profileData: selectProfileData,
+    profileData: selectProfile,
     profileInfo: selectProfileInfo,
     profileSocial: selectProfileSocial,
     profileEducation: selectProfileEducation,
@@ -141,7 +139,7 @@ const mapStateToProps = createStructuredSelector({
     profileSkillsArr: selectProfileSkillsArr,
     isAuthenticated: selectIsAuthenticated,
     isAuthLoading: selectIsAuthLoading,
-    userData: selectUserData,
+    user: selectUser,
 });
 
 export default connect(mapStateToProps, { getProfileById })(Profile);

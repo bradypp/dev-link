@@ -8,9 +8,14 @@ export const setAlert = (message, alertType = 'danger', timeout = 3000) => dispa
         payload: { id, message, alertType },
     });
 
-    setTimeout(() => dispatch({ type: REMOVE_ALERT, payload: id }), timeout);
+    setTimeout(() => dispatch(removeAlert(id)), timeout);
 };
 
-export const clearAlerts = () => dispatch => {
-    dispatch({ type: CLEAR_ALERTS });
-};
+export const clearAlerts = () => ({
+    type: CLEAR_ALERTS,
+});
+
+export const removeAlert = payload => ({
+    type: REMOVE_ALERT,
+    payload,
+});

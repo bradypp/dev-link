@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { deleteEducation } from 'redux/profile';
+import { deleteEducation } from 'redux/profiles';
 
 const Education = ({ education, deleteEducation }) => {
     const educations = education.map(({ _id, school, degree, from, to }) => (

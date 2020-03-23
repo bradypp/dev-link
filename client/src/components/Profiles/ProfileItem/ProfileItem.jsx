@@ -23,7 +23,7 @@ const ProfileItem = ({ profileData }) => {
             <ul>
                 {skills.slice(0, 4).map(skill => (
                     <li key={uuidv4()} className="text-primary">
-                        <i className="fas fa-check" /> {skill}
+                        {skill}
                     </li>
                 ))}
             </ul>

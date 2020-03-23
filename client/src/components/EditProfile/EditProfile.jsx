@@ -9,9 +9,9 @@ import {
     createProfile,
     getCurrentUserProfile,
     selectIsProfileLoading,
-    selectProfileData,
+    selectProfile,
     selectProfileInfoAndSocial,
-} from 'redux/profile';
+} from 'redux/profiles';
 
 const EditProfile = ({
     createProfile,
@@ -71,9 +71,7 @@ const EditProfile = ({
             ) : (
                 <>
                     <h1 className="large text-primary">Edit Your Profile</h1>
-                    <p className="lead">
-                        <i className="fas fa-user" /> Add some changes to your profile
-                    </p>
+                    <p className="lead">Add some changes to your profile</p>
                     <small>* = required field</small>
                     <form className="form" onSubmit={onSubmit}>
                         <div className="form-group">
@@ -175,7 +173,6 @@ const EditProfile = ({
                         {displaySocialInputs && (
                             <>
                                 <div className="form-group social-input">
-                                    <i className="fab fa-twitter fa-2x" />
                                     <input
                                         type="text"
                                         placeholder="Twitter URL"
@@ -186,7 +183,6 @@ const EditProfile = ({
                                 </div>
 
                                 <div className="form-group social-input">
-                                    <i className="fab fa-facebook fa-2x" />
                                     <input
                                         type="text"
                                         placeholder="Facebook URL"
@@ -197,7 +193,6 @@ const EditProfile = ({
                                 </div>
 
                                 <div className="form-group social-input">
-                                    <i className="fab fa-youtube fa-2x" />
                                     <input
                                         type="text"
                                         placeholder="YouTube URL"
@@ -208,7 +203,6 @@ const EditProfile = ({
                                 </div>
 
                                 <div className="form-group social-input">
-                                    <i className="fab fa-linkedin fa-2x" />
                                     <input
                                         type="text"
                                         placeholder="Linkedin URL"
@@ -219,7 +213,6 @@ const EditProfile = ({
                                 </div>
 
                                 <div className="form-group social-input">
-                                    <i className="fab fa-instagram fa-2x" />
                                     <input
                                         type="text"
                                         placeholder="Instagram URL"
@@ -254,7 +247,7 @@ EditProfile.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
     isProfileLoading: selectIsProfileLoading,
-    profileData: selectProfileData,
+    profileData: selectProfile,
     profileInfoAndSocial: selectProfileInfoAndSocial,
 });
 

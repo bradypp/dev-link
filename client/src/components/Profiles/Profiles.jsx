@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Spinner } from 'components/shared';
-import { getProfiles, selectIsProfileLoading, selectAllProfiles } from 'redux/profile';
+import { getProfiles, selectIsProfileLoading, selectAllProfiles } from 'redux/profiles';
 import ProfileItem from './ProfileItem/ProfileItem';
 
 const Profiles = ({ getProfiles, profilesLoading, allProfiles }) => {
@@ -26,9 +26,7 @@ const Profiles = ({ getProfiles, profilesLoading, allProfiles }) => {
             ) : (
                 <>
                     <h1 className="large text-primary">Developers</h1>
-                    <p className="lead">
-                        <i className="fab fa-connectdevelop" /> Browse and connect with developers
-                    </p>
+                    <p className="lead">Browse and connect with developers</p>
                     <div className="profiles">{renderProfiles()}</div>
                 </>
             )}

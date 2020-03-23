@@ -17,7 +17,7 @@ const ProfileAbout = ({ profileInfo, profileUser, skillsArr }) => {
             <div className="skills">
                 {skillsArr.map(skill => (
                     <div key={uuidv4()} className="p-1">
-                        <i className="fas fa-check" /> {skill}
+                        {skill}
                     </div>
                 ))}
             </div>

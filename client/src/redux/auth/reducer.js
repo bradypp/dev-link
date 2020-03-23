@@ -16,19 +16,19 @@ const initialState = {
     isAuthenticated: false,
     isLoading: false,
     user: {},
+    error: {},
 };
 
 export default (state = initialState, { type, payload }) => {
     switch (type) {
-        case USER_LOADED: {
-            const { user } = payload.data;
+        case USER_LOADED:
             return {
                 ...state,
                 isAuthenticated: true,
                 isLoading: false,
-                user,
+                user: payload,
+                error: {},
             };
-        }
         case USER_LOADING:
             return {
                 ...state,
@@ -37,17 +37,15 @@ export default (state = initialState, { type, payload }) => {
                 user: {},
             };
         case SIGN_UP_SUCCESS:
-        case SIGN_IN_SUCCESS: {
-            const { token } = payload.data;
-            setAuthToken(token);
+        case SIGN_IN_SUCCESS:
+            setAuthToken(payload);
             return {
                 ...state,
                 isAuthenticated: true,
                 isLoading: false,
-                token,
+                token: payload,
+                error: {},
             };
-        }
-        case AUTH_ERROR:
         case SIGN_OUT_SUCCESS:
         case ACCOUNT_DELETED:
             setAuthToken('');
@@ -57,6 +55,17 @@ export default (state = initialState, { type, payload }) => {
                 isAuthenticated: false,
                 isLoading: false,
                 user: {},
+                error: {},
+            };
+        case AUTH_ERROR:
+            setAuthToken('');
+            return {
+                ...state,
+                token: '',
+                isAuthenticated: false,
+                isLoading: false,
+                user: {},
+                error: payload,
             };
         default:
             return state;
