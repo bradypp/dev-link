@@ -46,7 +46,9 @@ const Navbar = ({ isAuthLoading, isAuthenticated, signOut }) => {
 
     return (
         <StyledNav className="navbar bg-dark">
-            <Logo to="/">DevLink</Logo>
+            <Logo styles="none" to="/">
+                <strong>Dev</strong>Link
+            </Logo>
             {!isAuthLoading && <>{isAuthenticated ? authLinks : guestLinks}</>}
         </StyledNav>
     );

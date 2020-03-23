@@ -7,7 +7,7 @@ const propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
     styles: PropTypes.oneOf(['base', 'default', 'bordered']),
-    variant: PropTypes.oneOf(['primary', 'success', 'danger', 'secondary', 'white']),
+    variant: PropTypes.oneOf(['primary', 'success', 'danger', 'secondary', 'grey']),
     Icon: PropTypes.element,
     disabled: PropTypes.bool,
     onClick: PropTypes.func,

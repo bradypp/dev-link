@@ -6,10 +6,11 @@ const typography = {
         tiny: `1.2rem`,
         small: `1.4rem`,
         base: `1.6rem`,
-        large: `2.0rem`,
-        xl: `2.4rem`,
-        xxl: `2.8rem`,
-        xxxl: `3.2rem`,
+        large: `1.8rem`,
+        xl: `2rem`,
+        xxl: `2.4rem`,
+        xxxl: `2.8rem`,
+        huge: `3.2rem`,
     },
 };
 export default typography;

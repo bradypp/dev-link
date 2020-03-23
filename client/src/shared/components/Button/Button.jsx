@@ -7,7 +7,7 @@ const propTypes = {
     children: PropTypes.node,
     styles: PropTypes.oneOf(['base', 'default', 'bordered']),
     type: PropTypes.oneOf(['button', 'submit']),
-    variant: PropTypes.oneOf(['primary', 'success', 'danger', 'secondary', 'white']),
+    variant: PropTypes.oneOf(['primary', 'success', 'danger', 'secondary', 'grey']),
     Icon: PropTypes.element,
     disabled: PropTypes.bool,
     isWorking: PropTypes.bool,
