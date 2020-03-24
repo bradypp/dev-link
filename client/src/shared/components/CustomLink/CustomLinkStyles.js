@@ -19,7 +19,7 @@ export const BaseLink = styled(Link)`
 export const PrimaryLink = styled(Link)`
     ${sharedLinkStyles}
     ${baseButtonStyles};
-    ${primaryButtonStyles()};
+    ${primaryButtonStyles};
 `;
 
 export const SecondaryLink = styled(Link)`

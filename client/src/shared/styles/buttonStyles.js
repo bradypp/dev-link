@@ -26,22 +26,24 @@ export const baseButtonStyles = css`
 
 const primaryLightenDarkenPercentage = 0.05;
 
-export const primaryButtonStyles = (customColor = undefined) => css`
+export const primaryButtonStyles = css`
     ${baseButtonStyles};
     color: ${({ theme, color }) => {
-        if (color === 'primary' || color === 'success' || color === 'danger') {
-            return theme.colors.white;
+        switch (color) {
+            case 'primary':
+            case 'primaryDark':
+            case 'primaryLight':
+            case 'danger':
+                return theme.colors.white;
+            default:
+                return theme.colors.greyDark1;
         }
-        return theme.colors.greyDark1;
     }};
-    background: ${({ theme, color }) =>
-        customColor !== undefined ? theme.colors.customColor : theme.colors[color]};
+    background: ${({ theme, color }) => theme.colors[color]};
     &:not(:disabled) {
         &:hover {
             background: ${({ theme, color }) =>
-                customColor
-                    ? mixins.darken(theme.colors.customColor, primaryLightenDarkenPercentage)
-                    : mixins.darken(theme.colors[color], primaryLightenDarkenPercentage)};
+                mixins.darken(theme.colors[color], primaryLightenDarkenPercentage)};
         }
         &:active {
             background: ${({ theme, color }) =>

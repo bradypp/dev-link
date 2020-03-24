@@ -23,7 +23,7 @@ export const BaseButton = styled.button`
 
 export const PrimaryButton = styled.button`
     ${sharedButtonStyles}
-    ${primaryButtonStyles()};
+    ${primaryButtonStyles};
 `;
 
 export const SecondaryButton = styled.button`

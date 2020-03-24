@@ -1,17 +1,33 @@
 import styled, { css } from 'styled-components/macro';
 import { CustomLink, Button } from 'shared/components';
-import { mixins } from 'shared/styles';
+import { mixins, primaryButtonStyles, secondaryButtonStyles } from 'shared/styles';
 
 const sharedStyles = css`
     margin-left: 0.75rem;
 `;
 
-export const StyledLink = styled(CustomLink)`
+export const PrimaryLink = styled(CustomLink).attrs(() => ({
+    variant: 'primary',
+    color: 'primaryDark',
+}))`
     ${sharedStyles}
+    ${primaryButtonStyles}
 `;
 
-export const StyledButton = styled(Button)`
+export const SecondaryLink = styled(CustomLink).attrs(() => ({
+    variant: 'secondary',
+    color: 'primaryDark',
+}))`
     ${sharedStyles}
+    ${secondaryButtonStyles}
+`;
+
+export const PrimaryButton = styled(Button).attrs(() => ({
+    variant: 'primary',
+    color: 'primaryDark',
+}))`
+    ${sharedStyles}
+    ${primaryButtonStyles}
 `;
 
 export const Logo = styled(CustomLink)`
