@@ -6,69 +6,108 @@ export const ButtonText = styled.span`
 `;
 
 export const baseButtonStyles = css`
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    ${mixins.flexCenter}
     vertical-align: middle;
-    line-height: 1;
     white-space: nowrap;
-    transition: ${({ theme }) => theme.animation.transition};
+    transition: all 0.15s ease;
     appearance: none;
     font-size: ${({ theme }) => theme.fontSize.base};
-    height: 3.5rem;
-    padding: 0 ${({ iconOnly }) => (iconOnly ? 1 : 1.8)}rem;
+    font-weight: 600;
+    height: 4rem;
+    line-height: 4rem;
+    overflow: hidden;
+    padding: 0 ${({ iconOnly }) => (iconOnly ? 1 : 2.2)}rem;
+    border-radius: 0.2rem;
     &:disabled {
         opacity: 0.6;
         cursor: default;
     }
 `;
 
-export const primaryButtonStyles = css`
+const primaryLightenDarkenPercentage = 0.05;
+
+export const primaryButtonStyles = (customColor = undefined) => css`
+    ${baseButtonStyles};
     color: ${({ theme, color }) => {
         if (color === 'primary' || color === 'success' || color === 'danger') {
             return theme.colors.white;
         }
-        return theme.colors.dark;
+        return theme.colors.greyDark1;
     }};
-    border: 0.3rem solid ${({ theme, color }) => theme.colors.button[color]};
-    background: ${({ theme, color }) => theme.colors.button[color]};
+    background: ${({ theme, color }) =>
+        customColor !== undefined ? theme.colors.customColor : theme.colors[color]};
     &:not(:disabled) {
         &:hover {
-            background: ${({ theme, color }) => mixins.darken(theme.colors.button[color], 0.1)};
+            background: ${({ theme, color }) =>
+                customColor
+                    ? mixins.darken(theme.colors.customColor, primaryLightenDarkenPercentage)
+                    : mixins.darken(theme.colors[color], primaryLightenDarkenPercentage)};
+        }
+        &:active {
+            background: ${({ theme, color }) =>
+                mixins.lighten(theme.colors[color], primaryLightenDarkenPercentage)};
+        }
+        ${({ isActive }) =>
+            isActive &&
+            css`
+                background: ${({ theme, color }) =>
+                    mixins.lighten(theme.colors[color], primaryLightenDarkenPercentage)} !important;
+            `}
+    }
+`;
+
+const secondaryInsetBoxShadow = css`
+    box-shadow: inset 0 0 0 1px ${({ theme, color }) => theme.colors[color]};
+`;
+const secondaryBackground = css`
+    background: ${({ theme, color }) => mixins.rgba(theme.colors[color], 0.05)};
+`;
+
+export const secondaryButtonStyles = css`
+    ${baseButtonStyles};
+    color: ${({ theme, color }) => theme.colors[color]};
+    background: ${({ theme }) => theme.colors.white};
+    border: 1px solid ${({ theme, color }) => theme.colors[color]};
+    &:not(:disabled) {
+        &:not(:disabled) {
+            &:hover {
+                ${secondaryInsetBoxShadow};
+                ${secondaryBackground};
+            }
+            &:active {
+                ${secondaryInsetBoxShadow};
+                ${secondaryBackground};
+            }
+            ${({ isActive }) =>
+                isActive &&
+                css`
+                    ${secondaryInsetBoxShadow};
+                    ${secondaryBackground} !important;
+                `}
+        }
+    }
+`;
+
+const tertiaryOnHoverBackground = css`
+    background: ${({ theme, color }) => mixins.rgba(theme.colors[color], 0.75)};
+`;
+export const tertiaryButtonStyles = css`
+    ${baseButtonStyles};
+    ${primaryButtonStyles};
+    background: ${({ theme, color }) => mixins.rgba(theme.colors[color], 0.7)};
+    &:not(:disabled) {
+        &:hover {
+            ${tertiaryOnHoverBackground};
         }
 
         &:active {
-            background: ${({ theme, color }) => mixins.lighten(theme.colors.button[color], 0.1)};
+            ${tertiaryOnHoverBackground};
         }
 
         ${({ isActive }) =>
             isActive &&
             css`
-                background: ${({ theme, color }) =>
-                    mixins.lighten(theme.colors.button[color], 0.1)} !important;
+                ${tertiaryOnHoverBackground} !important;
             `}
-    }
-`;
-
-export const borderedButtonStyles = css`
-    color: ${({ theme, color }) => theme.colors.button[color]};
-    background: ${({ theme }) => theme.colors.button.white};
-    border: 0.3rem solid ${({ theme, color }) => theme.colors.button[color]};
-    &:not(:disabled) {
-        &:not(:disabled) {
-            &:hover {
-                background: ${({ theme }) => theme.colors.button.grey};
-            }
-
-            &:active {
-                background: ${({ theme }) => theme.colors.button.white};
-            }
-
-            ${({ isActive }) =>
-                isActive &&
-                css`
-                    background: #fff !important;
-                `}
-        }
     }
 `;

@@ -2,37 +2,36 @@ import { setAuthToken } from 'shared/utils';
 import {
     SIGN_UP_SUCCESS,
     SIGN_IN_SUCCESS,
-    SIGN_OUT_SUCCESS,
+    SIGN_OUT_USER,
     USER_LOADED,
     USER_LOADING,
     AUTH_ERROR,
-    ACCOUNT_DELETED,
 } from 'redux/actionTypes';
 
 const initialState = {
     token: '',
     isAuthenticated: false,
-    isLoading: false,
+    isUserLoading: false,
     user: {},
     error: {},
 };
 
 export default (state = initialState, { type, payload }) => {
     switch (type) {
+        case USER_LOADING:
+            return {
+                ...state,
+                isUserLoading: true,
+                isAuthenticated: false,
+                user: {},
+            };
         case USER_LOADED:
             return {
                 ...state,
                 isAuthenticated: true,
-                isLoading: false,
+                isUserLoading: false,
                 user: payload,
                 error: {},
-            };
-        case USER_LOADING:
-            return {
-                ...state,
-                isLoading: true,
-                isAuthenticated: false,
-                user: {},
             };
         case SIGN_UP_SUCCESS:
         case SIGN_IN_SUCCESS:
@@ -40,18 +39,16 @@ export default (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 isAuthenticated: true,
-                isLoading: false,
                 token: payload,
                 error: {},
             };
-        case SIGN_OUT_SUCCESS:
-        case ACCOUNT_DELETED:
+        case SIGN_OUT_USER:
             setAuthToken('');
             return {
                 ...state,
                 token: '',
                 isAuthenticated: false,
-                isLoading: false,
+                isUserLoading: false,
                 user: {},
                 error: {},
             };
@@ -61,7 +58,7 @@ export default (state = initialState, { type, payload }) => {
                 ...state,
                 token: '',
                 isAuthenticated: false,
-                isLoading: false,
+                isUserLoading: false,
                 user: {},
                 error: payload,
             };

@@ -1,5 +1,10 @@
 import styled, { css } from 'styled-components/macro';
-import { baseButtonStyles, primaryButtonStyles, borderedButtonStyles } from 'shared/styles';
+import {
+    baseButtonStyles,
+    primaryButtonStyles,
+    secondaryButtonStyles,
+    tertiaryButtonStyles,
+} from 'shared/styles';
 import { Link } from 'react-router-dom';
 
 const sharedLinkStyles = css`
@@ -14,11 +19,17 @@ export const BaseLink = styled(Link)`
 export const PrimaryLink = styled(Link)`
     ${sharedLinkStyles}
     ${baseButtonStyles};
-    ${primaryButtonStyles};
+    ${primaryButtonStyles()};
 `;
 
-export const BorderedLink = styled(Link)`
+export const SecondaryLink = styled(Link)`
     ${sharedLinkStyles}
     ${baseButtonStyles};
-    ${borderedButtonStyles};
+    ${secondaryButtonStyles};
+`;
+
+export const TertiaryLink = styled(Link)`
+    ${sharedLinkStyles}
+    ${baseButtonStyles};
+    ${tertiaryButtonStyles};
 `;

@@ -1,13 +1,13 @@
 import { api, errorHandler } from 'shared/utils';
 import { setAlert } from 'redux/alerts/actions';
 import {
-    GET_PROFILE,
-    GET_PROFILES,
+    PROFILE_LOADED,
+    PROFILES_LOADED,
     PROFILES_ERROR,
-    UPDATE_PROFILE,
     CLEAR_PROFILE,
-    GET_REPOS,
+    REPOS_LOADED,
     PROFILE_LOADING,
+    PROFILES_LOADING,
 } from 'redux/actionTypes';
 
 export const getCurrentUserProfile = () => async dispatch => {
@@ -16,7 +16,7 @@ export const getCurrentUserProfile = () => async dispatch => {
 
         const res = await api.get('/profile');
 
-        dispatch(getProfile(res.data.data.profile));
+        dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {
         dispatch(errorHandler(err));
         dispatch(profilesError(err));
@@ -26,13 +26,11 @@ export const getCurrentUserProfile = () => async dispatch => {
 export const getProfiles = () => async dispatch => {
     try {
         dispatch(clearProfile());
+        dispatch(profilesLoading());
 
         const res = await api.get('/profile/all');
 
-        dispatch({
-            type: GET_PROFILES,
-            payload: res.data.data.profiles,
-        });
+        dispatch(profilesLoaded(res.data.data.profiles));
     } catch (err) {
         dispatch(errorHandler(err));
         dispatch(profilesError(err));
@@ -41,9 +39,11 @@ export const getProfiles = () => async dispatch => {
 
 export const getProfileById = userId => async dispatch => {
     try {
+        dispatch(profileLoading());
+
         const res = await api.get(`/profile/user/${userId}`);
 
-        dispatch(getProfile(res.data.data.profile));
+        dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {
         dispatch(errorHandler(err));
         dispatch(profilesError(err));
@@ -54,7 +54,7 @@ export const getGithubRepos = username => async dispatch => {
     try {
         const res = await api.get(`/profile/github/${username}`);
 
-        dispatch(getRepos(res.data.data.repos));
+        dispatch(reposLoaded(res.data.data.repos));
     } catch (err) {
         dispatch(errorHandler(err));
         dispatch(profilesError(err));
@@ -71,10 +71,8 @@ export const createProfile = (formData, history, edit = false) => async dispatch
 
         const res = await api.post('/profile', formData, config);
 
-        dispatch(getProfile(res.data.data.profile));
-
+        dispatch(profileLoaded(res.data.data.profile));
         dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created', 'success'));
-
         history.push('/dashboard');
     } catch (err) {
         dispatch(errorHandler(err));
@@ -92,10 +90,8 @@ export const addExperience = (formData, history) => async dispatch => {
 
         const res = await api.put('/profile/experience', formData, config);
 
-        dispatch(updateProfile(res.data.data.profile));
-
+        dispatch(profileLoaded(res.data.data.profile));
         dispatch(setAlert('Experience Added', 'success'));
-
         history.push('/dashboard');
     } catch (err) {
         dispatch(errorHandler(err));
@@ -113,10 +109,8 @@ export const addEducation = (formData, history) => async dispatch => {
 
         const res = await api.put('/profile/education', formData, config);
 
-        dispatch(updateProfile(res.data.data.profile));
-
+        dispatch(profileLoaded(res.data.data.profile));
         dispatch(setAlert('Education Added', 'success'));
-
         history.push('/dashboard');
     } catch (err) {
         dispatch(errorHandler(err));
@@ -128,8 +122,7 @@ export const deleteExperience = id => async dispatch => {
     try {
         const res = await api.delete(`/profile/experience/${id}`);
 
-        dispatch(updateProfile(res.data.data.profile));
-
+        dispatch(profileLoaded(res.data.data.profile));
         dispatch(setAlert('Experience Removed', 'success'));
     } catch (err) {
         dispatch(errorHandler(err));
@@ -141,8 +134,7 @@ export const deleteEducation = id => async dispatch => {
     try {
         const res = await api.delete(`/profile/education/${id}`);
 
-        dispatch(updateProfile(res.data.data.profile));
-
+        dispatch(profileLoaded(res.data.data.profile));
         dispatch(setAlert('Education Removed', 'success'));
     } catch (err) {
         dispatch(errorHandler(err));
@@ -162,17 +154,21 @@ export const profileLoading = () => ({
     type: PROFILE_LOADING,
 });
 
-export const updateProfile = payload => ({
-    type: UPDATE_PROFILE,
+export const profilesLoading = () => ({
+    type: PROFILES_LOADING,
+});
+
+export const profileLoaded = payload => ({
+    type: PROFILE_LOADED,
     payload,
 });
 
-export const getProfile = payload => ({
-    type: GET_PROFILE,
+export const profilesLoaded = payload => ({
+    type: PROFILES_LOADED,
     payload,
 });
 
-export const getRepos = payload => ({
-    type: GET_REPOS,
+export const reposLoaded = payload => ({
+    type: REPOS_LOADED,
     payload,
 });

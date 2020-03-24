@@ -7,8 +7,7 @@ import {
     USER_LOADING,
     AUTH_ERROR,
     SIGN_IN_SUCCESS,
-    SIGN_OUT_SUCCESS,
-    ACCOUNT_DELETED,
+    SIGN_OUT_USER,
 } from 'redux/actionTypes';
 
 export const loadUser = () => async dispatch => {
@@ -67,7 +66,7 @@ export const signIn = ({ email, password }) => async dispatch => {
 
 export const signOut = () => dispatch => {
     dispatch(clearProfile());
-    dispatch(signOutSuccess());
+    dispatch(signOutUser());
 };
 
 export const deleteAccount = () => async dispatch => {
@@ -75,7 +74,7 @@ export const deleteAccount = () => async dispatch => {
         try {
             await api.delete('/user');
             dispatch(clearProfile());
-            dispatch(accountDeleted());
+            dispatch(signOutUser());
 
             dispatch(setAlert('Your account has been permanently deleted'));
         } catch (err) {
@@ -109,10 +108,6 @@ export const signInSuccess = payload => ({
     payload,
 });
 
-export const signOutSuccess = () => ({
-    type: SIGN_OUT_SUCCESS,
-});
-
-export const accountDeleted = () => ({
-    type: ACCOUNT_DELETED,
+export const signOutUser = () => ({
+    type: SIGN_OUT_USER,
 });

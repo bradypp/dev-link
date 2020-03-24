@@ -1,14 +1,14 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { ButtonText } from 'shared/styles';
-import { BaseLink, PrimaryLink, BorderedLink } from './CustomLinkStyles';
+import { BaseLink, PrimaryLink, SecondaryLink, TertiaryLink } from './CustomLinkStyles';
 
 const propTypes = {
     to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     children: PropTypes.node,
     className: PropTypes.string,
-    variant: PropTypes.oneOf(['base', 'primary', 'bordered']),
-    color: PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'grey']),
+    variant: PropTypes.oneOf(['base', 'primary', 'secondary', 'tertiary']),
+    color: PropTypes.string,
     Icon: PropTypes.element,
     disabled: PropTypes.bool,
     onClick: PropTypes.func,
@@ -60,8 +60,8 @@ const CustomLink = forwardRef(
                             {linkChildren}
                         </PrimaryLink>
                     )) ||
-                    (variant === 'bordered' && (
-                        <BorderedLink
+                    (variant === 'secondary' && (
+                        <SecondaryLink
                             to={to}
                             className={className}
                             variant={variant}
@@ -70,7 +70,19 @@ const CustomLink = forwardRef(
                             disabled={disabled}
                             ref={ref}>
                             {linkChildren}
-                        </BorderedLink>
+                        </SecondaryLink>
+                    )) ||
+                    (variant === 'tertiary' && (
+                        <TertiaryLink
+                            to={to}
+                            className={className}
+                            variant={variant}
+                            color={color}
+                            onClick={onClick}
+                            disabled={disabled}
+                            ref={ref}>
+                            {linkChildren}
+                        </TertiaryLink>
                     ))}
             </>
         );

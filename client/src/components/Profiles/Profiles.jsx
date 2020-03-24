@@ -4,10 +4,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Spinner } from 'shared/components';
-import { getProfiles, selectIsProfileLoading, selectAllProfiles } from 'redux/profiles';
+import { getProfiles, selectIsProfilesLoading, selectAllProfiles } from 'redux/profiles';
 import ProfileItem from './ProfileItem/ProfileItem';
 
-const Profiles = ({ getProfiles, profilesLoading, allProfiles }) => {
+const Profiles = ({ getProfiles, isProfilesLoading, allProfiles }) => {
     useEffect(() => {
         getProfiles();
     }, [getProfiles]);
@@ -21,7 +21,7 @@ const Profiles = ({ getProfiles, profilesLoading, allProfiles }) => {
 
     return (
         <>
-            {profilesLoading ? (
+            {isProfilesLoading ? (
                 <Spinner />
             ) : (
                 <>
@@ -36,12 +36,12 @@ const Profiles = ({ getProfiles, profilesLoading, allProfiles }) => {
 
 Profiles.propTypes = {
     getProfiles: PropTypes.func.isRequired,
-    profilesLoading: PropTypes.bool.isRequired,
+    isProfilesLoading: PropTypes.bool.isRequired,
     allProfiles: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-    profilesLoading: selectIsProfileLoading,
+    isProfilesLoading: selectIsProfilesLoading,
     allProfiles: selectAllProfiles,
 });
 

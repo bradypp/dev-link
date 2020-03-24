@@ -1,5 +1,10 @@
 import styled, { css } from 'styled-components/macro';
-import { baseButtonStyles, primaryButtonStyles, borderedButtonStyles } from 'shared/styles';
+import {
+    baseButtonStyles,
+    primaryButtonStyles,
+    secondaryButtonStyles,
+    tertiaryButtonStyles,
+} from 'shared/styles';
 import { Spinner } from 'shared/components';
 
 export const StyledSpinner = styled(Spinner)`
@@ -18,12 +23,15 @@ export const BaseButton = styled.button`
 
 export const PrimaryButton = styled.button`
     ${sharedButtonStyles}
-    ${baseButtonStyles};
-    ${primaryButtonStyles};
+    ${primaryButtonStyles()};
 `;
 
-export const BorderedButton = styled.button`
+export const SecondaryButton = styled.button`
     ${sharedButtonStyles}
-    ${baseButtonStyles};
-    ${borderedButtonStyles};
+    ${secondaryButtonStyles};
+`;
+
+export const TertiaryButton = styled.button`
+    ${sharedButtonStyles}
+    ${tertiaryButtonStyles};
 `;

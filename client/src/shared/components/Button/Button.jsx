@@ -1,14 +1,20 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { ButtonText } from 'shared/styles';
-import { BaseButton, PrimaryButton, BorderedButton, StyledSpinner } from './ButtonStyles';
+import {
+    BaseButton,
+    PrimaryButton,
+    SecondaryButton,
+    TertiaryButton,
+    StyledSpinner,
+} from './ButtonStyles';
 
 const propTypes = {
     className: PropTypes.string,
     children: PropTypes.node,
-    variant: PropTypes.oneOf(['base', 'primary', 'bordered']),
+    variant: PropTypes.oneOf(['base', 'primary', 'secondary', 'tertiary']),
     type: PropTypes.oneOf(['button', 'submit']),
-    color: PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'grey']),
+    color: PropTypes.string,
     Icon: PropTypes.element,
     disabled: PropTypes.bool,
     isWorking: PropTypes.bool,
@@ -73,8 +79,8 @@ const Button = forwardRef(
                             {buttonChildren}
                         </PrimaryButton>
                     )) ||
-                    (variant === 'bordered' && (
-                        <BorderedButton
+                    (variant === 'secondary' && (
+                        <SecondaryButton
                             className={className}
                             onClick={handleClick}
                             variant={variant}
@@ -85,7 +91,21 @@ const Button = forwardRef(
                             iconOnly={!children}
                             ref={ref}>
                             {buttonChildren}
-                        </BorderedButton>
+                        </SecondaryButton>
+                    )) ||
+                    (variant === 'tertiary' && (
+                        <TertiaryButton
+                            className={className}
+                            onClick={handleClick}
+                            variant={variant}
+                            type={type}
+                            color={color}
+                            disabled={disabled || isWorking}
+                            isWorking={isWorking}
+                            iconOnly={!children}
+                            ref={ref}>
+                            {buttonChildren}
+                        </TertiaryButton>
                     ))}
             </>
         );

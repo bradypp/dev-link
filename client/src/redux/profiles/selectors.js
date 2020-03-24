@@ -4,7 +4,12 @@ export const selectProfiles = state => state.profiles;
 
 export const selectIsProfileLoading = createSelector(
     [selectProfiles],
-    profile => profile.isLoading,
+    profile => profile.isProfileLoading,
+);
+
+export const selectIsProfilesLoading = createSelector(
+    [selectProfiles],
+    profile => profile.isProfilesLoading,
 );
 
 export const selectAllProfiles = createSelector(

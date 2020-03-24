@@ -1,6 +1,9 @@
 const typography = {
     fonts: {
-        primary: 'Circular Std, system, -apple-system, BlinkMacSystemFont, sans-serif',
+        primary:
+            'Circular Std, "Segoe UI", Roboto, "Helvetica Neue", "Lucida Grande", Helvetica, Arial, system, -apple-system, sans-serif',
+        secondary:
+            'Circular Std, "Segoe UI", Roboto, "Helvetica Neue", "Lucida Grande", Helvetica, Arial, system, -apple-system, sans-serif',
     },
     fontSize: {
         tiny: `1.2rem`,

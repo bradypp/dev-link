@@ -1,12 +1,9 @@
 import styled, { css } from 'styled-components/macro';
 import { CustomLink, Button } from 'shared/components';
+import { mixins } from 'shared/styles';
 
 const sharedStyles = css`
-    margin: 0 0.6rem;
-    border-radius: 50px;
-    font-size: ${({ theme }) => theme.fontSize.large};
-    height: 4.5rem;
-    padding: 0rem 2rem;
+    margin-left: 0.75rem;
 `;
 
 export const StyledLink = styled(CustomLink)`
@@ -18,13 +15,15 @@ export const StyledButton = styled(Button)`
 `;
 
 export const Logo = styled(CustomLink)`
-    font-size: 4rem;
+    color: ${({ theme }) => theme.colors.primaryDark};
+    font-size: 3.5rem;
+    padding: 0;
+    font-weight: 400;
+    margin-right: auto;
 `;
 
 export const StyledNav = styled.nav`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
+    ${mixins.flexBetween};
+    padding: 1rem 0;
     width: 100%;
 `;

@@ -44,6 +44,10 @@ const mixins = {
         Color(colorValue)
             .lighten(amount)
             .string(),
+    rgba: (colorValue, opacity) =>
+        Color(colorValue)
+            .alpha(opacity)
+            .string(),
 };
 
 export default mixins;

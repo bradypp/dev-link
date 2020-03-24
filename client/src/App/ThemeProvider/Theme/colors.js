@@ -1,5 +1,7 @@
-const base = {
-    primary: '#0052cc',
+const colors = {
+    primary: '#2977c9',
+    primaryDark: '#105EB0',
+    primaryLight: '#4391E3',
     secondary: '',
     success: '#0B875B',
     danger: '#E13C3C',
@@ -12,20 +14,6 @@ const base = {
     greyLight2: '#ddd',
     greyLight3: '#ccc',
     link: '#0052cc',
-};
-
-const button = {
-    primary: base.primary,
-    secondary: base.secondary,
-    grey: '#f1f1f1',
-    white: base.white,
-    success: base.success,
-    danger: base.danger,
-};
-
-const colors = {
-    ...base,
-    button,
 };
 
 export default colors;

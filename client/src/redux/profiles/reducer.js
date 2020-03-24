@@ -1,74 +1,73 @@
 import {
-    GET_PROFILE,
+    PROFILE_LOADED,
     PROFILES_ERROR,
     CLEAR_PROFILE,
-    UPDATE_PROFILE,
-    GET_PROFILES,
-    GET_REPOS,
+    PROFILES_LOADED,
+    REPOS_LOADED,
     PROFILE_LOADING,
+    PROFILES_LOADING,
 } from 'redux/actionTypes';
 
 const initialState = {
     profile: {},
     profiles: [],
-    profileLoading: false,
-    profilesLoading: false,
+    isProfileLoading: false,
+    isProfilesLoading: false,
     userProfile: {},
     error: {},
 };
 
 export default (state = initialState, { type, payload }) => {
     switch (type) {
-        case GET_PROFILE:
-        case UPDATE_PROFILE: {
-            return {
-                ...state,
-                profile: payload,
-                isLoading: false,
-                error: {},
-            };
-        }
         case PROFILE_LOADING:
             return {
                 ...state,
-                isLoading: true,
+                isProfileLoading: true,
             };
-        case GET_PROFILES: {
+        case PROFILE_LOADED:
             return {
                 ...state,
-                profilesLoading: false,
-                profileLoading: false,
+                profile: payload,
+                isProfileLoading: false,
+                error: {},
+            };
+        case PROFILES_LOADING:
+            return {
+                ...state,
+                isProfilesLoading: true,
+            };
+        case PROFILES_LOADED:
+            return {
+                ...state,
+                isProfilesLoading: false,
                 profiles: payload,
-                profile: {},
                 error: {},
             };
-        }
-        case PROFILES_ERROR:
+        case REPOS_LOADED:
             return {
                 ...state,
-                isLoading: false,
-                profile: {},
-                error: payload,
-            };
-        case CLEAR_PROFILE:
-            return {
-                ...state,
-                profile: {},
-                repos: [],
-                isLoading: false,
-                error: {},
-            };
-        case GET_REPOS: {
-            return {
-                ...state,
-                isLoading: false,
                 profile: {
                     ...state.profile,
                     repos: payload,
                 },
                 error: {},
             };
-        }
+        case PROFILES_ERROR:
+            return {
+                ...state,
+                isProfileLoading: false,
+                isProfilesLoading: false,
+                profile: {},
+                profiles: [],
+                error: payload,
+            };
+        case CLEAR_PROFILE:
+            return {
+                ...state,
+                profile: {},
+                isProfileLoading: false,
+                isProfilesLoading: false,
+            };
         default:
             return state;
     }

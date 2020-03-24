@@ -16,7 +16,7 @@ import {
     selectProfileExperience,
     selectProfileSkillsArr,
 } from 'redux/profiles';
-import { selectIsAuthenticated, selectIsAuthLoading, selectUser } from 'redux/auth';
+import { selectIsAuthenticated, selectIsUserLoading, selectUser } from 'redux/auth';
 import ProfileTop from './ProfileTop/ProfileTop';
 import ProfileAbout from './ProfileAbout/ProfileAbout';
 import ProfileExperience from './ProfileExperience/ProfileExperience';
@@ -34,7 +34,7 @@ const Profile = ({
     profileExperience,
     profileSkillsArr,
     isAuthenticated,
-    isAuthLoading,
+    isUserLoading,
     user,
 }) => {
     const params = useParams();
@@ -47,14 +47,14 @@ const Profile = ({
 
     return (
         <>
-            {isFirstRender || isEmpty(profileData) || isAuthLoading || isProfileLoading ? (
+            {isFirstRender || isEmpty(profileData) || isUserLoading || isProfileLoading ? (
                 <Spinner />
             ) : (
                 <>
                     <Link to="/profiles" className="btn btn-light">
                         Back To Profiles
                     </Link>
-                    {isAuthenticated && isAuthLoading === false && user._id === profileUser._id && (
+                    {isAuthenticated && isUserLoading === false && user._id === profileUser._id && (
                         <Link to="/edit" className="btn btn-dark">
                             Edit Profile
                         </Link>
@@ -123,7 +123,7 @@ Profile.propTypes = {
     profileExperience: PropTypes.array.isRequired,
     profileSkillsArr: PropTypes.array.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
-    isAuthLoading: PropTypes.bool.isRequired,
+    isUserLoading: PropTypes.bool.isRequired,
     user: PropTypes.object.isRequired,
 };
 
@@ -137,7 +137,7 @@ const mapStateToProps = createStructuredSelector({
     profileExperience: selectProfileExperience,
     profileSkillsArr: selectProfileSkillsArr,
     isAuthenticated: selectIsAuthenticated,
-    isAuthLoading: selectIsAuthLoading,
+    isUserLoading: selectIsUserLoading,
     user: selectUser,
 });
 
