@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 const sharedLinkStyles = css`
     color: ${({ theme }) => theme.colors.link};
-    padding: 0 1.5rem;
 `;
 
 export const BaseLink = styled(Link)`

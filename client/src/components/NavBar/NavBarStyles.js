@@ -2,9 +2,11 @@ import styled, { css } from 'styled-components/macro';
 import { CustomLink, Button } from 'shared/components';
 
 const sharedStyles = css`
-    margin: 0 0.5rem;
-    padding: 1rem 2rem;
-    font-size: ${({ theme }) => theme.fontSize.base};
+    margin: 0 0.6rem;
+    border-radius: 50px;
+    font-size: ${({ theme }) => theme.fontSize.large};
+    height: 4.5rem;
+    padding: 0rem 2rem;
 `;
 
 export const StyledLink = styled(CustomLink)`
@@ -16,8 +18,7 @@ export const StyledButton = styled(Button)`
 `;
 
 export const Logo = styled(CustomLink)`
-    padding: 2.5rem;
-    font-size: ${({ theme }) => theme.fontSize.huge};
+    font-size: 4rem;
 `;
 
 export const StyledNav = styled.nav`

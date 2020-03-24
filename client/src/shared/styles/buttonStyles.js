@@ -9,14 +9,14 @@ export const baseButtonStyles = css`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: 3.5rem;
     vertical-align: middle;
     line-height: 1;
     white-space: nowrap;
     transition: ${({ theme }) => theme.animation.transition};
     appearance: none;
     font-size: ${({ theme }) => theme.fontSize.base};
-    border-radius: 0.3rem;
+    height: 3.5rem;
+    padding: 0 ${({ iconOnly }) => (iconOnly ? 1 : 1.8)}rem;
     &:disabled {
         opacity: 0.6;
         cursor: default;
@@ -30,6 +30,7 @@ export const primaryButtonStyles = css`
         }
         return theme.colors.dark;
     }};
+    border: 0.3rem solid ${({ theme, color }) => theme.colors.button[color]};
     background: ${({ theme, color }) => theme.colors.button[color]};
     &:not(:disabled) {
         &:hover {
@@ -52,7 +53,7 @@ export const primaryButtonStyles = css`
 export const borderedButtonStyles = css`
     color: ${({ theme, color }) => theme.colors.button[color]};
     background: ${({ theme }) => theme.colors.button.white};
-    border: 3px solid ${({ theme, color }) => theme.colors.button[color]};
+    border: 0.3rem solid ${({ theme, color }) => theme.colors.button[color]};
     &:not(:disabled) {
         &:not(:disabled) {
             &:hover {

@@ -9,7 +9,6 @@ export const StyledSpinner = styled(Spinner)`
 
 const sharedButtonStyles = css`
     color: ${({ theme }) => theme.colors.greyDark1};
-    padding: 0 ${({ iconOnly }) => (iconOnly ? 1 : 1.5)}rem;
 `;
 
 export const BaseButton = styled.button`
