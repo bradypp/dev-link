@@ -1,5 +1,5 @@
-import styled from 'styled-components/macro';
-import { buttonStyles, buttonText } from 'shared/styles';
+import styled, { css } from 'styled-components/macro';
+import { baseButtonStyles, primaryButtonStyles, borderedButtonStyles } from 'shared/styles';
 import { Spinner } from 'shared/components';
 
 export const StyledSpinner = styled(Spinner)`
@@ -7,11 +7,24 @@ export const StyledSpinner = styled(Spinner)`
     top: 1px;
 `;
 
-export const Text = styled.div`
-    ${buttonText}
+const sharedButtonStyles = css`
+    color: ${({ theme }) => theme.colors.greyDark1};
+    padding: 0 ${({ iconOnly }) => (iconOnly ? 1 : 1.5)}rem;
 `;
 
-export const StyledButton = styled.button`
-    color: ${({ theme }) => theme.colors.greyDark1};
-    ${buttonStyles};
+export const BaseButton = styled.button`
+    ${sharedButtonStyles}
+    ${baseButtonStyles};
+`;
+
+export const PrimaryButton = styled.button`
+    ${sharedButtonStyles}
+    ${baseButtonStyles};
+    ${primaryButtonStyles};
+`;
+
+export const BorderedButton = styled.button`
+    ${sharedButtonStyles}
+    ${baseButtonStyles};
+    ${borderedButtonStyles};
 `;

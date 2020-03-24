@@ -59,7 +59,7 @@ const Dashboard = ({
                                 <Education education={profileEducation} />
                             )}
                             <div className="my-2">
-                                <Button onClick={deleteAccount} variant="danger">
+                                <Button onClick={deleteAccount} color="danger">
                                     Delete My Account
                                 </Button>
                             </div>

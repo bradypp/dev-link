@@ -1,17 +1,17 @@
-import { css } from 'styled-components/macro';
+import styled, { css } from 'styled-components/macro';
+import { mixins } from 'shared/styles';
 
-export const buttonText = () => css`
+export const ButtonText = styled.span`
     padding-left: ${({ withPadding }) => (withPadding ? 7 : 0)}px;
 `;
 
-export const baseButtonStyles = () => css`
+export const baseButtonStyles = css`
     display: inline-flex;
     align-items: center;
     justify-content: center;
     height: 3.5rem;
     vertical-align: middle;
     line-height: 1;
-    padding: 0 ${({ iconOnly }) => (iconOnly ? 1 : 1.5)}rem;
     white-space: nowrap;
     transition: ${({ theme }) => theme.animation.transition};
     appearance: none;
@@ -23,39 +23,36 @@ export const baseButtonStyles = () => css`
     }
 `;
 
-export const defaultButtonStyles = () => css`
-    color: ${({ theme, variant }) => {
-        if (variant === 'primary' || variant === 'success' || variant === 'danger') {
+export const primaryButtonStyles = css`
+    color: ${({ theme, color }) => {
+        if (color === 'primary' || color === 'success' || color === 'danger') {
             return theme.colors.white;
         }
         return theme.colors.dark;
     }};
-    background: ${({ theme, variant }) => theme.colors.button[variant]};
+    background: ${({ theme, color }) => theme.colors.button[color]};
     &:not(:disabled) {
         &:hover {
-            background: ${({ theme, variant }) =>
-                theme.mixins.darken(theme.colors.button[variant], 0.1)};
+            background: ${({ theme, color }) => mixins.darken(theme.colors.button[color], 0.1)};
         }
 
         &:active {
-            background: ${({ theme, variant }) =>
-                theme.mixins.lighten(theme.colors.button[variant], 0.1)};
+            background: ${({ theme, color }) => mixins.lighten(theme.colors.button[color], 0.1)};
         }
 
         ${({ isActive }) =>
             isActive &&
             css`
-                background: ${({ theme, variant }) =>
-                    theme.mixins.lighten(theme.colors.button[variant], 0.1)} !important;
+                background: ${({ theme, color }) =>
+                    mixins.lighten(theme.colors.button[color], 0.1)} !important;
             `}
     }
 `;
 
-// TODO: Add border and colors
-export const borderedButtonStyles = () => css`
-    color: ${({ theme, variant }) => theme.colors.button[variant]};
+export const borderedButtonStyles = css`
+    color: ${({ theme, color }) => theme.colors.button[color]};
     background: ${({ theme }) => theme.colors.button.white};
-    border: 3px solid ${({ theme, variant }) => theme.colors.button[variant]};
+    border: 3px solid ${({ theme, color }) => theme.colors.button[color]};
     &:not(:disabled) {
         &:not(:disabled) {
             &:hover {
@@ -73,11 +70,4 @@ export const borderedButtonStyles = () => css`
                 `}
         }
     }
-`;
-
-export const buttonStyles = () => css`
-    ${baseButtonStyles}
-    ${({ styles }) =>
-        (styles === 'default' && defaultButtonStyles) ||
-        (styles === 'bordered' && borderedButtonStyles)}
 `;

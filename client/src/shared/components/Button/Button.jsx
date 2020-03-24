@@ -1,13 +1,14 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { StyledButton, StyledSpinner, Text } from './ButtonStyles';
+import { ButtonText } from 'shared/styles';
+import { BaseButton, PrimaryButton, BorderedButton, StyledSpinner } from './ButtonStyles';
 
 const propTypes = {
     className: PropTypes.string,
     children: PropTypes.node,
-    styles: PropTypes.oneOf(['base', 'default', 'bordered']),
+    variant: PropTypes.oneOf(['base', 'primary', 'bordered']),
     type: PropTypes.oneOf(['button', 'submit']),
-    variant: PropTypes.oneOf(['primary', 'success', 'danger', 'secondary', 'grey']),
+    color: PropTypes.oneOf(['primary', 'secondary', 'success', 'danger', 'grey']),
     Icon: PropTypes.element,
     disabled: PropTypes.bool,
     isWorking: PropTypes.bool,
@@ -17,8 +18,8 @@ const propTypes = {
 const defaultProps = {
     className: undefined,
     children: undefined,
-    styles: 'default',
     variant: 'primary',
+    color: 'primary',
     Icon: undefined,
     type: 'button',
     disabled: false,
@@ -27,28 +28,66 @@ const defaultProps = {
 };
 
 const Button = forwardRef(
-    ({ children, variant, Icon, disabled, isWorking, onClick, className, type, styles }, ref) => {
+    ({ children, color, Icon, disabled, isWorking, onClick, className, type, variant }, ref) => {
         const handleClick = () => {
             if (!disabled && !isWorking) {
                 onClick();
             }
         };
 
-        return (
-            <StyledButton
-                className={className}
-                onClick={handleClick}
-                styles={styles}
-                type={type}
-                variant={variant}
-                disabled={disabled || isWorking}
-                isWorking={isWorking}
-                iconOnly={!children}
-                ref={ref}>
+        const buttonChildren = (
+            <>
                 {isWorking && <StyledSpinner size={25} />}
                 {Icon && <Icon />}
-                {children && <Text withPadding={isWorking || Icon}>{children}</Text>}
-            </StyledButton>
+                {children && <ButtonText withPadding={isWorking || Icon}>{children}</ButtonText>}
+            </>
+        );
+
+        return (
+            <>
+                {(variant === 'base' && (
+                    <BaseButton
+                        className={className}
+                        onClick={handleClick}
+                        variant={variant}
+                        type={type}
+                        color={color}
+                        disabled={disabled || isWorking}
+                        isWorking={isWorking}
+                        iconOnly={!children}
+                        ref={ref}>
+                        {buttonChildren}
+                    </BaseButton>
+                )) ||
+                    (variant === 'primary' && (
+                        <PrimaryButton
+                            className={className}
+                            onClick={handleClick}
+                            variant={variant}
+                            type={type}
+                            color={color}
+                            disabled={disabled || isWorking}
+                            isWorking={isWorking}
+                            iconOnly={!children}
+                            ref={ref}>
+                            {buttonChildren}
+                        </PrimaryButton>
+                    )) ||
+                    (variant === 'bordered' && (
+                        <BorderedButton
+                            className={className}
+                            onClick={handleClick}
+                            variant={variant}
+                            type={type}
+                            color={color}
+                            disabled={disabled || isWorking}
+                            isWorking={isWorking}
+                            iconOnly={!children}
+                            ref={ref}>
+                            {buttonChildren}
+                        </BorderedButton>
+                    ))}
+            </>
         );
     },
 );

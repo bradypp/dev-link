@@ -18,14 +18,10 @@ const Navbar = ({ isAuthLoading, isAuthenticated, signOut }) => {
                 <StyledLink to="/profiles">Developers</StyledLink>
             </li>
             <li>
-                <StyledLink to="/dashboard">
-                    <span className="hide-sm">Dashboard</span>
-                </StyledLink>
+                <StyledLink to="/dashboard">Dashboard</StyledLink>
             </li>
             <li>
-                <StyledButton onClick={signOut}>
-                    <span className="hide-sm">Sign Out</span>
-                </StyledButton>
+                <StyledButton onClick={signOut}>Sign Out</StyledButton>
             </li>
         </ul>
     );
@@ -33,7 +29,7 @@ const Navbar = ({ isAuthLoading, isAuthenticated, signOut }) => {
     const guestLinks = (
         <ul>
             <li>
-                <StyledLink styles="bordered" to="/sign-in">
+                <StyledLink variant="bordered" to="/sign-in">
                     Sign In
                 </StyledLink>
             </li>
@@ -46,7 +42,7 @@ const Navbar = ({ isAuthLoading, isAuthenticated, signOut }) => {
 
     return (
         <StyledNav className="navbar bg-dark">
-            <Logo styles="none" to="/">
+            <Logo variant="base" to="/">
                 <strong>Dev</strong>Link
             </Logo>
             {!isAuthLoading && <>{isAuthenticated ? authLinks : guestLinks}</>}

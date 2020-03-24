@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components/macro';
+import { media } from 'shared/styles';
 import fontStyles from './fontStyles';
 
 const GlobalStyle = createGlobalStyle`
@@ -17,11 +18,11 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-size: 62.5%; 
 
-    ${({ theme }) => theme.media.bp1200`
+    ${media.bp1200`
         font-size: 56.25%; 
     `}
 
-    ${({ theme }) => theme.media.bp800`
+    ${media.bp800`
         font-size: 50%; 
     `}
   }
@@ -39,8 +40,8 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     font-family: ${({ theme }) => theme.fonts.primary};
     font-size: ${({ theme }) => theme.fontSize.base};
-    background-color: ${({ theme }) => theme.colors.light1};
-    color: ${({ theme }) => theme.colors.dark};
+    background-color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.greyDark1};
     line-height: 1.7;
   }
 
@@ -72,7 +73,7 @@ const GlobalStyle = createGlobalStyle`
     display: inline-block;
     text-decoration: none;
     color: ${({ theme }) => theme.colors.link};
-    transition: ${({ theme }) => theme.transition};
+    transition: ${({ theme }) => theme.animation.transition};
     cursor: pointer;
   }
 

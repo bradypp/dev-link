@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components/macro';
+import { mixins } from 'shared/styles';
 
 export const SpinnerOverlay = styled.div`
     ${({ overlayActive }) =>
@@ -7,7 +8,7 @@ export const SpinnerOverlay = styled.div`
             height: 60vh;
             width: 100%;
         `}
-    ${({ theme }) => theme.mixins.flexCenter}
+    ${mixins.flexCenter}
 `;
 
 export const StyledSpinner = styled.div`
