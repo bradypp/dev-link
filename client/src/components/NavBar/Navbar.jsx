@@ -3,8 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { selectIsUserLoading, selectIsAuthenticated, signOut } from 'redux/auth';
-import { Section } from 'shared/components';
-import { StyledNav, Logo, PrimaryLink, PrimaryButton, SecondaryLink } from './NavBarStyles';
+import {
+    StyledNav,
+    Logo,
+    StyledPrimaryLink,
+    StyledPrimaryButton,
+    StyledBorderedLink,
+} from './NavBarStyles';
 
 const propTypes = {
     signOut: PropTypes.func.isRequired,
@@ -15,16 +20,18 @@ const propTypes = {
 const Navbar = ({ isUserLoading, isAuthenticated, signOut }) => {
     const signedInMenu = (
         <>
-            <PrimaryLink to="/profiles">Developers</PrimaryLink>
-            <PrimaryLink to="/dashboard">Dashboard</PrimaryLink>
-            <PrimaryButton onClick={signOut}>Sign Out</PrimaryButton>
+            <StyledPrimaryLink to="/profiles">Developers</StyledPrimaryLink>
+            <StyledPrimaryLink to="/dashboard">Dashboard</StyledPrimaryLink>
+            <StyledPrimaryButton onClick={signOut}>Sign Out</StyledPrimaryButton>
         </>
     );
 
     const guestMenu = (
         <>
-            <SecondaryLink to="/sign-in">Sign In</SecondaryLink>
-            <PrimaryLink to="/sign-up">Join Now</PrimaryLink>
+            <StyledBorderedLink to="/sign-in">Sign In</StyledBorderedLink>
+            <StyledPrimaryButton color="primaryDark" to="/sign-up">
+                Join Now
+            </StyledPrimaryButton>
         </>
     );
 

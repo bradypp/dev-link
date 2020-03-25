@@ -1,20 +1,21 @@
 const utils = {
     spacing: {
-        tiny: `5px`,
-        small: `10px`,
-        base: `20px`,
-        large: `30px`,
-        xl: `50px`,
-        xxl: `100px`,
+        tiny: `0.5rem`,
+        small: `1rem`,
+        medium: `2rem`,
+        large: `3rem`,
+        xl: `5rem`,
+        xxl: `10rem`,
     },
     zIndex: {
-        modal: 100,
-        dropdown: 200,
-        alert: 300,
+        dropdown: 1,
+        modal: 2,
+        alert: 3,
     },
     layout: {
         maxWidth: 130,
         gridGap: 3,
+        numberOfColumns: 16,
     },
 };
 

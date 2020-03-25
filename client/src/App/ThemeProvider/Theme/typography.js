@@ -8,7 +8,7 @@ const typography = {
     fontSize: {
         tiny: `1.2rem`,
         small: `1.4rem`,
-        base: `1.6rem`,
+        medium: `1.6rem`,
         large: `1.8rem`,
         xl: `2rem`,
         xxl: `2.4rem`,

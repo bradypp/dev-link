@@ -5,5 +5,5 @@ export {
     baseButtonStyles,
     primaryButtonStyles,
     secondaryButtonStyles,
-    tertiaryButtonStyles,
+    borderedButtonStyles,
 } from './buttonStyles';

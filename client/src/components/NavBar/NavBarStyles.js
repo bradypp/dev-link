@@ -1,38 +1,30 @@
 import styled, { css } from 'styled-components/macro';
-import { CustomLink, Button } from 'shared/components';
-import { mixins, primaryButtonStyles, secondaryButtonStyles } from 'shared/styles';
+import { CustomLink, PrimaryLink, BorderedLink, PrimaryButton } from 'shared/components';
+import { mixins } from 'shared/styles';
 
 const sharedStyles = css`
     margin-left: 1rem;
 `;
 
-export const PrimaryLink = styled(CustomLink).attrs(() => ({
-    variant: 'primary',
+export const StyledPrimaryLink = styled(PrimaryLink).attrs(() => ({
     color: 'primaryDark',
 }))`
     ${sharedStyles}
-    ${primaryButtonStyles}
 `;
 
-export const SecondaryLink = styled(CustomLink).attrs(() => ({
-    variant: 'secondary',
+export const StyledBorderedLink = styled(BorderedLink).attrs(() => ({
     color: 'primaryDark',
 }))`
     ${sharedStyles}
-    ${secondaryButtonStyles}
 `;
 
-export const PrimaryButton = styled(Button).attrs(() => ({
-    variant: 'primary',
+export const StyledPrimaryButton = styled(PrimaryButton).attrs(() => ({
     color: 'primaryDark',
 }))`
     ${sharedStyles}
-    ${primaryButtonStyles}
 `;
 
-export const Logo = styled(CustomLink).attrs(() => ({
-    variant: 'base',
-}))`
+export const Logo = styled(CustomLink)`
     color: ${({ theme }) => theme.colors.primaryDark};
     font-size: 3.5rem;
     padding: 0;
@@ -41,8 +33,7 @@ export const Logo = styled(CustomLink).attrs(() => ({
 `;
 
 export const StyledNav = styled.nav`
-    ${({ theme }) => mixins.centerAndContain(theme.layout.maxWidth)};
+    ${({ theme }) => mixins.centerAndContain(theme.layout.maxWidth)}
     ${mixins.flexBetween};
     padding: 1rem 0;
-    width: ${({ theme }) => theme.layout.maxWidth}rem;
 `;
