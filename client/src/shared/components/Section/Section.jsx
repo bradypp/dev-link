@@ -20,6 +20,7 @@ const defaultProps = {
     numberOfColumns: 16,
 };
 
+// TODO: delete if unused
 const Section = ({ children, layout, isContained, maxWidth, gridGap, numberOfColumns }) => (
     <StyledSection
         layout={layout}
