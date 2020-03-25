@@ -12,6 +12,10 @@ const utils = {
         dropdown: 200,
         alert: 300,
     },
+    layout: {
+        maxWidth: 130,
+        gridGap: 3,
+    },
 };
 
 export default utils;

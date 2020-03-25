@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { selectIsUserLoading, selectIsAuthenticated, signOut } from 'redux/auth';
+import { Section } from 'shared/components';
 import { StyledNav, Logo, PrimaryLink, PrimaryButton, SecondaryLink } from './NavBarStyles';
 
 const propTypes = {
@@ -22,16 +23,14 @@ const Navbar = ({ isUserLoading, isAuthenticated, signOut }) => {
 
     const guestMenu = (
         <>
-            <SecondaryLink variant="secondary" to="/sign-in">
-                Sign In
-            </SecondaryLink>
+            <SecondaryLink to="/sign-in">Sign In</SecondaryLink>
             <PrimaryLink to="/sign-up">Join Now</PrimaryLink>
         </>
     );
 
     return (
-        <StyledNav className="navbar bg-dark">
-            <Logo color="base" to="/">
+        <StyledNav>
+            <Logo to="/">
                 <strong>Dev</strong>Link
             </Logo>
             {!isUserLoading && isAuthenticated ? signedInMenu : guestMenu}
