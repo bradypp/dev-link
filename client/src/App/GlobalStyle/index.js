@@ -49,7 +49,7 @@ const GlobalStyle = createGlobalStyle`
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 100%;
+    min-height: 100vh;
   }
 
   h1, h2, h3 {

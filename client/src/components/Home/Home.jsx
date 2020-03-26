@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { selectIsAuthenticated } from 'redux/auth';
+import { Section } from 'shared/components';
 
 const propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
@@ -12,25 +13,21 @@ const propTypes = {
 const Home = ({ isAuthenticated }) => {
     if (isAuthenticated) return <Redirect to="/dashboard" />;
     return (
-        <>
-            <div className="dark-overlay">
-                <div className="home-inner">
-                    <h1 className="x-large">Dev Link</h1>
-                    <p className="lead">
-                        Create your developer profile, share your project ideas and link-up with
-                        like-minded developers
-                    </p>
-                    <div className="buttons">
-                        <Link to="/sign-up" className="btn btn-primary">
-                            Sign Up
-                        </Link>
-                        <Link to="/sign-in" className="btn btn-light">
-                            Login
-                        </Link>
-                    </div>
-                </div>
+        <Section>
+            <h1 className="x-large">Dev Link</h1>
+            <p className="lead">
+                Create your developer profile, share your project ideas and link-up with like-minded
+                developers
+            </p>
+            <div className="buttons">
+                <Link to="/sign-up" className="btn btn-primary">
+                    Sign Up
+                </Link>
+                <Link to="/sign-in" className="btn btn-light">
+                    Login
+                </Link>
             </div>
-        </>
+        </Section>
     );
 };
 
