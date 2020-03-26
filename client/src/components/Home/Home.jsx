@@ -12,7 +12,7 @@ const propTypes = {
 const Home = ({ isAuthenticated }) => {
     if (isAuthenticated) return <Redirect to="/dashboard" />;
     return (
-        <section className="home">
+        <>
             <div className="dark-overlay">
                 <div className="home-inner">
                     <h1 className="x-large">Dev Link</h1>
@@ -30,7 +30,7 @@ const Home = ({ isAuthenticated }) => {
                     </div>
                 </div>
             </div>
-        </section>
+        </>
     );
 };
 

@@ -1,4 +1,4 @@
-// .navbar {
+// .Header {
 //     display: flex;
 //     justify-content: space-between;
 //     align-items: center;
@@ -11,20 +11,20 @@
 //     opacity: 0.9;
 // }
 
-.navbar ul {
+.Header ul {
     display: flex;
 }
 
-// .navbar a {
+// .Header a {
 //     color: var(--color-white);
 //     padding: 0.45rem;
 //     margin: 0 0.25rem;
 // }
 
-// .navbar a:hover {
+// .Header a:hover {
 //     color: var(--color-primary);
 // }
 
-.navbar .welcome span {
+.Header .welcome span {
     margin-right: 0.6rem;
 }

@@ -28,13 +28,18 @@ const mixins = {
         padding-right: 1px;
     `,
     boxShadowCover: css`
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
     `,
     boxShadowMedium: css`
-        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
     `,
     boxShadowDropdown: css`
-        box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.31) 0px 0px 1px;
+        box-shadow: rgba(9, 30, 66, 0.25) 0 0.4rem 0.8rem -0.2rem, rgba(9, 30, 66, 0.31) 0 0x 0.1rem;
+    `,
+    containAndCenter: css`
+        max-width: 130rem;
+        margin: 0 auto;
+        width: 100%;
     `,
     darken: (colorValue, amount) =>
         Color(colorValue)

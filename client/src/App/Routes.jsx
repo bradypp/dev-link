@@ -11,7 +11,7 @@ import {
     AddEducation,
     Profile,
     Profiles,
-    Navbar,
+    Header,
     Alert,
     NotFound,
 } from 'components';
@@ -20,8 +20,8 @@ import { PrivateRoute } from 'shared/components';
 const Routes = () => {
     return (
         <Router>
-            <Navbar />
             <Alert />
+            <Header />
             <Switch>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/sign-in" component={SignIn} />

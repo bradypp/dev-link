@@ -4,12 +4,13 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { selectIsUserLoading, selectIsAuthenticated, signOut } from 'redux/auth';
 import {
+    StyledHeader,
     StyledNav,
     Logo,
     StyledPrimaryLink,
     StyledPrimaryButton,
     StyledBorderedLink,
-} from './NavBarStyles';
+} from './HeaderStyles';
 
 const propTypes = {
     signOut: PropTypes.func.isRequired,
@@ -17,7 +18,7 @@ const propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
 };
 
-const Navbar = ({ isUserLoading, isAuthenticated, signOut }) => {
+const Header = ({ isUserLoading, isAuthenticated, signOut }) => {
     const signedInMenu = (
         <>
             <StyledPrimaryLink to="/profiles">Developers</StyledPrimaryLink>
@@ -36,12 +37,14 @@ const Navbar = ({ isUserLoading, isAuthenticated, signOut }) => {
     );
 
     return (
-        <StyledNav>
-            <Logo to="/">
-                <strong>Dev</strong>Link
-            </Logo>
-            {!isUserLoading && isAuthenticated ? signedInMenu : guestMenu}
-        </StyledNav>
+        <StyledHeader>
+            <StyledNav>
+                <Logo to="/">
+                    <strong>Dev</strong>Link
+                </Logo>
+                {!isUserLoading && isAuthenticated ? signedInMenu : guestMenu}
+            </StyledNav>
+        </StyledHeader>
     );
 };
 
@@ -50,6 +53,6 @@ const mapStateToProps = createStructuredSelector({
     isAuthenticated: selectIsAuthenticated,
 });
 
-Navbar.propTypes = propTypes;
+Header.propTypes = propTypes;
 
-export default connect(mapStateToProps, { signOut })(Navbar);
+export default connect(mapStateToProps, { signOut })(Header);

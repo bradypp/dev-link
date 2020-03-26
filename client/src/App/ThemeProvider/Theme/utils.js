@@ -12,11 +12,6 @@ const utils = {
         modal: 2,
         alert: 3,
     },
-    layout: {
-        maxWidth: 130,
-        gridGap: 3,
-        numberOfColumns: 16,
-    },
 };
 
 export default utils;

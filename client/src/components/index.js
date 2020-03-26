@@ -3,7 +3,7 @@ export { default as SignUp } from './SignUp/SignUp';
 export { default as Dashboard } from './Dashboard/Dashboard';
 export { default as Alert } from './Alert/Alert';
 export { default as Home } from './Home/Home';
-export { default as Navbar } from './NavBar/Navbar';
+export { default as Header } from './Header/Header';
 export { default as NotFound } from './NotFound/NotFound';
 export { default as Profile } from './Profile/Profile';
 

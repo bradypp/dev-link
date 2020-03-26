@@ -33,7 +33,13 @@ export const Logo = styled(CustomLink)`
 `;
 
 export const StyledNav = styled.nav`
-    ${({ theme }) => mixins.centerAndContain(theme.layout.maxWidth)}
-    ${mixins.flexBetween};
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    ${mixins.containAndCenter}
+`;
+
+export const StyledHeader = styled.header`
     padding: 1rem 0;
+    width: 100%;
 `;
