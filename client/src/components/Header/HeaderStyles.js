@@ -32,14 +32,14 @@ export const Logo = styled(CustomLink)`
     margin-right: auto;
 `;
 
-export const StyledNav = styled.nav`
+export const NavContainer = styled.nav`
     display: flex;
     justify-content: space-between;
     align-items: center;
     ${mixins.containAndCenter}
 `;
 
-export const StyledHeader = styled.header`
+export const HeaderContainer = styled.header`
     padding: 1rem 0;
     width: 100%;
 `;

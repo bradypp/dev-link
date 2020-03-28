@@ -1,40 +1,31 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
-import { createStructuredSelector } from 'reselect';
-import { selectIsAuthenticated } from 'redux/auth';
-import { Section } from 'shared/components';
+import { IoIosSearch } from 'react-icons/io';
+import { Section, Container } from 'shared/components';
+import { Heading, SearchContainer, InputContainer, StyledInput } from './HomeStyles';
 
-const propTypes = {
-    isAuthenticated: PropTypes.bool.isRequired,
-};
-
-const Home = ({ isAuthenticated }) => {
-    if (isAuthenticated) return <Redirect to="/dashboard" />;
+// TODO: edit form
+const Home = () => {
     return (
-        <Section>
-            <h1 className="x-large">Dev Link</h1>
-            <p className="lead">
-                Create your developer profile, share your project ideas and link-up with like-minded
-                developers
-            </p>
-            <div className="buttons">
-                <Link to="/sign-up" className="btn btn-primary">
-                    Sign Up
-                </Link>
-                <Link to="/sign-in" className="btn btn-light">
-                    Login
-                </Link>
-            </div>
-        </Section>
+        <Container>
+            <Section>
+                <Heading>Discover and recruit the ideal developers for your team</Heading>
+                <SearchContainer>
+                    <form>
+                        <InputContainer>
+                            <IoIosSearch />
+                            <StyledInput />
+                        </InputContainer>
+                        <button>Search</button>
+                    </form>
+                    <a>Advanced Options</a>
+                </SearchContainer>
+                <img src="#" alt="#" />
+            </Section>
+            <Section>
+                <p></p>
+            </Section>
+        </Container>
     );
 };
 
-Home.propTypes = propTypes;
-
-const mapStateToProps = createStructuredSelector({
-    isAuthenticated: selectIsAuthenticated,
-});
-
-export default connect(mapStateToProps)(Home);
+export default Home;

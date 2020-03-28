@@ -8,9 +8,9 @@ const utils = {
         xxl: `10rem`,
     },
     zIndex: {
-        dropdown: 1,
-        modal: 2,
-        alert: 3,
+        dropdown: 50,
+        modal: 100,
+        alert: 150,
     },
 };
 

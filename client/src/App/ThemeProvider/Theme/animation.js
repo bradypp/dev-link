@@ -1,4 +1,5 @@
 const effects = {
+    easeCustom: `cubic-bezier(0.3, 0, 0.4, 1)`,
     easeInCubic: `cubic-bezier(0.55, 0.055, 0.675, 0.19)`,
     easeOutCubic: `cubic-bezier(0.215, 0.61, 0.355, 1)`,
     easeInOutCubic: `cubic-bezier(0.215, 0.61, 0.355, 1)`,
@@ -11,7 +12,7 @@ const effects = {
 };
 
 const animation = {
-    transition: (seconds = 0.25) => `all ${seconds}s cubic-bezier(0.3, 0, 0.4, 1);`,
+    transition: `all 0.25s ${effects.easeCustom};`,
     ...effects,
 };
 

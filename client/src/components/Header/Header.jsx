@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { selectIsUserLoading, selectIsAuthenticated, signOut } from 'redux/auth';
 import {
-    StyledHeader,
-    StyledNav,
+    HeaderContainer,
+    NavContainer,
     Logo,
     StyledPrimaryLink,
     StyledPrimaryButton,
@@ -30,21 +30,19 @@ const Header = ({ isUserLoading, isAuthenticated, signOut }) => {
     const guestMenu = (
         <>
             <StyledBorderedLink to="/sign-in">Sign In</StyledBorderedLink>
-            <StyledPrimaryButton color="primaryDark" to="/sign-up">
-                Join Now
-            </StyledPrimaryButton>
+            <StyledPrimaryLink to="/sign-up">Join Now</StyledPrimaryLink>
         </>
     );
 
     return (
-        <StyledHeader>
-            <StyledNav>
+        <HeaderContainer>
+            <NavContainer>
                 <Logo to="/">
                     <strong>Dev</strong>Link
                 </Logo>
-                {!isUserLoading && isAuthenticated ? signedInMenu : guestMenu}
-            </StyledNav>
-        </StyledHeader>
+                {(isUserLoading && guestMenu) || isAuthenticated ? signedInMenu : guestMenu}
+            </NavContainer>
+        </HeaderContainer>
     );
 };
 

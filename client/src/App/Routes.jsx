@@ -15,28 +15,26 @@ import {
     Alert,
     NotFound,
 } from 'components';
-import { PrivateRoute, Container } from 'shared/components';
+import { PrivateRoute } from 'shared/components';
 
 const Routes = () => {
     return (
         <Router>
             <Alert />
             <Header />
-            <Container>
-                <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route exact path="/sign-in" component={SignIn} />
-                    <Route exact path="/sign-up" component={SignUp} />
-                    <Route exact path="/profile/:id" component={Profile} />
-                    <Route exact path="/profiles" component={Profiles} />
-                    <PrivateRoute exact path="/dashboard" component={Dashboard} />
-                    <PrivateRoute exact path="/create" component={CreateProfile} />
-                    <PrivateRoute exact path="/edit" component={EditProfile} />
-                    <PrivateRoute exact path="/add-experience" component={AddExperience} />
-                    <PrivateRoute exact path="/add-education" component={AddEducation} />
-                    <Route component={NotFound} />
-                </Switch>
-            </Container>
+            <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/sign-in" component={SignIn} />
+                <Route exact path="/sign-up" component={SignUp} />
+                <Route exact path="/profile/:id" component={Profile} />
+                <Route exact path="/profiles" component={Profiles} />
+                <PrivateRoute exact path="/dashboard" component={Dashboard} />
+                <PrivateRoute exact path="/create" component={CreateProfile} />
+                <PrivateRoute exact path="/edit" component={EditProfile} />
+                <PrivateRoute exact path="/add-experience" component={AddExperience} />
+                <PrivateRoute exact path="/add-education" component={AddEducation} />
+                <Route component={NotFound} />
+            </Switch>
         </Router>
     );
 };

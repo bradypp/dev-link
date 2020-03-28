@@ -17,6 +17,7 @@ const GlobalStyle = createGlobalStyle`
   html {
     box-sizing: border-box;
     font-size: 62.5%; 
+    touch-action: manipulation;
 
     ${media.bp1200`
         font-size: 56.25%; 
@@ -90,9 +91,6 @@ const GlobalStyle = createGlobalStyle`
   }
 
   input {
-    border-radius: 0;
-    outline: 0;
-
     &::placeholder {
       opacity: 0.7;
     }
@@ -105,10 +103,31 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
-  button {
-    background: none;
-    border: none;
+  [role="button"], button {
     cursor: pointer;
+    background: none;
+    font-family: ${({ theme }) => theme.fonts.primary};
+    font-size: ${({ theme }) => theme.fontSize.medium};
+  }
+
+   [role="button"], button, input, select, textarea {
+    outline: none;
+    border: 0;
+    border-radius: 0;
+    transition: ${({ theme }) => theme.animation.transition};
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+
+    &:disabled {
+      opacity: 0.7;
+    }
+  }
+
+  [role="button"], button, input, textarea {
+    appearance: none;
   }
 `;
 
