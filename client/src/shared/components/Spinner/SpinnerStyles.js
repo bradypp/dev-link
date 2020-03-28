@@ -13,13 +13,15 @@ export const SpinnerOverlay = styled.div`
 
 export const StyledSpinner = styled.div`
     display: inline-block;
-    width: ${({ size }) => size}px;
-    height: ${({ size }) => size}px;
+    width: ${({ size }) => size};
+    height: ${({ size }) => size};
     border-radius: 50%;
     color: #636767;
-    border: 5px solid #aaa;
-    border-top-color: #666;
-    animation: spin 1s ease-in-out infinite;
+    border: ${({ variant }) =>
+        (variant === 'default' && '0.5rem solid #999') ||
+        (variant === 'button' && '0.3rem solid #999')};
+    border-top-color: #454545;
+    animation: spin 1s ${({ theme }) => theme.animation.easeCustom} infinite;
 
     @keyframes spin {
         to {

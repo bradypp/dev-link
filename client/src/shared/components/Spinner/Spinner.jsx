@@ -4,19 +4,21 @@ import { StyledSpinner, SpinnerOverlay } from './SpinnerStyles';
 
 const propTypes = {
     overlayActive: PropTypes.bool,
-    size: PropTypes.number,
+    size: PropTypes.string,
+    variant: PropTypes.oneOf(['button', 'default']),
     className: PropTypes.string,
 };
 
 const defaultProps = {
     overlayActive: true,
-    size: 45,
+    size: '4.5rem',
+    variant: 'default',
     className: undefined,
 };
 
-const Spinner = ({ overlayActive, size, className }) => (
+const Spinner = ({ overlayActive, size, variant, className }) => (
     <SpinnerOverlay className={className} overlayActive={overlayActive}>
-        <StyledSpinner size={size} />
+        <StyledSpinner size={size} variant={variant} />
     </SpinnerOverlay>
 );
 
