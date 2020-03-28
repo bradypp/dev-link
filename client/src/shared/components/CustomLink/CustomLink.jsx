@@ -8,7 +8,7 @@ const propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
     color: PropTypes.string,
-    Icon: PropTypes.element,
+    Icon: PropTypes.oneOf([PropTypes.element, PropTypes.func]),
     disabled: PropTypes.bool,
     onClick: PropTypes.func,
 };

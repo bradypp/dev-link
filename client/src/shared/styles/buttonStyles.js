@@ -2,32 +2,37 @@ import styled, { css } from 'styled-components/macro';
 import { mixins } from 'shared/styles';
 
 export const ButtonText = styled.span`
-    padding-left: ${({ withPadding }) => (withPadding ? 7 : 0)}px;
+    padding-left: ${({ withPadding }) => (withPadding ? 0.5 : 0)}rem;
 `;
 
+// TODO: move styles to button styles?
 export const baseButtonStyles = css`
     ${mixins.flexCenter}
     vertical-align: middle;
     white-space: nowrap;
-    transition: all 0.15s ease;
     appearance: none;
     font-size: ${({ theme }) => theme.fontSize.medium};
     font-weight: 600;
     height: 4rem;
-    line-height: 4rem;
     overflow: hidden;
-    padding: 0 ${({ iconOnly }) => (iconOnly ? 1 : 2.2)}rem;
+    padding: 0 ${({ iconOnly }) => (!iconOnly ? `1.8rem` : `2.2rem`)};
     border-radius: 0.2rem;
+
     &:disabled {
-        opacity: 0.6;
+        opacity: 0.7;
         cursor: default;
+
+        span {
+            opacity: 0;
+        }
     }
 `;
 
-const primaryLightenDarkenPercentage = 0.05;
+const primaryLightenDarkenPercentage = 0.1;
 
 export const primaryButtonStyles = (color = 'primary') => css`
     ${baseButtonStyles};
+
     color: ${({ theme }) => {
         switch (color) {
             case 'primary':
@@ -43,23 +48,23 @@ export const primaryButtonStyles = (color = 'primary') => css`
     &:not(:disabled) {
         &:hover {
             background: ${({ theme }) =>
-                mixins.darken(theme.colors[color], primaryLightenDarkenPercentage)};
+                mixins.lighten(theme.colors[color], primaryLightenDarkenPercentage)};
         }
         &:active {
             background: ${({ theme }) =>
-                mixins.lighten(theme.colors[color], primaryLightenDarkenPercentage)};
+                mixins.darken(theme.colors[color], primaryLightenDarkenPercentage)};
         }
         ${({ isActive }) =>
             isActive &&
             css`
                 background: ${({ theme }) =>
-                    mixins.lighten(theme.colors[color], primaryLightenDarkenPercentage)} !important;
+                    mixins.darken(theme.colors[color], primaryLightenDarkenPercentage)} !important;
             `}
     }
 `;
 
 const secondaryOnHoverBackground = color => css`
-    background: ${({ theme }) => mixins.rgba(theme.colors[color], 0.75)};
+    background: ${({ theme }) => mixins.rgba(theme.colors[color], 0.6)};
 `;
 
 export const secondaryButtonStyles = (color = 'primary') => css`

@@ -8,7 +8,7 @@ const propTypes = {
     children: PropTypes.node,
     type: PropTypes.oneOf(['button', 'submit']),
     color: PropTypes.string,
-    Icon: PropTypes.element,
+    Icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     disabled: PropTypes.bool,
     isWorking: PropTypes.bool,
     onClick: PropTypes.func,
@@ -45,7 +45,7 @@ const CustomButton = forwardRef(
                 ref={ref}>
                 {isWorking && <StyledSpinner size={25} />}
                 {Icon && <Icon />}
-                {children && <ButtonText withPadding={isWorking || Icon}>{children}</ButtonText>}
+                {children && <ButtonText withPadding={Icon}>{children}</ButtonText>}
             </BaseButton>
         );
     },
