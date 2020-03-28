@@ -16,4 +16,6 @@ const colors = {
     link: '#0052cc',
 };
 
+// TODO: replace colors for text & background here & on the components & global style (including body)
+
 export default colors;

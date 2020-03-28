@@ -37,7 +37,7 @@ const mixins = {
         box-shadow: rgba(9, 30, 66, 0.25) 0 0.4rem 0.8rem -0.2rem, rgba(9, 30, 66, 0.31) 0 0x 0.1rem;
     `,
     containAndCenter: css`
-        max-width: 130rem;
+        max-width: ${({ theme }) => theme.layout.maxWidth};
         margin: 0 auto;
         width: 100%;
     `,

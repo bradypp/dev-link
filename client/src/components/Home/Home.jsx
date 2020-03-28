@@ -8,7 +8,7 @@ const Home = () => {
     return (
         <Container>
             <Section>
-                <Heading>Discover and recruit the ideal developers for your team</Heading>
+                <Heading>Discover like-minded developers</Heading>
                 <SearchContainer>
                     <form>
                         <InputContainer>

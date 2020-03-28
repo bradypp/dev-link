@@ -11,7 +11,6 @@ export const baseButtonStyles = css`
     vertical-align: middle;
     white-space: nowrap;
     appearance: none;
-    font-size: ${({ theme }) => theme.fontSize.medium};
     font-weight: 600;
     height: 4rem;
     overflow: hidden;

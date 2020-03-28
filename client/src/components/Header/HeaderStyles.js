@@ -3,7 +3,7 @@ import { CustomLink, PrimaryLink, BorderedLink, PrimaryButton } from 'shared/com
 import { mixins } from 'shared/styles';
 
 const sharedStyles = css`
-    margin-left: 1rem;
+    margin-left: 1.2rem;
 `;
 
 export const StyledPrimaryLink = styled(PrimaryLink).attrs(() => ({
@@ -40,6 +40,6 @@ export const NavContainer = styled.nav`
 `;
 
 export const HeaderContainer = styled.header`
-    padding: 1rem 0;
+    padding: 1.5rem 0;
     width: 100%;
 `;

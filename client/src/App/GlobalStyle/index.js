@@ -40,10 +40,10 @@ const GlobalStyle = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     font-family: ${({ theme }) => theme.fonts.primary};
-    font-size: ${({ theme }) => theme.fontSize.medium};
+    font-size: 1.6rem;
     background-color: ${({ theme }) => theme.colors.white};
     color: ${({ theme }) => theme.colors.greyDark1};
-    line-height: 1.7;
+    line-height: 1.5;
   }
 
   #root {
@@ -107,7 +107,7 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
     background: none;
     font-family: ${({ theme }) => theme.fonts.primary};
-    font-size: ${({ theme }) => theme.fontSize.medium};
+    font-size: 1.6rem;
   }
 
    [role="button"], button, input, select, textarea {

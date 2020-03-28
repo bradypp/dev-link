@@ -12,6 +12,9 @@ const utils = {
         modal: 100,
         alert: 150,
     },
+    layout: {
+        maxWidth: `120rem`,
+    },
 };
 
 export default utils;

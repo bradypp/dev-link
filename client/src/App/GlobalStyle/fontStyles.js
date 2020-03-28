@@ -2,76 +2,44 @@ import { css } from 'styled-components/macro';
 
 const fontStyles = css`
     @font-face {
-        font-family: 'Circular Std';
-        src: local('Circular Std Medium'), local('CircularStd-Medium'),
-            url('fonts/CircularStd-Medium.ttf') format('truetype'),
-            url('fonts/CircularStd-Medium.woff2') format('woff2'),
-            url('fonts/CircularStd-Medium.woff') format('woff');
-        font-weight: 500;
-        font-style: normal;
-    }
-    @font-face {
-        font-family: 'Circular Std';
-        src: local('Circular Std Book'), local('CircularStd-Book'),
-            url('fonts/CircularStd-Book.ttf') format('truetype'),
-            url('fonts/CircularStd-Book.woff2') format('woff2'),
-            url('fonts/CircularStd-Book.woff') format('woff');
+        font-family: 'Lato';
+        src: url('fonts/Lato/Lato-Regular.woff2') format('woff2'),
+            url('fonts/Lato/Lato-Regular.woff') format('woff'),
+            url('fonts/Lato/Lato-Regular.ttf') format('truetype');
         font-weight: 400;
         font-style: normal;
     }
     @font-face {
-        font-family: 'Circular Std';
-        src: local('Circular Std Medium Italic'), local('CircularStd-MediumItalic'),
-            url('fonts/CircularStd-MediumItalic.ttf') format('truetype'),
-            url('fonts/CircularStd-MediumItalic.woff2') format('woff2'),
-            url('fonts/CircularStd-MediumItalic.woff') format('woff');
-        font-weight: 500;
-        font-style: italic;
-    }
-    @font-face {
-        font-family: 'Circular Std';
-        src: local('Circular Std Black'), local('CircularStd-Black'),
-            url('fonts/CircularStd-Black.ttf') format('truetype'),
-            url('fonts/CircularStd-Black.woff2') format('woff2'),
-            url('fonts/CircularStd-Black.woff') format('woff');
-        font-weight: 900;
+        font-family: 'Lato';
+        src: url('fonts/Lato/Lato-Light.woff2') format('woff2'),
+            url('fonts/Lato/Lato-Light.woff') format('woff'),
+            url('fonts/Lato/Lato-Light.ttf') format('truetype');
+        font-weight: 300;
         font-style: normal;
     }
     @font-face {
-        font-family: 'Circular Std';
-        src: local('Circular Std Bold'), local('CircularStd-Bold'),
-            url('fonts/CircularStd-Bold.ttf') format('truetype'),
-            url('fonts/CircularStd-Bold.woff2') format('woff2'),
-            url('fonts/CircularStd-Bold.woff') format('woff');
+        font-family: 'Lato';
+        src: url('fonts/Lato/Lato-Bold.woff2') format('woff2'),
+            url('fonts/Lato/Lato-Bold.woff') format('woff'),
+            url('fonts/Lato/Lato-Bold.ttf') format('truetype');
         font-weight: 700;
         font-style: normal;
     }
     @font-face {
-        font-family: 'Circular Std';
-        src: local('Circular Std Bold Italic'), local('CircularStd-BoldItalic'),
-            url('fonts/CircularStd-BoldItalic.ttf') format('truetype'),
-            url('fonts/CircularStd-BoldItalic.woff2') format('woff2'),
-            url('fonts/CircularStd-BoldItalic.woff') format('woff');
-        font-weight: 700;
-        font-style: italic;
-    }
-    @font-face {
-        font-family: 'Circular Std';
-        src: local('Circular Std Book Italic'), local('CircularStd-BookItalic'),
-            url('fonts/CircularStd-BookItalic.ttf') format('truetype'),
-            url('fonts/CircularStd-BookItalic.woff2') format('woff2'),
-            url('fonts/CircularStd-BookItalic.woff') format('woff');
+        font-family: 'Fira Code';
+        src: url('fonts/FiraCode/FiraCode-Regular.woff2') format('woff2'),
+            url('fonts/FiraCode/FiraCode-Regular.woff') format('woff'),
+            url('fonts/FiraCode/FiraCode-Regular.ttf') format('truetype');
         font-weight: 400;
-        font-style: italic;
+        font-style: normal;
     }
     @font-face {
-        font-family: 'Circular Std';
-        src: local('Circular Std Black Italic'), local('CircularStd-BlackItalic'),
-            url('fonts/CircularStd-BlackItalic.ttf') format('truetype'),
-            url('fonts/CircularStd-BlackItalic.woff2') format('woff2'),
-            url('fonts/CircularStd-BlackItalic.woff') format('woff');
-        font-weight: 900;
-        font-style: italic;
+        font-family: 'Fira Code';
+        src: url('fonts/FiraCode/FiraCode-Medium.woff2') format('woff2'),
+            url('fonts/FiraCode/FiraCode-Medium.woff') format('woff'),
+            url('fonts/FiraCode/FiraCode-Medium.ttf') format('truetype');
+        font-weight: 500;
+        font-style: normal;
     }
 `;
 
