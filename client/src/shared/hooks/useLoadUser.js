@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import isEmpty from 'lodash.isempty';
+import { isEmpty } from 'lodash';
 import { loadUser, selectToken, selectUser } from 'redux/auth';
 import { setAuthToken } from 'shared/utils';
 import useClearAlerts from './useClearAlerts';
