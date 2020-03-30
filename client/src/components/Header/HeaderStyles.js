@@ -40,6 +40,6 @@ export const NavContainer = styled.nav`
 `;
 
 export const HeaderContainer = styled.header`
-    padding: 1.5rem 0;
+    padding: 1.5rem ${({ theme }) => theme.layout.pagePadding};
     width: 100%;
 `;

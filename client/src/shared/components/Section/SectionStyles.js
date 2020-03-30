@@ -15,7 +15,7 @@ const StyledSection = styled.section`
     ${({ layout }) => {
         return (layout === 'grid' && gridSectionStyles) || (layout === 'flex' && flexSectionStyles);
     }}
-    ${mixins.containAndCenter}
+    ${mixins.containAndCenter};
 `;
 
 export default StyledSection;

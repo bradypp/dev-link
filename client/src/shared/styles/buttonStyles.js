@@ -7,7 +7,8 @@ export const ButtonText = styled.span`
 
 // TODO: move styles to button styles?
 export const baseButtonStyles = css`
-    ${mixins.flexCenter}
+    ${mixins.inlineFlexCenter}
+    color: ${({ theme }) => theme.colors.greyDark1};
     vertical-align: middle;
     white-space: nowrap;
     appearance: none;
@@ -15,6 +16,7 @@ export const baseButtonStyles = css`
     height: 4rem;
     overflow: hidden;
     padding: 0 ${({ iconOnly }) => (!iconOnly ? `1.8rem` : `2.2rem`)};
+    width: min-content;
     border-radius: 0.2rem;
 
     &:disabled {
@@ -27,11 +29,9 @@ export const baseButtonStyles = css`
     }
 `;
 
-const primaryLightenDarkenPercentage = 0.1;
+const lightenDarkenPercentage = 0.05;
 
 export const primaryButtonStyles = (color = 'primary') => css`
-    ${baseButtonStyles};
-
     color: ${({ theme }) => {
         switch (color) {
             case 'primary':
@@ -47,42 +47,17 @@ export const primaryButtonStyles = (color = 'primary') => css`
     &:not(:disabled) {
         &:hover {
             background: ${({ theme }) =>
-                mixins.lighten(theme.colors[color], primaryLightenDarkenPercentage)};
+                mixins.darken(theme.colors[color], lightenDarkenPercentage)};
         }
         &:active {
             background: ${({ theme }) =>
-                mixins.darken(theme.colors[color], primaryLightenDarkenPercentage)};
+                mixins.lighten(theme.colors[color], lightenDarkenPercentage)};
         }
         ${({ isActive }) =>
             isActive &&
             css`
                 background: ${({ theme }) =>
-                    mixins.darken(theme.colors[color], primaryLightenDarkenPercentage)} !important;
-            `}
-    }
-`;
-
-const secondaryOnHoverBackground = color => css`
-    background: ${({ theme }) => mixins.rgba(theme.colors[color], 0.6)};
-`;
-
-export const secondaryButtonStyles = (color = 'primary') => css`
-    ${baseButtonStyles};
-    ${primaryButtonStyles(color)};
-    background: ${({ theme }) => mixins.rgba(theme.colors[color], 0.7)};
-    &:not(:disabled) {
-        &:hover {
-            ${secondaryOnHoverBackground(color)};
-        }
-
-        &:active {
-            ${secondaryOnHoverBackground(color)};
-        }
-
-        ${({ isActive }) =>
-            isActive &&
-            css`
-                ${secondaryOnHoverBackground(color)} !important;
+                    mixins.lighten(theme.colors[color], lightenDarkenPercentage)} !important;
             `}
     }
 `;
@@ -92,7 +67,6 @@ const borderedButtonActiveBackground = color => css`
 `;
 
 export const borderedButtonStyles = (color = 'primary') => css`
-    ${baseButtonStyles};
     color: ${({ theme }) => theme.colors[color]};
     background: ${({ theme }) => theme.colors.white};
     border: 1px solid ${({ theme }) => theme.colors[color]};
@@ -103,13 +77,13 @@ export const borderedButtonStyles = (color = 'primary') => css`
                 ${borderedButtonActiveBackground(color)};
             }
             &:active {
-                box-shadow: inset 0 0 0 0.2rem ${({ theme }) => theme.colors[color]};
+                box-shadow: inset 0 0 0 0.1rem ${({ theme }) => theme.colors[color]};
                 ${borderedButtonActiveBackground(color)};
             }
             ${({ isActive }) =>
                 isActive &&
                 css`
-                    box-shadow: inset 0 0 0 0.2rem ${({ theme }) => theme.colors[color]};
+                    box-shadow: inset 0 0 0 0.1rem ${({ theme }) => theme.colors[color]};
                     ${borderedButtonActiveBackground(color)};
                 `}
         }

@@ -10,6 +10,5 @@ export const StyledSpinner = styled(Spinner).attrs({
     position: absolute;
 `;
 export const BaseButton = styled.button`
-    color: ${({ theme }) => theme.colors.greyDark1};
     ${baseButtonStyles};
 `;

@@ -1,11 +1,11 @@
 import styled from 'styled-components/macro';
 import { primaryButtonStyles, borderedButtonStyles } from 'shared/styles';
-import { CustomLink } from 'shared/components';
+import Button from './Button';
 
-export const PrimaryLink = styled(CustomLink)`
+export const PrimaryButton = styled(Button)`
     ${({ color }) => primaryButtonStyles(color)};
 `;
 
-export const BorderedLink = styled(CustomLink)`
+export const BorderedButton = styled(Button)`
     ${({ color }) => borderedButtonStyles(color)};
 `;

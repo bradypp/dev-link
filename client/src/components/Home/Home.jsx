@@ -1,12 +1,15 @@
 import React from 'react';
 import { IoIosSearch } from 'react-icons/io';
-import { Section, Container } from 'shared/components';
+import { Section, MainContainer, PrimaryLink, PrimaryButton } from 'shared/components';
+import { useClearAlerts } from 'shared/hooks';
 import { Heading, SearchContainer, InputContainer, StyledInput } from './HomeStyles';
 
 // TODO: edit form
 const Home = () => {
+    useClearAlerts();
+
     return (
-        <Container>
+        <MainContainer>
             <Section>
                 <Heading>Discover like-minded developers</Heading>
                 <SearchContainer>
@@ -15,16 +18,13 @@ const Home = () => {
                             <IoIosSearch />
                             <StyledInput />
                         </InputContainer>
-                        <button>Search</button>
+                        <PrimaryButton type="submit">Search</PrimaryButton>
+                        <PrimaryLink color="greyLight1">Advanced Search</PrimaryLink>
                     </form>
-                    <a>Advanced Options</a>
                 </SearchContainer>
                 <img src="#" alt="#" />
             </Section>
-            <Section>
-                <p></p>
-            </Section>
-        </Container>
+        </MainContainer>
     );
 };
 

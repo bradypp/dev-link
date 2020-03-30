@@ -1,12 +1,4 @@
 const utils = {
-    spacing: {
-        tiny: `0.5rem`,
-        small: `1rem`,
-        medium: `2rem`,
-        large: `3rem`,
-        xl: `5rem`,
-        xxl: `10rem`,
-    },
     zIndex: {
         dropdown: 50,
         modal: 100,
@@ -14,6 +6,8 @@ const utils = {
     },
     layout: {
         maxWidth: `120rem`,
+        pagePadding: `4rem`,
+        pagePaddingMobile: `2rem`,
     },
 };
 

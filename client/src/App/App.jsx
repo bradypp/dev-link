@@ -1,13 +1,14 @@
 import React from 'react';
-import { useLoadUser } from 'shared/utils';
+import { useLoadUser } from 'shared/hooks';
+import { ThemeProvider } from 'styled-components/macro';
 import Routes from './Routes';
-import ThemeProvider from './ThemeProvider';
+import theme from './ThemeProvider/Theme';
 import GlobalStyle from './GlobalStyle';
 
 const App = () => {
     useLoadUser();
     return (
-        <ThemeProvider>
+        <ThemeProvider theme={theme('primary')}>
             <GlobalStyle />
             <Routes />
         </ThemeProvider>

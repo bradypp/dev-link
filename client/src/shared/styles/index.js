@@ -4,6 +4,5 @@ export {
     ButtonText,
     baseButtonStyles,
     primaryButtonStyles,
-    secondaryButtonStyles,
     borderedButtonStyles,
 } from './buttonStyles';

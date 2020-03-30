@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { ButtonText } from 'shared/styles';
-import { BaseButton, StyledSpinner } from './CustomButtonStyles';
+import { BaseButton, StyledSpinner } from './ButtonStyles';
 
 const propTypes = {
     className: PropTypes.string,
@@ -25,7 +25,7 @@ const defaultProps = {
     onClick: () => {},
 };
 
-const CustomButton = forwardRef(
+const Button = forwardRef(
     ({ children, color, Icon, disabled, isWorking, onClick, className, type }, ref) => {
         const handleClick = () => {
             if (!disabled && !isWorking) {
@@ -51,7 +51,7 @@ const CustomButton = forwardRef(
     },
 );
 
-CustomButton.propTypes = propTypes;
-CustomButton.defaultProps = defaultProps;
+Button.propTypes = propTypes;
+Button.defaultProps = defaultProps;
 
-export default CustomButton;
+export default Button;

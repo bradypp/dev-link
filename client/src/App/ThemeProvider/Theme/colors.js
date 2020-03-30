@@ -1,4 +1,4 @@
-const colors = {
+const base = {
     primary: '#2977c9',
     primaryDark: '#105EB0',
     primaryLight: '#4391E3',
@@ -13,9 +13,33 @@ const colors = {
     greyLight1: '#e7e4e4',
     greyLight2: '#ddd',
     greyLight3: '#ccc',
-    link: '#0052cc',
 };
 
-// TODO: replace colors for text & background here & on the components & global style (including body)
+const primary = {
+    text: {
+        primary: base.greyDark1,
+        secondary: base.white,
+        link: '#0052cc',
+    },
+    background: {
+        primary: base.white,
+    },
+};
+
+export const secondary = {
+    text: {
+        primary: base.white,
+        secondary: base.greyDark1,
+        link: '#0052cc',
+    },
+    background: {
+        primary: base.greyDark1,
+    },
+};
+
+const colors = theme => ({
+    ...base,
+    ...((theme === 'primary' && primary) || (theme === 'secondary' && secondary)),
+});
 
 export default colors;

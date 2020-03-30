@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import isEmpty from 'lodash.isempty';
 import { loadUser, selectToken, selectUser } from 'redux/auth';
 import { setAuthToken } from 'shared/utils';
+import useClearAlerts from './useClearAlerts';
 
 const useLoadUser = () => {
     const dispatch = useDispatch();
@@ -12,6 +13,8 @@ const useLoadUser = () => {
     if (token) {
         setAuthToken(token);
     }
+
+    useClearAlerts();
 
     useEffect(() => {
         if (isEmpty(user)) dispatch(loadUser());
