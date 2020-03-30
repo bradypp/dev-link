@@ -10,18 +10,18 @@ const {
 const { getCurrentUser, deleteUser, updateUser } = require('../controllers/userController');
 const validation = require('../utils/validation');
 const {
-    SIGN_UP,
-    SIGN_IN,
-    FORGOT_PASSWORD,
-    RESET_PASSWORD,
-    UPDATE_PASSWORD,
-    UPDATE_ME,
-} = require('../utils/validation/validationTypes');
+    signUpRules,
+    signInRules,
+    forgotPasswordRules,
+    resetPasswordRules,
+    updateUserRules,
+    updatePasswordRules,
+} = require('../utils/validation/userRules');
 
-router.route('/sign-up').post(validation(SIGN_UP), signUp);
-router.route('/sign-in').post(validation(SIGN_IN), signIn);
-router.route('/forgot-password').post(validation(FORGOT_PASSWORD), forgotPassword);
-router.route('/reset-password/:token').patch(validation(RESET_PASSWORD), resetPassword);
+router.route('/sign-up').post(validation(signUpRules), signUp);
+router.route('/sign-in').post(validation(signInRules), signIn);
+router.route('/forgot-password').post(validation(forgotPasswordRules), forgotPassword);
+router.route('/reset-password/:token').patch(validation(resetPasswordRules), resetPassword);
 
 // All routes after this middleware are protected
 router.use(protected);
@@ -29,8 +29,8 @@ router.use(protected);
 router
     .route('/')
     .get(getCurrentUser)
-    .patch(validation(UPDATE_ME), updateUser)
+    .patch(validation(updateUserRules), updateUser)
     .delete(deleteUser);
-router.route('/update-password').patch(validation(UPDATE_PASSWORD), updatePassword);
+router.route('/update-password').patch(validation(updatePasswordRules), updatePassword);
 
 module.exports = router;

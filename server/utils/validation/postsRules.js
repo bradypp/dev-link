@@ -1,9 +1,5 @@
 const { fieldRequired } = require('./utils');
 
-exports.postRules = () => {
-    return [fieldRequired('text', 'Text is required')];
-};
+exports.postRules = [fieldRequired('text', 'Text is required')];
 
-exports.postCommentRules = () => {
-    return [fieldRequired('text', 'Text is required')];
-};
+exports.postCommentRules = [fieldRequired('text', 'Text is required')];

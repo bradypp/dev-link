@@ -65,6 +65,7 @@ app.use(xss());
 app.use(hpp(hppConfig));
 
 // Routes
+// TODO: delete posts router?
 app.use('/api/v1/posts', postsRouter);
 app.use('/api/v1/profile', profileRouter);
 app.use('/api/v1/user', userRouter);
