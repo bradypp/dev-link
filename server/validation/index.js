@@ -1,12 +1,15 @@
-const { validationResult } = require('express-validator');
-
-const validate = (req, res, next) => {
-    const errors = validationResult(req);
-    if (errors.isEmpty()) return next();
-    errors.name = 'ExpressValidationErrors';
-    next(errors);
-};
+const userRules = require('./userRules');
+const profileRules = require('./profileRules');
+const validate = require('./validate');
 
 const validation = validationRules => [validationRules, validate];
 
-module.exports = validation;
+exports.signUp = validation(userRules.signUpRules);
+exports.signIn = validation(userRules.signInRules);
+exports.forgotPassword = validation(userRules.forgotPasswordRules);
+exports.resetPassword = validation(userRules.resetPasswordRules);
+exports.updatePassword = validation(userRules.updatePasswordRules);
+exports.updateUser = validation(userRules.updateUserRules);
+exports.profile = validation(profileRules.profileRules);
+exports.experience = validation(profileRules.experienceRules);
+exports.education = validation(profileRules.educationRules);

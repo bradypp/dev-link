@@ -2,7 +2,6 @@ const router = require('express').Router();
 const authController = require('../controllers/authController');
 const profileController = require('../controllers/profileController');
 const validation = require('../validation');
-const profileRules = require('../validation/profileRules');
 
 // Public routes
 router.route('/all').get(profileController.getAllUserProfiles);
@@ -15,14 +14,10 @@ router.use(authController.protected);
 router
     .route('/')
     .get(profileController.getCurrentUserProfile)
-    .post(validation(profileRules.profileRules), profileController.createOrUpdateUserProfile);
-router
-    .route('/experience')
-    .put(validation(profileRules.experienceRules), profileController.addExperienceToProfile);
+    .post(validation.profile, profileController.createOrUpdateUserProfile);
+router.route('/experience').put(validation.experience, profileController.addExperienceToProfile);
 router.route('/experience/:exp_id').delete(profileController.removeExperienceFromProfile);
-router
-    .route('/education')
-    .put(validation(profileRules.educationRules), profileController.addEducationToProfile);
+router.route('/education').put(validation.education, profileController.addEducationToProfile);
 router.route('/education/:edu_id').delete(profileController.removeEducationFromProfile);
 
 module.exports = router;
