@@ -15,7 +15,7 @@ const Home = () => {
                 <SearchContainer>
                     <form>
                         <InputContainer>
-                            <StyledInput Icon={IoIosSearch} height="5" />
+                            <StyledInput Icon={IoIosSearch} />
                         </InputContainer>
                         <PrimaryButton type="submit">Search</PrimaryButton>
                         <PrimaryLink to="/#" color="white1">

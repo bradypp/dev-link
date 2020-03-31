@@ -10,6 +10,7 @@ const propTypes = {
     invalid: PropTypes.bool,
     onChange: PropTypes.func,
     height: PropTypes.number,
+    borderRadius: PropTypes.string,
 };
 
 const defaultProps = {
@@ -19,6 +20,7 @@ const defaultProps = {
     invalid: false,
     onChange: () => {},
     height: 3.2,
+    borderRadius: `0.3rem`,
 };
 
 const Input = forwardRef(({ Icon, className, onChange, height, ...inputProps }, ref) => (

@@ -1,11 +1,10 @@
 import styled, { css } from 'styled-components';
-import { mixins } from 'shared/styles';
 
 export const StyledInput = styled.div`
-    ${mixins.inlineFlexCenter}
     position: relative;
     height: ${({ height }) => `${height}rem`};
     width: 100%;
+
     .icon {
         position: absolute;
         top: ${({ height }) => `${height / 4.2}rem`};
@@ -20,7 +19,7 @@ export const InputElement = styled.input`
     height: 100%;
     width: 100%;
     padding: 0 0.7rem;
-    border-radius: 0.3rem;
+    border-radius: ${({ borderRadius }) => borderRadius};
     border: 0.1rem solid ${({ theme }) => theme.colors.border1};
     color: ${({ theme }) => theme.colors.textPrimary1};
     background: ${({ theme }) => theme.colors.background1};

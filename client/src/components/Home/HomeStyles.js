@@ -13,4 +13,7 @@ export const SearchContainer = styled.div`
 
 export const InputContainer = styled.div``;
 
-export const StyledInput = styled(Input)``;
+export const StyledInput = styled(Input).attrs({
+    height: 5,
+    borderRadius: `5rem`,
+})``;

@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { selectIsUserLoading, selectIsAuthenticated, signOut } from 'redux/auth';
+import { Section } from 'shared/components';
 import {
     HeaderContainer,
     NavContainer,
@@ -18,8 +20,9 @@ const propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
 };
 
-// TODO: add search input/component to header?
 const Header = ({ isUserLoading, isAuthenticated, signOut }) => {
+    const location = useLocation();
+
     const signedInMenu = (
         <>
             <StyledPrimaryLink to="/profiles">Developers</StyledPrimaryLink>
@@ -35,12 +38,14 @@ const Header = ({ isUserLoading, isAuthenticated, signOut }) => {
         </>
     );
 
+    // TODO: Add search bar with location
     return (
         <HeaderContainer>
             <NavContainer>
                 <Logo to="/">
                     <strong>Dev</strong>Link
                 </Logo>
+                {location.pathname !== '/' && `Search Bar Here!`}
                 {(isUserLoading && guestMenu) || isAuthenticated ? signedInMenu : guestMenu}
             </NavContainer>
         </HeaderContainer>
