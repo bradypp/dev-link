@@ -6,11 +6,7 @@ const AppError = require('../utils/appError');
 
 exports.getCurrentUserProfile = catchAsync(async (req, res, next) => {
     const { id } = req.user;
-    const profile = await Profile.findOne({ user: id }).populate('user', [
-        'name',
-        'email',
-        'avatar',
-    ]);
+    const profile = await Profile.findOne({ user: id });
 
     if (!profile) {
         return next(new AppError('There is no profile for this user', 404));
@@ -25,7 +21,7 @@ exports.getCurrentUserProfile = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllUserProfiles = catchAsync(async (req, res, next) => {
-    const profiles = await Profile.find().populate('user', ['name', 'email', 'avatar']);
+    const profiles = await Profile.find();
 
     res.status(200).json({
         status: 'success',
@@ -37,11 +33,7 @@ exports.getAllUserProfiles = catchAsync(async (req, res, next) => {
 
 exports.getProfileByUserId = catchAsync(async (req, res, next) => {
     const { user_id } = req.params;
-    const profile = await Profile.findOne({ user: user_id }).populate('user', [
-        'name',
-        'email',
-        'avatar',
-    ]);
+    const profile = await Profile.findOne({ user: user_id });
 
     if (!profile) {
         return next(new AppError('Profile not found', 404));

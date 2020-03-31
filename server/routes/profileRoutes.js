@@ -1,37 +1,28 @@
 const router = require('express').Router();
-const { protected } = require('../controllers/authController');
-const {
-    getCurrentUserProfile,
-    createOrUpdateUserProfile,
-    getAllUserProfiles,
-    getProfileByUserId,
-    addExperienceToProfile,
-    removeExperienceFromProfile,
-    addEducationToProfile,
-    removeEducationFromProfile,
-    getUserGithubRepos,
-} = require('../controllers/profileController');
-const validation = require('../utils/validation');
-const {
-    profileRules,
-    experienceRules,
-    educationRules,
-} = require('../utils/validation/profileRules');
+const authController = require('../controllers/authController');
+const profileController = require('../controllers/profileController');
+const validation = require('../validation');
+const profileRules = require('../validation/profileRules');
 
-router.route('/all').get(getAllUserProfiles);
-router.route('/user/:user_id').get(getProfileByUserId);
-router.route('/github/:github_username').get(getUserGithubRepos);
+// Public routes
+router.route('/all').get(profileController.getAllUserProfiles);
+router.route('/user/:user_id').get(profileController.getProfileByUserId);
+router.route('/github/:github_username').get(profileController.getUserGithubRepos);
 
 // All routes after this middleware are protected
-router.use(protected);
+router.use(authController.protected);
 
 router
     .route('/')
-    .get(getCurrentUserProfile)
-    .post(validation(profileRules), createOrUpdateUserProfile);
-router.route('/experience').put(validation(experienceRules), addExperienceToProfile);
-router.route('/experience/:exp_id').delete(removeExperienceFromProfile);
-router.route('/education').put(validation(educationRules), addEducationToProfile);
-router.route('/education/:edu_id').delete(removeEducationFromProfile);
+    .get(profileController.getCurrentUserProfile)
+    .post(validation(profileRules.profileRules), profileController.createOrUpdateUserProfile);
+router
+    .route('/experience')
+    .put(validation(profileRules.experienceRules), profileController.addExperienceToProfile);
+router.route('/experience/:exp_id').delete(profileController.removeExperienceFromProfile);
+router
+    .route('/education')
+    .put(validation(profileRules.educationRules), profileController.addEducationToProfile);
+router.route('/education/:edu_id').delete(profileController.removeEducationFromProfile);
 
 module.exports = router;
