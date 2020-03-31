@@ -120,4 +120,6 @@ userSchema.methods.createPasswordResetToken = function() {
     return resetToken;
 };
 
-module.exports = model('User', userSchema, 'users');
+const User = model('User', userSchema, 'users');
+
+module.exports = User;

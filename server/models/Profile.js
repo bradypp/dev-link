@@ -129,4 +129,6 @@ const profileSchema = new Schema({
     },
 });
 
-module.exports = model('Profile', profileSchema, 'profiles');
+const Profile = model('Profile', profileSchema, 'profiles');
+
+module.exports = Profile;
