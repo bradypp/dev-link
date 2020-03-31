@@ -10,19 +10,6 @@ import {
     PROFILES_LOADING,
 } from 'redux/actionTypes';
 
-export const getCurrentUserProfile = () => async dispatch => {
-    try {
-        dispatch(profileLoading());
-
-        const res = await api.get('/profile');
-
-        dispatch(profileLoaded(res.data.data.profile));
-    } catch (err) {
-        dispatch(errorHandler(err));
-        dispatch(profilesError(err));
-    }
-};
-
 export const getProfiles = () => async dispatch => {
     try {
         dispatch(clearProfile());
@@ -37,11 +24,11 @@ export const getProfiles = () => async dispatch => {
     }
 };
 
-export const getProfileById = userId => async dispatch => {
+export const getProfile = userId => async dispatch => {
     try {
         dispatch(profileLoading());
 
-        const res = await api.get(`/profile/user/${userId}`);
+        const res = await api.get(`/user/${userId}/profile`);
 
         dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {
@@ -136,6 +123,16 @@ export const deleteEducation = id => async dispatch => {
 
         dispatch(profileLoaded(res.data.data.profile));
         dispatch(setAlert('Education Removed', 'success'));
+    } catch (err) {
+        dispatch(errorHandler(err));
+        dispatch(profilesError(err));
+    }
+};
+
+export const deleteProfile = () => async dispatch => {
+    try {
+        await api.delete('/profile');
+        dispatch(clearProfile());
     } catch (err) {
         dispatch(errorHandler(err));
         dispatch(profilesError(err));

@@ -6,7 +6,7 @@ import { isEmpty } from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import { Spinner } from 'shared/components';
 import {
-    getProfileById,
+    getProfile,
     selectIsProfileLoading,
     selectProfileUser,
     selectProfile,
@@ -24,7 +24,7 @@ import ProfileEducation from './ProfileEducation/ProfileEducation';
 import ProfileGithub from './ProfileGithub/ProfileGithub';
 
 const Profile = ({
-    getProfileById,
+    getProfile,
     isProfileLoading,
     profileData,
     profileUser,
@@ -41,9 +41,9 @@ const Profile = ({
     const [isFirstRender, setIsFirstRender] = useState(true);
 
     useEffect(() => {
-        getProfileById(params.id);
+        getProfile(params.id);
         setIsFirstRender(false);
-    }, [getProfileById, params.id]);
+    }, [getProfile, params.id]);
 
     return (
         <>
@@ -113,7 +113,7 @@ const Profile = ({
 };
 
 Profile.propTypes = {
-    getProfileById: PropTypes.func.isRequired,
+    getProfile: PropTypes.func.isRequired,
     isProfileLoading: PropTypes.bool.isRequired,
     profileUser: PropTypes.object.isRequired,
     profileData: PropTypes.object.isRequired,
@@ -141,4 +141,4 @@ const mapStateToProps = createStructuredSelector({
     user: selectUser,
 });
 
-export default connect(mapStateToProps, { getProfileById })(Profile);
+export default connect(mapStateToProps, { getProfile })(Profile);

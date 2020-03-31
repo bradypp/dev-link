@@ -30,7 +30,7 @@ const profileSchema = new Schema({
         type: String,
         trim: true,
     },
-    github_username: {
+    githubUsername: {
         type: String,
         trim: true,
     },

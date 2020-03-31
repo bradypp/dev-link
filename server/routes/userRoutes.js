@@ -1,7 +1,13 @@
-const router = require('express').Router();
+const express = require('express');
 const authController = require('../controllers/authController');
 const userController = require('../controllers/userController');
 const validation = require('../validation');
+const profileRouter = require('./profileRoutes');
+
+const router = express.Router();
+
+// Use the profile router for /:userId/profile route after /user
+router.use('/:userId/profile', profileRouter);
 
 router.route('/sign-up').post(validation.signUp, authController.signUp);
 router.route('/sign-in').post(validation.signIn, authController.signIn);
@@ -15,7 +21,7 @@ router.use(authController.protected);
 
 router
     .route('/')
-    .get(userController.getCurrentUser)
+    .get(userController.getUser)
     .patch(validation.updateUser, userController.updateUser)
     .delete(userController.deleteUser);
 router.route('/update-password').patch(validation.updatePassword, authController.updatePassword);

@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const Profile = require('../models/Profile');
+const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
@@ -11,7 +11,7 @@ const filterObj = (obj, ...allowedFields) => {
     return newObj;
 };
 
-exports.getCurrentUser = (req, res, next) => {
+exports.getUser = (req, res, next) => {
     res.status(200).json({
         status: 'success',
         data: {
@@ -41,6 +41,7 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     }
 
     const filteredBody = filterObj(req.body, 'name', 'email', 'active');
+
     const user = await User.findByIdAndUpdate(req.user.id, filteredBody, { new: true });
 
     res.status(200).json({
@@ -51,14 +52,4 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.deleteUser = catchAsync(async (req, res, next) => {
-    const { id } = req.user;
-
-    await Profile.findOneAndRemove({ user: id });
-    await User.findOneAndRemove({ _id: id });
-
-    res.status(200).json({
-        status: 'success',
-        message: 'User deleted',
-    });
-});
+exports.deleteUser = factory.deleteOne(User, null, 'req.user');

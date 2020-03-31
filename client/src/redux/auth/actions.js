@@ -1,6 +1,6 @@
 import { api, errorHandler } from 'shared/utils';
 import { setAlert } from 'redux/alerts';
-import { clearProfile } from 'redux/profiles';
+import { clearProfile, deleteProfile } from 'redux/profiles';
 import {
     SIGN_UP_SUCCESS,
     USER_LOADED,
@@ -74,9 +74,8 @@ export const deleteAccount = () => async dispatch => {
     if (window.confirm('Are you sure? This can NOT be undone!')) {
         try {
             await api.delete('/user');
-            dispatch(clearProfile());
+            dispatch(deleteProfile());
             dispatch(signOutUser());
-
             dispatch(setAlert('Your account has been permanently deleted'));
         } catch (err) {
             dispatch(errorHandler(err));

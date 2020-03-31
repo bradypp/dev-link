@@ -1,39 +1,14 @@
 const normalize = require('normalize-url');
 const axios = require('axios');
+const factory = require('./handlerFactory');
 const Profile = require('../models/Profile');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
-exports.getCurrentUserProfile = catchAsync(async (req, res, next) => {
-    const { id } = req.user;
-    const profile = await Profile.findOne({ user: id });
+exports.deleteProfile = factory.deleteOne(Profile, 'user', 'req.user');
 
-    if (!profile) {
-        return next(new AppError('There is no profile for this user', 404));
-    }
-
-    res.status(200).json({
-        status: 'success',
-        data: {
-            profile,
-        },
-    });
-});
-
-exports.getAllUserProfiles = catchAsync(async (req, res, next) => {
-    const profiles = await Profile.find();
-
-    res.status(200).json({
-        status: 'success',
-        data: {
-            profiles,
-        },
-    });
-});
-
-exports.getProfileByUserId = catchAsync(async (req, res, next) => {
-    const { user_id } = req.params;
-    const profile = await Profile.findOne({ user: user_id });
+exports.getProfile = catchAsync(async (req, res, next) => {
+    const profile = await Profile.findOne({ user: req.params.userId });
 
     if (!profile) {
         return next(new AppError('Profile not found', 404));
@@ -47,8 +22,9 @@ exports.getProfileByUserId = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.createOrUpdateUserProfile = catchAsync(async (req, res, next) => {
-    const { id } = req.user;
+exports.getAllProfiles = factory.getAll(Profile);
+
+exports.createOrUpdateProfile = catchAsync(async (req, res, next) => {
     const {
         company,
         location,
@@ -56,7 +32,7 @@ exports.createOrUpdateUserProfile = catchAsync(async (req, res, next) => {
         bio,
         skills,
         status,
-        github_username,
+        githubUsername,
         youtube,
         twitter,
         instagram,
@@ -66,12 +42,12 @@ exports.createOrUpdateUserProfile = catchAsync(async (req, res, next) => {
 
     // Set fields
     const profileFields = {
-        user: id,
+        user: req.user.id,
         company,
         location,
         bio,
         status,
-        github_username,
+        githubUsername,
         website: website ? normalize(website, { forceHttps: true }) : null,
         skills: skills ? skills.split(',').map(skill => skill.trim()) : null,
         social: {
@@ -83,7 +59,7 @@ exports.createOrUpdateUserProfile = catchAsync(async (req, res, next) => {
         },
     };
 
-    // Find profile by user id and update if it exists, if not,upsert:true allows a new profile to be created
+    // Find profile by user id and update if it exists, upsert:true allows a new profile to be created if one doesn't exist
     const profile = await Profile.findOneAndUpdate(
         { user: req.user.id },
         { $set: profileFields },
@@ -98,12 +74,11 @@ exports.createOrUpdateUserProfile = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.addExperienceToProfile = catchAsync(async (req, res, next) => {
-    const { id } = req.user;
+exports.addExperience = catchAsync(async (req, res, next) => {
     const { title, company, location, from, to, current, description } = req.body;
 
     // Find profile
-    const profile = await Profile.findOne({ user: id });
+    const profile = await Profile.findOne({ user: req.user.id });
 
     if (!profile) {
         return next(new AppError('Profile not found', 404));
@@ -117,6 +92,7 @@ exports.addExperienceToProfile = catchAsync(async (req, res, next) => {
 
     // Save profile and send response
     await profile.save();
+
     res.status(200).json({
         status: 'success',
         data: {
@@ -125,25 +101,23 @@ exports.addExperienceToProfile = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.removeExperienceFromProfile = catchAsync(async (req, res, next) => {
-    const { id } = req.user;
-    const { exp_id } = req.params;
-
+exports.removeExperience = catchAsync(async (req, res, next) => {
     // Find profile
-    const profile = await Profile.findOne({ user: id });
+    const profile = await Profile.findOne({ user: req.user.id });
 
     if (!profile) {
         return next(new AppError('Profile not found', 404));
     }
 
     // Get remove index
-    const removeIndex = profile.experience.map(item => item.id).indexOf(exp_id);
+    const removeIndex = profile.experience.map(item => item.id).indexOf(req.params.expId);
 
     // Splice out of array
     profile.experience.splice(removeIndex, 1);
 
     // Save profile and send response
     await profile.save();
+
     res.status(200).json({
         status: 'success',
         data: {
@@ -152,12 +126,11 @@ exports.removeExperienceFromProfile = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.addEducationToProfile = catchAsync(async (req, res, next) => {
-    const { id } = req.user;
+exports.addEducation = catchAsync(async (req, res, next) => {
     const { school, degree, field_of_study, from, to, current, description } = req.body;
 
     // Find profile
-    const profile = await Profile.findOne({ user: id });
+    const profile = await Profile.findOne({ user: req.user.id });
 
     if (!profile) {
         return next(new AppError('Profile not found', 404));
@@ -171,6 +144,7 @@ exports.addEducationToProfile = catchAsync(async (req, res, next) => {
 
     // Save profile and send response
     await profile.save();
+
     res.status(200).json({
         status: 'success',
         data: {
@@ -179,25 +153,23 @@ exports.addEducationToProfile = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.removeEducationFromProfile = catchAsync(async (req, res, next) => {
-    const { id } = req.user;
-    const { edu_id } = req.params;
-
+exports.removeEducation = catchAsync(async (req, res, next) => {
     // Find profile
-    const profile = await Profile.findOne({ user: id });
+    const profile = await Profile.findOne({ user: req.user.id });
 
     if (!profile) {
         return next(new AppError('Profile not found', 404));
     }
 
     // Get remove index
-    const removeIndex = profile.education.map(item => item.id).indexOf(edu_id);
+    const removeIndex = profile.education.map(item => item.id).indexOf(req.params.eduId);
 
     // Splice out of array
     profile.education.splice(removeIndex, 1);
 
     // Save profile and send response
     await profile.save();
+
     res.status(200).json({
         status: 'success',
         data: {
@@ -206,9 +178,9 @@ exports.removeEducationFromProfile = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.getUserGithubRepos = catchAsync(async (req, res, next) => {
+exports.getGithubRepos = catchAsync(async (req, res, next) => {
     const githubRes = await axios.get(
-        `https://api.github.com/users/${req.params.github_username}/repos?per_page=10&sort=created:asc`,
+        `https://api.github.com/users/${req.params.githubUsername}/repos?per_page=10&sort=created:asc`,
         {
             headers: {
                 'user-agent': 'node.js',
@@ -218,6 +190,7 @@ exports.getUserGithubRepos = catchAsync(async (req, res, next) => {
             },
         },
     );
+
     res.status(200).json({
         status: 'success',
         data: {

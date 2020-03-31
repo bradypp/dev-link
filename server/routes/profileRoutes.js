@@ -1,23 +1,26 @@
-const router = require('express').Router();
+const express = require('express');
 const authController = require('../controllers/authController');
 const profileController = require('../controllers/profileController');
 const validation = require('../validation');
 
+// mergeParams allows access to other/nested router params
+const router = express.Router({ mergeParams: true });
+
 // Public routes
-router.route('/all').get(profileController.getAllUserProfiles);
-router.route('/user/:user_id').get(profileController.getProfileByUserId);
-router.route('/github/:github_username').get(profileController.getUserGithubRepos);
+router.route('/').get(profileController.getProfile);
+router.route('/all').get(profileController.getAllProfiles);
+router.route('/github/:githubUsername').get(profileController.getGithubRepos);
 
 // All routes after this middleware are protected
 router.use(authController.protected);
 
 router
     .route('/')
-    .get(profileController.getCurrentUserProfile)
-    .post(validation.profile, profileController.createOrUpdateUserProfile);
-router.route('/experience').put(validation.experience, profileController.addExperienceToProfile);
-router.route('/experience/:exp_id').delete(profileController.removeExperienceFromProfile);
-router.route('/education').put(validation.education, profileController.addEducationToProfile);
-router.route('/education/:edu_id').delete(profileController.removeEducationFromProfile);
+    .post(validation.profile, profileController.createOrUpdateProfile)
+    .delete(profileController.deleteProfile);
+router.route('/experience').put(validation.experience, profileController.addExperience);
+router.route('/experience/:expId').delete(profileController.removeExperience);
+router.route('/education').put(validation.education, profileController.addEducation);
+router.route('/education/:eduId').delete(profileController.removeEducation);
 
 module.exports = router;

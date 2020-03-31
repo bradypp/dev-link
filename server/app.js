@@ -9,7 +9,7 @@ const hpp = require('hpp');
 const AppError = require('./utils/appError');
 const rateLimiter = require('./config/rateLimiter');
 const hppConfig = require('./config/hppConfig');
-const globalErrorHandler = require('./utils/globalErrorHandler');
+const globalErrorHandler = require('./controllers/globalErrorHandler');
 const profileRouter = require('./routes/profileRoutes');
 const userRouter = require('./routes/userRoutes');
 

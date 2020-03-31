@@ -16,7 +16,7 @@ class QueryParamsHandler {
         excludedFilterParams.push('page', 'sort', 'limit', 'fields');
 
         // Remove query params not wanted in filter
-        this.excludedFilterParams.forEach(el => delete queryObj[el]);
+        excludedFilterParams.forEach(el => delete queryObj[el]);
 
         // Allow filtering by gte|gt|lte|lt if they exist in queryParams by adding the mongodb $ operator
         // E.g. localhost:5000/api/user?age[gte]=18 (filter for age > 18)
@@ -49,12 +49,8 @@ class QueryParamsHandler {
             // Limit the fields to query and return from the database
             // E.g. localhost:5000/api/user?field=name,age (only return the name and age)
             const fields = this.queryParams.fields.split(',').join(' ');
-
             // Remove the fields & the mongodb field __v
-            this.query = this.query.select(`${fields} -__v`);
-        } else {
-            // Select and return everything except the mongodb field __v
-            this.query = this.query.select('-__v');
+            this.query = this.query.select(`${fields}`);
         }
 
         return this;
