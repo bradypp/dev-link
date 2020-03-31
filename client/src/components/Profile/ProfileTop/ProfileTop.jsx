@@ -1,5 +1,5 @@
 import React from 'react';
-import isEmpty from 'lodash.isempty';
+import { isEmpty } from 'lodash';
 
 const ProfileTop = ({ profileInfo, profileUser, profileSocial }) => {
     const { website, location, status, company } = profileInfo;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
-import isEmpty from 'lodash.isempty';
+import { isEmpty } from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import { Spinner } from 'shared/components';
 import {

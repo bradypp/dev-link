@@ -4,6 +4,7 @@ import { createStructuredSelector } from 'reselect';
 import { selectAlerts } from 'redux/alerts';
 import { connect } from 'react-redux';
 
+// TODO: styling
 const Alert = ({ alerts }) =>
     alerts !== null &&
     alerts.length > 0 &&

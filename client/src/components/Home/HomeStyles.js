@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+import { Input } from 'shared/components';
 
 export const Heading = styled.h1`
     grid-column: 1 / 12;
@@ -12,4 +13,4 @@ export const SearchContainer = styled.div`
 
 export const InputContainer = styled.div``;
 
-export const StyledInput = styled.input``;
+export const StyledInput = styled(Input)``;

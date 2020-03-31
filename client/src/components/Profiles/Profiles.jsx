@@ -7,6 +7,12 @@ import { Spinner } from 'shared/components';
 import { getProfiles, selectIsProfilesLoading, selectAllProfiles } from 'redux/profiles';
 import ProfileItem from './ProfileItem/ProfileItem';
 
+const propTypes = {
+    getProfiles: PropTypes.func.isRequired,
+    isProfilesLoading: PropTypes.bool.isRequired,
+    allProfiles: PropTypes.array.isRequired,
+};
+
 const Profiles = ({ getProfiles, isProfilesLoading, allProfiles }) => {
     useEffect(() => {
         getProfiles();
@@ -34,11 +40,7 @@ const Profiles = ({ getProfiles, isProfilesLoading, allProfiles }) => {
     );
 };
 
-Profiles.propTypes = {
-    getProfiles: PropTypes.func.isRequired,
-    isProfilesLoading: PropTypes.bool.isRequired,
-    allProfiles: PropTypes.array.isRequired,
-};
+Profiles.propTypes = propTypes;
 
 const mapStateToProps = createStructuredSelector({
     isProfilesLoading: selectIsProfilesLoading,

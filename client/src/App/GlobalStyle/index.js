@@ -41,8 +41,8 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     font-family: ${({ theme }) => theme.fonts.primary};
     font-size: 1.6rem;
-    background: ${({ theme }) => theme.colors.background.primary};
-    color: ${({ theme }) => theme.colors.text.primary};
+    background: ${({ theme }) => theme.colors.background1};
+    color: ${({ theme }) => theme.colors.textPrimary1};
     line-height: 1.5;
   }
 
@@ -74,7 +74,7 @@ const GlobalStyle = createGlobalStyle`
   a {
     display: inline-block;
     text-decoration: none;
-    color: ${({ theme }) => theme.colors.text.link};
+    color: ${({ theme }) => theme.colors.link};
     transition: ${({ theme }) => theme.animation.transition};
     cursor: pointer;
   }
@@ -114,7 +114,7 @@ const GlobalStyle = createGlobalStyle`
     outline: none;
     border: 0;
     border-radius: 0;
-    color: ${({ theme }) => theme.colors.text.primary};
+    color: ${({ theme }) => theme.colors.textPrimary1};
     transition: ${({ theme }) => theme.animation.transition};
 
     &:focus,

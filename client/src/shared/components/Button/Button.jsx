@@ -44,7 +44,7 @@ const Button = forwardRef(
                 iconOnly={!children}
                 ref={ref}>
                 {isWorking && <StyledSpinner size={25} />}
-                {Icon && <Icon />}
+                {Icon && <Icon className="icon" />}
                 {children && <ButtonText withPadding={Icon}>{children}</ButtonText>}
             </BaseButton>
         );

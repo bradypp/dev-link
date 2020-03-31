@@ -5,10 +5,9 @@ export const ButtonText = styled.span`
     padding-left: ${({ withPadding }) => (withPadding ? 0.5 : 0)}rem;
 `;
 
-// TODO: move styles to button styles?
 export const baseButtonStyles = css`
     ${mixins.inlineFlexCenter}
-    color: ${({ theme }) => theme.colors.greyDark1};
+    color: ${({ theme }) => theme.colors.textPrimary1};
     vertical-align: middle;
     white-space: nowrap;
     appearance: none;
@@ -29,6 +28,7 @@ export const baseButtonStyles = css`
     }
 `;
 
+// TODO: put box shadow on buttons
 const lightenDarkenPercentage = 0.05;
 
 export const primaryButtonStyles = (color = 'primary') => css`
@@ -38,7 +38,7 @@ export const primaryButtonStyles = (color = 'primary') => css`
             case 'primaryDark':
             case 'primaryLight':
             case 'danger':
-                return theme.colors.white;
+                return theme.colors.white1;
             default:
                 return theme.colors.greyDark1;
         }
@@ -62,13 +62,14 @@ export const primaryButtonStyles = (color = 'primary') => css`
     }
 `;
 
+// TODO: move to header styles if only used there
 const borderedButtonActiveBackground = color => css`
     background: ${({ theme }) => mixins.rgba(theme.colors[color], 0.05)};
 `;
 
 export const borderedButtonStyles = (color = 'primary') => css`
     color: ${({ theme }) => theme.colors[color]};
-    background: ${({ theme }) => theme.colors.white};
+    background: ${({ theme }) => theme.colors.white1};
     border: 1px solid ${({ theme }) => theme.colors[color]};
     &:not(:disabled) {
         &:not(:disabled) {

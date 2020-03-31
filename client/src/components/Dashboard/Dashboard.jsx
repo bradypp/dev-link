@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-import isEmpty from 'lodash.isempty';
+import { isEmpty } from 'lodash';
 import { Spinner, Button } from 'shared/components';
 import { clearAlerts, selectAlerts } from 'redux/alerts';
 import { selectUserFirstName, deleteAccount } from 'redux/auth';

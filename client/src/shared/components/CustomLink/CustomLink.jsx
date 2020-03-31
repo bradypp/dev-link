@@ -38,7 +38,7 @@ const CustomLink = forwardRef(
                 onClick={handleClick}
                 disabled={disabled}
                 ref={ref}>
-                {Icon && <Icon />}
+                {Icon && <Icon className="icon" />}
                 {children && <ButtonText withPadding={Icon}>{children}</ButtonText>}
             </BaseLink>
         );

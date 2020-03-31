@@ -18,6 +18,7 @@ const propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
 };
 
+// TODO: add search input/component to header?
 const Header = ({ isUserLoading, isAuthenticated, signOut }) => {
     const signedInMenu = (
         <>

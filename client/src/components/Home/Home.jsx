@@ -4,7 +4,7 @@ import { Section, MainContainer, PrimaryLink, PrimaryButton } from 'shared/compo
 import { useClearAlerts } from 'shared/hooks';
 import { Heading, SearchContainer, InputContainer, StyledInput } from './HomeStyles';
 
-// TODO: edit form
+// TODO: make form and advanced search link/button
 const Home = () => {
     useClearAlerts();
 
@@ -15,11 +15,12 @@ const Home = () => {
                 <SearchContainer>
                     <form>
                         <InputContainer>
-                            <IoIosSearch />
-                            <StyledInput />
+                            <StyledInput Icon={IoIosSearch} height="5" />
                         </InputContainer>
                         <PrimaryButton type="submit">Search</PrimaryButton>
-                        <PrimaryLink color="greyLight1">Advanced Search</PrimaryLink>
+                        <PrimaryLink to="/#" color="white1">
+                            Advanced Search
+                        </PrimaryLink>
                     </form>
                 </SearchContainer>
                 <img src="#" alt="#" />

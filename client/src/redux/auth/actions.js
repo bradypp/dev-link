@@ -69,6 +69,7 @@ export const signOut = () => dispatch => {
     dispatch(signOutUser());
 };
 
+// TODO: add confirm modal
 export const deleteAccount = () => async dispatch => {
     if (window.confirm('Are you sure? This can NOT be undone!')) {
         try {

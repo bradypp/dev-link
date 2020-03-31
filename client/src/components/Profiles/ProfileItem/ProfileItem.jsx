@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
 
+const propTypes = {
+    profileData: PropTypes.object.isRequired,
+};
+
 const ProfileItem = ({ profileData }) => {
     const { user, status, company, location, skills } = profileData;
     const { _id, name, avatar } = user;
@@ -31,8 +35,6 @@ const ProfileItem = ({ profileData }) => {
     );
 };
 
-ProfileItem.propTypes = {
-    profileData: PropTypes.object.isRequired,
-};
+ProfileItem.propTypes = propTypes;
 
 export default ProfileItem;

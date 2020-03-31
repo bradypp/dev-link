@@ -36,5 +36,6 @@ module.exports = {
         'jsx-a11y/click-events-have-key-events': 0,
         'import/prefer-default-export': 0,
         'react/forbid-prop-types': 0,
+        'react/jsx-props-no-spreading': 0,
     },
 };
