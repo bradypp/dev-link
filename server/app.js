@@ -10,6 +10,7 @@ const AppError = require('./utils/appError');
 const rateLimiter = require('./config/rateLimiter');
 const hppConfig = require('./config/hppConfig');
 const globalErrorHandler = require('./controllers/errorHandler');
+const authRouter = require('./routes/userRoutes');
 const profileRouter = require('./routes/profileRoutes');
 const userRouter = require('./routes/userRoutes');
 
@@ -65,8 +66,9 @@ app.use(hpp(hppConfig));
 
 // Routes
 // TODO: delete posts router?
-app.use('/api/v1/user', userRouter);
+app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/profile', profileRouter);
+app.use('/api/v1/user', userRouter);
 
 // Unhandled route handler
 app.all('*', (req, res, next) =>
