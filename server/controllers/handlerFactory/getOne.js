@@ -23,22 +23,12 @@ const getOne = async (req, res, next, Model, config, conditions) => {
     });
 };
 
-exports.getOneByIdParams = (Model, config = {}) =>
+exports.getOneById = (Model, config = {}) =>
     catchAsync(async (req, res, next) => {
         getOne(req, res, next, Model, config, { _id: req.params.id });
     });
 
-exports.getOneByIdCurrentUser = (Model, config = {}) =>
-    catchAsync(async (req, res, next) => {
-        getOne(req, res, next, Model, config, { _id: req.user.id });
-    });
-
-exports.getOneByCurrentUser = (Model, config = {}) =>
-    catchAsync(async (req, res, next) => {
-        getOne(req, res, next, Model, config, { user: req.user.id });
-    });
-
-exports.getOneByUserParamsUserId = (Model, config = {}) =>
+exports.getOneByUserId = (Model, config = {}) =>
     catchAsync(async (req, res, next) => {
         getOne(req, res, next, Model, config, { user: req.params.userId });
     });

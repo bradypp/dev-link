@@ -98,6 +98,7 @@ exports.protected = catchAsync(async (req, res, next) => {
 exports.forgotPassword = catchAsync(async (req, res, next) => {
     // Get user based on email
     const user = await User.findOne({ email: req.body.email });
+
     if (!user) {
         return next(new AppError('There is no user with email address.', 404));
     }
@@ -187,3 +188,14 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
     // Create and send JWT
     user.createSendJwt(res);
 });
+
+exports.restrictTo = (...roles) => {
+    return (req, res, next) => {
+        // roles ['admin', 'user']
+        if (!roles.includes(req.user.role)) {
+            return next(new AppError('You do not have permission to perform this action', 403));
+        }
+
+        next();
+    };
+};

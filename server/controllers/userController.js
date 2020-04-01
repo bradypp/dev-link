@@ -4,16 +4,13 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const filterObj = require('../utils/filterObj');
 
-exports.deleteUser = factory.deleteOneByIdCurrentUser(User);
-
-exports.getUser = (req, res, next) => {
-    res.status(200).json({
-        status: 'success',
-        data: {
-            user: req.user,
-        },
-    });
+exports.getMe = (req, res, next) => {
+    req.params.id = req.user.id;
+    next();
 };
+
+exports.deleteUser = factory.deleteOneById(User);
+exports.getUser = factory.getOneById(User);
 
 // Allows updating of name, email & active status
 exports.updateUser = catchAsync(async (req, res, next) => {

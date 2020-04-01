@@ -52,7 +52,7 @@ export const getCurrentUserProfile = () => async dispatch => {
 
 export const getGithubRepos = username => async dispatch => {
     try {
-        const res = await api.get(`/profile/github/${username}`);
+        const res = await api.get(`/profile/githubRepos/${username}`);
 
         dispatch(reposLoaded(res.data.data.repos));
     } catch (err) {

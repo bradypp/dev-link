@@ -8,17 +8,12 @@ const deleteOne = async (req, res, next, Model, conditions) => {
     });
 };
 
-exports.deleteOneByIdParams = Model =>
+exports.deleteOneById = Model =>
     catchAsync(async (req, res, next) => {
         deleteOne(req, res, next, Model, { _id: req.params.id });
     });
 
-exports.deleteOneByIdCurrentUser = Model =>
+exports.deleteOneByUserId = Model =>
     catchAsync(async (req, res, next) => {
-        deleteOne(req, res, next, Model, { _id: req.user.id });
-    });
-
-exports.deleteOneByCurrentUser = Model =>
-    catchAsync(async (req, res, next) => {
-        deleteOne(Model, { user: req.user.id });
+        deleteOne(Model, { user: req.params.userId });
     });

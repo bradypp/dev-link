@@ -5,10 +5,14 @@ const Profile = require('../models/Profile');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
-exports.getProfile = factory.getOneByUserParamsUserId(Profile);
-exports.getCurrentUserProfile = factory.getOneByCurrentUser(Profile);
+exports.getMe = (req, res, next) => {
+    req.params.userId = req.user.id;
+    next();
+};
+
+exports.getProfile = factory.getOneByUserId(Profile);
 exports.getAllProfiles = factory.getAll(Profile);
-exports.deleteProfile = factory.deleteOneByCurrentUser(Profile);
+exports.deleteProfile = factory.deleteOneByUserId(Profile);
 
 exports.createOrUpdateProfile = catchAsync(async (req, res, next) => {
     const {
@@ -28,7 +32,7 @@ exports.createOrUpdateProfile = catchAsync(async (req, res, next) => {
 
     // Set fields
     const profileFields = {
-        user: req.user.id,
+        user: req.params.userId,
         company,
         location,
         bio,
@@ -47,7 +51,7 @@ exports.createOrUpdateProfile = catchAsync(async (req, res, next) => {
 
     // Find profile by user id and update if it exists, upsert:true allows a new profile to be created if one doesn't exist
     const profile = await Profile.findOneAndUpdate(
-        { user: req.user.id },
+        { user: req.params.userId },
         { $set: profileFields },
         { new: true, upsert: true },
     );
@@ -64,7 +68,7 @@ exports.addExperience = catchAsync(async (req, res, next) => {
     const { title, company, location, from, to, current, description } = req.body;
 
     // Find profile
-    const profile = await Profile.findOne({ user: req.user.id });
+    const profile = await Profile.findOne({ user: req.params.userId });
 
     if (!profile) {
         return next(new AppError('Profile not found', 404));
@@ -89,7 +93,7 @@ exports.addExperience = catchAsync(async (req, res, next) => {
 
 exports.removeExperience = catchAsync(async (req, res, next) => {
     // Find profile
-    const profile = await Profile.findOne({ user: req.user.id });
+    const profile = await Profile.findOne({ user: req.params.userId });
 
     if (!profile) {
         return next(new AppError('Profile not found', 404));
@@ -114,7 +118,7 @@ exports.removeExperience = catchAsync(async (req, res, next) => {
 
 exports.addEducation = catchAsync(async (req, res, next) => {
     // Find profile
-    const profile = await Profile.findOne({ user: req.user.id });
+    const profile = await Profile.findOne({ user: req.params.userId });
 
     if (!profile) {
         return next(new AppError('Profile not found', 404));
@@ -139,7 +143,7 @@ exports.addEducation = catchAsync(async (req, res, next) => {
 
 exports.removeEducation = catchAsync(async (req, res, next) => {
     // Find profile
-    const profile = await Profile.findOne({ user: req.user.id });
+    const profile = await Profile.findOne({ user: req.params.userId });
 
     if (!profile) {
         return next(new AppError('Profile not found', 404));

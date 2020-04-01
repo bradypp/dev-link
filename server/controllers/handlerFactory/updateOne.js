@@ -24,17 +24,12 @@ const updateOne = async (req, res, next, Model, config, conditions) => {
     });
 };
 
-exports.updateOneByIdParams = (Model, config = {}) =>
+exports.updateOneById = (Model, config = {}) =>
     catchAsync(async (req, res, next) =>
         updateOne(req, res, next, Model, config, { _id: req.params.id }),
     );
 
-exports.updateOneByIdCurrentUser = (Model, config = {}) =>
+exports.updateOneByUserId = (Model, config = {}) =>
     catchAsync(async (req, res, next) =>
-        updateOne(req, res, next, Model, config, { _id: req.user.id }),
-    );
-
-exports.updateOneByCurrentUser = (Model, config = {}) =>
-    catchAsync(async (req, res, next) =>
-        updateOne(req, res, next, Model, config, { user: req.user.id }),
+        updateOne(req, res, next, Model, config, { user: req.params.userId }),
     );

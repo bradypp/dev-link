@@ -20,10 +20,19 @@ router
 router.use(authController.protected);
 
 router
-    .route('/')
+    .route('/me')
+    .get(userController.getMe, userController.getUser)
+    .patch(validation.updateUser, userController.getMe, userController.updateUser)
+    .delete(userController.getMe, userController.deleteUser);
+router.route('/update-password').patch(validation.updatePassword, authController.updatePassword);
+
+// Restrict the following routes to users with role admin only
+router.use(authController.restrictTo('admin'));
+
+router
+    .route('/:id')
     .get(userController.getUser)
     .patch(validation.updateUser, userController.updateUser)
     .delete(userController.deleteUser);
-router.route('/update-password').patch(validation.updatePassword, authController.updatePassword);
 
 module.exports = router;
