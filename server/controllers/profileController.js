@@ -5,24 +5,10 @@ const Profile = require('../models/Profile');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
-exports.deleteProfile = factory.deleteOne(Profile, 'user', 'req.user');
-
-exports.getProfile = catchAsync(async (req, res, next) => {
-    const profile = await Profile.findOne({ user: req.params.userId });
-
-    if (!profile) {
-        return next(new AppError('Profile not found', 404));
-    }
-
-    res.status(200).json({
-        status: 'success',
-        data: {
-            profile,
-        },
-    });
-});
-
+exports.getProfile = factory.getOneByUserParamsUserId(Profile);
+exports.getCurrentUserProfile = factory.getOneByCurrentUser(Profile);
 exports.getAllProfiles = factory.getAll(Profile);
+exports.deleteProfile = factory.deleteOneByCurrentUser(Profile);
 
 exports.createOrUpdateProfile = catchAsync(async (req, res, next) => {
     const {
@@ -127,8 +113,6 @@ exports.removeExperience = catchAsync(async (req, res, next) => {
 });
 
 exports.addEducation = catchAsync(async (req, res, next) => {
-    const { school, degree, field_of_study, from, to, current, description } = req.body;
-
     // Find profile
     const profile = await Profile.findOne({ user: req.user.id });
 
@@ -137,7 +121,7 @@ exports.addEducation = catchAsync(async (req, res, next) => {
     }
 
     // Make new education object
-    const newEdu = { school, degree, field_of_study, from, to, current, description };
+    const newEdu = { ...req.body };
 
     // Add education to profile
     profile.education.push(newEdu);

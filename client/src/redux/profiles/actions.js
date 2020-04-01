@@ -37,6 +37,19 @@ export const getProfile = userId => async dispatch => {
     }
 };
 
+export const getCurrentUserProfile = () => async dispatch => {
+    try {
+        dispatch(profileLoading());
+
+        const res = await api.get(`/profile/me`);
+
+        dispatch(profileLoaded(res.data.data.profile));
+    } catch (err) {
+        dispatch(errorHandler(err));
+        dispatch(profilesError(err));
+    }
+};
+
 export const getGithubRepos = username => async dispatch => {
     try {
         const res = await api.get(`/profile/github/${username}`);

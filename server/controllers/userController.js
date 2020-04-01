@@ -2,14 +2,9 @@ const User = require('../models/User');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const filterObj = require('../utils/filterObj');
 
-const filterObj = (obj, ...allowedFields) => {
-    const newObj = {};
-    Object.keys(obj).forEach(el => {
-        if (allowedFields.includes(el)) newObj[el] = obj[el];
-    });
-    return newObj;
-};
+exports.deleteUser = factory.deleteOneByIdCurrentUser(User);
 
 exports.getUser = (req, res, next) => {
     res.status(200).json({
@@ -20,6 +15,7 @@ exports.getUser = (req, res, next) => {
     });
 };
 
+// Allows updating of name, email & active status
 exports.updateUser = catchAsync(async (req, res, next) => {
     const { password, password2, email } = req.body;
 
@@ -51,5 +47,3 @@ exports.updateUser = catchAsync(async (req, res, next) => {
         },
     });
 });
-
-exports.deleteUser = factory.deleteOne(User, null, 'req.user');

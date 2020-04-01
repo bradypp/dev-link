@@ -7,9 +7,9 @@ import { createStructuredSelector } from 'reselect';
 import { isEmpty } from 'lodash';
 import { Spinner, Button } from 'shared/components';
 import { clearAlerts, selectAlerts } from 'redux/alerts';
-import { selectUserFirstName, deleteAccount, selectUserId } from 'redux/auth';
+import { selectUserFirstName, deleteAccount } from 'redux/auth';
 import {
-    getProfile,
+    getCurrentUserProfile,
     selectProfile,
     selectIsProfileLoading,
     selectProfileEducation,
@@ -20,7 +20,7 @@ import DashboardActions from './DashboardActions/DashboardActions';
 import Experience from './Experience/Experience';
 
 const Dashboard = ({
-    getProfile,
+    getCurrentUserProfile,
     deleteAccount,
     userFirstName,
     profileData,
@@ -29,11 +29,10 @@ const Dashboard = ({
     profileExperience,
     clearAlerts,
     alerts,
-    userId,
 }) => {
     useEffect(() => {
-        getProfile(userId);
-    }, [getProfile, userId]);
+        getCurrentUserProfile();
+    }, [getCurrentUserProfile]);
 
     useEffect(() => {
         if (alerts.length > 0) {
@@ -81,14 +80,13 @@ const Dashboard = ({
 
 Dashboard.propTypes = {
     clearAlerts: PropTypes.func.isRequired,
-    getProfile: PropTypes.func.isRequired,
+    getCurrentUserProfile: PropTypes.func.isRequired,
     deleteAccount: PropTypes.func.isRequired,
     userFirstName: PropTypes.string.isRequired,
     profileData: PropTypes.object.isRequired,
     isProfileLoading: PropTypes.bool.isRequired,
     profileEducation: PropTypes.array.isRequired,
     profileExperience: PropTypes.array.isRequired,
-    userId: PropTypes.string.isRequired,
     alerts: PropTypes.array.isRequired,
 };
 
@@ -98,10 +96,9 @@ const mapStateToProps = createStructuredSelector({
     isProfileLoading: selectIsProfileLoading,
     profileEducation: selectProfileEducation,
     profileExperience: selectProfileExperience,
-    userId: selectUserId,
     alerts: selectAlerts,
 });
 
-export default compose(connect(mapStateToProps, { getProfile, clearAlerts, deleteAccount }))(
-    Dashboard,
-);
+export default compose(
+    connect(mapStateToProps, { getCurrentUserProfile, clearAlerts, deleteAccount }),
+)(Dashboard);

@@ -130,7 +130,10 @@ const profileSchema = new Schema({
 });
 
 profileSchema.pre(/^find/, function(next) {
-    this.populate('user', ['name', 'email', 'avatar']);
+    this.populate({
+        path: 'user',
+        select: 'name email avatar',
+    });
     next();
 });
 

@@ -5,10 +5,14 @@ import { connect } from 'react-redux';
 import { Spinner } from 'shared/components';
 import { createStructuredSelector } from 'reselect';
 import { isEmpty } from 'lodash';
-import { createProfile, getProfile, selectIsProfileLoading, selectProfile } from 'redux/profiles';
-import { selectUserId } from 'redux/auth';
+import {
+    createProfile,
+    getCurrentUserProfile,
+    selectIsProfileLoading,
+    selectProfile,
+} from 'redux/profiles';
 
-const CreateProfile = ({ createProfile, getProfile, profile, isProfileLoading, userId }) => {
+const CreateProfile = ({ createProfile, getCurrentUserProfile, profile, isProfileLoading }) => {
     const [formData, setFormData] = useState({
         company: '',
         website: '',
@@ -50,8 +54,8 @@ const CreateProfile = ({ createProfile, getProfile, profile, isProfileLoading, u
     };
 
     useEffect(() => {
-        getProfile(userId);
-    }, [getProfile, userId]);
+        getCurrentUserProfile();
+    }, [getCurrentUserProfile]);
 
     return (
         <>
@@ -228,16 +232,14 @@ const CreateProfile = ({ createProfile, getProfile, profile, isProfileLoading, u
 
 CreateProfile.propTypes = {
     createProfile: PropTypes.func.isRequired,
-    getProfile: PropTypes.func.isRequired,
-    userId: PropTypes.string.isRequired,
+    getCurrentUserProfile: PropTypes.func.isRequired,
     isProfileLoading: PropTypes.bool.isRequired,
     profile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
     isProfileLoading: selectIsProfileLoading,
-    userId: selectUserId,
     profile: selectProfile,
 });
 
-export default connect(mapStateToProps, { createProfile, getProfile })(CreateProfile);
+export default connect(mapStateToProps, { createProfile, getCurrentUserProfile })(CreateProfile);

@@ -115,7 +115,7 @@ const sendErrorProd = (err, req, res) => {
     });
 };
 
-const globalErrorHandler = (err, req, res, next) => {
+const errorHandler = (err, req, res, next) => {
     let error;
 
     // Handle and send validation errors
@@ -149,4 +149,4 @@ const globalErrorHandler = (err, req, res, next) => {
     }
 };
 
-module.exports = globalErrorHandler;
+module.exports = errorHandler;

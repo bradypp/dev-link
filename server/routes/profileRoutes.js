@@ -1,7 +1,7 @@
 const express = require('express');
 const authController = require('../controllers/authController');
 const profileController = require('../controllers/profileController');
-const validation = require('../validation');
+const validation = require('../controllers/validation');
 
 // mergeParams allows access to other/nested router params
 const router = express.Router({ mergeParams: true });
@@ -18,6 +18,7 @@ router
     .route('/')
     .post(validation.profile, profileController.createOrUpdateProfile)
     .delete(profileController.deleteProfile);
+router.route('/me').get(profileController.getCurrentUserProfile);
 router.route('/experience').put(validation.experience, profileController.addExperience);
 router.route('/experience/:expId').delete(profileController.removeExperience);
 router.route('/education').put(validation.education, profileController.addEducation);

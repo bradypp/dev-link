@@ -7,20 +7,18 @@ import { isEmpty } from 'lodash';
 import { Spinner } from 'shared/components';
 import {
     createProfile,
-    getProfile,
+    getCurrentUserProfile,
     selectIsProfileLoading,
     selectProfile,
     selectProfileInfoAndSocial,
 } from 'redux/profiles';
-import { selectUserId } from 'redux/auth';
 
 const EditProfile = ({
     createProfile,
-    getProfile,
+    getCurrentUserProfile,
     profileData,
     isProfileLoading,
     profileInfoAndSocial,
-    userId,
 }) => {
     const [formData, setFormData] = useState({
         company: '',
@@ -55,9 +53,9 @@ const EditProfile = ({
     } = formData;
 
     useEffect(() => {
-        if (isEmpty(profileData)) getProfile(userId);
+        if (isEmpty(profileData)) getCurrentUserProfile();
         setFormData(profileInfoAndSocial);
-    }, [getProfile, profileData, profileInfoAndSocial, userId]);
+    }, [getCurrentUserProfile, profileData, profileInfoAndSocial]);
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -241,18 +239,16 @@ const EditProfile = ({
 
 EditProfile.propTypes = {
     createProfile: PropTypes.func.isRequired,
-    getProfile: PropTypes.func.isRequired,
+    getCurrentUserProfile: PropTypes.func.isRequired,
     isProfileLoading: PropTypes.bool.isRequired,
     profileData: PropTypes.object.isRequired,
     profileInfoAndSocial: PropTypes.object.isRequired,
-    userId: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
     isProfileLoading: selectIsProfileLoading,
     profileData: selectProfile,
     profileInfoAndSocial: selectProfileInfoAndSocial,
-    userId: selectUserId,
 });
 
-export default connect(mapStateToProps, { createProfile, getProfile })(EditProfile);
+export default connect(mapStateToProps, { createProfile, getCurrentUserProfile })(EditProfile);
