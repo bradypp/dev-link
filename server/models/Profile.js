@@ -5,6 +5,10 @@ const profileSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User',
     },
+    photo: {
+        type: String,
+        default: 'default.jpg',
+    },
     company: {
         type: String,
         trim: true,
@@ -101,7 +105,7 @@ const profileSchema = new Schema({
             },
         },
     ],
-    social: {
+    socials: {
         youtube: {
             type: String,
             trim: true,
@@ -123,11 +127,19 @@ const profileSchema = new Schema({
             trim: true,
         },
     },
+    likes: [
+        {
+            user: { type: Schema.Types.ObjectId, ref: 'User' },
+        },
+    ],
     createdAt: {
         type: Date,
         default: Date.now(),
     },
 });
+
+// Indexes allow for more efficient queries
+profileSchema.index({ user: 1, status: 1, location: 1, skills: 1 });
 
 profileSchema.pre(/^find/, function(next) {
     this.populate({

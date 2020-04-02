@@ -12,7 +12,7 @@ router
     .patch(validation.resetPassword, authController.resetPassword);
 
 // All routes after this middleware are protected
-router.use(authController.protected);
+router.use(authController.protect);
 
 router.route('/update-password').patch(validation.updatePassword, authController.updatePassword);
 

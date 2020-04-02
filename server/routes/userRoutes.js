@@ -10,12 +10,12 @@ const router = express.Router();
 router.use('/:userId/profile', profileRouter);
 
 // All routes after this middleware are protected
-router.use(authController.protected);
+router.use(authController.protect);
 
 router
     .route('/me')
     .get(userController.getMe, userController.getUser)
-    .patch(validation.updateUser, userController.getMe, userController.updateUser)
+    .patch(userController.getMe, validation.updateUser, userController.updateMe)
     .delete(userController.getMe, userController.deleteUser);
 
 // Restrict the following routes to users with role admin only
@@ -24,7 +24,8 @@ router.use(authController.restrictTo('admin'));
 router
     .route('/:id')
     .get(userController.getUser)
-    .patch(validation.updateUser, userController.updateUser)
+    .post(userController.createUser)
+    .patch(userController.updateUser)
     .delete(userController.deleteUser);
 
 module.exports = router;

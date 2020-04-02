@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
@@ -10,12 +11,16 @@ const AppError = require('./utils/appError');
 const rateLimiter = require('./config/rateLimiter');
 const hppConfig = require('./config/hppConfig');
 const globalErrorHandler = require('./controllers/errorHandler');
-const authRouter = require('./routes/userRoutes');
+const authRouter = require('./routes/authRoutes');
 const profileRouter = require('./routes/profileRoutes');
 const userRouter = require('./routes/userRoutes');
 
 // Start express app
 const app = express();
+
+// Set html template engine to pug
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
 
 // Set security HTTP headers
 app.use(helmet());
@@ -34,6 +39,9 @@ app.options('*', cors());
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
+
+// Serving static files
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Rate limiting middlewares
 if (process.env.NODE_ENV === 'production') {
@@ -65,7 +73,6 @@ app.use(xss());
 app.use(hpp(hppConfig));
 
 // Routes
-// TODO: delete posts router?
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/profile', profileRouter);
 app.use('/api/v1/user', userRouter);

@@ -1,9 +1,10 @@
-const normalize = require('normalize-url');
+const sharp = require('sharp');
 const axios = require('axios');
 const factory = require('./handlerFactory');
 const Profile = require('../models/Profile');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const multerUpload = require('../utils/multerUpload');
 
 exports.getMe = (req, res, next) => {
     req.params.userId = req.user.id;
@@ -11,52 +12,30 @@ exports.getMe = (req, res, next) => {
 };
 
 exports.getProfile = factory.getOneByUserId(Profile);
-exports.getAllProfiles = factory.getAll(Profile);
+exports.updateProfile = factory.updateOneByUserId(Profile);
 exports.deleteProfile = factory.deleteOneByUserId(Profile);
+exports.getAllProfiles = factory.getAll(Profile);
 
-exports.createOrUpdateProfile = catchAsync(async (req, res, next) => {
-    const {
-        company,
-        location,
-        website,
-        bio,
-        skills,
-        status,
-        githubUsername,
-        youtube,
-        twitter,
-        instagram,
-        linkedin,
-        facebook,
-    } = req.body;
-
-    // Set fields
-    const profileFields = {
+exports.createProfile = catchAsync(async (req, res, next) => {
+    // Check a profile doesn't already exist for this user
+    let profile = await Profile.findOne({
         user: req.params.userId,
-        company,
-        location,
-        bio,
-        status,
-        githubUsername,
-        website: website ? normalize(website, { forceHttps: true }) : null,
-        skills: skills ? skills.split(',').map(skill => skill.trim()) : null,
-        social: {
-            youtube: youtube ? normalize(youtube, { forceHttps: true }) : null,
-            twitter: twitter ? normalize(twitter, { forceHttps: true }) : null,
-            facebook: facebook ? normalize(facebook, { forceHttps: true }) : null,
-            linkedin: linkedin ? normalize(linkedin, { forceHttps: true }) : null,
-            instagram: instagram ? normalize(instagram, { forceHttps: true }) : null,
-        },
+    });
+
+    if (profile) {
+        return next(new AppError('Profile for this user already exists', 400));
+    }
+
+    const profileFields = {
+        ...req.body,
+        user: req.params.userId,
     };
 
-    // Find profile by user id and update if it exists, upsert:true allows a new profile to be created if one doesn't exist
-    const profile = await Profile.findOneAndUpdate(
-        { user: req.params.userId },
-        { $set: profileFields },
-        { new: true, upsert: true },
-    );
+    // Create and save new profile
+    profile = new Profile(profileFields);
+    await profile.save();
 
-    res.status(200).json({
+    res.status(201).json({
         status: 'success',
         data: {
             profile,
@@ -64,20 +43,31 @@ exports.createOrUpdateProfile = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.addExperience = catchAsync(async (req, res, next) => {
-    const { title, company, location, from, to, current, description } = req.body;
+exports.uploadProfilePhoto = multerUpload.single('photo');
 
-    // Find profile
+exports.resizeProfilePhoto = catchAsync(async (req, res, next) => {
+    if (!req.file) return next();
+
+    req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
+
+    await sharp(req.file.buffer)
+        .resize(500, 500)
+        .toFormat('jpeg')
+        .jpeg({ quality: 90 })
+        .toFile(`public/img/users/${req.file.filename}`);
+
+    next();
+});
+
+exports.addExperience = catchAsync(async (req, res, next) => {
     const profile = await Profile.findOne({ user: req.params.userId });
 
     if (!profile) {
         return next(new AppError('Profile not found', 404));
     }
 
-    // Make new experience object
-    const newExp = { title, company, location, from, to, current, description };
-
-    // Add experience to profile
+    // Make new experience object and add to profile
+    const newExp = { ...req.body };
     profile.experience.push(newExp);
 
     // Save profile and send response
@@ -99,10 +89,8 @@ exports.removeExperience = catchAsync(async (req, res, next) => {
         return next(new AppError('Profile not found', 404));
     }
 
-    // Get remove index
+    // Get remove index and splice from experience array
     const removeIndex = profile.experience.map(item => item.id).indexOf(req.params.expId);
-
-    // Splice out of array
     profile.experience.splice(removeIndex, 1);
 
     // Save profile and send response
@@ -124,10 +112,8 @@ exports.addEducation = catchAsync(async (req, res, next) => {
         return next(new AppError('Profile not found', 404));
     }
 
-    // Make new education object
+    // Make new education object and add to profile
     const newEdu = { ...req.body };
-
-    // Add education to profile
     profile.education.push(newEdu);
 
     // Save profile and send response
@@ -142,17 +128,14 @@ exports.addEducation = catchAsync(async (req, res, next) => {
 });
 
 exports.removeEducation = catchAsync(async (req, res, next) => {
-    // Find profile
     const profile = await Profile.findOne({ user: req.params.userId });
 
     if (!profile) {
         return next(new AppError('Profile not found', 404));
     }
 
-    // Get remove index
+    // Get remove index and splice from education array
     const removeIndex = profile.education.map(item => item.id).indexOf(req.params.eduId);
-
-    // Splice out of array
     profile.education.splice(removeIndex, 1);
 
     // Save profile and send response
@@ -173,8 +156,8 @@ exports.getGithubRepos = catchAsync(async (req, res, next) => {
             headers: {
                 'user-agent': 'node.js',
                 Accept: 'application/vnd.github.v3+json',
-                client_id: process.env.CLIENT_ID,
-                client_secret: process.env.CLIENT_SECRET,
+                client_id: process.env.GITHUB_CLIENT_ID,
+                client_secret: process.env.GITHUB_CLIENT_SECRET,
             },
         },
     );

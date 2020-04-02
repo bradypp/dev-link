@@ -21,9 +21,6 @@ const userSchema = new Schema({
         required: true,
         select: false,
     },
-    avatar: {
-        type: String,
-    },
     role: {
         type: String,
         enum: ['user', 'admin'],
@@ -41,6 +38,9 @@ const userSchema = new Schema({
         default: Date.now(),
     },
 });
+
+// Indexes allow for more efficient queries
+userSchema.index({ name: 1 });
 
 // Encrypt password on registration and password update
 userSchema.pre('save', async function(next) {

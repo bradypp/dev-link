@@ -4,16 +4,18 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const filterObj = require('../utils/filterObj');
 
+exports.getUser = factory.getOneById(User);
+exports.createUser = factory.createOne(User);
+exports.updateUser = factory.updateOneById(User);
+exports.deleteUser = factory.deleteOneById(User);
+
 exports.getMe = (req, res, next) => {
     req.params.id = req.user.id;
     next();
 };
 
-exports.deleteUser = factory.deleteOneById(User);
-exports.getUser = factory.getOneById(User);
-
 // Allows updating of name, email & active status
-exports.updateUser = catchAsync(async (req, res, next) => {
+exports.updateMe = catchAsync(async (req, res, next) => {
     const { password, password2, email } = req.body;
 
     // Create error if user sends password data
@@ -27,7 +29,6 @@ exports.updateUser = catchAsync(async (req, res, next) => {
     }
 
     if (email) {
-        // Check user with this email doesn't exist
         if (await User.findOne({ email })) {
             return next(new AppError('This email is already taken!', 400));
         }

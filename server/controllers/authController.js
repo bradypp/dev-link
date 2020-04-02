@@ -1,6 +1,4 @@
-const gravatar = require('gravatar');
 const { promisify } = require('util');
-const normalize = require('normalize-url');
 const jwt = require('jsonwebtoken');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
@@ -19,18 +17,10 @@ exports.signUp = catchAsync(async (req, res, next) => {
         return next(new AppError('User with this email already exists', 400));
     }
 
-    // Get gravatar for that email & set a default
-    const avatar = gravatar.url(email, {
-        s: '200', // Size
-        r: 'pg', // Rating
-        d: 'mm', // Default
-    });
-
     // Create new user
     user = new User({
         name,
         email,
-        avatar: normalize(avatar),
         password,
     });
 
@@ -61,7 +51,7 @@ exports.signIn = catchAsync(async (req, res, next) => {
     user.createSendJwt(res);
 });
 
-exports.protected = catchAsync(async (req, res, next) => {
+exports.protect = catchAsync(async (req, res, next) => {
     // Get token from header or cookies
     let token;
     if (req.header('Authorization') && req.header('Authorization').startsWith('Bearer')) {

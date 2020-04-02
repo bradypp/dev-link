@@ -12,12 +12,25 @@ router.route('/all').get(profileController.getAllProfiles);
 router.route('/githubRepos/:githubUsername').get(profileController.getGithubRepos);
 
 // All routes after this middleware are protected
-router.use(authController.protected);
+router.use(authController.protect);
 
 router
     .route('/me')
     .get(profileController.getMe, profileController.getProfile)
-    .post(validation.profile, profileController.getMe, profileController.createOrUpdateProfile)
+    .post(
+        validation.createProfile,
+        profileController.getMe,
+        profileController.uploadProfilePhoto,
+        profileController.resizeProfilePhoto,
+        profileController.createProfile,
+    )
+    .patch(
+        validation.updateProfile,
+        profileController.getMe,
+        profileController.uploadProfilePhoto,
+        profileController.resizeProfilePhoto,
+        profileController.updateProfile,
+    )
     .delete(profileController.getMe, profileController.deleteProfile);
 router
     .route('/experience')
@@ -37,7 +50,8 @@ router.use(authController.restrictTo('admin'));
 
 router
     .route('/')
-    .post(validation.profile, profileController.createOrUpdateProfile)
+    .post(profileController.createProfile)
+    .patch(profileController.updateProfile)
     .delete(profileController.deleteProfile);
 
 module.exports = router;

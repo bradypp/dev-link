@@ -10,6 +10,7 @@ exports.getAll = (Model, errorMessage = 'No document found with that ID') =>
             .limitFields()
             .paginate();
 
+        // const doc = await features.query.explain();
         const doc = await features.query;
 
         if (!doc) {
