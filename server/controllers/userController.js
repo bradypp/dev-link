@@ -1,8 +1,6 @@
 const User = require('../models/User');
 const factory = require('./handlerFactory');
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
-const filterObj = require('../utils/filterObj');
+const { AppError, catchAsync, filterObject } = require('../utils');
 
 exports.getUser = factory.getOneById(User);
 exports.createUser = factory.createOne(User);
@@ -34,7 +32,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
         }
     }
 
-    const filteredBody = filterObj(req.body, 'name', 'email', 'active');
+    const filteredBody = filterObject(req.body, ['name', 'email', 'active']);
 
     const user = await User.findByIdAndUpdate(req.user.id, filteredBody, { new: true });
 

@@ -2,33 +2,40 @@ const sharp = require('sharp');
 const axios = require('axios');
 const factory = require('./handlerFactory');
 const Profile = require('../models/Profile');
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
-const multerUpload = require('../utils/multerUpload');
+const { AppError, catchAsync, multerUpload } = require('../utils');
 
 exports.getMe = (req, res, next) => {
     req.params.userId = req.user.id;
     next();
 };
 
-exports.getProfile = factory.getOneByUserId(Profile);
-exports.updateProfile = factory.updateOneByUserId(Profile);
-exports.deleteProfile = factory.deleteOneByUserId(Profile);
+const notFoundErrorMessage = 'Profile not found';
+
+exports.getProfile = factory.getOneByUserId(Profile, { errorMessage: notFoundErrorMessage });
+exports.updateProfile = factory.updateOneByUserId(Profile, {
+    errorMessage: notFoundErrorMessage,
+    fieldsToOmit: ['experience', 'education', 'likes'],
+});
+exports.deleteProfile = factory.deleteOneByUserId(Profile, { errorMessage: notFoundErrorMessage });
 exports.getAllProfiles = factory.getAll(Profile);
 
 exports.createProfile = catchAsync(async (req, res, next) => {
-    // Check a profile doesn't already exist for this user
     let profile = await Profile.findOne({
         user: req.params.userId,
     });
 
+    // Check a profile doesn't already exist for this user
     if (profile) {
         return next(new AppError('Profile for this user already exists', 400));
     }
 
+    // Profile fields to save to new profile
     const profileFields = {
         ...req.body,
         user: req.params.userId,
+        experience: undefined,
+        education: undefined,
+        likes: undefined,
     };
 
     // Create and save new profile
@@ -51,11 +58,12 @@ exports.resizeProfilePhoto = catchAsync(async (req, res, next) => {
     req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
 
     await sharp(req.file.buffer)
-        .resize(500, 500)
+        .resize(300, 300)
         .toFormat('jpeg')
-        .jpeg({ quality: 90 })
+        .jpeg({ quality: 80 })
         .toFile(`public/img/users/${req.file.filename}`);
 
+    req.body.photo = req.file.filename;
     next();
 });
 
@@ -63,7 +71,7 @@ exports.addExperience = catchAsync(async (req, res, next) => {
     const profile = await Profile.findOne({ user: req.params.userId });
 
     if (!profile) {
-        return next(new AppError('Profile not found', 404));
+        return next(new AppError(notFoundErrorMessage, 404));
     }
 
     // Make new experience object and add to profile
@@ -82,11 +90,10 @@ exports.addExperience = catchAsync(async (req, res, next) => {
 });
 
 exports.removeExperience = catchAsync(async (req, res, next) => {
-    // Find profile
     const profile = await Profile.findOne({ user: req.params.userId });
 
     if (!profile) {
-        return next(new AppError('Profile not found', 404));
+        return next(new AppError(notFoundErrorMessage, 404));
     }
 
     // Get remove index and splice from experience array
@@ -105,11 +112,10 @@ exports.removeExperience = catchAsync(async (req, res, next) => {
 });
 
 exports.addEducation = catchAsync(async (req, res, next) => {
-    // Find profile
     const profile = await Profile.findOne({ user: req.params.userId });
 
     if (!profile) {
-        return next(new AppError('Profile not found', 404));
+        return next(new AppError(notFoundErrorMessage, 404));
     }
 
     // Make new education object and add to profile
@@ -131,7 +137,7 @@ exports.removeEducation = catchAsync(async (req, res, next) => {
     const profile = await Profile.findOne({ user: req.params.userId });
 
     if (!profile) {
-        return next(new AppError('Profile not found', 404));
+        return next(new AppError(notFoundErrorMessage, 404));
     }
 
     // Get remove index and splice from education array

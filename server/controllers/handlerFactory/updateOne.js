@@ -1,12 +1,13 @@
-const catchAsync = require('../../utils/catchAsync');
-const AppError = require('../../utils/appError');
+const { AppError, catchAsync, omitKeyValuePairs } = require('../../utils');
 
 // Don't update user passwords using this (User.save() needs to be used for the update/reset password middlewares to run)
 const updateOne = async (req, res, next, Model, config, conditions) => {
     const options = config.options || {};
     const errorMessage = config.errorMessage || 'No document found with that ID';
+    const fieldsToOmit = config.fieldsToOmit || [];
+    const data = omitKeyValuePairs({ ...req.body }, fieldsToOmit);
 
-    const doc = await Model.findOneAndUpdate(conditions, req.body, {
+    const doc = await Model.findOneAndUpdate(conditions, data, {
         new: true,
         runValidators: true,
         ...options,
