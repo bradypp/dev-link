@@ -20,6 +20,13 @@ const userSchema = new Schema({
         type: String,
         required: true,
         select: false,
+        min: [8, 'Password must contain at least 8 characters'],
+        validate: {
+            validator(value) {
+                return value.match(/^(?=.*[a-z])(?=.*[0-9])(?=.*[^0-9a-zA-Z]).{8,}$/g);
+            },
+            message: 'Password must contain a mix of letters, numbers and symbols',
+        },
     },
     role: {
         type: String,

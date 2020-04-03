@@ -1,5 +1,4 @@
-const catchAsync = require('../../utils/catchAsync');
-const AppError = require('../../utils/appError');
+const { AppError, catchAsync } = require('../../utils');
 
 const getOne = async (req, res, next, Model, config, conditions) => {
     const selectOptions = config.selectOptions || null;

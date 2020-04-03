@@ -1,5 +1,4 @@
-const catchAsync = require('../../utils/catchAsync');
-const AppError = require('../../utils/appError');
+const { AppError, catchAsync } = require('../../utils');
 const QueryHandler = require('../queryHandler');
 
 exports.getAll = (Model, errorMessage = 'No document found with that ID') =>

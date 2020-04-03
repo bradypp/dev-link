@@ -1,30 +1,22 @@
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
-const sendEmail = require('../utils/sendEmail');
+const { AppError, catchAsync, Email } = require('../utils');
 const User = require('../models/User');
 
 exports.signUp = catchAsync(async (req, res, next) => {
     const { name, email, password } = req.body;
 
     // Check if a user with that email exists
-    let user = await User.findOne({
-        email,
-    });
-
-    if (user) {
+    if (await User.findOne({ email })) {
         return next(new AppError('User with this email already exists', 400));
     }
 
     // Create new user
-    user = new User({
+    const user = await User.create({
         name,
         email,
         password,
     });
-
-    await user.save();
 
     // Create and send JWT
     user.createSendJwt(res, 201);
@@ -92,7 +84,6 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     if (!user) {
         return next(new AppError('There is no user with email address.', 404));
     }
-
     // Generate the random reset token
     const resetToken = user.createPasswordResetToken();
 
@@ -103,15 +94,8 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
         'host',
     )}/api/v1/auth/reset-password/${resetToken}`;
 
-    // TODO: change message to be more user friendly
-    const message = `Forgot your password? Submit a PATCH request with a new password and password2 to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
-
     try {
-        await sendEmail({
-            email: user.email,
-            subject: 'Your password reset token (valid for 10 min)',
-            message,
-        });
+        await new Email(user, resetURL).sendPasswordReset();
 
         res.status(200).json({
             status: 'success',

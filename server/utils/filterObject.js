@@ -1,4 +1,4 @@
-const filterObj = (obj, ...allowedFields) => {
+const filterObject = (obj, allowedFields) => {
     const newObj = {};
     Object.keys(obj).forEach(el => {
         if (allowedFields.includes(el)) newObj[el] = obj[el];
@@ -6,4 +6,4 @@ const filterObj = (obj, ...allowedFields) => {
     return newObj;
 };
 
-module.exports = filterObj;
+module.exports = filterObject;

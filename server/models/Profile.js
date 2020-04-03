@@ -23,12 +23,13 @@ const profileSchema = new Schema({
     },
     status: {
         type: String,
-        required: true,
+        required: [true, 'Status is required'],
         trim: true,
     },
     skills: {
         type: [String],
-        required: true,
+        required: [true, 'Skills are required'],
+        trim: true,
     },
     bio: {
         type: String,
@@ -42,12 +43,12 @@ const profileSchema = new Schema({
         {
             title: {
                 type: String,
-                required: true,
+                required: [true, 'Title is required'],
                 trim: true,
             },
             company: {
                 type: String,
-                required: true,
+                required: [true, 'Company is required'],
                 trim: true,
             },
             location: {
@@ -56,7 +57,7 @@ const profileSchema = new Schema({
             },
             from: {
                 type: Date,
-                required: true,
+                required: [true, 'From date is required'],
             },
             to: {
                 type: Date,
@@ -90,7 +91,7 @@ const profileSchema = new Schema({
             },
             from: {
                 type: Date,
-                required: true,
+                required: [true, 'From date is required'],
             },
             to: {
                 type: Date,
