@@ -1,12 +1,18 @@
-const { fieldRequired, normalizeUrls, sanitizeArray } = require('./utils');
+const { body } = require('express-validator');
+const { fieldRequired, normalizeUrls, sanitizeArrayOfStrings } = require('./utils');
 
-const fromDateRules = fieldRequired(
-    'from',
-    'From date is required and needs to be from the past',
-).custom((value, { req }) => (req.body.to ? value < req.body.to : true));
+const fromDateRules = fieldRequired('from', 'From date is required')
+    .isString()
+    .withMessage('From date field needs to be a string')
+    .custom((value, { req }) => (req.body.to ? value < req.body.to : true))
+    .withMessage('From date needs to be from before the to date');
+
+const toDateRules = body('to', 'To date field needs to be a string')
+    .if(body('to').exists())
+    .isString();
 
 const profileSanitizers = [
-    sanitizeArray('skills'),
+    sanitizeArrayOfStrings('skills'),
     normalizeUrls([
         'website',
         'socials.youtube',
@@ -29,6 +35,7 @@ exports.experienceRules = [
     fieldRequired('title', 'Title is required'),
     fieldRequired('company', 'Company is required'),
     fromDateRules,
+    toDateRules,
 ];
 
 exports.educationRules = [
@@ -36,4 +43,5 @@ exports.educationRules = [
     fieldRequired('degree', 'Degree is required'),
     fieldRequired('field_of_study', 'Field of study is required'),
     fromDateRules,
+    toDateRules,
 ];
