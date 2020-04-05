@@ -50,6 +50,20 @@ router
     .route('/education/:eduId')
     .delete(profileController.getMe, profileController.removeEducation);
 
+// TODO: add portfolio validation?
+router
+    .route('/portfolio')
+    .patch(
+        profileController.getMe,
+        profileController.uploadProfilePhoto,
+        profileController.resizeProfilePhoto,
+        profileController.addPortfolioItem,
+    );
+
+router
+    .route('/portfolio/:portId')
+    .delete(profileController.getMe, profileController.removePortfolioItem);
+
 router.route('/:id/like').patch(profileController.getMe, profileController.toggleLike);
 
 router.route('/:id/watch').patch(profileController.getMe, profileController.toggleWatching);

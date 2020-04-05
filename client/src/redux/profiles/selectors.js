@@ -27,8 +27,6 @@ export const selectProfileSocial = createSelector([selectProfile], profile => pr
 
 export const selectProfilePhoto = createSelector([selectProfile], profile => profile.photo);
 
-export const selectProfileAbout = createSelector([selectProfile], profile => profile.about);
-
 export const selectProfileLookingFor = createSelector(
     [selectProfile],
     profile => profile.looking_for,

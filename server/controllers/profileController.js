@@ -3,7 +3,7 @@ const axios = require('axios');
 const factory = require('./handlerFactory');
 const Profile = require('../models/Profile');
 const User = require('../models/User');
-const { AppError, catchAsync, multerUpload } = require('../utils');
+const { AppError, catchAsync, multerImageUpload } = require('../utils');
 
 // TODO: move education & experience validation (from/to fields) to the front end and allow in create/update profile by sending the whole experience/education array, remove from fields to omit
 // TODO: allow updating likes in update profile route? push user id to likes array then send to update endpoint
@@ -56,20 +56,19 @@ exports.createProfile = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.uploadProfilePhoto = multerUpload.single('photo');
+exports.uploadProfilePhoto = multerImageUpload.single('photo');
 
 exports.resizeProfilePhoto = catchAsync(async (req, res, next) => {
     if (!req.file) return next();
 
-    req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
+    req.body.photo = `user-${req.user.id}-${Date.now()}.jpeg`;
 
     await sharp(req.file.buffer)
         .resize(300, 300)
         .toFormat('jpeg')
         .jpeg({ quality: 80 })
-        .toFile(`public/img/users/${req.file.filename}`);
+        .toFile(`public/img/users/${req.body.photo}`);
 
-    req.body.photo = req.file.filename;
     next();
 });
 
@@ -161,14 +160,82 @@ exports.removeEducation = catchAsync(async (req, res, next) => {
     });
 });
 
+// TODO: test images upload
+exports.uploadProfilePortfolioImages = multerImageUpload.array('images', 5);
+
+exports.resizeProfilePortfolioImages = catchAsync(async (req, res, next) => {
+    if (!req.files.images) return next();
+
+    req.body.images = [];
+
+    await Promise.all(
+        req.files.images.map(async (file, i) => {
+            const filename = `portfolio-${req.user.id}-${Date.now()}-${i + 1}.jpeg`;
+
+            await sharp(req.file.buffer)
+                .resize(500, 500)
+                .toFormat('jpeg')
+                .jpeg({ quality: 80 })
+                .toFile(`public/img/portfolio/${filename}`);
+
+            req.body.images.push(filename);
+        }),
+    );
+    next();
+});
+
+// TODO: test portfolio updating using update/create route with images
+exports.addPortfolioItem = catchAsync(async (req, res, next) => {
+    const profile = await Profile.findOne({ user: req.params.userId });
+
+    if (!profile) {
+        return next(new AppError(notFoundErrorMessage, 404));
+    }
+
+    // Make new education object and add to profile
+    const newPortfolioItem = { ...req.body };
+    profile.portfolio.push(newPortfolioItem);
+
+    // Save profile and send response
+    await profile.save();
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            profile,
+        },
+    });
+});
+
+exports.removePortfolioItem = catchAsync(async (req, res, next) => {
+    const profile = await Profile.findOne({ user: req.params.userId });
+
+    if (!profile) {
+        return next(new AppError(notFoundErrorMessage, 404));
+    }
+
+    // Get remove index and splice from education array
+    const removeIndex = profile.portfolio.map(item => item.id).indexOf(req.params.portId);
+    profile.portfolio.splice(removeIndex, 1);
+
+    // Save profile and send response
+    await profile.save();
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            profile,
+        },
+    });
+});
+
 exports.toggleLike = catchAsync(async (req, res, next) => {
     const profile = await Profile.findById(req.params.id);
     const user = await User.findById(req.params.userId);
 
     const isInProfileLikesArr =
         profile.likes.filter(el => el.toString() === req.params.userId).length > 0;
-    const idInUserLikesArr =
-        profile.likes.filter(el => el.toString() === req.params.userId).length > 0;
+    const idInUserLikesArr = user.likes.filter(el => el.toString() === req.params.id).length > 0;
 
     if (isInProfileLikesArr !== idInUserLikesArr) {
         return next(new AppError('User likes array and profile likes array are out of sync', 400));
@@ -211,7 +278,7 @@ exports.toggleWatching = catchAsync(async (req, res, next) => {
     const isInProfileWatchingArr =
         profile.watching.filter(el => el.toString() === req.params.userId).length > 0;
     const idInUserWatchingArr =
-        profile.watching.filter(el => el.toString() === req.params.userId).length > 0;
+        user.watching.filter(el => el.toString() === req.params.id).length > 0;
 
     if (isInProfileWatchingArr !== idInUserWatchingArr) {
         return next(

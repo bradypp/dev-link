@@ -2,6 +2,7 @@ const { body } = require('express-validator');
 const { fieldRequired, normalizeUrls } = require('./utils');
 
 // TODO: Move sanitizers (link normalization) and validators to the frontend at place of input/on save to simplify backend validation
+// TODO: update for new model/frontend
 
 const fromDateRules = fieldRequired('from', 'From date is required')
     .isString()
