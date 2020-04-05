@@ -17,57 +17,45 @@ export const selectAllProfiles = createSelector(
     profile => profile.profiles || [],
 );
 
-export const selectProfile = createSelector([selectProfiles], profile => profile.profile || {});
+export const selectProfile = createSelector([selectProfiles], profile => profile.profile);
 
-export const selectProfileUser = createSelector([selectProfiles], profile => profile.user || {});
+export const selectProfileUser = createSelector([selectProfiles], profile => profile.user);
 
-export const selectProfileRepos = createSelector([selectProfile], profile => profile.repos || []);
+export const selectProfileSkills = createSelector([selectProfile], profile => profile.skills || []);
 
-export const selectProfileSkillsArr = createSelector(
+export const selectProfileSocial = createSelector([selectProfile], profile => profile.social || []);
+
+export const selectProfilePhoto = createSelector([selectProfile], profile => profile.photo);
+
+export const selectProfileAbout = createSelector([selectProfile], profile => profile.about);
+
+export const selectProfileLookingFor = createSelector(
     [selectProfile],
-    profile => profile.skills || [],
+    profile => profile.looking_for,
 );
 
-export const selectProfileInfo = createSelector(
+export const selectProfileInterests = createSelector([selectProfile], profile => profile.interests);
+
+export const selectProfilePortfolio = createSelector(
     [selectProfile],
-    ({ company, website, location, status, skills, github_username, bio }) => {
-        return {
-            company: company || '',
-            website: website || '',
-            location: location || '',
-            status: status || '',
-            skills: skills ? skills.join(',') : '',
-            github_username: github_username || '',
-            bio: bio || '',
-        };
-    },
+    profile => profile.portfolio || [],
 );
 
-export const selectProfileSocial = createSelector([selectProfile], ({ social }) => {
-    if (!social) return {};
-    const { twitter, facebook, linkedin, youtube, instagram } = social;
-    return {
-        twitter: twitter || '',
-        facebook: facebook || '',
-        linkedin: linkedin || '',
-        youtube: youtube || '',
-        instagram: instagram || '',
-    };
-});
+export const selectProfileLikes = createSelector([selectProfile], profile => profile.likes || []);
 
-export const selectProfileInfoAndSocial = createSelector(
-    [selectProfileInfo, selectProfileSocial],
-    (profileInfo, profileSocial) => {
-        return { ...profileInfo, ...profileSocial };
-    },
+export const selectProfileWatching = createSelector(
+    [selectProfile],
+    profile => profile.watching || [],
 );
 
 export const selectProfileEducation = createSelector(
     [selectProfile],
-    profileData => profileData.education || [],
+    profile => profile.education || [],
 );
 
 export const selectProfileExperience = createSelector(
     [selectProfile],
-    profileData => profileData.experience || [],
+    profile => profile.experience || [],
 );
+
+export const selectProfileRepos = createSelector([selectProfile], profile => profile.repos || []);

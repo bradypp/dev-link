@@ -13,7 +13,6 @@ const initialState = {
     profiles: [],
     isProfileLoading: false,
     isProfilesLoading: false,
-    userProfile: {},
     error: {},
 };
 

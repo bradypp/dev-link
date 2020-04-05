@@ -9,8 +9,6 @@ export { default as Profile } from './Profile/Profile';
 
 export { default as CreateProfile } from './CreateProfile/CreateProfile';
 export { default as EditProfile } from './EditProfile/EditProfile';
-export { default as AddExperience } from './AddExperience/AddExperience';
-export { default as AddEducation } from './AddEducation/AddEducation';
 
 export { default as Profiles } from './Profiles/Profiles';
 export { default as ProfileItem } from './Profiles/ProfileItem/ProfileItem';

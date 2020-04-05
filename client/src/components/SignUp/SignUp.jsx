@@ -6,6 +6,15 @@ import { connect } from 'react-redux';
 import { setAlert, clearAlerts, selectAlerts } from 'redux/alerts';
 import { signUp, selectIsAuthenticated } from 'redux/auth';
 
+const propTypes = {
+    setAlert: PropTypes.func.isRequired,
+    clearAlerts: PropTypes.func.isRequired,
+    signUp: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
+    alerts: PropTypes.array.isRequired,
+};
+
+// TODO: redesign
 const SignUp = ({ setAlert, clearAlerts, signUp, isAuthenticated, alerts }) => {
     const [formData, setFormData] = useState({
         name: '',
@@ -94,13 +103,7 @@ const SignUp = ({ setAlert, clearAlerts, signUp, isAuthenticated, alerts }) => {
     );
 };
 
-SignUp.propTypes = {
-    setAlert: PropTypes.func.isRequired,
-    clearAlerts: PropTypes.func.isRequired,
-    signUp: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired,
-    alerts: PropTypes.array.isRequired,
-};
+SignUp.propTypes = propTypes;
 
 const mapStateToProps = createStructuredSelector({
     isAuthenticated: selectIsAuthenticated,

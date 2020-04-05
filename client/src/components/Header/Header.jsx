@@ -19,6 +19,8 @@ const propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
 };
 
+// TODO: Edit content of header in different states when finished (for now include what you need to build the app & test)
+// TODO: Edit styling
 const Header = ({ isUserLoading, isAuthenticated, signOut }) => {
     const location = useLocation();
 

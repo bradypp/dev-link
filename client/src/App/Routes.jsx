@@ -7,8 +7,6 @@ import {
     Dashboard,
     CreateProfile,
     EditProfile,
-    AddExperience,
-    AddEducation,
     Profile,
     Profiles,
     Header,
@@ -31,8 +29,6 @@ const Routes = () => {
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
                 <PrivateRoute exact path="/create" component={CreateProfile} />
                 <PrivateRoute exact path="/edit" component={EditProfile} />
-                <PrivateRoute exact path="/add-experience" component={AddExperience} />
-                <PrivateRoute exact path="/add-education" component={AddEducation} />
                 <Route component={NotFound} />
             </Switch>
         </Router>

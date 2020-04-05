@@ -10,12 +10,12 @@ import {
     PROFILES_LOADING,
 } from 'redux/actionTypes';
 
-export const getProfiles = () => async dispatch => {
+export const getProfiles = () => async (dispatch, queryParams = '') => {
     try {
         dispatch(clearProfile());
         dispatch(profilesLoading());
 
-        const res = await api.get('/profile/all');
+        const res = await api.get(`/profile/all/${queryParams}`);
 
         dispatch(profilesLoaded(res.data.data.profiles));
     } catch (err) {
@@ -61,7 +61,7 @@ export const getGithubRepos = username => async dispatch => {
     }
 };
 
-export const createProfile = (formData, history, edit = false) => async dispatch => {
+export const createProfile = (formData, history) => async dispatch => {
     try {
         const config = {
             headers: {
@@ -69,10 +69,11 @@ export const createProfile = (formData, history, edit = false) => async dispatch
             },
         };
 
-        const res = await api.post('/profile', formData, config);
+        const res = await api.post('/profile/me', formData, config);
 
         dispatch(profileLoaded(res.data.data.profile));
-        dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created', 'success'));
+        // TODO: decide whether to keep this alert
+        dispatch(setAlert('Profile Created', 'success'));
         history.push('/dashboard');
     } catch (err) {
         dispatch(errorHandler(err));
@@ -80,6 +81,28 @@ export const createProfile = (formData, history, edit = false) => async dispatch
     }
 };
 
+// formData = only the profile fields you want to update
+export const updateProfile = (formData, history) => async dispatch => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        const res = await api.patch('/profile/me', formData, config);
+
+        dispatch(profileLoaded(res.data.data.profile));
+        // TODO: decide whether to keep this alert
+        dispatch(setAlert('Profile Updated', 'success'));
+        history.push('/dashboard');
+    } catch (err) {
+        dispatch(errorHandler(err));
+        dispatch(profilesError(err));
+    }
+};
+
+// TODO: delete if not needed (if validation can be done in front end therefore allowed in create/updateProfile routes)
 export const addExperience = (formData, history) => async dispatch => {
     try {
         const config = {
@@ -88,7 +111,7 @@ export const addExperience = (formData, history) => async dispatch => {
             },
         };
 
-        const res = await api.put('/profile/experience', formData, config);
+        const res = await api.patch('/profile/experience', formData, config);
 
         dispatch(profileLoaded(res.data.data.profile));
         dispatch(setAlert('Experience Added', 'success'));
@@ -99,6 +122,7 @@ export const addExperience = (formData, history) => async dispatch => {
     }
 };
 
+// TODO: delete if not needed (if validation can be done in front end therefore allowed in create/updateProfile routes)
 export const addEducation = (formData, history) => async dispatch => {
     try {
         const config = {
@@ -107,7 +131,7 @@ export const addEducation = (formData, history) => async dispatch => {
             },
         };
 
-        const res = await api.put('/profile/education', formData, config);
+        const res = await api.patch('/profile/education', formData, config);
 
         dispatch(profileLoaded(res.data.data.profile));
         dispatch(setAlert('Education Added', 'success'));
@@ -118,6 +142,7 @@ export const addEducation = (formData, history) => async dispatch => {
     }
 };
 
+// TODO: delete if not needed (if validation can be done in front end therefore allowed in create/updateProfile routes)
 export const deleteExperience = id => async dispatch => {
     try {
         const res = await api.delete(`/profile/experience/${id}`);
@@ -130,6 +155,7 @@ export const deleteExperience = id => async dispatch => {
     }
 };
 
+// TODO: delete if not needed (if validation can be done in front end therefore allowed in create/updateProfile routes)
 export const deleteEducation = id => async dispatch => {
     try {
         const res = await api.delete(`/profile/education/${id}`);
@@ -144,7 +170,7 @@ export const deleteEducation = id => async dispatch => {
 
 export const deleteProfile = () => async dispatch => {
     try {
-        await api.delete('/profile');
+        await api.delete('/profile/me');
         dispatch(clearProfile());
     } catch (err) {
         dispatch(errorHandler(err));

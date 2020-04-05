@@ -6,6 +6,14 @@ import { createStructuredSelector } from 'reselect';
 import { signIn, selectIsAuthenticated } from 'redux/auth';
 import { clearAlerts, selectAlerts } from 'redux/alerts';
 
+const propTypes = {
+    signIn: PropTypes.func.isRequired,
+    clearAlerts: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
+    alerts: PropTypes.array.isRequired,
+};
+
+// TODO: redesign
 const SignIn = ({ signIn, clearAlerts, isAuthenticated, alerts }) => {
     const [formData, setFormData] = useState({
         email: '',
@@ -65,12 +73,7 @@ const SignIn = ({ signIn, clearAlerts, isAuthenticated, alerts }) => {
     );
 };
 
-SignIn.propTypes = {
-    signIn: PropTypes.func.isRequired,
-    clearAlerts: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired,
-    alerts: PropTypes.array.isRequired,
-};
+SignIn.propTypes = propTypes;
 
 const mapStateToProps = createStructuredSelector({
     isAuthenticated: selectIsAuthenticated,

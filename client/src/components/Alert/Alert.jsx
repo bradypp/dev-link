@@ -4,19 +4,17 @@ import { createStructuredSelector } from 'reselect';
 import { selectAlerts } from 'redux/alerts';
 import { connect } from 'react-redux';
 
+const propTypes = {
+    alerts: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
 // TODO: styling
 const Alert = ({ alerts }) =>
     alerts !== null &&
     alerts.length > 0 &&
-    alerts.map(alert => (
-        <div key={alert.id} className={`alert alert-${alert.alertType}`}>
-            {alert.message}
-        </div>
-    ));
+    alerts.map(alert => <div key={alert.id}>{alert.message}</div>);
 
-Alert.propTypes = {
-    alerts: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
+Alert.propTypes = propTypes;
 
 const mapStateToProps = createStructuredSelector({
     alerts: selectAlerts,

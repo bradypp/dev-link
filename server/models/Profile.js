@@ -11,41 +11,43 @@ const profileSchema = new Schema({
         type: String,
         default: 'default.jpg',
     },
-    status: {
-        type: String,
-        trim: true,
-    },
-    seniority: {
-        type: String,
-        enum: ['Student', 'Junior', 'Experienced', 'Advanced'],
-        trim: true,
-    },
-    location: {
-        type: String,
-        trim: true,
-    },
-    company: {
-        type: String,
-        trim: true,
-    },
-    website: {
-        type: String,
-        trim: true,
-    },
-    github_username: {
-        type: String,
-        trim: true,
-    },
-    skills: [
-        {
+    about: {
+        status: {
             type: String,
-            required: [true, 'Skills are required'],
             trim: true,
         },
-    ],
-    bio: {
-        type: String,
-        trim: true,
+        seniority: {
+            type: String,
+            enum: ['Student', 'Junior', 'Experienced', 'Advanced'],
+            trim: true,
+        },
+        location: {
+            type: String,
+            trim: true,
+        },
+        company: {
+            type: String,
+            trim: true,
+        },
+        website: {
+            type: String,
+            trim: true,
+        },
+        github_username: {
+            type: String,
+            trim: true,
+        },
+        skills: [
+            {
+                type: String,
+                required: [true, 'Skills are required'],
+                trim: true,
+            },
+        ],
+        bio: {
+            type: String,
+            trim: true,
+        },
     },
     looking_for: {
         role_title: {

@@ -1,13 +1,8 @@
 import React from 'react';
 
-// TODO: update to make look better and add button to home/feed
+// TODO: update and add button to home/feed
 const NotFound = () => {
-    return (
-        <>
-            <h1 className="x-large text-primary">Page Not Found</h1>
-            <p className="large">Sorry, this page does not exist</p>
-        </>
-    );
+    return <div>not found</div>;
 };
 
 export default NotFound;
