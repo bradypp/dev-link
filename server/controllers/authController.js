@@ -3,49 +3,79 @@ const jwt = require('jsonwebtoken');
 const { AppError, catchAsync, Email } = require('../utils');
 const User = require('../models/User');
 
-exports.signUp = catchAsync(async (req, res, next) => {
-    const { name, email, password } = req.body;
+const createSendJwt = (res, user, statusCode = 200) => {
+    const payload = { id: user.id };
 
+    const jwtExpiryMilliseconds = process.env.JWT_EXPIRES_MINUTES * 60 * 1000;
+
+    // Create JWT token
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+        expiresIn: jwtExpiryMilliseconds,
+    });
+
+    const cookieOptions = {
+        expires: new Date(Date.now() + jwtExpiryMilliseconds),
+        httpOnly: true,
+        sameSite: 'strict',
+    };
+
+    if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+
+    res.cookie('jwt', token, cookieOptions);
+
+    // Send token & user data in response
+    res.status(statusCode).json({
+        status: 'success',
+        data: {
+            token,
+        },
+    });
+};
+
+exports.signUp = catchAsync(async (req, res, next) => {
     // Check if a user with that email exists
-    if (await User.findOne({ email })) {
+    if (await User.findOne({ email: req.body.email })) {
         return next(new AppError('User with this email already exists', 400));
     }
 
     // Create new user
-    const user = await User.create({
-        name,
-        email,
-        password,
-    });
+    const user = await User.create(req.body);
 
     // Create and send JWT
-    user.createSendJwt(res, 201);
+    createSendJwt(res, user, 201);
 });
 
 exports.signIn = catchAsync(async (req, res, next) => {
-    const { email, password } = req.body;
+    const user = await User.findOne({ email: req.body.email }).select('+password');
 
-    const validationError = new AppError('Email or password incorrect', 400);
-
-    // Check user exists
-    const user = await User.findOne({ email }).select('+password');
-    if (!user) {
-        return next(validationError);
-    }
-
-    // Check password is valid
-    const isPasswordValid = await user.checkPassword(password);
-    if (!isPasswordValid) {
-        return next(validationError);
+    // Check user exists and password is valid
+    if (!user || !(await user.checkPassword(req.body.password))) {
+        return next(new AppError('Email or password incorrect', 400));
     }
 
     // Create and send JWT
-    user.createSendJwt(res);
+    createSendJwt(res, user);
 });
+
+exports.signOut = (req, res) => {
+    const cookieOptions = {
+        expires: new Date(Date.now() + 10 * 1000),
+        httpOnly: true,
+        sameSite: 'strict',
+    };
+
+    // Remove jwt cookie
+    res.cookie('jwt', 'loggedout', cookieOptions);
+
+    res.status(200).json({
+        status: 'success',
+    });
+};
 
 exports.protect = catchAsync(async (req, res, next) => {
     // Get token from header or cookies
     let token;
+
     if (req.header('Authorization') && req.header('Authorization').startsWith('Bearer')) {
         // Remove bearer from token
         token = req.header('Authorization').split(' ')[1];
@@ -135,37 +165,33 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
 
-    // Need to use user.save to make sure the pre-save middleware for encryption runs
+    // Need to use user.save not user.findByIdAndUpdate to make sure the pre-save middleware for encryption runs
     await user.save();
 
     // Create and send JWT
-    user.createSendJwt(res);
+    createSendJwt(res, user);
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
-    const { current_password, password } = req.body;
-
-    // Get user
     const user = await User.findById(req.user.id).select('+password');
 
     // Check if current password is correct
-    if (!(await user.checkPassword(current_password))) {
+    if (!(await user.checkPassword(req.body.current_password))) {
         return next(new AppError('Current password incorrect', 401));
     }
 
     // Update password
-    user.password = password;
+    user.password = req.body.password;
 
-    // Need to use user.save to make sure the pre-save middleware for encryption runs
+    // Need to use user.save not user.findByIdAndUpdate to make sure the pre-save middleware for encryption runs
     await user.save();
 
     // Create and send JWT
-    user.createSendJwt(res);
+    createSendJwt(res, user);
 });
 
 exports.restrictTo = (...roles) => {
     return (req, res, next) => {
-        // roles ['admin', 'user']
         if (!roles.includes(req.user.role)) {
             return next(new AppError('You do not have permission to perform this action', 403));
         }

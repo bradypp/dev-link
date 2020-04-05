@@ -34,7 +34,7 @@ export const signUp = ({ name, email, password, password2 }) => async dispatch =
             },
         };
 
-        const res = await api.post('/user/sign-up', body, config);
+        const res = await api.post('/auth/sign-up', body, config);
 
         dispatch(signUpSuccess(res.data.data.token));
         dispatch(loadUser());
@@ -54,7 +54,7 @@ export const signIn = ({ email, password }) => async dispatch => {
             },
         };
 
-        const res = await api.post('/user/sign-in', body, config);
+        const res = await api.post('/auth/sign-in', body, config);
 
         dispatch(signInSuccess(res.data.data.token));
         dispatch(loadUser());

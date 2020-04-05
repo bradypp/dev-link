@@ -1,5 +1,7 @@
 const { body } = require('express-validator');
-const { fieldRequired, normalizeUrls, sanitizeArrayOfStrings } = require('./utils');
+const { fieldRequired, normalizeUrls } = require('./utils');
+
+// TODO: Move sanitizers (link normalization) and validators to the frontend at place of input/on save to simplify backend validation
 
 const fromDateRules = fieldRequired('from', 'From date is required')
     .isString()
@@ -12,7 +14,6 @@ const toDateRules = body('to', 'To date field needs to be a string')
     .isString();
 
 const profileSanitizers = [
-    sanitizeArrayOfStrings('skills'),
     normalizeUrls([
         'website',
         'socials.youtube',
@@ -20,6 +21,7 @@ const profileSanitizers = [
         'socials.facebook',
         'socials.linkedin',
         'socials.instagram',
+        'socials.custom',
     ]),
 ];
 
@@ -39,8 +41,7 @@ exports.experienceRules = [
 ];
 
 exports.educationRules = [
-    fieldRequired('school', 'School is required'),
-    fieldRequired('degree', 'Degree is required'),
+    fieldRequired('type', 'Education type is required'),
     fieldRequired('field_of_study', 'Field of study is required'),
     fromDateRules,
     toDateRules,

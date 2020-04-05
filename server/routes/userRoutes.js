@@ -18,6 +18,8 @@ router
     .patch(userController.getMe, validation.updateUser, userController.updateMe)
     .delete(userController.getMe, userController.deleteUser);
 
+router.route('/watching-profiles').get(userController.getMe, userController.getWatchingProfiles);
+
 // Restrict the following routes to users with role admin only
 router.use(authController.restrictTo('admin'));
 

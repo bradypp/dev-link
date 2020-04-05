@@ -1,5 +1,7 @@
 const { Schema, model } = require('mongoose');
 
+// TODO: make repos model and save featured repos into it with link to user/profile & populate on get
+
 const profileSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
@@ -26,19 +28,63 @@ const profileSchema = new Schema({
         required: [true, 'Status is required'],
         trim: true,
     },
-    skills: {
-        type: [String],
-        required: [true, 'Skills are required'],
-        trim: true,
-    },
+    skills: [
+        {
+            type: String,
+            required: [true, 'Skills are required'],
+            trim: true,
+        },
+    ],
     bio: {
         type: String,
         trim: true,
     },
-    githubUsername: {
+    job_title: {
         type: String,
         trim: true,
     },
+    availability: {
+        type: String,
+        trim: true,
+    },
+    github_username: {
+        type: String,
+        trim: true,
+    },
+    interests: [
+        {
+            type: String,
+            trim: true,
+        },
+    ],
+    portfolio: [
+        {
+            title: {
+                type: String,
+                required: [true, 'Title is required'],
+                trim: true,
+            },
+            description: {
+                type: String,
+                trim: true,
+            },
+            skills: [
+                {
+                    type: String,
+                    trim: true,
+                },
+            ],
+            repo: {
+                type: String,
+                trim: true,
+            },
+            demo: {
+                type: String,
+                trim: true,
+            },
+            images: [String],
+        },
+    ],
     experience: [
         {
             title: {
@@ -58,9 +104,11 @@ const profileSchema = new Schema({
             from: {
                 type: Date,
                 required: [true, 'From date is required'],
+                trim: true,
             },
             to: {
                 type: Date,
+                trim: true,
             },
             current: {
                 type: Boolean,
@@ -74,27 +122,36 @@ const profileSchema = new Schema({
     ],
     education: [
         {
+            type: {
+                type: String,
+                required: [true, 'Education type is required'],
+                trim: true,
+            },
             school: {
                 type: String,
-                required: true,
                 trim: true,
             },
-            degree: {
-                type: String,
-                required: true,
-                trim: true,
-            },
-            field_of_study: {
-                type: String,
-                required: true,
-                trim: true,
-            },
+            subjects: [
+                {
+                    title: {
+                        type: String,
+                        required: true,
+                        trim: true,
+                    },
+                    grade: {
+                        type: String,
+                        trim: true,
+                    },
+                },
+            ],
             from: {
                 type: Date,
                 required: [true, 'From date is required'],
+                trim: true,
             },
             to: {
                 type: Date,
+                trim: true,
             },
             current: {
                 type: Boolean,
@@ -107,14 +164,6 @@ const profileSchema = new Schema({
         },
     ],
     socials: {
-        youtube: {
-            type: String,
-            trim: true,
-        },
-        twitter: {
-            type: String,
-            trim: true,
-        },
         facebook: {
             type: String,
             trim: true,
@@ -123,19 +172,50 @@ const profileSchema = new Schema({
             trim: true,
             type: String,
         },
+        twitter: {
+            type: String,
+            trim: true,
+        },
+        youtube: {
+            type: String,
+            trim: true,
+        },
         instagram: {
             type: String,
             trim: true,
         },
+        custom: [
+            {
+                name: {
+                    type: String,
+                    trim: true,
+                },
+                link: {
+                    type: String,
+                    trim: true,
+                },
+            },
+        ],
     },
     likes: [
         {
-            user: { type: Schema.Types.ObjectId, ref: 'User' },
+            user: {
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+            },
+        },
+    ],
+    watching: [
+        {
+            user: {
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+            },
         },
     ],
     createdAt: {
         type: Date,
-        default: Date.now(),
+        default: Date.now,
     },
 });
 
@@ -145,7 +225,7 @@ profileSchema.index({ user: 1, status: 1, location: 1, skills: 1 });
 profileSchema.pre(/^find/, function(next) {
     this.populate({
         path: 'user',
-        select: 'name email avatar',
+        select: 'name email',
     });
     next();
 });

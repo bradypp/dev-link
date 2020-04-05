@@ -16,7 +16,12 @@ exports.sanitizeArrayOfStrings = field =>
         .isArray()
         .bail()
         .withMessage(`${field} field must be an array`)
-        .customSanitizer(array => array.map(el => el.trim()));
+        .customSanitizer(array =>
+            array.map(el => {
+                if (typeof el === 'string') return el.trim();
+                return el;
+            }),
+        );
 
 exports.sanitizeArrayOfObjects = field =>
     body(field)
@@ -28,7 +33,12 @@ exports.sanitizeArrayOfObjects = field =>
             array.map(obj => {
                 const newObj = {};
                 Object.keys(obj).forEach(key => {
-                    newObj[key] = obj[key].trim();
+                    const value = obj[key];
+                    if (typeof value === 'string') {
+                        newObj[key] = value.trim();
+                    } else {
+                        newObj[key] = value;
+                    }
                 });
                 return newObj;
             }),

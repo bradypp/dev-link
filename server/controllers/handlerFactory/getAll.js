@@ -3,14 +3,14 @@ const QueryHandler = require('../queryHandler');
 
 exports.getAll = (Model, errorMessage = 'No document found with that ID') =>
     catchAsync(async (req, res, next) => {
-        const features = new QueryHandler(Model.find(), req.query)
+        const handler = new QueryHandler(Model.find(), req.query)
             .filter()
             .sort()
             .limitFields()
             .paginate();
 
-        // const doc = await features.query.explain();
-        const doc = await features.query;
+        // const doc = await handler.query.explain();
+        const doc = await handler.query;
 
         if (!doc) {
             return next(new AppError(errorMessage, 404));

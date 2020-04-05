@@ -2,7 +2,11 @@ const sharp = require('sharp');
 const axios = require('axios');
 const factory = require('./handlerFactory');
 const Profile = require('../models/Profile');
+const User = require('../models/User');
 const { AppError, catchAsync, multerUpload } = require('../utils');
+
+// TODO: move education & experience validation (from/to fields) to the front end and allow in create/update profile by sending the whole experience/education array, remove from fields to omit
+// TODO: allow updating likes in update profile route? push user id to likes array then send to update endpoint
 
 exports.getMe = (req, res, next) => {
     req.params.userId = req.user.id;
@@ -14,18 +18,14 @@ const notFoundErrorMessage = 'Profile not found';
 exports.getProfile = factory.getOneByUserId(Profile, { errorMessage: notFoundErrorMessage });
 exports.updateProfile = factory.updateOneByUserId(Profile, {
     errorMessage: notFoundErrorMessage,
-    fieldsToOmit: ['experience', 'education', 'likes'],
+    fieldsToOmit: ['interests', 'portfolio', 'experience', 'education', 'likes'],
 });
 exports.deleteProfile = factory.deleteOneByUserId(Profile, { errorMessage: notFoundErrorMessage });
 exports.getAllProfiles = factory.getAll(Profile);
 
 exports.createProfile = catchAsync(async (req, res, next) => {
-    let profile = await Profile.findOne({
-        user: req.params.userId,
-    });
-
     // Check a profile doesn't already exist for this user
-    if (profile) {
+    if (await Profile.findOne({ user: req.params.userId })) {
         return next(new AppError('Profile for this user already exists', 400));
     }
 
@@ -33,14 +33,15 @@ exports.createProfile = catchAsync(async (req, res, next) => {
     const profileFields = {
         ...req.body,
         user: req.params.userId,
+        interests: undefined,
+        portfolio: undefined,
         experience: undefined,
         education: undefined,
         likes: undefined,
     };
 
     // Create and save new profile
-    profile = new Profile(profileFields);
-    await profile.save();
+    const profile = await Profile.create(profileFields);
 
     res.status(201).json({
         status: 'success',
@@ -155,9 +156,83 @@ exports.removeEducation = catchAsync(async (req, res, next) => {
     });
 });
 
+exports.toggleLike = catchAsync(async (req, res, next) => {
+    const profile = await Profile.findById(req.params.id);
+    const user = await User.findById(req.params.userId);
+
+    // Check if the profile has already been liked by the current user
+    if (
+        profile.likes.filter(el => el.user.toString() === req.params.userId).length > 0 &&
+        user.likes.filter(el => el.profile.toString() === req.params.id).length > 0
+    ) {
+        // Remove user from the likes array user already exists
+        const profileLikesRemoveIndex = profile.likes
+            .map(el => el.toString())
+            .indexOf(req.params.userId);
+        profile.likes.splice(profileLikesRemoveIndex, 1);
+
+        // Remove profile from the likes array user already exists
+        const userLikesRemoveIndex = user.likes.map(el => el.toString()).indexOf(req.params.id);
+        user.likes.splice(userLikesRemoveIndex, 1);
+    } else {
+        // Add user to the profile likes array
+        profile.likes.push({ user: req.params.userId });
+        // Add profile to the user likes array
+        user.likes.push({ profile: req.params.id });
+    }
+
+    await profile.save();
+    await user.save();
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            profile,
+        },
+    });
+});
+
+exports.toggleWatching = catchAsync(async (req, res, next) => {
+    const profile = await Profile.findById(req.params.id);
+    const user = await User.findById(req.params.userId);
+
+    // Check if the profile has already been liked by the current user
+    if (
+        profile.watching.filter(el => el.user.toString() === req.params.userId).length > 0 &&
+        user.likes.filter(el => el.profile.toString() === req.params.id).length > 0
+    ) {
+        // Remove user from the likes array user already exists
+        const profileWatchingRemoveIndex = profile.watching
+            .map(el => el.user.toString())
+            .indexOf(req.params.userId);
+        profile.watching.splice(profileWatchingRemoveIndex, 1);
+
+        // Remove profile from the likes array user already exists
+        const userWatchingRemoveIndex = user.watching
+            .map(el => el.profile.toString())
+            .indexOf(req.params.id);
+        user.watching.splice(userWatchingRemoveIndex, 1);
+    } else {
+        // Add user to the profile likes array
+        profile.watching.push({ user: req.params.userId });
+        // Add profile to the profile likes array
+        user.watching.push({ profile: req.params.id });
+    }
+
+    await profile.save();
+    await user.save();
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            profile,
+        },
+    });
+});
+
 exports.getGithubRepos = catchAsync(async (req, res, next) => {
     const githubRes = await axios.get(
-        `https://api.github.com/users/${req.params.githubUsername}/repos?per_page=10&sort=created:asc`,
+        `https://api.github.com/users/${req.params.github_username}/repos?per_page=10&sort=created:asc`,
         {
             headers: {
                 'user-agent': 'node.js',

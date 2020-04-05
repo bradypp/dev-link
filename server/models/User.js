@@ -1,53 +1,81 @@
 const { Schema, model } = require('mongoose');
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 
-const userSchema = new Schema({
-    name: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    email: {
-        type: String,
-        required: [true, 'Please enter a valid email address'],
-        trim: true,
-        unique: true,
-        lowercase: true,
-    },
-    password: {
-        type: String,
-        required: true,
-        select: false,
-        min: [8, 'Password must contain at least 8 characters'],
-        validate: {
-            validator(value) {
-                return value.match(/^(?=.*[a-z])(?=.*[0-9])(?=.*[^0-9a-zA-Z]).{8,}$/g);
+const options = {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+};
+
+const userSchema = new Schema(
+    {
+        name: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        email: {
+            type: String,
+            required: [true, 'Please enter a valid email address'],
+            trim: true,
+            unique: true,
+            lowercase: true,
+        },
+        password: {
+            type: String,
+            required: true,
+            select: false,
+            min: [8, 'Password must contain at least 8 characters'],
+            validate: {
+                validator(value) {
+                    return value.match(/^(?=.*[a-z])(?=.*[0-9])(?=.*[^0-9a-zA-Z]).{8,}$/g);
+                },
+                message: 'Password must contain a mix of letters, numbers and symbols',
             },
-            message: 'Password must contain a mix of letters, numbers and symbols',
+        },
+        role: {
+            type: String,
+            enum: ['user', 'admin'],
+            default: 'user',
+        },
+        passwordChangedAt: Date,
+        passwordResetToken: String,
+        passwordResetExpires: Date,
+        active: {
+            type: Boolean,
+            default: true,
+        },
+        likes: [
+            {
+                profile: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Profile',
+                },
+            },
+        ],
+        watching: [
+            {
+                profile: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Profile',
+                },
+            },
+        ],
+        createdAt: {
+            type: Date,
+            default: Date.now,
         },
     },
-    role: {
-        type: String,
-        enum: ['user', 'admin'],
-        default: 'user',
-    },
-    passwordChangedAt: Date,
-    passwordResetToken: String,
-    passwordResetExpires: Date,
-    active: {
-        type: Boolean,
-        default: true,
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now(),
-    },
-});
+    options,
+);
 
 // Indexes allow for more efficient queries
 userSchema.index({ name: 1 });
+
+// A virtual is a property that isn't stored in the database
+userSchema.virtual('first_name').get(function() {
+    return this.name.split(' ')[0];
+});
 
 // Encrypt password on registration and password update
 userSchema.pre('save', async function(next) {
@@ -75,41 +103,8 @@ userSchema.statics.encryptPasswordResetToken = function(token) {
         .digest('hex');
 };
 
-userSchema.methods.createSendJwt = function(res, statusCode = 200) {
-    const payload = { id: this.id };
-
-    const jwtExpiryMilliseconds = process.env.JWT_EXPIRES_MINUTES * 60 * 1000;
-
-    // Create JWT token
-    const token = jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: jwtExpiryMilliseconds,
-    });
-
-    const cookieOptions = {
-        expires: new Date(Date.now() + jwtExpiryMilliseconds),
-        httpOnly: true,
-        sameSite: 'strict',
-    };
-
-    if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
-
-    res.cookie('jwt', token, cookieOptions);
-
-    // Send token & user data in response
-    res.status(statusCode).json({
-        status: 'success',
-        data: {
-            token,
-        },
-    });
-};
-
 userSchema.methods.checkPassword = function(password) {
     return bcrypt.compare(password, this.password);
-};
-
-userSchema.methods.this = function() {
-    return this;
 };
 
 userSchema.methods.changedPasswordSinceJWT = function(JWTTimestamp) {

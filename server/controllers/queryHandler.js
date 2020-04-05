@@ -3,20 +3,19 @@
 
 class QueryHandler {
     constructor(query, queryParams = {}) {
-        // The query model e.g. User.find()
+        // The database query e.g. User.find()
         this.query = query;
-        // Object containing query fields e.g. req.params
+        // Object containing query config params e.g. req.params
         this.queryParams = queryParams;
     }
 
-    filter(excludedFilterParams = []) {
+    filter(...additionalExcludedFilterParams) {
         const queryObj = { ...this.queryParams };
 
-        // queryParams to exclude from filter
-        excludedFilterParams.push('page', 'sort', 'limit', 'fields');
-
         // Remove query params not wanted in filter
-        excludedFilterParams.forEach(el => delete queryObj[el]);
+        ['page', 'sort', 'limit', 'fields', ...additionalExcludedFilterParams].forEach(
+            el => delete queryObj[el],
+        );
 
         // Allow filtering by gte|gt|lte|lt if they exist in queryParams by adding the mongodb $ operator
         // E.g. localhost:5000/api/user?age[gte]=18 (filter for age > 18)

@@ -5,10 +5,10 @@ import { connect } from 'react-redux';
 import { Spinner } from 'shared/components';
 import { getGithubRepos, selectProfileRepos } from 'redux/profiles';
 
-const ProfileGithub = ({ githubUsername, getGithubRepos, profileRepos }) => {
+const ProfileGithub = ({ github_username, getGithubRepos, profileRepos }) => {
     useEffect(() => {
-        getGithubRepos(githubUsername);
-    }, [getGithubRepos, githubUsername]);
+        getGithubRepos(github_username);
+    }, [getGithubRepos, github_username]);
 
     return (
         <div className="profile-github">
@@ -47,7 +47,7 @@ const ProfileGithub = ({ githubUsername, getGithubRepos, profileRepos }) => {
 ProfileGithub.propTypes = {
     getGithubRepos: PropTypes.func.isRequired,
     profileRepos: PropTypes.array.isRequired,
-    githubUsername: PropTypes.string.isRequired,
+    github_username: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({

@@ -103,7 +103,7 @@ const Profile = ({
                         </div>
 
                         {profileInfo.github_username && (
-                            <ProfileGithub githubUsername={profileInfo.github_username} />
+                            <ProfileGithub github_username={profileInfo.github_username} />
                         )}
                     </div>
                 </>
