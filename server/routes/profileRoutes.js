@@ -31,7 +31,11 @@ router
         profileController.resizeProfilePhoto,
         profileController.updateProfile,
     )
-    .delete(profileController.getMe, profileController.deleteProfile);
+    .delete(
+        profileController.getMe,
+        profileController.deleteProfileImages,
+        profileController.deleteProfile,
+    );
 
 // TODO: add required routes (portfolio etc.)
 router

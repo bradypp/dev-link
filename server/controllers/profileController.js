@@ -1,5 +1,6 @@
 const sharp = require('sharp');
 const axios = require('axios');
+const fs = require('fs');
 const factory = require('./handlerFactory');
 const Profile = require('../models/Profile');
 const User = require('../models/User');
@@ -58,6 +59,7 @@ exports.createProfile = catchAsync(async (req, res, next) => {
 
 exports.uploadProfilePhoto = multerImageUpload.single('photo');
 
+// TODO: delete profile photo on uploading a new one (do this before image upload?). Make this a more general photo preparation middleware?
 exports.resizeProfilePhoto = catchAsync(async (req, res, next) => {
     if (!req.file) return next();
 
@@ -68,6 +70,28 @@ exports.resizeProfilePhoto = catchAsync(async (req, res, next) => {
         .toFormat('jpeg')
         .jpeg({ quality: 80 })
         .toFile(`public/img/users/${req.body.photo}`);
+
+    next();
+});
+
+exports.deleteProfileImages = catchAsync(async (req, res, next) => {
+    const profile = await Profile.findOne({ user: req.params.userId });
+
+    if (!profile) {
+        return next(new AppError(notFoundErrorMessage, 404));
+    }
+    if (profile.photo === 'default.jpeg') next();
+
+    fs.unlink(`public/img/users/${profile.photo}`, err => {
+        if (err) next(new AppError(err.message, 500));
+    });
+
+    // TODO: test
+    profile.portfolio.images.forEach(image =>
+        fs.unlink(`public/img/portfolio/${image}`, err => {
+            if (err) next(new AppError(err.message, 500));
+        }),
+    );
 
     next();
 });
@@ -161,6 +185,7 @@ exports.removeEducation = catchAsync(async (req, res, next) => {
 });
 
 // TODO: test images upload
+// TODO: delete images on updating/deleting old items/images. Make this a more general portfolio image preparation middleware?
 exports.uploadProfilePortfolioImages = multerImageUpload.array('images', 5);
 
 exports.resizeProfilePortfolioImages = catchAsync(async (req, res, next) => {
