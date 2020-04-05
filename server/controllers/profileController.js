@@ -82,16 +82,20 @@ exports.deleteProfileImages = catchAsync(async (req, res, next) => {
     }
     if (profile.photo === 'default.jpeg') next();
 
-    fs.unlink(`public/img/users/${profile.photo}`, err => {
-        if (err) next(new AppError(err.message, 500));
-    });
+    if (profile.photo) {
+        fs.unlink(`public/img/users/${profile.photo}`, err => {
+            if (err) next(new AppError(err.message, 500));
+        });
+    }
 
     // TODO: test
-    profile.portfolio.images.forEach(image =>
-        fs.unlink(`public/img/portfolio/${image}`, err => {
-            if (err) next(new AppError(err.message, 500));
-        }),
-    );
+    if (profile.portfolio.length > 0) {
+        profile.portfolio.images.forEach(image =>
+            fs.unlink(`public/img/portfolio/${image}`, err => {
+                if (err) next(new AppError(err.message, 500));
+            }),
+        );
+    }
 
     next();
 });
@@ -232,6 +236,7 @@ exports.addPortfolioItem = catchAsync(async (req, res, next) => {
     });
 });
 
+// TODO: test
 exports.removePortfolioItem = catchAsync(async (req, res, next) => {
     const profile = await Profile.findOne({ user: req.params.userId });
 
