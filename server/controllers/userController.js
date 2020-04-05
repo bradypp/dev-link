@@ -42,13 +42,24 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.getWatchingProfiles = catchAsync(async (req, res, next) => {
-    const user = await User.findById(req.params.id).populate('watching');
-    console.log(user);
+exports.getWatching = catchAsync(async (req, res, next) => {
+    const { watching } = await User.findById(req.params.id).populate('watching');
+
     res.status(200).json({
         status: 'success',
         data: {
-            profiles: user.watching,
+            watching,
+        },
+    });
+});
+
+exports.getLikes = catchAsync(async (req, res, next) => {
+    const { likes } = await User.findById(req.params.id).populate('likes');
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            likes,
         },
     });
 });

@@ -34,36 +34,29 @@ router
     .delete(profileController.getMe, profileController.deleteProfile);
 
 // TODO: add required routes (portfolio etc.)
-// route: /v1/api/profile/experience
 router
     .route('/experience')
     .patch(validation.experience, profileController.getMe, profileController.addExperience);
 
-// route: /v1/api/profile/experience/:expId
 router
     .route('/experience/:expId')
     .delete(profileController.getMe, profileController.removeExperience);
 
-// route: /v1/api/profile/education/:expId
 router
     .route('/education')
     .patch(validation.education, profileController.getMe, profileController.addEducation);
 
-// route: /v1/api/profile/education/:eduId
 router
     .route('/education/:eduId')
     .delete(profileController.getMe, profileController.removeEducation);
 
-// route: v/1/api/profile/:id/like
 router.route('/:id/like').patch(profileController.getMe, profileController.toggleLike);
 
-// route: v/1/api/profile/:id/watch
 router.route('/:id/watch').patch(profileController.getMe, profileController.toggleWatching);
 
 // Restrict the following routes to admin users only
 router.use(authController.restrictTo('admin'));
 
-// route: /v1/api/user/:userId/profile/
 router
     .route('/')
     .post(profileController.createProfile)

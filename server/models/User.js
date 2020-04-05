@@ -45,20 +45,22 @@ const userSchema = new Schema(
             type: Boolean,
             default: true,
         },
+        profile: {
+            type: Schema.Types.ObjectId,
+            ref: 'Profile',
+        },
         likes: [
             {
-                profile: {
-                    type: Schema.Types.ObjectId,
-                    ref: 'Profile',
-                },
+                type: Schema.Types.ObjectId,
+                ref: 'Profile',
+                unique: true,
             },
         ],
         watching: [
             {
-                profile: {
-                    type: Schema.Types.ObjectId,
-                    ref: 'Profile',
-                },
+                type: Schema.Types.ObjectId,
+                ref: 'Profile',
+                unique: true,
             },
         ],
         createdAt: {

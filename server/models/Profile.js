@@ -11,6 +11,19 @@ const profileSchema = new Schema({
         type: String,
         default: 'default.jpg',
     },
+    status: {
+        type: String,
+        trim: true,
+    },
+    seniority: {
+        type: String,
+        enum: ['Student', 'Junior', 'Experienced', 'Advanced'],
+        trim: true,
+    },
+    location: {
+        type: String,
+        trim: true,
+    },
     company: {
         type: String,
         trim: true,
@@ -19,13 +32,8 @@ const profileSchema = new Schema({
         type: String,
         trim: true,
     },
-    location: {
+    github_username: {
         type: String,
-        trim: true,
-    },
-    status: {
-        type: String,
-        required: [true, 'Status is required'],
         trim: true,
     },
     skills: [
@@ -39,17 +47,25 @@ const profileSchema = new Schema({
         type: String,
         trim: true,
     },
-    job_title: {
-        type: String,
-        trim: true,
-    },
-    availability: {
-        type: String,
-        trim: true,
-    },
-    github_username: {
-        type: String,
-        trim: true,
+    looking_for: {
+        role_title: {
+            type: String,
+            trim: true,
+        },
+        types: [
+            {
+                type: String,
+                trim: true,
+            },
+        ],
+        description: {
+            type: String,
+            trim: true,
+        },
+        availability: {
+            type: String,
+            trim: true,
+        },
     },
     interests: [
         {
@@ -91,6 +107,17 @@ const profileSchema = new Schema({
                 type: String,
                 required: [true, 'Title is required'],
                 trim: true,
+            },
+            type: {
+                type: String,
+                required: [true, 'Type is required'],
+                enum: [
+                    'full-time permanent',
+                    'full-time temporary',
+                    'part-time permanent',
+                    'part-time temporary',
+                    'self-employed',
+                ],
             },
             company: {
                 type: String,
@@ -199,18 +226,16 @@ const profileSchema = new Schema({
     },
     likes: [
         {
-            user: {
-                type: Schema.Types.ObjectId,
-                ref: 'User',
-            },
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            unique: true,
         },
     ],
     watching: [
         {
-            user: {
-                type: Schema.Types.ObjectId,
-                ref: 'User',
-            },
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            unique: true,
         },
     ],
     createdAt: {
