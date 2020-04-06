@@ -7,7 +7,7 @@ const multerFilter = (req, file, cb) => {
     if (file.mimetype.startsWith('image')) {
         cb(null, true);
     } else {
-        cb(new AppError('Uploaded profile photo is not an image!', 400), false);
+        cb(new AppError('Uploaded file is not an image!', 400), false);
     }
 };
 

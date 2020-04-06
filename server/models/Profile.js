@@ -7,11 +7,11 @@ const profileSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User',
     },
-    photo: {
+    avatar: {
         type: String,
         default: 'default.jpg',
     },
-    cover_image: {
+    cover: {
         type: String,
         default: 'default.jpg',
     },
