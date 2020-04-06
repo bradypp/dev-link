@@ -57,19 +57,30 @@ exports.createProfile = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.uploadProfilePhoto = multerImageUpload.single('photo');
+exports.uploadProfileImages = multerImageUpload.fields([
+    { name: 'photo', maxCount: 1 },
+    { name: 'cover_image', maxCount: 1 },
+]);
 
 // TODO: delete profile photo on uploading a new one (do this before image upload?). Make this a more general photo preparation middleware?
-exports.resizeProfilePhoto = catchAsync(async (req, res, next) => {
-    if (!req.file) return next();
+exports.resizeProfileImages = catchAsync(async (req, res, next) => {
+    if (!req.files.photo || !req.files.cover_image) return next();
 
-    req.body.photo = `user-${req.user.id}-${Date.now()}.jpeg`;
-
+    // Profile photo
+    req.body.photo = `profile-${req.user.id}-${Date.now()}-photo.jpeg`;
     await sharp(req.file.buffer)
-        .resize(300, 300)
+        .resize(400, 400)
         .toFormat('jpeg')
-        .jpeg({ quality: 80 })
-        .toFile(`public/img/users/${req.body.photo}`);
+        .jpeg({ quality: 90 })
+        .toFile(`public/img/profile/photo/${req.body.photo}`);
+
+    // Cover image
+    req.body.cover_image = `profile-${req.user.id}-${Date.now()}-cover_image.jpeg`;
+    await sharp(req.file.buffer)
+        .resize(1188, 297)
+        .toFormat('jpeg')
+        .jpeg({ quality: 90 })
+        .toFile(`public/img/profile/cover/${req.body.cover_image}`);
 
     next();
 });
@@ -83,7 +94,7 @@ exports.deleteProfileImages = catchAsync(async (req, res, next) => {
     if (profile.photo === 'default.jpeg') next();
 
     if (profile.photo) {
-        fs.unlink(`public/img/users/${profile.photo}`, err => {
+        fs.unlink(`public/img/profile/photo/${profile.photo}`, err => {
             if (err) next(new AppError(err.message, 500));
         });
     }
@@ -91,7 +102,7 @@ exports.deleteProfileImages = catchAsync(async (req, res, next) => {
     // TODO: test
     if (profile.portfolio.length > 0) {
         profile.portfolio.images.forEach(image =>
-            fs.unlink(`public/img/portfolio/${image}`, err => {
+            fs.unlink(`public/img/profile/portfolio/${image}`, err => {
                 if (err) next(new AppError(err.message, 500));
             }),
         );
@@ -205,7 +216,7 @@ exports.resizeProfilePortfolioImages = catchAsync(async (req, res, next) => {
                 .resize(500, 500)
                 .toFormat('jpeg')
                 .jpeg({ quality: 80 })
-                .toFile(`public/img/portfolio/${filename}`);
+                .toFile(`public/img/profile/portfolio/${filename}`);
 
             req.body.images.push(filename);
         }),

@@ -20,15 +20,15 @@ router
     .post(
         validation.createProfile,
         profileController.getMe,
-        profileController.uploadProfilePhoto,
-        profileController.resizeProfilePhoto,
+        profileController.uploadProfileImages,
+        profileController.resizeProfileImages,
         profileController.createProfile,
     )
     .patch(
         validation.updateProfile,
         profileController.getMe,
-        profileController.uploadProfilePhoto,
-        profileController.resizeProfilePhoto,
+        profileController.uploadProfileImages,
+        profileController.resizeProfileImages,
         profileController.updateProfile,
     )
     .delete(
@@ -59,8 +59,8 @@ router
     .route('/portfolio')
     .patch(
         profileController.getMe,
-        profileController.uploadProfilePhoto,
-        profileController.resizeProfilePhoto,
+        profileController.uploadProfilePortfolioImages,
+        profileController.resizeProfilePortfolioImages,
         profileController.addPortfolioItem,
     );
 
