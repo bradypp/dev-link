@@ -28,10 +28,13 @@ const profileSanitizers = [
 
 exports.createProfileRules = [
     fieldRequired('status', 'Status is required'),
+    fieldRequired('headline', 'Headline is required'),
+    fieldRequired('languages', 'Languages are required'),
     fieldRequired('skills', 'Skills are required'),
     profileSanitizers,
 ];
 
+// TODO: update should contain the same rules as above if they exist
 exports.updateProfileRules = profileSanitizers;
 
 exports.experienceRules = [

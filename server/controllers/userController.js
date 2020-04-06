@@ -7,13 +7,13 @@ exports.createUser = factory.createOne(User);
 exports.updateUser = factory.updateOneById(User);
 exports.deleteUser = factory.deleteOneById(User);
 
-exports.getMe = (req, res, next) => {
+exports.getIdFromCurrentUser = (req, res, next) => {
     req.params.id = req.user.id;
     next();
 };
 
 // Allows updating of name, email & active status
-exports.updateMe = catchAsync(async (req, res, next) => {
+exports.updateUser = catchAsync(async (req, res, next) => {
     // Create error if user sends password data
     if (req.body.password || req.body.password2) {
         return next(
@@ -30,7 +30,13 @@ exports.updateMe = catchAsync(async (req, res, next) => {
         }
     }
 
-    const filteredBody = filterObject(req.body, ['name', 'email', 'active']);
+    if (req.body.username) {
+        if (await User.findOne({ username: req.body.username })) {
+            return next(new AppError('This username is already taken!', 400));
+        }
+    }
+
+    const filteredBody = filterObject(req.body, ['name', 'username', 'email', 'active']);
 
     const user = await User.findByIdAndUpdate(req.params.userId, filteredBody, { new: true });
 

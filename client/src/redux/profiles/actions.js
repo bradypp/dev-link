@@ -24,7 +24,20 @@ export const getProfiles = () => async (dispatch, queryParams = '') => {
     }
 };
 
-export const getProfile = userId => async dispatch => {
+export const getProfileByUsername = username => async dispatch => {
+    try {
+        dispatch(profileLoading());
+
+        const res = await api.get(`/profile/?username=${username}`);
+
+        dispatch(profileLoaded(res.data.data.profile));
+    } catch (err) {
+        dispatch(errorHandler(err));
+        dispatch(profilesError(err));
+    }
+};
+
+export const getProfileById = userId => async dispatch => {
     try {
         dispatch(profileLoading());
 

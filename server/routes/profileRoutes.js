@@ -7,9 +7,11 @@ const validation = require('../controllers/validation');
 const router = express.Router({ mergeParams: true });
 
 // Public routes
-router.route('/').get(profileController.getProfile);
+router.route('/').get(profileController.getByUsername, profileController.getProfile);
 router.route('/all').get(profileController.getAllProfiles);
-router.route('/githubRepos/:github_username').get(profileController.getGithubRepos);
+
+// TODO: delete?
+router.route('/github-repos/:github_username').get(profileController.getGithubRepos);
 
 // All routes after this middleware are protected
 router.use(authController.protect);

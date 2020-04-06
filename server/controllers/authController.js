@@ -38,6 +38,11 @@ exports.signUp = catchAsync(async (req, res, next) => {
         return next(new AppError('User with this email already exists', 400));
     }
 
+    // Check if a user with that username exists
+    if (await User.findOne({ username: req.body.username })) {
+        return next(new AppError('User with this username already exists', 400));
+    }
+
     // Create new user
     const user = await User.create(req.body);
 

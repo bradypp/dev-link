@@ -11,8 +11,17 @@ const { AppError, catchAsync, multerImageUpload } = require('../utils');
 
 exports.getMe = (req, res, next) => {
     req.params.userId = req.user.id;
+    req.params.id = req.user.profile;
     next();
 };
+
+exports.getByUsername = catchAsync(async (req, res, next) => {
+    if (!req.query.username) next();
+    const user = await User.findOne({ username: req.query.username });
+    req.params.userId = user.id;
+    req.params.id = user.profile;
+    next();
+});
 
 const notFoundErrorMessage = 'Profile not found';
 
@@ -64,37 +73,46 @@ exports.uploadProfileImages = multerImageUpload.fields([
 
 // TODO: delete profile photo on uploading a new one (do this before image upload?). Make this a more general photo preparation middleware?
 exports.resizeProfileImages = catchAsync(async (req, res, next) => {
-    if (!req.files.photo || !req.files.cover_image) return next();
+    if (!req.files) return next();
 
     // Profile photo
-    req.body.photo = `profile-${req.user.id}-${Date.now()}-photo.jpeg`;
-    await sharp(req.file.buffer)
-        .resize(400, 400)
-        .toFormat('jpeg')
-        .jpeg({ quality: 90 })
-        .toFile(`public/img/profile/photo/${req.body.photo}`);
+    if (req.files.photo) {
+        req.body.photo = `profile-${req.user.id}-${Date.now()}-photo.jpeg`;
+        await sharp(req.files.photo[0].buffer)
+            .resize(400, 400)
+            .toFormat('jpeg')
+            .jpeg({ quality: 90 })
+            .toFile(`public/img/profile/photo/${req.body.photo}`);
+    }
 
     // Cover image
-    req.body.cover_image = `profile-${req.user.id}-${Date.now()}-cover_image.jpeg`;
-    await sharp(req.file.buffer)
-        .resize(1188, 297)
-        .toFormat('jpeg')
-        .jpeg({ quality: 90 })
-        .toFile(`public/img/profile/cover/${req.body.cover_image}`);
+    if (req.files.cover_image) {
+        req.body.cover_image = `profile-${req.user.id}-${Date.now()}-cover_image.jpeg`;
+        await sharp(req.files.cover_image[0].buffer)
+            .resize(1188, 297)
+            .toFormat('jpeg')
+            .jpeg({ quality: 90 })
+            .toFile(`public/img/profile/cover/${req.body.cover_image}`);
+    }
 
     next();
 });
 
 exports.deleteProfileImages = catchAsync(async (req, res, next) => {
-    const profile = await Profile.findOne({ user: req.params.userId });
+    const profile = Profile.findOne({ user: req.params.userId });
 
     if (!profile) {
         return next(new AppError(notFoundErrorMessage, 404));
     }
-    if (profile.photo === 'default.jpeg') next();
 
-    if (profile.photo) {
+    if (profile.photo && profile.photo !== 'default.jpg') {
         fs.unlink(`public/img/profile/photo/${profile.photo}`, err => {
+            if (err) next(new AppError(err.message, 500));
+        });
+    }
+
+    if (profile.cover_image && profile.cover_image !== 'default.jpg') {
+        fs.unlink(`public/img/profile/photo/${profile.cover_image}`, err => {
             if (err) next(new AppError(err.message, 500));
         });
     }
@@ -212,7 +230,7 @@ exports.resizeProfilePortfolioImages = catchAsync(async (req, res, next) => {
         req.files.images.map(async (file, i) => {
             const filename = `portfolio-${req.user.id}-${Date.now()}-${i + 1}.jpeg`;
 
-            await sharp(req.file.buffer)
+            await sharp(file.buffer)
                 .resize(500, 500)
                 .toFormat('jpeg')
                 .jpeg({ quality: 80 })
@@ -358,6 +376,7 @@ exports.toggleWatching = catchAsync(async (req, res, next) => {
     });
 });
 
+// TODO: delete?
 exports.getGithubRepos = catchAsync(async (req, res, next) => {
     const githubRes = await axios.get(
         `https://api.github.com/users/${req.params.github_username}/repos?per_page=10&sort=created:asc`,

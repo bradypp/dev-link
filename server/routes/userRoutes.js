@@ -14,18 +14,18 @@ router.use(authController.protect);
 
 router
     .route('/me')
-    .get(userController.getMe, userController.getUser)
-    .patch(userController.getMe, validation.updateUser, userController.updateMe)
-    .delete(userController.getMe, userController.deleteUser);
+    .get(userController.getIdFromCurrentUser, userController.getUser)
+    .patch(userController.getIdFromCurrentUser, validation.updateUser, userController.updateUser)
+    .delete(userController.getIdFromCurrentUser, userController.deleteUser);
 
-router.route('/watching').get(userController.getMe, userController.getWatching);
-router.route('/likes').get(userController.getMe, userController.getLikes);
+router.route('/watching').get(userController.getIdFromCurrentUser, userController.getWatching);
+router.route('/likes').get(userController.getIdFromCurrentUser, userController.getLikes);
 
 // Restrict the following routes to users with role admin only
 router.use(authController.restrictTo('admin'));
 
 router
-    .route('/:id')
+    .route('/')
     .get(userController.getUser)
     .post(userController.createUser)
     .patch(userController.updateUser)

@@ -15,13 +15,14 @@ const profileSchema = new Schema({
         type: String,
         default: 'default.jpg',
     },
-    status: {
+    headline: {
         type: String,
+        required: [true, 'Headline is required'],
         trim: true,
     },
-    seniority: {
+    status: {
         type: String,
-        enum: ['Student', 'Junior', 'Experienced', 'Advanced'],
+        required: [true, 'Status is required'],
         trim: true,
     },
     location: {
@@ -40,6 +41,13 @@ const profileSchema = new Schema({
         type: String,
         trim: true,
     },
+    languages: [
+        {
+            type: String,
+            required: [true, 'Languages are required'],
+            trim: true,
+        },
+    ],
     skills: [
         {
             type: String,
@@ -121,6 +129,7 @@ const profileSchema = new Schema({
                     'part-time permanent',
                     'part-time temporary',
                     'self-employed',
+                    'freelance',
                 ],
             },
             company: {
