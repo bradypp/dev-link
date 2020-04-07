@@ -20,9 +20,14 @@ const profileSchema = new Schema({
         required: [true, 'Headline is required'],
         trim: true,
     },
-    location: {
+    city: {
         type: String,
-        required: [true, 'Location is required'],
+        required: [true, 'City is required'],
+        trim: true,
+    },
+    country: {
+        type: String,
+        required: [true, 'Country is required'],
         trim: true,
     },
     company: {
@@ -261,7 +266,8 @@ const profileSchema = new Schema({
 profileSchema.index({
     user: 1,
     languages: 1,
-    location: 1,
+    city: 1,
+    country: 1,
     skills: 1,
     likes: -1,
     watchers: -1,

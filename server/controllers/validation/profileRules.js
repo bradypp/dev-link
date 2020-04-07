@@ -27,7 +27,6 @@ const profileSanitizers = [
 ];
 
 exports.createProfileRules = [
-    fieldRequired('status', 'Status is required'),
     fieldRequired('headline', 'Headline is required'),
     fieldRequired('languages', 'Languages are required'),
     fieldRequired('skills', 'Skills are required'),
