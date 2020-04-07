@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
-import { baseButtonStyles } from 'shared/styles';
 import { Link } from 'react-router-dom';
+import { baseButtonStyles } from 'shared/components/Button/ButtonStyles';
 
 export const BaseLink = styled(Link)`
     ${baseButtonStyles};

@@ -18,11 +18,12 @@ const propTypes = {
 const SignUp = ({ setAlert, clearAlerts, signUp, isAuthenticated, alerts }) => {
     const [formData, setFormData] = useState({
         name: '',
+        username: '',
         email: '',
         password: '',
         password2: '',
     });
-    const { name, email, password, password2 } = formData;
+    const { name, username, email, password, password2 } = formData;
 
     const onChange = event => {
         setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -64,15 +65,21 @@ const SignUp = ({ setAlert, clearAlerts, signUp, isAuthenticated, alerts }) => {
                 </div>
                 <div className="form-group">
                     <input
+                        type="text"
+                        placeholder="Username"
+                        name="username"
+                        value={username}
+                        onChange={onChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <input
                         type="email"
                         placeholder="Email Address"
                         name="email"
                         value={email}
                         onChange={onChange}
                     />
-                    <small className="form-text">
-                        This site uses Gravatar so if you want a profile image, use a Gravatar email
-                    </small>
                 </div>
                 <div className="form-group">
                     <input

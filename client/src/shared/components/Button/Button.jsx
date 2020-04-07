@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { ButtonText } from 'shared/styles';
-import { BaseButton, StyledSpinner } from './ButtonStyles';
+import { BaseButton, ButtonText, StyledSpinner } from './ButtonStyles';
 
 const propTypes = {
     className: PropTypes.string,

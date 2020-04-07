@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { ButtonText } from 'shared/styles';
+import { ButtonText } from 'shared/components/Button/ButtonStyles';
 import { BaseLink } from './CustomLinkStyles';
 
 const propTypes = {

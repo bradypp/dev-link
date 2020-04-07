@@ -4,10 +4,10 @@ const utils = {
         modal: 100,
         alert: 150,
     },
+    // TODO: media query to change padding to 1.6 for mobile
     layout: {
         maxWidth: `120rem`,
         pagePadding: `4rem`,
-        pagePaddingMobile: `1.6rem`,
     },
 };
 

@@ -28,29 +28,28 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html,
-  body {
+  body, 
+  #root {
     width: 100%;
     max-width: 100%;
   }
 
   body {
-    min-height: 100%;
     overflow-x: hidden;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
+    font-family: ${({ theme }) => theme.fonts.primary};
+    font-size: 1.6rem;
+    line-height: 1.5;
+    color: ${({ theme }) => theme.colors.textPrimary1};
+    background-color: ${({ theme }) => theme.colors.background2};
+    min-height: 100vh;
   }
 
   #root {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 ${({ theme }) => theme.layout.pagePadding};
-    font-family: ${({ theme }) => theme.fonts.primary};
-    font-size: 1.6rem;
-    line-height: 1.5;
-    color: ${({ theme }) => theme.colors.textPrimary1};
-    background: ${({ theme }) => theme.colors.background2};
-    min-height: 100vh;
   }
 
   p {

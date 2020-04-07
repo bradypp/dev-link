@@ -2,25 +2,31 @@ import styled, { css } from 'styled-components/macro';
 import { CustomLink, PrimaryLink, BorderedLink, PrimaryButton } from 'shared/components';
 import { mixins } from 'shared/styles';
 
+// TODO: finalize header styling (change coloring)
+
 const sharedStyles = css`
-    margin-left: 1.2rem;
+    margin-left: 1.4rem;
+    font-size: 1.5rem;
+    padding: 0 2rem;
+    height: 3.8rem;
+    border-radius: 5px;
 `;
 
-export const StyledPrimaryLink = styled(PrimaryLink).attrs(() => ({
+export const StyledPrimaryLink = styled(PrimaryLink).attrs({
     color: 'primaryDark',
-}))`
+})`
     ${sharedStyles}
 `;
 
-export const StyledBorderedLink = styled(BorderedLink).attrs(() => ({
+export const StyledBorderedLink = styled(BorderedLink).attrs({
     color: 'primaryDark',
-}))`
+})`
     ${sharedStyles}
 `;
 
-export const StyledPrimaryButton = styled(PrimaryButton).attrs(() => ({
+export const StyledPrimaryButton = styled(PrimaryButton).attrs({
     color: 'primaryDark',
-}))`
+})`
     ${sharedStyles}
 `;
 
@@ -40,6 +46,8 @@ export const NavContainer = styled.nav`
 `;
 
 export const HeaderContainer = styled.header`
-    padding: 1.6rem 0;
+    ${mixins.boxShadowCard}
+    padding: 1rem ${({ theme }) => theme.layout.pagePadding};
     width: 100%;
+    background-color: ${({ theme }) => theme.colors.white1};
 `;

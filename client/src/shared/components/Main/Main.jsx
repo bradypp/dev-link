@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import MainContainer from './MainStyles';
+import { MainContainer, LayoutContainer } from './MainStyles';
 
 const propTypes = {
     children: PropTypes.node.isRequired,
@@ -15,8 +15,10 @@ const defaultProps = {
 };
 
 const Main = ({ children, display, flexDirection }) => (
-    <MainContainer display={display} flexDirection={flexDirection}>
-        {children}
+    <MainContainer>
+        <LayoutContainer display={display} flexDirection={flexDirection}>
+            {children}
+        </LayoutContainer>
     </MainContainer>
 );
 

@@ -16,11 +16,10 @@ export const StyledSpinner = styled.div`
     width: ${({ size }) => size};
     height: ${({ size }) => size};
     border-radius: 50%;
-    color: #636767;
     border: ${({ variant }) =>
-        (variant === 'default' && '0.5rem solid #999') ||
-        (variant === 'button' && '0.3rem solid #999')};
-    border-top-color: #454545;
+        (variant === 'default' && '0.4rem solid #ccc') ||
+        (variant === 'button' && '0.25rem solid #ccc')};
+    border-top-color: #666;
     animation: spin 1s ${({ theme }) => theme.animation.easeCustom} infinite;
 
     @keyframes spin {

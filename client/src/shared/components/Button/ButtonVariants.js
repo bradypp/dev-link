@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { primaryButtonStyles, borderedButtonStyles } from 'shared/styles';
+import { primaryButtonStyles, borderedButtonStyles } from './ButtonVariantStyles';
 import Button from './Button';
 
 export const PrimaryButton = styled(Button)`

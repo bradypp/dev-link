@@ -4,7 +4,7 @@ const base = {
     primary: '#2977c9',
     primaryDark: '#105EB0',
     primaryLight: '#4391E3',
-    secondary: '',
+    secondary: '#283e4a',
     success: '#0B875B',
     danger: '#E13C3C',
     warning: '#F89C1C',

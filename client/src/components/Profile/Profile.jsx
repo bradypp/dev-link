@@ -25,12 +25,13 @@ import {
     Avatar,
     Name,
     Headline,
-    Location,
+    TopSubHeading,
 } from './ProfileStyles';
 
 const propTypes = {
     avatar: PropTypes.string.isRequired,
     coverImage: PropTypes.string.isRequired,
+    isProfileLoading: PropTypes.bool.isRequired,
     profileInfo: PropTypes.object.isRequired,
     profileUser: PropTypes.object.isRequired,
     getProfileByUsername: PropTypes.func.isRequired,
@@ -39,6 +40,7 @@ const propTypes = {
 const mapStateToProps = createStructuredSelector({
     avatar: selectProfileAvatar,
     coverImage: selectProfileCoverImage,
+    isProfileLoading: selectIsProfileLoading,
     profileInfo: selectProfileInfo,
     profileUser: selectProfileUser,
 });
@@ -47,9 +49,24 @@ const mapDispatchToProps = {
     getProfileByUsername,
 };
 
-const Profile = ({ getProfileByUsername, avatar, coverImage, profileInfo, profileUser }) => {
+const Profile = ({
+    getProfileByUsername,
+    avatar,
+    coverImage,
+    profileInfo,
+    profileUser,
+    isProfileLoading,
+}) => {
     const { username } = useParams();
-    const { headline, status, location, website, github_username, company } = profileInfo;
+    const {
+        headline,
+        current_position,
+        city,
+        country,
+        website,
+        github_username,
+        company,
+    } = profileInfo;
     const { name, email } = profileUser;
 
     // TODO: delete?
@@ -63,6 +80,7 @@ const Profile = ({ getProfileByUsername, avatar, coverImage, profileInfo, profil
     }, [getProfileByUsername, username]);
 
     // TODO: add loader
+    // TODO: Extract each section into their own components (about me component with bio, languages, skills, interests and the others) and move and logic (such as conditional rendering) to separate variables in those components for readability
     return (
         <Main>
             <TopCardContainer>
@@ -87,10 +105,38 @@ const Profile = ({ getProfileByUsername, avatar, coverImage, profileInfo, profil
                             />
                         </AvatarContainer>
                         <Name>{name}</Name>
-                        <Headline>{headline}</Headline>
-                        <Location>{location}</Location>
+                        {headline && <Headline>{headline}</Headline>}
+                        {city ? (
+                            <TopSubHeading>
+                                {city}
+                                {country && <>, {country}</>}
+                            </TopSubHeading>
+                        ) : (
+                            <>{country && <TopSubHeading>{country}</TopSubHeading>}</>
+                        )}
+                        {company ? (
+                            <TopSubHeading>
+                                {company}
+                                {current_position && <> &middot; {current_position}</>}
+                            </TopSubHeading>
+                        ) : (
+                            <>
+                                {current_position && (
+                                    <TopSubHeading>{current_position}</TopSubHeading>
+                                )}
+                            </>
+                        )}
+                    </div>
+                    <div>
+                        {/* watch button & like button */}
+                        {/* website link*/}
+                        {/* gihub username link*/}
+                        {/* Contact info button & socials button*/}
                     </div>
                 </TopCardContentContainer>
+                {/* bio card */}
+                {/* languages & skills card */}
+                {/* interests card */}
             </TopCardContainer>
         </Main>
     );

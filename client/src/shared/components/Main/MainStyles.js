@@ -12,11 +12,12 @@ const flexMainStyles = css`
     flex-direction: ${({ flexDirection }) => flexDirection};
 `;
 
-const MainContainer = styled.main`
-    ${mixins.containAndCenter};
-    ${({ display }) =>
-        (display === 'grid' && gridMainStyles) || (display === 'flex' && flexMainStyles)}}
-    padding
+export const MainContainer = styled.main`
+    padding: 1.6rem ${({ theme }) => theme.layout.pagePadding};
 `;
 
-export default MainContainer;
+export const LayoutContainer = styled.div`
+    ${mixins.containAndCenter};
+    ${({ display }) =>
+        (display === 'grid' && gridMainStyles) || (display === 'flex' && flexMainStyles)}};
+`;
