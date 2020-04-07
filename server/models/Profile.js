@@ -20,16 +20,16 @@ const profileSchema = new Schema({
         required: [true, 'Headline is required'],
         trim: true,
     },
-    status: {
-        type: String,
-        required: [true, 'Status is required'],
-        trim: true,
-    },
     location: {
         type: String,
+        required: [true, 'Location is required'],
         trim: true,
     },
     company: {
+        type: String,
+        trim: true,
+    },
+    current_position: {
         type: String,
         trim: true,
     },
@@ -258,7 +258,14 @@ const profileSchema = new Schema({
 });
 
 // Indexes allow for more efficient queries
-profileSchema.index({ user: 1, status: 1, location: 1, skills: 1 });
+profileSchema.index({
+    user: 1,
+    languages: 1,
+    location: 1,
+    skills: 1,
+    likes: -1,
+    watchers: -1,
+});
 
 profileSchema.pre(/^find/, function(next) {
     this.populate({

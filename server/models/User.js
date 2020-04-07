@@ -77,7 +77,7 @@ const userSchema = new Schema(
 );
 
 // Indexes allow for more efficient queries
-userSchema.index({ name: 1 });
+userSchema.index({ name: 1, username: 1, email: 1 });
 
 // A virtual is a property that isn't stored in the database
 userSchema.virtual('first_name').get(function() {
