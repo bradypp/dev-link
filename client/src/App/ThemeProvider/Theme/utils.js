@@ -7,7 +7,7 @@ const utils = {
     layout: {
         maxWidth: `120rem`,
         pagePadding: `4rem`,
-        pagePaddingMobile: `2rem`,
+        pagePaddingMobile: `1.6rem`,
     },
 };
 

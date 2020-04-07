@@ -5,7 +5,6 @@ import {
     PROFILES_LOADED,
     PROFILES_ERROR,
     CLEAR_PROFILE,
-    REPOS_LOADED,
     PROFILE_LOADING,
     PROFILES_LOADING,
 } from 'redux/actionTypes';
@@ -63,17 +62,7 @@ export const getCurrentUserProfile = () => async dispatch => {
     }
 };
 
-export const getGithubRepos = username => async dispatch => {
-    try {
-        const res = await api.get(`/profile/githubRepos/${username}`);
-
-        dispatch(reposLoaded(res.data.data.repos));
-    } catch (err) {
-        dispatch(errorHandler(err));
-        dispatch(profilesError(err));
-    }
-};
-
+// TODO: create a base profile on sign up so ready for edit? If so, change backend too
 export const createProfile = (formData, history) => async dispatch => {
     try {
         const config = {
@@ -214,10 +203,5 @@ export const profileLoaded = payload => ({
 
 export const profilesLoaded = payload => ({
     type: PROFILES_LOADED,
-    payload,
-});
-
-export const reposLoaded = payload => ({
-    type: REPOS_LOADED,
     payload,
 });

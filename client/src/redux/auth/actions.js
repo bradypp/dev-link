@@ -65,7 +65,6 @@ export const signIn = ({ email, password }) => async dispatch => {
 };
 
 export const signOut = () => dispatch => {
-    dispatch(clearProfile());
     dispatch(signOutUser());
 };
 

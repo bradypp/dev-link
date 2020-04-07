@@ -3,7 +3,12 @@ import { connect } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
-import { selectIsUserLoading, selectIsAuthenticated, signOut } from 'redux/auth';
+import {
+    selectIsUserLoading,
+    selectIsAuthenticated,
+    signOut,
+    selectUserUserName,
+} from 'redux/auth';
 import {
     HeaderContainer,
     NavContainer,
@@ -17,16 +22,24 @@ const propTypes = {
     signOut: PropTypes.func.isRequired,
     isUserLoading: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
+    userUserName: PropTypes.string.isRequired,
+};
+
+const stateToProps = {
+    isUserLoading: selectIsUserLoading,
+    userUserName: selectUserUserName,
+    isAuthenticated: selectIsAuthenticated,
 };
 
 // TODO: Edit content of header in different states when finished (for now include what you need to build the app & test)
 // TODO: Edit styling
-const Header = ({ isUserLoading, isAuthenticated, signOut }) => {
+const Header = ({ isUserLoading, isAuthenticated, signOut, userUserName }) => {
     const location = useLocation();
 
     const signedInMenu = (
         <>
-            <StyledPrimaryLink to="/profiles">Developers</StyledPrimaryLink>
+            <StyledPrimaryLink to="/search">Developers</StyledPrimaryLink>
+            <StyledPrimaryLink to={`/profile/${userUserName}`}>Profile</StyledPrimaryLink>
             <StyledPrimaryLink to="/dashboard">Dashboard</StyledPrimaryLink>
             <StyledPrimaryButton onClick={signOut}>Sign Out</StyledPrimaryButton>
         </>
@@ -53,11 +66,8 @@ const Header = ({ isUserLoading, isAuthenticated, signOut }) => {
     );
 };
 
-const mapStateToProps = createStructuredSelector({
-    isUserLoading: selectIsUserLoading,
-    isAuthenticated: selectIsAuthenticated,
-});
-
 Header.propTypes = propTypes;
+
+const mapStateToProps = createStructuredSelector(stateToProps);
 
 export default connect(mapStateToProps, { signOut })(Header);

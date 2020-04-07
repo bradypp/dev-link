@@ -33,13 +33,13 @@ export const Logo = styled(CustomLink)`
 `;
 
 export const NavContainer = styled.nav`
+    ${mixins.containAndCenter}
     display: flex;
     justify-content: space-between;
     align-items: center;
-    ${mixins.containAndCenter}
 `;
 
 export const HeaderContainer = styled.header`
-    padding: 1.5rem ${({ theme }) => theme.layout.pagePadding};
+    padding: 1.6rem 0;
     width: 100%;
 `;

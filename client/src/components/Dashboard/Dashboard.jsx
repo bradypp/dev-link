@@ -6,6 +6,8 @@ import { useClearAlerts } from 'shared/hooks';
 
 const propTypes = {};
 
+const stateToProps = {};
+
 const Dashboard = () => {
     useClearAlerts();
     return <div>dashboard</div>;
@@ -13,6 +15,6 @@ const Dashboard = () => {
 
 Dashboard.propTypes = propTypes;
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector(stateToProps);
 
 export default connect(mapStateToProps)(Dashboard);

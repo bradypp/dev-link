@@ -1,24 +1,104 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
+import { Main, Spinner } from 'shared/components';
+import {
+    getProfileByUsername,
+    selectIsProfileLoading,
+    selectProfileAvatar,
+    selectProfileCoverImage,
+    selectProfileInfo,
+    selectProfileUser,
+    selectProfileSocial,
+    selectProfileEducation,
+    selectProfileExperience,
+    selectProfileSkills,
+} from 'redux/profiles';
+import {
+    TopCardContainer,
+    TopCardContentContainer,
+    CoverImage,
+    CoverImageContainer,
+    AvatarContainer,
+    Avatar,
+    Name,
+    Headline,
+    Location,
+} from './ProfileStyles';
 
-const propTypes = {};
+const propTypes = {
+    avatar: PropTypes.string.isRequired,
+    coverImage: PropTypes.string.isRequired,
+    profileInfo: PropTypes.object.isRequired,
+    profileUser: PropTypes.object.isRequired,
+    getProfileByUsername: PropTypes.func.isRequired,
+};
 
-const Profile = () => {
+const mapStateToProps = createStructuredSelector({
+    avatar: selectProfileAvatar,
+    coverImage: selectProfileCoverImage,
+    profileInfo: selectProfileInfo,
+    profileUser: selectProfileUser,
+});
+
+const mapDispatchToProps = {
+    getProfileByUsername,
+};
+
+const Profile = ({ getProfileByUsername, avatar, coverImage, profileInfo, profileUser }) => {
+    const { username } = useParams();
+    const { headline, status, location, website, github_username, company } = profileInfo;
+    const { name, email } = profileUser;
+
+    // TODO: delete?
     // const [isFirstRender, setIsFirstRender] = useState(true);
     // useEffect(() => {
     // setIsFirstRender(false);
     // }, []);
 
-    return <div>profile</div>;
+    useEffect(() => {
+        getProfileByUsername(username);
+    }, [getProfileByUsername, username]);
+
+    // TODO: add loader
+    return (
+        <Main>
+            <TopCardContainer>
+                <CoverImageContainer>
+                    <CoverImage
+                        src={[
+                            `http://localhost:5000/img/profile/cover_image/${coverImage}`,
+                            ` http://localhost:5000/img/profile/cover_image/default.jpg`,
+                        ]}
+                        alt="Profile cover"
+                    />
+                </CoverImageContainer>
+                <TopCardContentContainer>
+                    <div>
+                        <AvatarContainer>
+                            <Avatar
+                                src={[
+                                    `http://localhost:5000/img/profile/avatar/${avatar}`,
+                                    `http://localhost:5000/img/profile/avatar/default.jpg`,
+                                ]}
+                                alt="Profile avatar"
+                            />
+                        </AvatarContainer>
+                        <Name>{name}</Name>
+                        <Headline>{headline}</Headline>
+                        <Location>{location}</Location>
+                    </div>
+                </TopCardContentContainer>
+            </TopCardContainer>
+        </Main>
+    );
 };
 
 Profile.propTypes = propTypes;
 
-const mapStateToProps = createStructuredSelector({});
-
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
 
 // TODO: delete
 // import React, { useEffect, useState } from 'react';

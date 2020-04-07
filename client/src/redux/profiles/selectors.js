@@ -19,13 +19,23 @@ export const selectAllProfiles = createSelector(
 
 export const selectProfile = createSelector([selectProfiles], profile => profile.profile);
 
-export const selectProfileUser = createSelector([selectProfiles], profile => profile.user);
+export const selectProfileInfo = createSelector([selectProfile], profile => {
+    const { headline, status, location, website, github_username, company } = profile;
+    return { headline, status, location, website, github_username, company };
+});
 
-export const selectProfileSkills = createSelector([selectProfile], profile => profile.skills || []);
+export const selectProfileUser = createSelector([selectProfile], profile => profile.user);
 
-export const selectProfileSocial = createSelector([selectProfile], profile => profile.social || []);
+export const selectProfileSkills = createSelector([selectProfile], profile => profile.skills);
 
-export const selectProfilePhoto = createSelector([selectProfile], profile => profile.photo);
+export const selectProfileSocial = createSelector([selectProfile], profile => profile.social);
+
+export const selectProfileAvatar = createSelector([selectProfile], profile => profile.avatar);
+
+export const selectProfileCoverImage = createSelector(
+    [selectProfile],
+    profile => profile.cover_image,
+);
 
 export const selectProfileLookingFor = createSelector(
     [selectProfile],
@@ -34,26 +44,15 @@ export const selectProfileLookingFor = createSelector(
 
 export const selectProfileInterests = createSelector([selectProfile], profile => profile.interests);
 
-export const selectProfilePortfolio = createSelector(
-    [selectProfile],
-    profile => profile.portfolio || [],
-);
+export const selectProfilePortfolio = createSelector([selectProfile], profile => profile.portfolio);
 
-export const selectProfileLikes = createSelector([selectProfile], profile => profile.likes || []);
+export const selectProfileLikes = createSelector([selectProfile], profile => profile.likes);
 
-export const selectProfileWatching = createSelector(
-    [selectProfile],
-    profile => profile.watching || [],
-);
+export const selectProfileWatching = createSelector([selectProfile], profile => profile.watching);
 
-export const selectProfileEducation = createSelector(
-    [selectProfile],
-    profile => profile.education || [],
-);
+export const selectProfileEducation = createSelector([selectProfile], profile => profile.education);
 
 export const selectProfileExperience = createSelector(
     [selectProfile],
-    profile => profile.experience || [],
+    profile => profile.experience,
 );
-
-export const selectProfileRepos = createSelector([selectProfile], profile => profile.repos || []);

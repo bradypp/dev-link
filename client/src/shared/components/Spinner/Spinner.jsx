@@ -5,6 +5,7 @@ import { StyledSpinner, SpinnerOverlay } from './SpinnerStyles';
 const propTypes = {
     overlayActive: PropTypes.bool,
     size: PropTypes.string,
+    size: PropTypes.string,
     variant: PropTypes.oneOf(['button', 'default']),
     className: PropTypes.string,
 };

@@ -3,7 +3,6 @@ import {
     PROFILES_ERROR,
     CLEAR_PROFILE,
     PROFILES_LOADED,
-    REPOS_LOADED,
     PROFILE_LOADING,
     PROFILES_LOADING,
 } from 'redux/actionTypes';
@@ -40,15 +39,6 @@ export default (state = initialState, { type, payload }) => {
                 ...state,
                 isProfilesLoading: false,
                 profiles: payload,
-                error: {},
-            };
-        case REPOS_LOADED:
-            return {
-                ...state,
-                profile: {
-                    ...state.profile,
-                    repos: payload,
-                },
                 error: {},
             };
         case PROFILES_ERROR:

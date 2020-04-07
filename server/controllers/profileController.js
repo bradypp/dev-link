@@ -67,32 +67,32 @@ exports.createProfile = catchAsync(async (req, res, next) => {
 });
 
 exports.uploadProfileImages = multerImageUpload.fields([
-    { name: 'photo', maxCount: 1 },
+    { name: 'avatar', maxCount: 1 },
     { name: 'cover_image', maxCount: 1 },
 ]);
 
-// TODO: delete profile photo on uploading a new one (do this before image upload?). Make this a more general photo preparation middleware?
+// TODO: delete profile avatar on uploading a new one (do this before image upload?). Make this a more general avatar preparation middleware?
 exports.resizeProfileImages = catchAsync(async (req, res, next) => {
     if (!req.files) return next();
 
-    // Profile photo
-    if (req.files.photo) {
-        req.body.photo = `profile-${req.user.id}-${Date.now()}-photo.jpeg`;
-        await sharp(req.files.photo[0].buffer)
+    // Profile avatar
+    if (req.files.avatar) {
+        req.body.avatar = `profile-avatar-${req.user.id}-${Date.now()}.jpeg`;
+        await sharp(req.files.avatar[0].buffer)
             .resize(400, 400)
             .toFormat('jpeg')
             .jpeg({ quality: 90 })
-            .toFile(`public/img/profile/photo/${req.body.photo}`);
+            .toFile(`public/img/profile/avatar/${req.body.avatar}`);
     }
 
     // Cover image
     if (req.files.cover_image) {
-        req.body.cover_image = `profile-${req.user.id}-${Date.now()}-cover_image.jpeg`;
+        req.body.cover_image = `profile-cover_image-${req.user.id}-${Date.now()}.jpeg`;
         await sharp(req.files.cover_image[0].buffer)
             .resize(1188, 297)
             .toFormat('jpeg')
             .jpeg({ quality: 90 })
-            .toFile(`public/img/profile/cover/${req.body.cover_image}`);
+            .toFile(`public/img/profile/cover_image/${req.body.cover_image}`);
     }
 
     next();
@@ -105,20 +105,20 @@ exports.deleteProfileImages = catchAsync(async (req, res, next) => {
         return next(new AppError(notFoundErrorMessage, 404));
     }
 
-    if (profile.photo && profile.photo !== 'default.jpg') {
-        fs.unlink(`public/img/profile/photo/${profile.photo}`, err => {
+    if (profile.avatar && profile.avatar !== 'default.jpg') {
+        fs.unlink(`public/img/profile/avatar/${profile.avatar}`, err => {
             if (err) next(new AppError(err.message, 500));
         });
     }
 
     if (profile.cover_image && profile.cover_image !== 'default.jpg') {
-        fs.unlink(`public/img/profile/photo/${profile.cover_image}`, err => {
+        fs.unlink(`public/img/profile/cover_image/${profile.cover_image}`, err => {
             if (err) next(new AppError(err.message, 500));
         });
     }
 
     // TODO: test
-    if (profile.portfolio.length > 0) {
+    if (profile.portfolio && profile.portfolio.length > 0) {
         profile.portfolio.images.forEach(image =>
             fs.unlink(`public/img/profile/portfolio/${image}`, err => {
                 if (err) next(new AppError(err.message, 500));
@@ -228,7 +228,7 @@ exports.resizeProfilePortfolioImages = catchAsync(async (req, res, next) => {
 
     await Promise.all(
         req.files.images.map(async (file, i) => {
-            const filename = `portfolio-${req.user.id}-${Date.now()}-${i + 1}.jpeg`;
+            const filename = `profile-portfolio-${i + 1}-${req.user.id}-${Date.now()}.jpeg`;
 
             await sharp(file.buffer)
                 .resize(500, 500)

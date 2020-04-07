@@ -1,3 +1,5 @@
+import { themes } from 'shared/constants';
+
 const base = {
     primary: '#2977c9',
     primaryDark: '#105EB0',
@@ -21,7 +23,7 @@ const base = {
     borderInputFocus: '#4c9aff',
 };
 
-const primary = {
+const light = {
     textPrimary1: base.greyDark1,
     textPrimary2: base.greyDark2,
     textPrimary3: base.greyDark3,
@@ -33,8 +35,8 @@ const primary = {
     background3: base.white3,
 };
 
-// TODO: customize
-const secondary = {
+// TODO: customize dark theme
+const dark = {
     textPrimary1: base.white1,
     textPrimary2: base.white2,
     textPrimary3: base.white3,
@@ -50,7 +52,7 @@ const secondary = {
 
 const colors = theme => ({
     ...base,
-    ...((theme === 'primary' && primary) || (theme === 'secondary' && secondary)),
+    ...((theme === themes.LIGHT && light) || (theme === themes.DARK && dark)),
 });
 
 export default colors;

@@ -11,7 +11,7 @@ const profileSchema = new Schema({
         type: String,
         default: 'default.jpg',
     },
-    cover: {
+    cover_image: {
         type: String,
         default: 'default.jpg',
     },

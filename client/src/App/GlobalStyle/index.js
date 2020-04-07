@@ -13,7 +13,6 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: inherit;
   }
 
-
   html {
     box-sizing: border-box;
     font-size: 62.5%; 
@@ -39,26 +38,19 @@ const GlobalStyle = createGlobalStyle`
     overflow-x: hidden;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    font-family: ${({ theme }) => theme.fonts.primary};
-    font-size: 1.6rem;
-    background: ${({ theme }) => theme.colors.background1};
-    color: ${({ theme }) => theme.colors.textPrimary1};
-    line-height: 1.5;
   }
 
   #root {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0 ${({ theme }) => theme.layout.pagePadding};
+    font-family: ${({ theme }) => theme.fonts.primary};
+    font-size: 1.6rem;
+    line-height: 1.5;
+    color: ${({ theme }) => theme.colors.textPrimary1};
+    background: ${({ theme }) => theme.colors.background2};
     min-height: 100vh;
-  }
-
-  h1, h2, h3 {
-    font-weight: 900;
-  }
-
-  h4, h5, h6, strong {
-    font-weight: 700;
   }
 
   p {

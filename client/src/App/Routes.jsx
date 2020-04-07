@@ -5,8 +5,6 @@ import {
     SignIn,
     SignUp,
     Dashboard,
-    CreateProfile,
-    EditProfile,
     Profile,
     Profiles,
     Header,
@@ -22,13 +20,11 @@ const Routes = () => {
             <Header />
             <Switch>
                 <Route exact path="/" component={Home} />
-                <Route exact path="/sign-in" component={SignIn} />
-                <Route exact path="/sign-up" component={SignUp} />
-                <Route exact path="/profile/:id" component={Profile} />
-                <Route exact path="/profiles" component={Profiles} />
-                <PrivateRoute exact path="/dashboard" component={Dashboard} />
-                <PrivateRoute exact path="/create" component={CreateProfile} />
-                <PrivateRoute exact path="/edit" component={EditProfile} />
+                <Route path="/sign-in" component={SignIn} />
+                <Route path="/sign-up" component={SignUp} />
+                <Route path="/profile/:username" component={Profile} />
+                <Route path="/search" component={Profiles} />
+                <PrivateRoute path="/dashboard" component={Dashboard} />
                 <Route component={NotFound} />
             </Switch>
         </Router>

@@ -7,8 +7,8 @@ import { createStructuredSelector } from 'reselect';
 import { selectIsAuthenticated } from 'redux/auth';
 
 const propTypes = {
-    isAuthenticated: PropTypes.bool,
     component: PropTypes.object.isRequired,
+    isAuthenticated: PropTypes.bool,
 };
 
 const defaultProps = {
