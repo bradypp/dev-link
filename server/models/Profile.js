@@ -17,17 +17,14 @@ const profileSchema = new Schema({
     },
     headline: {
         type: String,
-        required: [true, 'Headline is required'],
         trim: true,
     },
     city: {
         type: String,
-        required: [true, 'City is required'],
         trim: true,
     },
     country: {
         type: String,
-        required: [true, 'Country is required'],
         trim: true,
     },
     company: {
@@ -45,6 +42,16 @@ const profileSchema = new Schema({
     github_username: {
         type: String,
         trim: true,
+    },
+    contact: {
+        email: {
+            type: String,
+            trim: true,
+        },
+        phone: {
+            type: String,
+            trim: true,
+        },
     },
     languages: [
         {

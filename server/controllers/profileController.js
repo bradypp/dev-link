@@ -28,7 +28,7 @@ const notFoundErrorMessage = 'Profile not found';
 exports.getProfile = factory.getOneByUserId(Profile, { errorMessage: notFoundErrorMessage });
 exports.updateProfile = factory.updateOneByUserId(Profile, {
     errorMessage: notFoundErrorMessage,
-    fieldsToOmit: ['interests', 'portfolio', 'experience', 'education', 'likes'],
+    fieldsToOmit: ['contact', 'portfolio', 'experience', 'education', 'likes', 'watching'],
 });
 exports.deleteProfile = factory.deleteOneByUserId(Profile, { errorMessage: notFoundErrorMessage });
 exports.getAllProfiles = factory.getAll(Profile);
@@ -43,11 +43,6 @@ exports.createProfile = catchAsync(async (req, res, next) => {
     const profileFields = {
         ...req.body,
         user: req.params.userId,
-        interests: undefined,
-        portfolio: undefined,
-        experience: undefined,
-        education: undefined,
-        likes: undefined,
     };
 
     // Create and save new profile
