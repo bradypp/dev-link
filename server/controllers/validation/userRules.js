@@ -35,7 +35,12 @@ exports.signUpRules = [
     password2Rules,
 ];
 
-exports.signInRules = [emailRules, fieldRequired('password', 'Password is required')];
+exports.signInRules = [
+    body('username', 'Username or email is required').custom(
+        (value, { req }) => !!value || !!req.body.email,
+    ),
+    fieldRequired('password', 'Password is required'),
+];
 
 exports.forgotPasswordRules = emailRules;
 

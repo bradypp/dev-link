@@ -22,19 +22,17 @@ const profileSanitizers = [
         'socials.facebook',
         'socials.linkedin',
         'socials.instagram',
-        'socials.custom',
+        'socials.custom.link',
     ]),
 ];
 
-exports.createProfileRules = [
-    fieldRequired('headline', 'Headline is required'),
-    fieldRequired('languages', 'Languages are required'),
-    fieldRequired('skills', 'Skills are required'),
-    profileSanitizers,
-];
+const profileEmailRules = body('contact.email', 'Please enter a valid email')
+    .trim()
+    .normalizeEmail()
+    .isEmail();
 
-// TODO: update should contain the same rules as above if they exist
-exports.updateProfileRules = profileSanitizers;
+// TODO: update should contain rules for fields that exists (e.g. contact.phone) and anything else that can be updated in this route
+exports.updateProfileRules = [profileEmailRules, profileSanitizers];
 
 exports.experienceRules = [
     fieldRequired('title', 'Title is required'),

@@ -51,11 +51,13 @@ exports.signUp = catchAsync(async (req, res, next) => {
 });
 
 exports.signIn = catchAsync(async (req, res, next) => {
-    const user = await User.findOne({ email: req.body.email }).select('+password');
+    const user = req.body.email
+        ? await User.findOne({ email: req.body.email }).select('+password')
+        : await User.findOne({ username: req.body.username }).select('+password');
 
     // Check user exists and password is valid
     if (!user || !(await user.checkPassword(req.body.password))) {
-        return next(new AppError('Email or password incorrect', 400));
+        return next(new AppError('Sign in details incorrect', 400));
     }
 
     // Create and send JWT

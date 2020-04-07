@@ -19,13 +19,7 @@ router.use(authController.protect);
 router
     .route('/me')
     .get(profileController.getMe, profileController.getProfile)
-    .post(
-        validation.createProfile,
-        profileController.getMe,
-        profileController.uploadProfileImages,
-        profileController.resizeProfileImages,
-        profileController.createProfile,
-    )
+    .post(profileController.getMe, profileController.createProfile)
     .patch(
         validation.updateProfile,
         profileController.getMe,
