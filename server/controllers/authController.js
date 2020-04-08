@@ -51,9 +51,11 @@ exports.signUp = catchAsync(async (req, res, next) => {
 });
 
 exports.signIn = catchAsync(async (req, res, next) => {
-    const user = req.body.email
-        ? await User.findOne({ email: req.body.email }).select('+password')
-        : await User.findOne({ username: req.body.username }).select('+password');
+    let user;
+
+    // Find user by login (either username or email)
+    user = await User.findOne({ email: req.body.login }).select('+password');
+    if (!user) user = await User.findOne({ username: req.body.login }).select('+password');
 
     // Check user exists and password is valid
     if (!user || !(await user.checkPassword(req.body.password))) {

@@ -36,9 +36,7 @@ exports.signUpRules = [
 ];
 
 exports.signInRules = [
-    body('username', 'Username or email is required').custom(
-        (value, { req }) => !!value || !!req.body.email,
-    ),
+    fieldRequired('login', 'Username or email is required'),
     fieldRequired('password', 'Password is required'),
 ];
 
