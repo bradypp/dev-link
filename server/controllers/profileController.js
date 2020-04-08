@@ -1,7 +1,7 @@
 const sharp = require('sharp');
 const axios = require('axios');
 const fs = require('fs');
-const factory = require('./handlerFactory');
+const handlers = require('./handlers');
 const Profile = require('../models/Profile');
 const User = require('../models/User');
 const { AppError, catchAsync, multerImageUpload } = require('../utils');
@@ -25,33 +25,33 @@ exports.getByUsername = catchAsync(async (req, res, next) => {
 
 const notFoundErrorMessage = 'Profile not found';
 
-exports.getProfile = factory.getOneByUserId(Profile, { errorMessage: notFoundErrorMessage });
-exports.updateProfile = factory.updateOneByUserId(Profile, {
-    errorMessage: notFoundErrorMessage,
-    fieldsToOmit: ['contact', 'portfolio', 'experience', 'education', 'likes', 'watching'],
-});
-exports.deleteProfile = factory.deleteOneByUserId(Profile, { errorMessage: notFoundErrorMessage });
-exports.getAllProfiles = factory.getAll(Profile);
+exports.createProfileAdmin = handlers.createOne(Profile);
+exports.updateProfileAdmin = handlers.updateOneByUserId(Profile);
 
-exports.createProfile = catchAsync(async (req, res, next) => {
-    // Check a profile doesn't already exist for this user
-    if (await Profile.findOne({ user: req.params.userId })) {
-        return next(new AppError('Profile for this user already exists', 400));
-    }
+exports.getProfile = handlers.getOneByUserId(Profile, { errorMessage: notFoundErrorMessage });
+exports.deleteProfile = handlers.deleteOneByUserId(Profile, { errorMessage: notFoundErrorMessage });
+exports.getAllProfiles = handlers.getAll(Profile);
 
+exports.createUpdateProfile = catchAsync(async (req, res, next) => {
     // Profile fields to save to new profile
     const profileFields = {
         ...req.body,
         user: req.params.userId,
     };
 
-    // Create and save new profile
-    const profile = await Profile.create(profileFields);
+    const profile = await Profile.findOneAndUpdate({ user: req.params.userId }, profileFields, {
+        new: true,
+        runValidators: true,
+        upsert: true,
+    });
+
+    if (!profile) {
+        return next(new AppError('Unable to update/create profile', 400));
+    }
 
     // Add reference to profile to user document
-    const user = await User.findById(req.params.userId);
-    user.profile = profile.id;
-    user.save();
+    req.user.profile = profile.id;
+    req.user.save();
 
     res.status(201).json({
         status: 'success',

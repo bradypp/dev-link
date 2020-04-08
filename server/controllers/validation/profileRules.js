@@ -27,12 +27,13 @@ const profileSanitizers = [
 ];
 
 const profileEmailRules = body('contact.email', 'Please enter a valid email')
+    .if(body('contact.email').exists())
     .trim()
     .normalizeEmail()
     .isEmail();
 
 // TODO: update should contain rules for fields that exists (e.g. contact.phone) and anything else that can be updated in this route
-exports.updateProfileRules = [profileEmailRules, profileSanitizers];
+exports.createUpdateProfileRules = [profileEmailRules, profileSanitizers];
 
 exports.experienceRules = [
     fieldRequired('title', 'Title is required'),

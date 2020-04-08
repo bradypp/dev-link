@@ -1,7 +1,7 @@
 const express = require('express');
-const authController = require('../controllers/authController');
-const profileController = require('../controllers/profileController');
-const validation = require('../controllers/validation');
+const authController = require('../authController');
+const profileController = require('../profileController');
+const validation = require('../validation');
 
 // mergeParams allows access to other/nested router params
 const router = express.Router({ mergeParams: true });
@@ -19,13 +19,12 @@ router.use(authController.protect);
 router
     .route('/me')
     .get(profileController.getMe, profileController.getProfile)
-    .post(profileController.getMe, profileController.createProfile)
-    .patch(
-        validation.updateProfile,
+    .post(
+        validation.createUpdateProfile,
         profileController.getMe,
         profileController.uploadProfileImages,
         profileController.resizeProfileImages,
-        profileController.updateProfile,
+        profileController.createUpdateProfile,
     )
     .delete(
         profileController.getMe,
@@ -73,8 +72,8 @@ router.use(authController.restrictTo('admin'));
 
 router
     .route('/')
-    .post(profileController.createProfile)
-    .patch(profileController.updateProfile)
+    .post(profileController.createProfileAdmin)
+    .patch(profileController.updateProfileAdmin)
     .delete(profileController.deleteProfile);
 
 module.exports = router;

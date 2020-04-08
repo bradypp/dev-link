@@ -1,11 +1,11 @@
 const User = require('../models/User');
-const factory = require('./handlerFactory');
+const handlers = require('./handlers');
 const { AppError, catchAsync, filterObject } = require('../utils');
 
-exports.getUser = factory.getOneById(User);
-exports.createUser = factory.createOne(User);
-exports.updateUser = factory.updateOneById(User);
-exports.deleteUser = factory.deleteOneById(User);
+exports.getUser = handlers.getOneById(User);
+exports.createUserAdmin = handlers.createOne(User);
+exports.updateUserAdmin = handlers.updateOneById(User);
+exports.deleteUser = handlers.deleteOneById(User);
 
 exports.getIdFromCurrentUser = (req, res, next) => {
     req.params.id = req.user.id;

@@ -6,9 +6,13 @@ const handleCastErrorDB = err => {
 };
 
 const handleDuplicateFieldsDB = err => {
-    const value = err.message.match(/(["'])(\\?.)*?\1/)[0];
-    const message = `Duplicate field value: ${value}. Please use another value!`;
-    return new AppError(message, 400);
+    const duplicateValuesArray = err.message.match(/(["'])(\\?.)*?\1/);
+    if (duplicateValuesArray) {
+        const value = duplicateValuesArray[0];
+        const message = `Duplicate field value: ${value}. Please use another value!`;
+        return new AppError(message, 400);
+    }
+    return new AppError(err.message, 400);
 };
 
 const handleJWTError = () => new AppError('Invalid token. Please log in again!', 401);

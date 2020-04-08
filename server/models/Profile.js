@@ -272,13 +272,11 @@ const profileSchema = new Schema({
 // Indexes allow for more efficient queries
 profileSchema.index({
     user: 1,
-    languages: 1,
     city: 1,
     country: 1,
-    skills: 1,
-    likes: -1,
-    watchers: -1,
 });
+profileSchema.index({ languages: 1 });
+profileSchema.index({ skills: 1 });
 
 profileSchema.pre(/^find/, function(next) {
     this.populate({

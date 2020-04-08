@@ -1,7 +1,7 @@
 const express = require('express');
-const authController = require('../controllers/authController');
-const userController = require('../controllers/userController');
-const validation = require('../controllers/validation');
+const authController = require('../authController');
+const userController = require('../userController');
+const validation = require('../validation');
 const profileRouter = require('./profileRoutes');
 
 const router = express.Router();
@@ -27,8 +27,8 @@ router.use(authController.restrictTo('admin'));
 router
     .route('/')
     .get(userController.getUser)
-    .post(userController.createUser)
-    .patch(userController.updateUser)
+    .post(userController.createUserAdmin)
+    .patch(userController.updateUserAdmin)
     .delete(userController.deleteUser);
 
 module.exports = router;
