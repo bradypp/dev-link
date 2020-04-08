@@ -14,6 +14,7 @@ const flexMainStyles = css`
 
 export const MainContainer = styled.main`
     padding: 1.6rem ${({ theme }) => theme.layout.pagePadding};
+    width: 100%;
 `;
 
 export const LayoutContainer = styled.div`

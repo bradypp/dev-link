@@ -40,13 +40,11 @@ export const Logo = styled(CustomLink)`
 
 export const NavContainer = styled.nav`
     ${mixins.containAndCenter}
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    ${mixins.flexBetween}
 `;
 
 export const HeaderContainer = styled.header`
-    ${mixins.boxShadowCard}
+    box-shadow: ${({ theme }) => theme.boxShadow.card};
     padding: 1rem ${({ theme }) => theme.layout.pagePadding};
     width: 100%;
     background-color: ${({ theme }) => theme.colors.white1};

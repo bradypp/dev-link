@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { Input } from 'shared/components';
+import { Input, Main } from 'shared/components';
 
 export const Heading = styled.h1`
     grid-column: 1 / 12;

@@ -62,8 +62,8 @@ export const getCurrentUserProfile = () => async dispatch => {
     }
 };
 
-// TODO: create a base profile on sign up so ready for edit? If so, change backend too
-export const createProfile = (formData, history) => async dispatch => {
+// formData = only the profile fields you want to update
+export const createUpdateProfile = formData => async dispatch => {
     try {
         const config = {
             headers: {
@@ -75,29 +75,7 @@ export const createProfile = (formData, history) => async dispatch => {
 
         dispatch(profileLoaded(res.data.data.profile));
         // TODO: decide whether to keep this alert
-        dispatch(setAlert('Profile Created', 'success'));
-        history.push('/dashboard');
-    } catch (err) {
-        dispatch(errorHandler(err));
-        dispatch(profilesError(err));
-    }
-};
-
-// formData = only the profile fields you want to update
-export const updateProfile = (formData, history) => async dispatch => {
-    try {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        };
-
-        const res = await api.patch('/profile/me', formData, config);
-
-        dispatch(profileLoaded(res.data.data.profile));
-        // TODO: decide whether to keep this alert
         dispatch(setAlert('Profile Updated', 'success'));
-        history.push('/dashboard');
     } catch (err) {
         dispatch(errorHandler(err));
         dispatch(profilesError(err));

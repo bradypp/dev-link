@@ -38,11 +38,14 @@ export const selectProfileSkills = createSelector([selectProfile], profile => pr
 
 export const selectProfileSocial = createSelector([selectProfile], profile => profile.social);
 
-export const selectProfileAvatar = createSelector([selectProfile], profile => profile.avatar);
+export const selectProfileAvatar = createSelector(
+    [selectProfile],
+    profile => profile.avatar || 'default.jpg',
+);
 
 export const selectProfileCoverImage = createSelector(
     [selectProfile],
-    profile => profile.cover_image,
+    profile => profile.cover_image || 'default.jpg',
 );
 
 export const selectProfileLookingFor = createSelector(

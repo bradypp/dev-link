@@ -16,11 +16,11 @@ const propTypes = {
 // TODO: redesign
 const SignIn = ({ signIn, clearAlerts, isAuthenticated, alerts }) => {
     const [formData, setFormData] = useState({
-        email: '',
+        login: '',
         password: '',
     });
 
-    const { email, password } = formData;
+    const { login, password } = formData;
 
     const onChange = event => {
         setFormData({ ...formData, [event.target.name]: event.target.value });
@@ -47,10 +47,10 @@ const SignIn = ({ signIn, clearAlerts, isAuthenticated, alerts }) => {
             <form className="form" onSubmit={onSubmit} noValidate>
                 <div className="form-group">
                     <input
-                        type="email"
-                        placeholder="Email Address"
-                        name="email"
-                        value={email}
+                        type="text"
+                        placeholder="Username or email address"
+                        name="login"
+                        value={login}
                         onChange={onChange}
                     />
                 </div>

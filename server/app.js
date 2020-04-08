@@ -11,9 +11,9 @@ const { AppError } = require('./utils');
 const rateLimiter = require('./config/rateLimiter');
 const hppConfig = require('./config/hppConfig');
 const globalErrorHandler = require('./controllers/errorHandler');
-const authRouter = require('./routes/authRoutes');
-const profileRouter = require('./routes/profileRoutes');
-const userRouter = require('./routes/userRoutes');
+const authRouter = require('./controllers/routes/authRoutes');
+const profileRouter = require('./controllers/routes/profileRoutes');
+const userRouter = require('./controllers/routes/userRoutes');
 
 // Start express app
 const app = express();

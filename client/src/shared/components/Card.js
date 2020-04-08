@@ -1,8 +1,7 @@
 import styled from 'styled-components/macro';
-import { mixins } from 'shared/styles';
 
 const Card = styled.section`
-    ${mixins.boxShadowCard};
+    box-shadow: ${({ theme }) => theme.boxShadow.card};
     background-color: ${({ theme }) => theme.colors.background1};
     padding: 2.4rem;
     width: 100%;

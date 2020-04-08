@@ -44,10 +44,10 @@ export const signUp = ({ name, email, password, password2 }) => async dispatch =
     }
 };
 
-export const signIn = ({ email, password }) => async dispatch => {
+export const signIn = ({ login, password }) => async dispatch => {
     try {
         dispatch(userLoading());
-        const body = JSON.stringify({ email, password });
+        const body = JSON.stringify({ login, password });
         const config = {
             headers: {
                 'Content-Type': 'application/json',
