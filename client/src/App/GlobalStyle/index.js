@@ -1,10 +1,8 @@
 import { createGlobalStyle } from 'styled-components/macro';
 import { media } from 'shared/styles';
-import fontStyles from './fontStyles';
+import './fontStyles.css';
 
 const GlobalStyle = createGlobalStyle`
-  ${fontStyles}
-
   *,
   *:before,
   *:after {
@@ -42,7 +40,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1.6rem;
     line-height: 1.5;
     color: ${({ theme }) => theme.colors.textPrimary1};
-    background-color: ${({ theme }) => theme.colors.background2};
+    background-color: ${({ theme }) => theme.colors.background1};
     min-height: 100vh;
   }
 
