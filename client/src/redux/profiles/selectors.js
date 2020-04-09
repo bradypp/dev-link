@@ -58,9 +58,12 @@ export const selectProfileInterests = createSelector([selectProfile], profile =>
 
 export const selectProfilePortfolio = createSelector([selectProfile], profile => profile.portfolio);
 
-export const selectProfileStars = createSelector([selectProfile], profile => profile.stars);
+export const selectProfileStars = createSelector([selectProfile], profile => profile.stars || []);
 
-export const selectProfileWatchers = createSelector([selectProfile], profile => profile.watchers);
+export const selectProfileWatchers = createSelector(
+    [selectProfile],
+    profile => profile.watchers || [],
+);
 
 export const selectProfileEducation = createSelector([selectProfile], profile => profile.education);
 

@@ -1,10 +1,12 @@
 export { default as PrivateRoute } from './PrivateRoute/PrivateRoute';
 export { default as Spinner } from './Spinner/Spinner';
 export { default as Button } from './Button/Button';
+export { default as StyledButton } from './StyledButton/StyledButton';
 export { default as CustomLink } from './CustomLink/CustomLink';
+export { default as StyledLink } from './CustomLink/CustomLink';
 export { default as Input } from './Input/Input';
 export { default as Main } from './Main/Main';
 export { default as Card } from './Card';
-export { MinimalButton, PrimaryButton, BorderedButton } from './Button/ButtonVariants';
-export { MinimalLink, PrimaryLink, BorderedLink } from './CustomLink/CustomLinkVariants';
+export { MinimalButton, PrimaryButton, BorderedButton } from './StyledButton/StyledButtonVariants';
+export { MinimalLink, PrimaryLink, BorderedLink } from './StyledLink/StyledLinkVariants';
 export * from './typography';

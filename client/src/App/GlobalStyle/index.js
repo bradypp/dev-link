@@ -64,7 +64,7 @@ const GlobalStyle = createGlobalStyle`
     display: inline-block;
     text-decoration: none;
     color: ${({ theme }) => theme.colors.link};
-    transition: ${({ theme }) => theme.animation.transition};
+    transition: all 0.1s ease;
     cursor: pointer;
   }
 
@@ -104,7 +104,7 @@ const GlobalStyle = createGlobalStyle`
     border: 0;
     border-radius: 0;
     color: ${({ theme }) => theme.colors.textPrimary1};
-    transition: ${({ theme }) => theme.animation.transition};
+    transition: all 0.1s ease;
 
     &:focus,
     &:active {

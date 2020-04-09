@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { IoMdEye, IoMdEyeOff, IoMdStar, IoMdStarOutline } from 'react-icons/io';
 import { createStructuredSelector } from 'reselect';
 import {
     selectProfileAvatar,
@@ -17,8 +16,7 @@ import { selectUser, selectIsAuthenticated } from 'redux/auth';
 import { setAlert } from 'redux/alerts';
 import {
     ProfileTopContainer,
-    ContentContainerLeft,
-    ContentContainerRight,
+    ContentContainer,
     CoverImage,
     CoverImageContainer,
     AvatarContainer,
@@ -27,6 +25,11 @@ import {
     Headline,
     TopSubHeading,
     ToggleButton,
+    StarIcon,
+    WatchIcon,
+    CountContainer,
+    ToggleButtonsContainer,
+    StarredIcon,
 } from './ProfileTopStyles';
 
 const propTypes = {
@@ -116,67 +119,53 @@ const ProfileTop = ({
                     alt="Profile cover"
                 />
             </CoverImageContainer>
-            <ContentContainerLeft>
-                <AvatarContainer>
-                    <Avatar
-                        src={[
-                            `http://localhost:5000/img/profile/avatar/${avatar}`,
-                            `http://localhost:5000/img/profile/avatar/default.jpg`,
-                        ]}
-                        alt="Profile avatar"
-                    />
-                </AvatarContainer>
-                <Name>{name}</Name>
-                {headline && <Headline>{headline}</Headline>}
-                {city ? (
-                    <TopSubHeading>
-                        {city}
-                        {country && <>, {country}</>}
-                    </TopSubHeading>
-                ) : (
-                    <>{country && <TopSubHeading>{country}</TopSubHeading>}</>
-                )}
-                {company ? (
-                    <TopSubHeading>
-                        {company}
-                        {current_position && <> &middot; {current_position}</>}
-                    </TopSubHeading>
-                ) : (
-                    <>{current_position && <TopSubHeading>{current_position}</TopSubHeading>}</>
-                )}
-            </ContentContainerLeft>
-            <ContentContainerRight>
-                <ToggleButton
-                    Icon={() =>
-                        watchedByCurrentUser ? (
-                            <IoMdEyeOff size="1.6em" className="watchIcon--watching" />
-                        ) : (
-                            <IoMdEye size="1.6em" className="watchIcon" />
-                        )
-                    }
-                    color="greyDark1"
-                    onClick={toggleWatchHandler}>
-                    Watch
-                    {profileWatchers.length}
-                </ToggleButton>
-                <ToggleButton
-                    Icon={() =>
-                        starredByCurrentUser ? (
-                            <IoMdStar size="1.6em" className="starIcon" />
-                        ) : (
-                            <IoMdStarOutline size="1.6em" className="starIcon" />
-                        )
-                    }
-                    color="greyDark1"
-                    onClick={toggleStarHandler}>
-                    Star
-                    {profileStars.length}
-                </ToggleButton>
-                {/* watch button & like button */}
-                {/* website link*/}
-                {/* gihub username link*/}
-                {/* Contact info button & socials button*/}
-            </ContentContainerRight>
+            <ContentContainer>
+                <div>
+                    <AvatarContainer>
+                        <Avatar
+                            src={[
+                                `http://localhost:5000/img/profile/avatar/${avatar}`,
+                                `http://localhost:5000/img/profile/avatar/default.jpg`,
+                            ]}
+                            alt="Profile avatar"
+                        />
+                    </AvatarContainer>
+                    <Name>{name}</Name>
+                    {headline && <Headline>{headline}</Headline>}
+                    {city ? (
+                        <TopSubHeading>
+                            {city}
+                            {country && <>, {country}</>}
+                        </TopSubHeading>
+                    ) : (
+                        <>{country && <TopSubHeading>{country}</TopSubHeading>}</>
+                    )}
+                    {company ? (
+                        <TopSubHeading>
+                            {company}
+                            {current_position && <> &middot; {current_position}</>}
+                        </TopSubHeading>
+                    ) : (
+                        <>{current_position && <TopSubHeading>{current_position}</TopSubHeading>}</>
+                    )}
+                </div>
+                <ToggleButtonsContainer>
+                    <ToggleButton Icon={() => <WatchIcon />} onClick={toggleWatchHandler}>
+                        {watchedByCurrentUser ? 'Watching' : 'Watch'}
+                    </ToggleButton>
+                    <CountContainer className="count">{profileWatchers.length}</CountContainer>
+                    <ToggleButton
+                        Icon={() => (starredByCurrentUser ? <StarredIcon /> : <StarIcon />)}
+                        onClick={toggleStarHandler}>
+                        {starredByCurrentUser ? 'Starred' : 'Star'}
+                    </ToggleButton>
+                    <CountContainer className="count">{profileStars.length}</CountContainer>
+                    {/* watch button & like button */}
+                    {/* website link*/}
+                    {/* gihub username link*/}
+                    {/* Contact info button & socials button*/}
+                </ToggleButtonsContainer>
+            </ContentContainer>
         </ProfileTopContainer>
     );
 };

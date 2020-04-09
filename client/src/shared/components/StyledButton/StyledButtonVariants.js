@@ -3,17 +3,17 @@ import {
     minimalButtonStyles,
     primaryButtonStyles,
     borderedButtonStyles,
-} from './ButtonVariantStyles';
-import Button from './Button';
+} from './StyledButtonVariantStyles';
+import StyledButton from './StyledButton';
 
-export const MinimalButton = styled(Button)`
+export const MinimalButton = styled(StyledButton)`
     ${minimalButtonStyles};
 `;
 
-export const PrimaryButton = styled(Button)`
+export const PrimaryButton = styled(StyledButton)`
     ${({ color }) => primaryButtonStyles(color)};
 `;
 
-export const BorderedButton = styled(Button)`
+export const BorderedButton = styled(StyledButton)`
     ${({ color }) => borderedButtonStyles(color)};
 `;

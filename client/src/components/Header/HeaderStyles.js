@@ -12,7 +12,7 @@ const sharedStyles = css`
     border-radius: 5px;
 `;
 
-// TODO: Made header specific buttons?
+// TODO: Made header specific buttons from Button/Link or MinimalButton/Link with better styling
 export const StyledPrimaryLink = styled(PrimaryLink).attrs({
     color: 'primaryDark',
 })`
