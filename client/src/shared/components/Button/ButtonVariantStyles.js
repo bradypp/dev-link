@@ -1,10 +1,20 @@
 import { css } from 'styled-components/macro';
 import { mixins } from 'shared/styles';
 
+export const minimalButtonStyles = css`
+    color: ${({ theme }) => theme.colors.textPrimary1};
+    font-weight: 600;
+    height: 4rem;
+    padding: 0 ${({ iconOnly }) => (!iconOnly ? `1.8rem` : `2.2rem`)};
+    width: min-content;
+    border-radius: 0.2rem;
+`;
+
 // TODO: put box shadow on buttons
 const lightenDarkenPercentage = 0.05;
 
 export const primaryButtonStyles = (color = 'primary') => css`
+${minimalButtonStyles}
     color: ${({ theme }) => {
         switch (color) {
             case 'primary':
@@ -41,6 +51,7 @@ const borderedButtonActiveBackground = color => css`
 `;
 
 export const borderedButtonStyles = (color = 'primary') => css`
+${minimalButtonStyles}
     color: ${({ theme }) => theme.colors[color]};
     border: 1px solid ${({ theme }) => theme.colors[color]};
     &:not(:disabled) {

@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components/macro';
-import { CustomLink, PrimaryLink, BorderedLink, PrimaryButton } from 'shared/components';
+import { MinimalLink, PrimaryLink, BorderedLink, PrimaryButton } from 'shared/components';
 import { mixins } from 'shared/styles';
 
 // TODO: finalize header styling (change coloring)
@@ -31,7 +31,7 @@ export const StyledPrimaryButton = styled(PrimaryButton).attrs({
     ${sharedStyles}
 `;
 
-export const Logo = styled(CustomLink)`
+export const Logo = styled(MinimalLink)`
     color: ${({ theme }) => theme.colors.primaryDark};
     font-size: 3.5rem;
     padding: 0;

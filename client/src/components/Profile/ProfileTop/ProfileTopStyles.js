@@ -68,11 +68,11 @@ export const TopSubHeading = styled.h3`
 
 // TODO: Styling
 export const ToggleButton = styled(Button)`
-    font-size: 1.4rem;
+    ${'' /* font-size: 1.4rem;
     height: 3rem;
     padding: 0 1rem;
     border: 1px solid ${({ theme }) => theme.colors.greyDark1};
-    margin-left: 1rem;
+    margin-left: 1rem; */}
     .starIcon {
         margin-bottom: 3px;
     }

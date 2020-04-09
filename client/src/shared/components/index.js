@@ -5,6 +5,6 @@ export { default as CustomLink } from './CustomLink/CustomLink';
 export { default as Input } from './Input/Input';
 export { default as Main } from './Main/Main';
 export { default as Card } from './Card';
-export { PrimaryButton, BorderedButton } from './Button/ButtonVariants';
-export { PrimaryLink, BorderedLink } from './CustomLink/CustomLinkVariants';
+export { MinimalButton, PrimaryButton, BorderedButton } from './Button/ButtonVariants';
+export { MinimalLink, PrimaryLink, BorderedLink } from './CustomLink/CustomLinkVariants';
 export * from './typography';
