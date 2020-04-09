@@ -4,6 +4,7 @@ import { mixins } from 'shared/styles';
 
 export const ButtonText = styled.span`
     padding-left: ${({ withPadding }) => (withPadding ? 0.5 : 0)}rem;
+    line-height: 0;
 `;
 
 export const StyledSpinner = styled(Spinner).attrs({
@@ -30,10 +31,6 @@ export const baseButtonStyles = css`
     &:disabled {
         opacity: 0.7;
         cursor: default;
-
-        span {
-            opacity: 0;
-        }
     }
 `;
 

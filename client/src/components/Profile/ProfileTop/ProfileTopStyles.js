@@ -1,13 +1,9 @@
-import styled, { css } from 'styled-components/macro';
+import styled from 'styled-components/macro';
 import Image from 'react-image';
-import { Card } from 'shared/components';
+import { Card, Button } from 'shared/components';
 
-const sharedCardStyles = css`
+export const ProfileTopContainer = styled(Card)`
     grid-column: 1 / 12;
-`;
-
-export const TopCardContainer = styled(Card)`
-    ${sharedCardStyles};
     padding: 0;
 `;
 
@@ -23,10 +19,20 @@ export const CoverImage = styled(Image)`
 
 const topCardPadding = 2.4;
 
-export const TopCardContentContainer = styled.div`
-    display: flex;
-    padding: ${topCardPadding}rem ${topCardPadding}rem 2rem;
+export const ContentContainerLeft = styled.div`
+    display: inline-block;
+    width: 50%;
+    padding: ${topCardPadding}rem 0 2rem ${topCardPadding}rem;
     line-height: 1.3;
+`;
+
+export const ContentContainerRight = styled.div`
+    display: inline-block;
+    float: right;
+    width: 50%;
+    padding: ${topCardPadding}rem ${topCardPadding}rem 2rem 0;
+    line-height: 1.3;
+    text-align: right;
 `;
 
 export const AvatarContainer = styled.div`
@@ -60,16 +66,20 @@ export const TopSubHeading = styled.h3`
     margin-top: 0.8rem;
 `;
 
-export const SectionHeading = styled.h2`
-    font-size: 2rem;
-    font-weight: 400;
-`;
-
-export const SectionSubHeading = styled.h3`
-    font-size: 1.6rem;
-    font-weight: 400;
-`;
-
-export const CardContainer = styled(Card)`
-    ${sharedCardStyles};
+// TODO: Styling
+export const ToggleButton = styled(Button)`
+    font-size: 1.4rem;
+    height: 3rem;
+    padding: 0 1rem;
+    border: 1px solid ${({ theme }) => theme.colors.greyDark1};
+    margin-left: 1rem;
+    .starIcon {
+        margin-bottom: 3px;
+    }
+    .watchIcon {
+        margin-bottom: 1px;
+    }
+    .watchIcon--watching {
+        margin-bottom: 0px;
+    }
 `;

@@ -11,7 +11,6 @@ const { AppError, catchAsync, multerImageUpload } = require('../utils');
 
 exports.getMe = (req, res, next) => {
     req.params.userId = req.user.id;
-    req.params.id = req.user.profile;
     next();
 };
 
@@ -19,7 +18,6 @@ exports.getByUsername = catchAsync(async (req, res, next) => {
     if (!req.query.username) next();
     const user = await User.findOne({ username: req.query.username });
     req.params.userId = user.id;
-    req.params.id = user.profile;
     next();
 });
 
@@ -283,34 +281,29 @@ exports.removePortfolioItem = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.toggleLike = catchAsync(async (req, res, next) => {
+exports.toggleStar = catchAsync(async (req, res, next) => {
     const profile = await Profile.findById(req.params.id);
     const user = await User.findById(req.params.userId);
 
-    const isInProfileLikesArr =
-        profile.likes.filter(el => el.toString() === req.params.userId).length > 0;
-    const idInUserLikesArr = user.likes.filter(el => el.toString() === req.params.id).length > 0;
+    const userIsInProfileStarsArr = profile.stars.includes(req.params.userId);
+    const profileIsInUserStarredArr = user.starred.includes(req.params.id);
 
-    if (isInProfileLikesArr !== idInUserLikesArr) {
-        return next(new AppError('User likes array and profile likes array are out of sync', 400));
-    }
-
-    // Check if the profile has already been liked by the current user
-    if (isInProfileLikesArr && idInUserLikesArr) {
-        // Remove user from the likes array if user already exists
-        const profileLikesRemoveIndex = profile.likes
+    // Check if the profile has already been starred by the current user
+    if (userIsInProfileStarsArr && profileIsInUserStarredArr) {
+        // Remove user from the stars array if user already exists
+        const profileLikesRemoveIndex = profile.stars
             .map(el => el.toString())
             .indexOf(req.params.userId);
-        profile.likes.splice(profileLikesRemoveIndex, 1);
+        profile.stars.splice(profileLikesRemoveIndex, 1);
 
-        // Remove profile from the likes array if user already exists
-        const userLikesRemoveIndex = user.likes.map(el => el.toString()).indexOf(req.params.id);
-        user.likes.splice(userLikesRemoveIndex, 1);
+        // Remove profile from the stars array if user already exists
+        const userLikesRemoveIndex = user.starred.map(el => el.toString()).indexOf(req.params.id);
+        user.starred.splice(userLikesRemoveIndex, 1);
     } else {
-        // Add user to the profile likes array
-        profile.likes.push(req.params.userId);
-        // Add profile to the user likes array
-        user.likes.push(req.params.id);
+        // Add user to the profile stars array
+        profile.stars.push(req.params.userId);
+        // Add profile to the user starred array
+        user.starred.push(req.params.id);
     }
 
     await profile.save();
@@ -320,43 +313,35 @@ exports.toggleLike = catchAsync(async (req, res, next) => {
         status: 'success',
         data: {
             profile,
+            user,
         },
     });
 });
 
-exports.toggleWatching = catchAsync(async (req, res, next) => {
-    // if (req.params.id === req.user.);
+exports.toggleWatch = catchAsync(async (req, res, next) => {
     const profile = await Profile.findById(req.params.id);
     const user = await User.findById(req.params.userId);
 
-    const isInProfileWatchingArr =
-        profile.watching.filter(el => el.toString() === req.params.userId).length > 0;
-    const idInUserWatchingArr =
-        user.watching.filter(el => el.toString() === req.params.id).length > 0;
-
-    if (isInProfileWatchingArr !== idInUserWatchingArr) {
-        return next(
-            new AppError('User watching array and profile watching array are out of sync', 400),
-        );
-    }
+    const userIsInProfileWatchersArr = profile.watchers.includes(req.params.userId);
+    const profileIsInUserWatchingArr = user.watching.includes(req.params.id);
 
     // Check if the profile has already been liked by the current user
-    if (isInProfileWatchingArr && idInUserWatchingArr) {
-        // Remove user from the likes array if user already exists
-        const profileWatchingRemoveIndex = profile.watching
+    if (userIsInProfileWatchersArr && profileIsInUserWatchingArr) {
+        // Remove user from the watchers array if user already exists
+        const profileWatchersRemoveIndex = profile.watchers
             .map(el => el.toString())
             .indexOf(req.params.userId);
-        profile.watching.splice(profileWatchingRemoveIndex, 1);
+        profile.watchers.splice(profileWatchersRemoveIndex, 1);
 
-        // Remove profile from the likes array if user already exists
+        // Remove profile from the watching array if user already exists
         const userWatchingRemoveIndex = user.watching
             .map(el => el.toString())
             .indexOf(req.params.id);
         user.watching.splice(userWatchingRemoveIndex, 1);
     } else {
-        // Add user to the profile likes array
-        profile.watching.push(req.params.userId);
-        // Add profile to the profile likes array
+        // Add user to the profile watchers array
+        profile.watchers.push(req.params.userId);
+        // Add profile to the users watching array
         user.watching.push(req.params.id);
     }
 
@@ -367,6 +352,7 @@ exports.toggleWatching = catchAsync(async (req, res, next) => {
         status: 'success',
         data: {
             profile,
+            user,
         },
     });
 });

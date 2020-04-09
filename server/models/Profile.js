@@ -249,7 +249,7 @@ const profileSchema = new Schema({
             },
         ],
     },
-    likes: [
+    stars: [
         {
             type: Schema.Types.ObjectId,
             ref: 'User',

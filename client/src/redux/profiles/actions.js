@@ -1,5 +1,6 @@
 import { api, errorHandler } from 'shared/utils';
-import { setAlert } from 'redux/alerts/actions';
+import { setAlert } from 'redux/alerts';
+import { userLoaded } from 'redux/auth';
 import {
     PROFILE_LOADED,
     PROFILES_LOADED,
@@ -62,7 +63,6 @@ export const getCurrentUserProfile = () => async dispatch => {
     }
 };
 
-// formData = only the profile fields you want to update
 export const createUpdateProfile = formData => async dispatch => {
     try {
         const config = {
@@ -76,6 +76,30 @@ export const createUpdateProfile = formData => async dispatch => {
         dispatch(profileLoaded(res.data.data.profile));
         // TODO: decide whether to keep this alert
         dispatch(setAlert('Profile Updated', 'success'));
+    } catch (err) {
+        dispatch(errorHandler(err));
+        dispatch(profilesError(err));
+    }
+};
+
+export const toggleStar = profileId => async dispatch => {
+    try {
+        const res = await api.patch(`/profile/${profileId}/star`);
+
+        dispatch(profileLoaded(res.data.data.profile));
+        dispatch(userLoaded(res.data.data.user));
+    } catch (err) {
+        dispatch(errorHandler(err));
+        dispatch(profilesError(err));
+    }
+};
+
+export const toggleWatch = profileId => async dispatch => {
+    try {
+        const res = await api.patch(`/profile/${profileId}/watch`);
+
+        dispatch(profileLoaded(res.data.data.profile));
+        dispatch(userLoaded(res.data.data.user));
     } catch (err) {
         dispatch(errorHandler(err));
         dispatch(profilesError(err));

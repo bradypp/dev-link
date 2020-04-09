@@ -63,9 +63,9 @@ router
     .route('/portfolio/:portId')
     .delete(profileController.getMe, profileController.removePortfolioItem);
 
-router.route('/:id/like').patch(profileController.getMe, profileController.toggleLike);
+router.route('/:id/star').patch(profileController.getMe, profileController.toggleStar);
 
-router.route('/:id/watch').patch(profileController.getMe, profileController.toggleWatching);
+router.route('/:id/watch').patch(profileController.getMe, profileController.toggleWatch);
 
 // Restrict the following routes to admin users only
 router.use(authController.restrictTo('admin'));

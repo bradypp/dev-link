@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Main, SectionHeading } from 'shared/components';
+import { Main } from 'shared/components';
 import { getProfileByUsername } from 'redux/profiles';
 import ProfileTop from './ProfileTop/ProfileTop';
 
@@ -23,7 +23,6 @@ const Profile = ({ getProfileByUsername }) => {
 
     return (
         <Main>
-            <SectionHeading>Hello!</SectionHeading>
             <ProfileTop />
             {/* bio card */}
             {/* languages & skills card */}
