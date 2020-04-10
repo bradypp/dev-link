@@ -1,18 +1,22 @@
 const utils = {
     rootDomain: {},
     zIndex: {
-        dropdown: 50,
-        modal: 100,
-        alert: 150,
+        header: 50,
+        dropdown: 100,
+        modal: 150,
+        alert: 200,
     },
-    // TODO: media query to change padding to 1.6 for mobile
     layout: {
         maxWidth: `120rem`,
-        pagePadding: `4rem`,
+        pagePadding: `4.8rem`,
+        pagePaddingTablet: `3.2rem`,
+        pagePaddingMobile: `1.6rem`,
+        headerHeight: `6rem`,
     },
     boxShadow: {
         medium: `0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1)`,
-        card: `0 0 0 0.1rem rgba(0, 0, 0, 0.15), 0 0.2rem 0.5rem rgba(0, 0, 0, 0.2)`,
+        header: `0 0.15rem 0.5rem rgba(9, 30, 66, 0.15)`,
+        card: `0 0.15rem 0.35rem rgba(9, 30, 66, 0.25)`,
         dropdown: `rgba(9, 30, 66, 0.25) 0 0.4rem 0.8rem -0.2rem, rgba(9, 30, 66, 0.31) 0 0x 0.1rem`,
         cover: `0 0 1rem rgba(0, 0, 0, 0.3)`,
     },

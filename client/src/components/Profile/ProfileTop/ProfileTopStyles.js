@@ -65,15 +65,18 @@ const sharedToggleContainerStyles = css`
     height: 3rem;
     padding: 0 0.8rem;
     border: 1px solid ${({ theme }) => theme.colors.greyLight3};
-    border-radius: 2px;
+    border-radius: 0;
 `;
 
-export const ToggleButton = styled(PrimaryButton).attrs({ color: 'white1' })`
+export const ToggleButton = styled(PrimaryButton).attrs({ color: 'white2' })`
     ${sharedToggleContainerStyles}
     margin-left: 1.6rem;
+    color: ${({ theme }) => theme.colors.textPrimary1};
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
 
     span {
-        margin-top: 4px;
+        margin-top: 2px;
     }
 `;
 
@@ -83,6 +86,8 @@ export const CountContainer = styled.div`
     border-left: none;
     padding-top: 2px;
     font-size: 1.4rem;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
 `;
 
 export const ToggleButtonsContainer = styled.div`

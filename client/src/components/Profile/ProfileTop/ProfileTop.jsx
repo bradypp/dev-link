@@ -86,9 +86,6 @@ const ProfileTop = ({
         company,
     } = profileInfo;
     const { name } = profileUser;
-    // TODO: Put stars/watchers buttons in a form wrapper?
-    // TODO: Button and numbers styling
-    // TODO: add clicking on stars/watchers numbers to take you to a list of all the users in that array, list the users profiles?
 
     const toggleWatchHandler = () => {
         if (isAuthenticated) {

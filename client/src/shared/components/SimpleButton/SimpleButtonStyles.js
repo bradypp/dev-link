@@ -1,7 +1,6 @@
 import styled from 'styled-components/macro';
-import { Link } from 'react-router-dom';
 import { baseButtonStyles } from 'shared/styles';
 
-export const CustomLinkWrapper = styled(Link)`
+export const SimpleButtonWrapper = styled.button`
     ${baseButtonStyles};
 `;

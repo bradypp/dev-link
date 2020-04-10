@@ -1,13 +1,16 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { BaseLink } from './CustomLinkStyles';
+import { ButtonText, ButtonSpinner } from 'shared/components/Button/ButtonStyles';
+import { CustomLinkWrapper } from './CustomLinkStyles';
 
 const propTypes = {
     to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     children: PropTypes.node,
     className: PropTypes.string,
-    disabled: PropTypes.bool,
+    color: PropTypes.string,
+    Icon: PropTypes.oneOf([PropTypes.element, PropTypes.func]),
     isWorking: PropTypes.bool,
+    disabled: PropTypes.bool,
     onClick: PropTypes.func,
 };
 
@@ -15,28 +18,35 @@ const defaultProps = {
     to: undefined,
     className: undefined,
     children: undefined,
-    disabled: false,
+    color: 'primary',
+    Icon: undefined,
     isWorking: false,
+    disabled: false,
     onClick: undefined,
 };
 
-const CustomLink = forwardRef(({ children, disabled, isWorking, to, className, onClick }, ref) => {
-    const handleClick = () => {
-        if (!disabled && onClick) {
-            onClick();
-        }
-    };
-    return (
-        <BaseLink
-            to={to}
-            className={className}
-            onClick={handleClick}
-            disabled={disabled || isWorking}
-            ref={ref}>
-            {children}
-        </BaseLink>
-    );
-});
+const CustomLink = forwardRef(
+    ({ children, color, Icon, isWorking, disabled, to, className, onClick }, ref) => {
+        const handleClick = () => {
+            if (!disabled && onClick) {
+                onClick();
+            }
+        };
+        return (
+            <CustomLinkWrapper
+                to={to}
+                className={className}
+                color={color}
+                onClick={handleClick}
+                disabled={disabled}
+                ref={ref}>
+                {isWorking && <ButtonSpinner />}
+                {Icon && <Icon className="icon" />}
+                {children && <ButtonText withPadding={Icon || isWorking}>{children}</ButtonText>}
+            </CustomLinkWrapper>
+        );
+    },
+);
 
 CustomLink.propTypes = propTypes;
 CustomLink.defaultProps = defaultProps;

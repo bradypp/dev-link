@@ -45,8 +45,11 @@ export const NavContainer = styled.nav`
 `;
 
 export const HeaderContainer = styled.header`
-    box-shadow: ${({ theme }) => theme.boxShadow.card};
-    padding: 1rem ${({ theme }) => theme.layout.pagePadding};
+${mixins.flexCenter}
+    box-shadow: ${({ theme }) => theme.boxShadow.header};
+    padding: 0 ${({ theme }) => theme.layout.pagePadding};
+    height: ${({ theme }) => theme.layout.headerHeight};
     width: 100%;
     background-color: ${({ theme }) => theme.colors.white1};
+    z-index: ${({ theme }) => theme.zIndex.header};
 `;

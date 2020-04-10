@@ -91,7 +91,7 @@ const GlobalStyle = createGlobalStyle`
       }
     }
   }
-
+  
   [role="button"], button {
     cursor: pointer;
     background: none;
@@ -113,6 +113,7 @@ const GlobalStyle = createGlobalStyle`
 
     &:disabled {
       opacity: 0.7;
+        cursor: default;
     }
   }
 

@@ -3,17 +3,17 @@ import {
     minimalButtonStyles,
     primaryButtonStyles,
     borderedButtonStyles,
-} from 'shared/components/StyledButton/StyledButtonVariantStyles';
-import CustomLink from './StyledLink';
+} from 'shared/components/Button/ButtonVariantStyles';
+import CustomLink from './CustomLink';
 
 export const MinimalLink = styled(CustomLink)`
     ${minimalButtonStyles};
 `;
 
 export const PrimaryLink = styled(CustomLink)`
-    ${({ color }) => primaryButtonStyles(color)};
+    ${primaryButtonStyles};
 `;
 
 export const BorderedLink = styled(CustomLink)`
-    ${({ color }) => borderedButtonStyles(color)};
+    ${borderedButtonStyles};
 `;

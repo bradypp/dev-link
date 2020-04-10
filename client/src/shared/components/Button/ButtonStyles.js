@@ -1,20 +1,17 @@
-import styled, { css } from 'styled-components/macro';
-import { mixins } from 'shared/styles';
+import styled from 'styled-components/macro';
+import { Spinner } from 'shared/components';
+import { baseButtonStyles } from 'shared/styles';
 
-export const baseButtonStyles = css`
-    ${mixins.inlineFlexCenter}
-    vertical-align: middle;
-    white-space: nowrap;
-    appearance: none;
-    overflow: hidden;
-    position: relative;
-
-    &:disabled {
-        opacity: 0.7;
-        cursor: default;
-    }
+export const ButtonWrapper = styled.button`
+    ${baseButtonStyles}
 `;
 
-export const BaseButton = styled.button`
-    ${baseButtonStyles};
+export const ButtonText = styled.span`
+    padding-left: ${({ withPadding }) => (withPadding ? 0.5 : 0)}rem;
 `;
+
+export const ButtonSpinner = styled(Spinner).attrs({
+    overlayActive: false,
+    variant: 'button',
+    size: '1.8rem',
+})``;
