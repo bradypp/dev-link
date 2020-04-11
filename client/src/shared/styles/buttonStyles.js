@@ -1,6 +1,6 @@
 import { css } from 'styled-components/macro';
 
-const baseButtonStyles = css`
+export const sharedButtonStyles = css`
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -16,4 +16,4 @@ const baseButtonStyles = css`
     }
 `;
 
-export default baseButtonStyles;
+export default sharedButtonStyles;

@@ -6,6 +6,7 @@ const propTypes = {
     overlayActive: PropTypes.bool,
     size: PropTypes.string,
     variant: PropTypes.oneOf(['button', 'default']),
+    color: PropTypes.string,
     className: PropTypes.string,
 };
 
@@ -13,12 +14,13 @@ const defaultProps = {
     overlayActive: true,
     size: '4.5rem',
     variant: 'default',
+    color: 'dark',
     className: undefined,
 };
 
-const Spinner = ({ overlayActive, size, variant, className }) => (
+const Spinner = ({ overlayActive, size, color, variant, className }) => (
     <SpinnerOverlay className={className} overlayActive={overlayActive}>
-        <StyledSpinner size={size} variant={variant} />
+        <StyledSpinner size={size} variant={variant} color={color} />
     </SpinnerOverlay>
 );
 

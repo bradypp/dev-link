@@ -11,6 +11,7 @@ export const SpinnerOverlay = styled.div`
     ${mixins.flexCenter}
 `;
 
+// TODO: change styling for light/dark color
 export const StyledSpinner = styled.div`
     display: inline-block;
     width: ${({ size }) => size};

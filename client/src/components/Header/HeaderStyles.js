@@ -1,38 +1,13 @@
 import styled, { css } from 'styled-components/macro';
-import { MinimalLink, PrimaryLink, BorderedLink, PrimaryButton } from 'shared/components';
+import { CustomLink, Button } from 'shared/components';
 import { mixins } from 'shared/styles';
 
-// TODO: finalize header styling (change coloring)
+// TODO: Made header specific buttons
 
-const sharedStyles = css`
-    margin-left: 1.4rem;
-    font-size: 1.5rem;
-    padding: 0 2rem;
-    height: 3.8rem;
-    border-radius: 5px;
-`;
-
-// TODO: Made header specific buttons from Button/Link or MinimalButton/Link with better styling
-export const StyledPrimaryLink = styled(PrimaryLink).attrs({
-    color: 'primaryDark',
+export const Logo = styled(CustomLink).attrs({
+    variant: 'base',
 })`
-    ${sharedStyles}
-`;
-
-export const StyledBorderedLink = styled(BorderedLink).attrs({
-    color: 'primaryDark',
-})`
-    ${sharedStyles}
-`;
-
-export const StyledPrimaryButton = styled(PrimaryButton).attrs({
-    color: 'primaryDark',
-})`
-    ${sharedStyles}
-`;
-
-export const Logo = styled(MinimalLink)`
-    color: ${({ theme }) => theme.colors.primaryDark};
+    color: ${({ theme }) => theme.colors.primary};
     font-size: 3.5rem;
     padding: 0;
     font-weight: 400;
@@ -42,6 +17,11 @@ export const Logo = styled(MinimalLink)`
 export const NavContainer = styled.nav`
     ${mixins.containAndCenter}
     ${mixins.flexBetween}
+
+    & > button, a:not(:first-child) {
+        margin-left: 1.4rem;
+        font-size: 1.5rem;
+    }
 `;
 
 export const HeaderContainer = styled.header`

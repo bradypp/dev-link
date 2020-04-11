@@ -30,6 +30,7 @@ const light = {
     textSecondary1: base.white1,
     textSecondary2: base.white2,
     textSecondary3: base.white3,
+    textColored1: base.primary,
     background1: base.white1,
     background2: base.white2,
     background3: base.white3,

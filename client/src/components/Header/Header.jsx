@@ -3,15 +3,9 @@ import { connect } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
+import { Button, CustomLink } from 'shared/components';
 import { selectIsUserLoading, selectIsAuthenticated, signOut, selectUser } from 'redux/auth';
-import {
-    HeaderContainer,
-    NavContainer,
-    Logo,
-    StyledPrimaryLink,
-    StyledPrimaryButton,
-    StyledBorderedLink,
-} from './HeaderStyles';
+import { HeaderContainer, NavContainer, Logo } from './HeaderStyles';
 
 const propTypes = {
     signOut: PropTypes.func.isRequired,
@@ -33,17 +27,19 @@ const Header = ({ isUserLoading, isAuthenticated, signOut, user }) => {
 
     const signedInMenu = (
         <>
-            <StyledPrimaryLink to="/search">Developers</StyledPrimaryLink>
-            <StyledPrimaryLink to={`/profile/${user.username}`}>Profile</StyledPrimaryLink>
-            <StyledPrimaryLink to="/dashboard">Dashboard</StyledPrimaryLink>
-            <StyledPrimaryButton onClick={signOut}>Sign Out</StyledPrimaryButton>
+            <CustomLink to="/search">Developers</CustomLink>
+            <CustomLink to={`/profile/${user.username}`}>Profile</CustomLink>
+            <CustomLink to="/dashboard">Dashboard</CustomLink>
+            <Button onClick={signOut}>Sign Out</Button>
         </>
     );
 
     const guestMenu = (
         <>
-            <StyledBorderedLink to="/sign-in">Sign In</StyledBorderedLink>
-            <StyledPrimaryLink to="/sign-up">Join Now</StyledPrimaryLink>
+            <CustomLink to="/sign-in" variant="bordered">
+                Sign In
+            </CustomLink>
+            <CustomLink to="/sign-up">Join Now</CustomLink>
         </>
     );
 

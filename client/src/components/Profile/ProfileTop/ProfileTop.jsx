@@ -14,8 +14,9 @@ import {
 } from 'redux/profiles';
 import { selectUser, selectIsAuthenticated } from 'redux/auth';
 import { setAlert } from 'redux/alerts';
+import { Flex, Button } from 'shared/components';
+import { ProfileCard } from '../ProfileStyles';
 import {
-    ProfileTopContainer,
     ContentContainer,
     CoverImage,
     CoverImageContainer,
@@ -28,8 +29,9 @@ import {
     StarIcon,
     WatchIcon,
     CountContainer,
-    ToggleButtonsContainer,
+    ButtonsContainer,
     StarredIcon,
+    ContentRightContainer,
 } from './ProfileTopStyles';
 
 const propTypes = {
@@ -81,8 +83,8 @@ const ProfileTop = ({
         current_position,
         city,
         country,
-        website,
-        github_username,
+        // website,
+        // github_username,
         company,
     } = profileInfo;
     const { name } = profileUser;
@@ -105,8 +107,11 @@ const ProfileTop = ({
     const starredByCurrentUser = profileStars.includes(currentUser._id);
     const watchedByCurrentUser = profileWatchers.includes(currentUser._id);
 
+    // TODO: Add contact/socials popup & do button styling
+    // TODO: Watching/stars numbers hover effect and on click functionality
+    // TODO: Add message button?
     return (
-        <ProfileTopContainer>
+        <ProfileCard padding="0">
             <CoverImageContainer>
                 <CoverImage
                     src={[
@@ -117,7 +122,7 @@ const ProfileTop = ({
                 />
             </CoverImageContainer>
             <ContentContainer>
-                <div>
+                <Flex flexDirection="column" alignItems="flexStart">
                     <AvatarContainer>
                         <Avatar
                             src={[
@@ -145,25 +150,25 @@ const ProfileTop = ({
                     ) : (
                         <>{current_position && <TopSubHeading>{current_position}</TopSubHeading>}</>
                     )}
-                </div>
-                <ToggleButtonsContainer>
-                    <ToggleButton Icon={() => <WatchIcon />} onClick={toggleWatchHandler}>
-                        {watchedByCurrentUser ? 'Watching' : 'Watch'}
-                    </ToggleButton>
-                    <CountContainer className="count">{profileWatchers.length}</CountContainer>
-                    <ToggleButton
-                        Icon={() => (starredByCurrentUser ? <StarredIcon /> : <StarIcon />)}
-                        onClick={toggleStarHandler}>
-                        {starredByCurrentUser ? 'Starred' : 'Star'}
-                    </ToggleButton>
-                    <CountContainer className="count">{profileStars.length}</CountContainer>
-                    {/* watch button & like button */}
-                    {/* website link*/}
-                    {/* gihub username link*/}
-                    {/* Contact info button & socials button*/}
-                </ToggleButtonsContainer>
+                </Flex>
+                <ContentRightContainer>
+                    <ButtonsContainer>
+                        <ToggleButton Icon={() => <WatchIcon />} onClick={toggleWatchHandler}>
+                            {watchedByCurrentUser ? `Unwatch` : `Watch`}
+                        </ToggleButton>
+                        <CountContainer className="count">{profileWatchers.length}</CountContainer>
+                        <ToggleButton
+                            Icon={() => (starredByCurrentUser ? <StarredIcon /> : <StarIcon />)}
+                            onClick={toggleStarHandler}>
+                            {starredByCurrentUser ? `Unstar` : `Star`}
+                        </ToggleButton>
+                        <CountContainer className="count">{profileStars.length}</CountContainer>
+                    </ButtonsContainer>
+                    <Button>Contact Info</Button>
+                    <Button>Socials</Button>
+                </ContentRightContainer>
             </ContentContainer>
-        </ProfileTopContainer>
+        </ProfileCard>
     );
 };
 

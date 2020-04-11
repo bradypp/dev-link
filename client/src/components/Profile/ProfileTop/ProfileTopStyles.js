@@ -1,15 +1,10 @@
 import styled, { css } from 'styled-components/macro';
 import { IoMdEye, IoMdStarOutline, IoMdStar } from 'react-icons/io';
 import Image from 'react-image';
-import { Card, PrimaryButton } from 'shared/components';
+import { Button, Flex } from 'shared/components';
 import { mixins } from 'shared/styles';
 
-export const ProfileTopContainer = styled(Card)`
-    grid-column: 1 / 12;
-    padding: 0;
-`;
-
-const coverImageHeight = 20.8;
+const coverImageHeight = 20;
 
 export const CoverImageContainer = styled.div`
     height: ${coverImageHeight}rem;
@@ -21,11 +16,11 @@ export const CoverImage = styled(Image)`
 
 const topCardPadding = 2.4;
 
-export const ContentContainer = styled.div`
-    ${mixins.flexBetween}
-    width: 100%;
-    align-items: flex-start;
-    padding: ${topCardPadding}rem ${topCardPadding}rem 2rem;
+export const ContentContainer = styled(Flex).attrs({
+    justifyContent: `flex-between`,
+    alignItems: 'flex-start',
+    padding: `${topCardPadding}rem`,
+})`
     line-height: 1.3;
 `;
 
@@ -45,53 +40,70 @@ export const Avatar = styled(Image)`
 export const Name = styled.h1`
     font-size: 2.4rem;
     font-weight: 400;
-    margin-top: 0.8rem;
+    padding-top: 0.8rem;
 `;
 
 export const Headline = styled.h2`
     font-size: 1.8rem;
     font-weight: 400;
-    margin-top: 0.8rem;
+    padding-top: 0.8rem;
 `;
 
 export const TopSubHeading = styled.h3`
     font-size: 1.6rem;
     font-weight: 400;
-    margin-top: 0.8rem;
+    padding-top: 0.8rem;
 `;
 
-const sharedToggleContainerStyles = css`
+export const ContentRightContainer = styled(Flex).attrs({
+    flexDirection: 'column',
+    justifyContent: `flex-start`,
+    alignItems: 'flex-end',
+})`
+    height: 100%;
+
+    & > * :not(:last-child) {
+        margin-bottom: 1rem;
+    }
+`;
+
+export const ButtonsContainer = styled(Flex).attrs({
+    justifyContent: 'flex-end',
+})`
+    & > button :not(:first-child) {
+        margin-left: 1.4rem;
+    }
+`;
+
+const sharedToggleButtonStyles = css`
     font-size: 1.3rem;
     height: 3rem;
     padding: 0 0.8rem;
     border: 1px solid ${({ theme }) => theme.colors.greyLight3};
-    border-radius: 0;
 `;
 
-export const ToggleButton = styled(PrimaryButton).attrs({ color: 'white2' })`
-    ${sharedToggleContainerStyles}
-    margin-left: 1.6rem;
+// TODO: Have a round icon only button that changes color/background color on hover & click?
+export const ToggleButton = styled(Button).attrs({
+    color: 'white2',
+    lightenDarkenPercentage: 0.05,
+})`
+    ${sharedToggleButtonStyles}
     color: ${({ theme }) => theme.colors.textPrimary1};
-    border-top-left-radius: 2px;
-    border-bottom-left-radius: 2px;
-
-    span {
-        margin-top: 2px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    
+    &:hover {
+        border: 1px solid ${({ theme }) => mixins.darken(theme.colors.greyLight3, 0.1)};
     }
 `;
 
 export const CountContainer = styled.div`
     ${mixins.inlineFlexCenter}
-    ${sharedToggleContainerStyles}
+    ${sharedToggleButtonStyles}
     border-left: none;
-    padding-top: 2px;
     font-size: 1.4rem;
-    border-top-right-radius: 2px;
-    border-bottom-right-radius: 2px;
-`;
-
-export const ToggleButtonsContainer = styled.div`
-    ${mixins.flexCenter}
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
 `;
 
 export const StarIcon = styled(IoMdStarOutline)`

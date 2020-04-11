@@ -1,46 +1,47 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { SimpleLinkWrapper } from './SimpleCustomLinkStyles';
+import { StyledButton } from './ButtonWrapperStyles';
 
 const propTypes = {
-    to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-    children: PropTypes.node,
     className: PropTypes.string,
+    children: PropTypes.node,
+    type: PropTypes.oneOf(['button', 'reset', 'submit']),
     disabled: PropTypes.bool,
     isWorking: PropTypes.bool,
     onClick: PropTypes.func,
 };
 
 const defaultProps = {
-    to: undefined,
     className: undefined,
     children: undefined,
+    type: 'button',
     disabled: false,
     isWorking: false,
-    onClick: undefined,
+    onClick: () => {},
 };
 
-const SimpleCustomLink = forwardRef(
-    ({ children, disabled, isWorking, to, className, onClick }, ref) => {
+const ButtonWrapper = forwardRef(
+    ({ children, disabled, isWorking, onClick, className, type }, ref) => {
         const handleClick = () => {
-            if (!disabled && onClick) {
+            if (!disabled && !isWorking) {
                 onClick();
             }
         };
+
         return (
-            <SimpleLinkWrapper
-                to={to}
+            <StyledButton
                 className={className}
                 onClick={handleClick}
+                type={type}
                 disabled={disabled || isWorking}
                 ref={ref}>
                 {children}
-            </SimpleLinkWrapper>
+            </StyledButton>
         );
     },
 );
 
-SimpleCustomLink.propTypes = propTypes;
-SimpleCustomLink.defaultProps = defaultProps;
+ButtonWrapper.propTypes = propTypes;
+ButtonWrapper.defaultProps = defaultProps;
 
-export default SimpleCustomLink;
+export default ButtonWrapper;

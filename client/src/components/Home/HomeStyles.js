@@ -1,10 +1,11 @@
 import styled from 'styled-components/macro';
-import { Input, Main } from 'shared/components';
+import { Input } from 'shared/components';
 
 export const Heading = styled.h1`
     grid-column: 1 / 12;
     font-size: 5rem;
     font-weight: 300;
+    color: ${({ theme }) => theme.colors.textColored1};
 `;
 
 export const SearchContainer = styled.div`

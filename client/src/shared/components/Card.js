@@ -1,9 +1,13 @@
 import styled from 'styled-components/macro';
+import { Section } from 'shared/components';
 
-const Card = styled.section`
+const Card = styled(Section).attrs(({ padding }) => ({
+    display: 'flex',
+    flexDirection: 'column',
+    padding: padding || '2.4rem',
+}))`
     box-shadow: ${({ theme }) => theme.boxShadow.card};
     background-color: ${({ theme }) => theme.colors.background1};
-    padding: 2.4rem;
     width: 100%;
 `;
 

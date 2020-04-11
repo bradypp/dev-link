@@ -1,6 +1,6 @@
 import React from 'react';
 import { IoIosSearch } from 'react-icons/io';
-import { Main, PrimaryLink, PrimaryButton } from 'shared/components';
+import { Main, CustomLink, Button } from 'shared/components';
 import { useClearAlerts } from 'shared/hooks';
 import { Heading, SearchContainer, InputContainer, StyledInput } from './HomeStyles';
 
@@ -16,10 +16,10 @@ const Home = () => {
                     <InputContainer>
                         <StyledInput Icon={IoIosSearch} />
                     </InputContainer>
-                    <PrimaryButton type="submit">Search</PrimaryButton>
-                    <PrimaryLink to="/#" color="white1">
+                    <Button type="submit">Search</Button>
+                    <CustomLink to="/#" color="white2">
                         Advanced Search
-                    </PrimaryLink>
+                    </CustomLink>
                 </form>
             </SearchContainer>
             <img src="#" alt="#" />
