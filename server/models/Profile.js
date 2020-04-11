@@ -53,18 +53,16 @@ const profileSchema = new Schema({
             trim: true,
         },
     },
-    languages: [
-        {
-            type: String,
-            required: [true, 'Languages are required'],
-            trim: true,
-        },
-    ],
     skills: [
         {
-            type: String,
-            required: [true, 'Skills are required'],
-            trim: true,
+            skillType: {
+                type: String,
+                trim: true,
+            },
+            skillsArray: {
+                type: String,
+                trim: true,
+            },
         },
     ],
     bio: {
