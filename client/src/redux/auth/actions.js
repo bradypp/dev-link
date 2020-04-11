@@ -65,6 +65,7 @@ export const signIn = ({ login, password }) => async dispatch => {
 };
 
 export const signOut = () => dispatch => {
+    console.log('object');
     dispatch(signOutUser());
 };
 

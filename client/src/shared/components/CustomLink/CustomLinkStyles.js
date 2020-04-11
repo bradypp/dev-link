@@ -1,13 +1,17 @@
-import styled from 'styled-components/macro';
-import { Link } from 'react-router-dom';
-import { sharedButtonStyles } from 'shared/styles';
+import styled, { css } from 'styled-components/macro';
+import { sharedButtonStyles, mixins } from 'shared/styles';
 import {
     baseButtonStyles,
     primaryButtonStyles,
     borderedButtonStyles,
 } from 'shared/components/Button/ButtonStyles';
+import CustomLinkWrapper from './CustomLinkWrapper';
 
-export const StyledLink = styled(Link)`
+export const simpleLinkStyles = css`
+    ${mixins.linkHover}
+`;
+
+export const StyledLink = styled(CustomLinkWrapper)`
     ${sharedButtonStyles};
     ${({ variant }) => {
         switch (variant) {
@@ -15,8 +19,13 @@ export const StyledLink = styled(Link)`
                 return primaryButtonStyles;
             case 'bordered':
                 return borderedButtonStyles;
-            default:
+            case 'base':
                 return baseButtonStyles;
+            case 'link':
+                return simpleLinkStyles;
+            case 'no-style':
+            default:
+                return sharedButtonStyles;
         }
     }}
 `;

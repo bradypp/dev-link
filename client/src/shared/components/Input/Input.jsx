@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-
-import { StyledInput, InputElement } from './InputStyles';
+import { InputContainer, InputElement } from './InputStyles';
 
 const propTypes = {
     className: PropTypes.string,
@@ -24,7 +23,7 @@ const defaultProps = {
 };
 
 const Input = forwardRef(({ Icon, className, onChange, height, ...inputProps }, ref) => (
-    <StyledInput className={className} height={height}>
+    <InputContainer className={className} height={height}>
         {Icon && <Icon className="icon" />}
         <InputElement
             {...inputProps}
@@ -33,7 +32,7 @@ const Input = forwardRef(({ Icon, className, onChange, height, ...inputProps }, 
             height={height}
             ref={ref}
         />
-    </StyledInput>
+    </InputContainer>
 ));
 
 Input.propTypes = propTypes;

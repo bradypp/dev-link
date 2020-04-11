@@ -14,7 +14,7 @@ import {
 } from 'redux/profiles';
 import { selectUser, selectIsAuthenticated } from 'redux/auth';
 import { setAlert } from 'redux/alerts';
-import { Flex, Button } from 'shared/components';
+import { Flex, Button, CustomLink } from 'shared/components';
 import { ProfileCard } from '../ProfileStyles';
 import {
     ContentContainer,
@@ -32,6 +32,7 @@ import {
     ButtonsContainer,
     StarredIcon,
     ContentRightContainer,
+    ContactSocialContainer,
 } from './ProfileTopStyles';
 
 const propTypes = {
@@ -107,7 +108,7 @@ const ProfileTop = ({
     const starredByCurrentUser = profileStars.includes(currentUser._id);
     const watchedByCurrentUser = profileWatchers.includes(currentUser._id);
 
-    // TODO: Add contact/socials popup & do button styling
+    // TODO: Add contact/socials popup & do button styling (add icon?)
     // TODO: Watching/stars numbers hover effect and on click functionality
     // TODO: Add message button?
     return (
@@ -164,8 +165,12 @@ const ProfileTop = ({
                         </ToggleButton>
                         <CountContainer className="count">{profileStars.length}</CountContainer>
                     </ButtonsContainer>
-                    <Button>Contact Info</Button>
-                    <Button>Socials</Button>
+                    <ContactSocialContainer>
+                        <CustomLink variant="link">Contact</CustomLink> &middot;
+                        <CustomLink variant="link">Socials</CustomLink>
+                        &middot; <CustomLink variant="link">Website</CustomLink>
+                        &middot; <CustomLink variant="link">GitHub</CustomLink>
+                    </ContactSocialContainer>
                 </ContentRightContainer>
             </ContentContainer>
         </ProfileCard>

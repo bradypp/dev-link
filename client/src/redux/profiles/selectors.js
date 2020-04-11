@@ -19,8 +19,9 @@ export const selectAllProfiles = createSelector(
 
 export const selectProfile = createSelector([selectProfiles], profile => profile.profile);
 
-export const selectProfileInfo = createSelector([selectProfile], profile => {
-    const {
+export const selectProfileInfo = createSelector(
+    [selectProfile],
+    ({ _id, headline, current_position, city, country, website, github_username, company }) => ({
         _id,
         headline,
         current_position,
@@ -29,9 +30,8 @@ export const selectProfileInfo = createSelector([selectProfile], profile => {
         website,
         github_username,
         company,
-    } = profile;
-    return { _id, headline, current_position, city, country, website, github_username, company };
-});
+    }),
+);
 
 export const selectProfileUser = createSelector([selectProfile], profile => profile.user || {});
 

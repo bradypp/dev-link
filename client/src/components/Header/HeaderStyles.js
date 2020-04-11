@@ -1,11 +1,11 @@
-import styled, { css } from 'styled-components/macro';
-import { CustomLink, Button } from 'shared/components';
+import styled from 'styled-components/macro';
+import { CustomLink } from 'shared/components';
 import { mixins } from 'shared/styles';
 
 // TODO: Made header specific buttons
 
 export const Logo = styled(CustomLink).attrs({
-    variant: 'base',
+    variant: 'no-styles',
 })`
     color: ${({ theme }) => theme.colors.primary};
     font-size: 3.5rem;
@@ -25,7 +25,7 @@ export const NavContainer = styled.nav`
 `;
 
 export const HeaderContainer = styled.header`
-${mixins.flexCenter}
+    ${mixins.flexCenter}
     box-shadow: ${({ theme }) => theme.boxShadow.header};
     padding: 0 ${({ theme }) => theme.layout.pagePadding};
     height: ${({ theme }) => theme.layout.headerHeight};

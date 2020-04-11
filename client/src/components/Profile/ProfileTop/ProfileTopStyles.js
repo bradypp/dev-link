@@ -4,14 +4,15 @@ import Image from 'react-image';
 import { Button, Flex } from 'shared/components';
 import { mixins } from 'shared/styles';
 
-const coverImageHeight = 20;
+const coverImageHeight = 18;
 
 export const CoverImageContainer = styled.div`
     height: ${coverImageHeight}rem;
+    overflow: hidden;
 `;
 
 export const CoverImage = styled(Image)`
-    max-height: 100%;
+    width-height: 100%;
 `;
 
 const topCardPadding = 2.4;
@@ -25,7 +26,7 @@ export const ContentContainer = styled(Flex).attrs({
 `;
 
 export const AvatarContainer = styled.div`
-    margin-top: -${coverImageHeight / 2 + topCardPadding}rem;
+    margin-top: -14rem;
     height: 16rem;
     width: 16rem;
     box-shadow: ${({ theme }) => theme.boxShadow.card};
@@ -37,27 +38,29 @@ export const Avatar = styled(Image)`
     border-radius: 50%;
 `;
 
+const contentLeftMargin = '0.8rem';
+
 export const Name = styled.h1`
     font-size: 2.4rem;
     font-weight: 400;
-    padding-top: 0.8rem;
+    margin-top: ${contentLeftMargin};
 `;
 
 export const Headline = styled.h2`
     font-size: 1.8rem;
     font-weight: 400;
-    padding-top: 0.8rem;
+    margin-top: ${contentLeftMargin};
 `;
 
 export const TopSubHeading = styled.h3`
     font-size: 1.6rem;
     font-weight: 400;
-    padding-top: 0.8rem;
+    margin-top: ${contentLeftMargin};
 `;
 
 export const ContentRightContainer = styled(Flex).attrs({
     flexDirection: 'column',
-    justifyContent: `flex-start`,
+    justifyContent: `space-between`,
     alignItems: 'flex-end',
 })`
     height: 100%;
@@ -84,14 +87,14 @@ const sharedToggleButtonStyles = css`
 
 // TODO: Have a round icon only button that changes color/background color on hover & click?
 export const ToggleButton = styled(Button).attrs({
-    color: 'white2',
+    backgroundColor: 'white2',
     lightenDarkenPercentage: 0.05,
 })`
     ${sharedToggleButtonStyles}
     color: ${({ theme }) => theme.colors.textPrimary1};
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
-    
+
     &:hover {
         border: 1px solid ${({ theme }) => mixins.darken(theme.colors.greyLight3, 0.1)};
     }
@@ -118,4 +121,19 @@ export const StarredIcon = styled(IoMdStar)`
 
 export const WatchIcon = styled(IoMdEye)`
     font-size: 1.6em;
+`;
+
+// TODO: link styles (make bolder & grey background on hover?), make global button variant?
+// TODO: make shared a href component to have link styles which aren't global and are separate from the button styles
+export const ContactSocialContainer = styled(Flex).attrs({
+    justifyContent: 'flex-end',
+})`
+    height: max-content;
+    & > * :not(:first-child) {
+        margin-left: 0.4rem;
+    }
+
+    & > * :not(:last-child) {
+        margin-right: 0.4rem;
+    }
 `;

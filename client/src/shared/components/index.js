@@ -1,8 +1,8 @@
 export { default as PrivateRoute } from './PrivateRoute/PrivateRoute';
 export { default as Spinner } from './Spinner/Spinner';
-export { default as SimpleButton } from './ButtonWrapper/ButtonWrapper';
+export { default as ButtonWrapper } from './Button/ButtonWrapper';
 export { default as Button } from './Button/Button';
-export { default as SimpleCustomLink } from './LinkWrapper/LinkWrapper';
+export { default as LinkWrapper } from './CustomLink/CustomLinkWrapper';
 export { default as CustomLink } from './CustomLink/CustomLink';
 export { default as Input } from './Input/Input';
 export { default as Main } from './Main/Main';

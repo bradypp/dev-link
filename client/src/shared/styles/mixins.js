@@ -1,6 +1,21 @@
 import { css } from 'styled-components/macro';
 import Color from 'color';
 
+const functions = {
+    darken: (colorValue, amount) =>
+        Color(colorValue)
+            .darken(amount)
+            .string(),
+    lighten: (colorValue, amount) =>
+        Color(colorValue)
+            .lighten(amount)
+            .string(),
+    rgba: (colorValue, opacity) =>
+        Color(colorValue)
+            .alpha(opacity)
+            .string(),
+};
+
 const mixins = {
     flexCenter: css`
         display: flex;
@@ -37,18 +52,13 @@ const mixins = {
         margin: 0 auto;
         width: 100%;
     `,
-    darken: (colorValue, amount) =>
-        Color(colorValue)
-            .darken(amount)
-            .string(),
-    lighten: (colorValue, amount) =>
-        Color(colorValue)
-            .lighten(amount)
-            .string(),
-    rgba: (colorValue, opacity) =>
-        Color(colorValue)
-            .alpha(opacity)
-            .string(),
+    linkHover: css`
+        color: ${({ theme }) => theme.colors.textLink};
+        &:hover {
+            color: ${({ theme }) => mixins.lighten(theme.colors.textLink, 0.1)};
+        }
+    `,
+    ...functions,
 };
 
 export default mixins;

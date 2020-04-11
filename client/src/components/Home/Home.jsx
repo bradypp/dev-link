@@ -17,7 +17,7 @@ const Home = () => {
                         <StyledInput Icon={IoIosSearch} />
                     </InputContainer>
                     <Button type="submit">Search</Button>
-                    <CustomLink to="/#" color="white2">
+                    <CustomLink to="/#" backgroundColor="white2">
                         Advanced Search
                     </CustomLink>
                 </form>

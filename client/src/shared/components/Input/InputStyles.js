@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export const StyledInput = styled.div`
+export const InputContainer = styled.div`
     position: relative;
     height: ${({ height }) => `${height}rem`};
     width: 100%;

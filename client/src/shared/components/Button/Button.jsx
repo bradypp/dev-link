@@ -7,7 +7,8 @@ const propTypes = {
     className: PropTypes.string,
     children: PropTypes.node,
     type: PropTypes.oneOf(['button', 'reset', 'submit']),
-    color: PropTypes.string,
+    backgroundColor: PropTypes.string,
+    textColor: PropTypes.string,
     variant: PropTypes.string,
     Icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
     lightenDarkenPercentage: PropTypes.number,
@@ -20,7 +21,8 @@ const propTypes = {
 const defaultProps = {
     className: undefined,
     children: undefined,
-    color: 'primary',
+    backgroundColor: 'primary',
+    textColor: undefined,
     variant: 'primary',
     Icon: undefined,
     lightenDarkenPercentage: 0.05,
@@ -31,48 +33,13 @@ const defaultProps = {
     onClick: () => {},
 };
 
-const Button = forwardRef(
-    (
-        {
-            children,
-            color,
-            variant,
-            Icon,
-            lightenDarkenPercentage,
-            disabled,
-            isWorking,
-            onClick,
-            className,
-            type,
-            isActive,
-        },
-        ref,
-    ) => {
-        const handleClick = () => {
-            if (!disabled && !isWorking) {
-                onClick();
-            }
-        };
-
-        return (
-            <StyledButton
-                className={className}
-                onClick={handleClick}
-                type={type}
-                color={color}
-                variant={variant}
-                lightenDarkenPercentage={lightenDarkenPercentage}
-                disabled={disabled || isWorking}
-                isActive={isActive}
-                iconOnly={!children}
-                ref={ref}>
-                {isWorking && <ButtonSpinner />}
-                {Icon && <Icon className="icon" />}
-                {children && <ButtonText withPadding={Icon || isWorking}>{children}</ButtonText>}
-            </StyledButton>
-        );
-    },
-);
+const Button = forwardRef(({ children, Icon, disabled, isWorking, ...otherProps }, ref) => (
+    <StyledButton disabled={disabled || isWorking} iconOnly={!children} ref={ref} {...otherProps}>
+        {isWorking && <ButtonSpinner />}
+        {Icon && <Icon className="icon" />}
+        {children && <ButtonText withPadding={Icon || isWorking}>{children}</ButtonText>}
+    </StyledButton>
+));
 
 Button.propTypes = propTypes;
 Button.defaultProps = defaultProps;

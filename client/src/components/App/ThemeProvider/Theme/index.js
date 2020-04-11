@@ -8,6 +8,7 @@ const theme = theme => ({
     animation,
     ...typography,
     ...utils,
+    theme,
 });
 
 export default theme;

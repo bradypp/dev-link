@@ -1,6 +1,6 @@
+/* eslint-disable react/button-has-type */
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { StyledButton } from './ButtonWrapperStyles';
 
 const propTypes = {
     className: PropTypes.string,
@@ -29,14 +29,9 @@ const ButtonWrapper = forwardRef(
         };
 
         return (
-            <StyledButton
-                className={className}
-                onClick={handleClick}
-                type={type}
-                disabled={disabled || isWorking}
-                ref={ref}>
+            <button className={className} onClick={handleClick} type={type} ref={ref}>
                 {children}
-            </StyledButton>
+            </button>
         );
     },
 );
