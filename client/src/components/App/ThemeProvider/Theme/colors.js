@@ -17,10 +17,8 @@ const base = {
     greyLight1: '#e7e4e4',
     greyLight2: '#ddd',
     greyLight3: '#ccc',
-    link: '#0052cc',
-    border1: '#dfe1e6',
-    border2: '#C1C7D0',
-    borderInputFocus: '#4c9aff',
+    borderFocus: '#4c9aff',
+    textLink: '#0052cc',
 };
 
 const light = {
@@ -31,10 +29,11 @@ const light = {
     textSecondary2: base.white2,
     textSecondary3: base.white3,
     textColored1: base.primary,
-    textLink: base.link,
     background1: base.white1,
     background2: base.white2,
     background3: base.white3,
+    border1: base.greyLight2,
+    border2: base.greyLight3,
 };
 
 // TODO: customize dark theme
@@ -46,15 +45,26 @@ const dark = {
     textSecondary2: base.greyDark2,
     textSecondary3: base.greyDark3,
     textColored1: base.primary,
-    textLink: base.link,
     background1: base.greyDark1,
     background2: base.greyDark2,
     background3: base.greyDark3,
+    border1: base.white2,
+    border2: base.white3,
+};
+
+const selectTheme = theme => {
+    switch (theme) {
+        case themes.DARK:
+            return dark;
+        case themes.LIGHT:
+        default:
+            return light;
+    }
 };
 
 const colors = theme => ({
     ...base,
-    ...((theme === themes.LIGHT && light) || (theme === themes.DARK && dark)),
+    ...selectTheme(theme),
 });
 
 export default colors;

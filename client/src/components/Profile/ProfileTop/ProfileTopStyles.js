@@ -29,7 +29,7 @@ export const AvatarContainer = styled.div`
     margin-top: -14rem;
     height: 16rem;
     width: 16rem;
-    box-shadow: ${({ theme }) => theme.boxShadow.card};
+    box-shadow: ${({ theme }) => theme.boxShadow.primary};
     border-radius: 50%;
     border: 5px solid #fff;
 `;
@@ -124,7 +124,6 @@ export const WatchIcon = styled(IoMdEye)`
 `;
 
 // TODO: link styles (make bolder & grey background on hover?), make global button variant?
-// TODO: make shared a href component to have link styles which aren't global and are separate from the button styles
 export const ContactSocialContainer = styled(Flex).attrs({
     justifyContent: 'flex-end',
 })`

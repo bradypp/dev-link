@@ -21,6 +21,7 @@ const Profile = ({ getProfileByUsername }) => {
         getProfileByUsername(username);
     }, [getProfileByUsername, username]);
 
+    // TODO: Conditional appearance for different components/buttons (such as contact, social & education etc) based on if profile belongs to current authenticated user or not. If it is the currently authenticated users profile, have prompts to edit/add profile info, that's if they haven't already clicked to remove that from their profile?
     return (
         <Main>
             <ProfileTop />

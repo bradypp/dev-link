@@ -14,12 +14,17 @@ export const ButtonSpinner = styled(Spinner).attrs({
     size: '1.8rem',
 })``;
 
+const height = css`
+    ${({ iconOnly }) => (iconOnly ? `2.8rem` : `3.6rem`)}
+`;
+
 export const baseButtonStyles = css`
     ${sharedButtonStyles}
     color: ${({ theme }) => theme.colors.textPrimary1};
     font-weight: 600;
-    height: 3.6rem;
-    padding: 0 ${({ iconOnly }) => (!iconOnly ? `1.6rem` : `2rem`)};
+    height: ${height};
+    width: ${({ iconOnly }) => iconOnly && `${height}`};
+    padding: 0 ${({ iconOnly }) => (iconOnly ? `0` : `1.6rem`)};
     border-radius: 0.2rem;
 `;
 

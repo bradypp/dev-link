@@ -4,6 +4,7 @@ export const InputContainer = styled.div`
     position: relative;
     height: ${({ height }) => `${height}rem`};
     width: 100%;
+    border-radius: ${({ borderRadius }) => borderRadius};
 
     .icon {
         position: absolute;
@@ -19,8 +20,8 @@ export const InputElement = styled.input`
     height: 100%;
     width: 100%;
     padding: 0 0.7rem;
-    border-radius: ${({ borderRadius }) => borderRadius};
     border: 0.1rem solid ${({ theme }) => theme.colors.border1};
+    border-radius: ${({ borderRadius }) => borderRadius};
     color: ${({ theme }) => theme.colors.textPrimary1};
     background-color: ${({ theme }) => theme.colors.background1};
     transition: background 0.1s;
@@ -34,8 +35,8 @@ export const InputElement = styled.input`
 
     &:focus {
         background-color: #fff;
-        border: 0.1rem solid ${({ theme }) => theme.colors.borderInputFocus};
-        box-shadow: 0 0 0 0.1rem ${({ theme }) => theme.colors.borderInputFocus};
+        border: 0.1rem solid ${({ theme }) => theme.colors.borderFocus};
+        box-shadow: 0 0 0 0.1rem ${({ theme }) => theme.colors.borderFocus};
     }
 
     ${({ invalid, theme }) =>

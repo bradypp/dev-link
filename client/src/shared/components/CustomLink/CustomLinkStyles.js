@@ -8,7 +8,7 @@ import {
 import CustomLinkWrapper from './CustomLinkWrapper';
 
 export const simpleLinkStyles = css`
-    ${mixins.linkHover}
+    ${mixins.link}
 `;
 
 export const StyledLink = styled(CustomLinkWrapper)`

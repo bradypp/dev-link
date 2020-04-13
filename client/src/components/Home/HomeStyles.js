@@ -8,13 +8,14 @@ export const Heading = styled.h1`
     color: ${({ theme }) => theme.colors.textColored1};
 `;
 
+// TODO: Change to styled(Form) once you've made the form component
 export const SearchContainer = styled.div`
     grid-column: 1 / 9;
 `;
 
-export const InputContainer = styled.div``;
-
 export const StyledInput = styled(Input).attrs({
     height: 5,
-    borderRadius: `5rem`,
-})``;
+})`
+    box-shadow: ${({ theme }) => theme.boxShadow.primary};
+    margin-bottom: 1rem;
+`;

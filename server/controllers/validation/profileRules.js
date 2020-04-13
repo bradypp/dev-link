@@ -1,5 +1,6 @@
 const { body } = require('express-validator');
-const { fieldRequired, normalizeUrls } = require('./utils');
+const normalize = require('normalize-url');
+const { fieldRequired, normalizeUrls, normalizeCustomSocials } = require('./utils');
 
 // TODO: Move sanitizers (link normalization) and validators to the frontend at place of input/on save to simplify backend validation
 // TODO: update for new model/frontend
@@ -22,8 +23,15 @@ const profileSanitizers = [
         'socials.facebook',
         'socials.linkedin',
         'socials.instagram',
-        'socials.custom.link',
     ]),
+    body('socials.custom')
+        .if(body('socials.custom').exists())
+        .customSanitizer(value =>
+            value.map(el => ({
+                name: el.name,
+                link: normalize(el.link, { forceHttps: true }),
+            })),
+        ),
 ];
 
 const profileEmailRules = body('contact.email', 'Please enter a valid email')

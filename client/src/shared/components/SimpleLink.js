@@ -3,7 +3,7 @@ import { mixins } from 'shared/styles';
 
 const SimpleLink = styled.a`
     &:hover {
-        ${mixins.linkHover}
+        ${mixins.link}
     }
 `;
 

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { Flex, CustomLink } from 'shared/components';
 import {
     selectProfileAvatar,
     selectProfileCoverImage,
@@ -9,13 +10,16 @@ import {
     selectProfileUser,
     selectProfileStars,
     selectProfileWatchers,
+    selectProfileContact,
+    selectProfileSocials,
     toggleStar,
     toggleWatch,
 } from 'redux/profiles';
 import { selectUser, selectIsAuthenticated } from 'redux/auth';
 import { setAlert } from 'redux/alerts';
-import { Flex, Button, CustomLink } from 'shared/components';
 import { ProfileCard } from '../ProfileStyles';
+import Contact from './Contact/Contact';
+import Socials from './Socials/Socials';
 import {
     ContentContainer,
     CoverImage,
@@ -47,6 +51,8 @@ const propTypes = {
     profileStars: PropTypes.array.isRequired,
     profileWatchers: PropTypes.array.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
+    profileContact: PropTypes.object.isRequired,
+    profileSocials: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -58,6 +64,8 @@ const mapStateToProps = createStructuredSelector({
     profileStars: selectProfileStars,
     profileWatchers: selectProfileWatchers,
     isAuthenticated: selectIsAuthenticated,
+    profileContact: selectProfileContact,
+    profileSocials: selectProfileSocials,
 });
 
 const mapDispatchToProps = {
@@ -78,6 +86,8 @@ const ProfileTop = ({
     toggleWatch,
     isAuthenticated,
     setAlert,
+    profileSocials,
+    profileContact,
 }) => {
     const {
         headline,
@@ -108,9 +118,11 @@ const ProfileTop = ({
     const starredByCurrentUser = profileStars.includes(currentUser._id);
     const watchedByCurrentUser = profileWatchers.includes(currentUser._id);
 
-    // TODO: Add contact/socials popup & do button styling (add icon?)
+    // TODO: Add contact/socials popup & do button styling (add icon?) in separate sub-components
     // TODO: Watching/stars numbers hover effect and on click functionality
+    // TODO: Add skills below like/watch buttons with link to profiles page filtered for that skill?
     // TODO: Add message button?
+
     return (
         <ProfileCard padding="0">
             <CoverImageContainer>
@@ -166,10 +178,16 @@ const ProfileTop = ({
                         <CountContainer className="count">{profileStars.length}</CountContainer>
                     </ButtonsContainer>
                     <ContactSocialContainer>
-                        <CustomLink variant="link">Contact</CustomLink> &middot;
-                        <CustomLink variant="link">Socials</CustomLink>
-                        &middot; <CustomLink variant="link">Website</CustomLink>
-                        &middot; <CustomLink variant="link">GitHub</CustomLink>
+                        <Contact name={name} profileContact={profileContact} /> &middot;
+                        <Socials name={name} profileSocials={profileSocials} />
+                        &middot;{' '}
+                        <CustomLink to="" variant="link">
+                            Website
+                        </CustomLink>
+                        &middot;{' '}
+                        <CustomLink to="" variant="link">
+                            GitHub
+                        </CustomLink>
                     </ContactSocialContainer>
                 </ContentRightContainer>
             </ContentContainer>

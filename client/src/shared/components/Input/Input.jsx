@@ -19,21 +19,24 @@ const defaultProps = {
     invalid: false,
     onChange: () => {},
     height: 3.2,
-    borderRadius: `0.3rem`,
+    borderRadius: `1rem`,
 };
 
-const Input = forwardRef(({ Icon, className, onChange, height, ...inputProps }, ref) => (
-    <InputContainer className={className} height={height}>
-        {Icon && <Icon className="icon" />}
-        <InputElement
-            {...inputProps}
-            onChange={onChange}
-            hasIcon={!!Icon}
-            height={height}
-            ref={ref}
-        />
-    </InputContainer>
-));
+const Input = forwardRef(
+    ({ Icon, className, onChange, height, borderRadius, ...inputProps }, ref) => (
+        <InputContainer className={className} height={height} borderRadius={borderRadius}>
+            {Icon && <Icon className="icon" />}
+            <InputElement
+                borderRadius={borderRadius}
+                onChange={onChange}
+                hasIcon={!!Icon}
+                height={height}
+                ref={ref}
+                {...inputProps}
+            />
+        </InputContainer>
+    ),
+);
 
 Input.propTypes = propTypes;
 Input.defaultProps = defaultProps;

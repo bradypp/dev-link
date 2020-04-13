@@ -4,7 +4,7 @@ import { ButtonText, ButtonSpinner } from 'shared/components/Button/ButtonStyles
 import { StyledLink } from './CustomLinkStyles';
 
 const propTypes = {
-    to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
     children: PropTypes.node,
     className: PropTypes.string,
     backgroundColor: PropTypes.string,
@@ -19,7 +19,6 @@ const propTypes = {
 };
 
 const defaultProps = {
-    to: undefined,
     className: undefined,
     children: undefined,
     backgroundColor: 'primary',

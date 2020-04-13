@@ -6,7 +6,7 @@ const Card = styled(Section).attrs(({ padding }) => ({
     flexDirection: 'column',
     padding: padding || '2.4rem',
 }))`
-    box-shadow: ${({ theme }) => theme.boxShadow.card};
+    box-shadow: ${({ theme }) => theme.boxShadow.primary};
     background-color: ${({ theme }) => theme.colors.background1};
     width: 100%;
 `;

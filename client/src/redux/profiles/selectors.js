@@ -35,9 +35,17 @@ export const selectProfileInfo = createSelector(
 
 export const selectProfileUser = createSelector([selectProfile], profile => profile.user || {});
 
-export const selectProfileSkills = createSelector([selectProfile], profile => profile.skills);
+export const selectProfileSkills = createSelector([selectProfile], profile => profile.skills || []);
 
-export const selectProfileSocial = createSelector([selectProfile], profile => profile.social);
+export const selectProfileSocials = createSelector(
+    [selectProfile],
+    profile => profile.socials || [],
+);
+
+export const selectProfileContact = createSelector(
+    [selectProfile],
+    profile => profile.contact || {},
+);
 
 export const selectProfileAvatar = createSelector(
     [selectProfile],

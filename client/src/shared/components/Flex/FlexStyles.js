@@ -5,5 +5,5 @@ export const FlexContainer = styled.div`
     ${flexStyles}
     padding: ${({ padding }) => padding};
     margin: ${({ margin }) => margin};
-    width:100%;
+    width: 100%;
 `;

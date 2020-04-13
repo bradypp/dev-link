@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components/macro';
-import { media, mixins } from 'shared/styles';
+import { media } from 'shared/styles';
 import './fontStyles.css';
 
 const GlobalStyle = createGlobalStyle`
@@ -61,11 +61,9 @@ const GlobalStyle = createGlobalStyle`
   }
 
   a {
-    display: inline-block;
+    cursor: pointer;
     text-decoration: none;
     color: ${({ theme }) => theme.colors.textLink};
-    transition: all 0.1s ease;
-    cursor: pointer;
   }
 
   img {

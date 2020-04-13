@@ -55,14 +55,8 @@ const profileSchema = new Schema({
     },
     skills: [
         {
-            skillType: {
-                type: String,
-                trim: true,
-            },
-            skillsArray: {
-                type: String,
-                trim: true,
-            },
+            type: String,
+            trim: true,
         },
     ],
     bio: {
@@ -213,40 +207,18 @@ const profileSchema = new Schema({
             },
         },
     ],
-    socials: {
-        facebook: {
-            type: String,
-            trim: true,
-        },
-        linkedin: {
-            trim: true,
-            type: String,
-        },
-        twitter: {
-            type: String,
-            trim: true,
-        },
-        youtube: {
-            type: String,
-            trim: true,
-        },
-        instagram: {
-            type: String,
-            trim: true,
-        },
-        custom: [
-            {
-                name: {
-                    type: String,
-                    trim: true,
-                },
-                link: {
-                    type: String,
-                    trim: true,
-                },
+    socials: [
+        {
+            name: {
+                type: String,
+                trim: true,
             },
-        ],
-    },
+            link: {
+                type: String,
+                trim: true,
+            },
+        },
+    ],
     stars: [
         {
             type: Schema.Types.ObjectId,
