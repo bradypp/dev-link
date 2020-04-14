@@ -13,6 +13,7 @@ const propTypes = {
     alignItems: PropTypes.string,
     flexDirection: PropTypes.string,
     backgroundColor: PropTypes.string,
+    flexWrap: PropTypes.string,
 };
 
 const defaultProps = {
@@ -24,30 +25,12 @@ const defaultProps = {
     alignItems: 'center',
     flexDirection: 'column',
     backgroundColor: 'background2',
+    flexWrap: 'nowrap',
 };
 
-const Main = ({
-    children,
-    className,
-    display,
-    gridColumns,
-    gridGap,
-    justifyContent,
-    flexDirection,
-    alignItems,
-    backgroundColor,
-}) => (
+const Main = ({ children, backgroundColor, ...otherProps }) => (
     <MainContainer backgroundColor={backgroundColor}>
-        <LayoutContainer
-            className={className}
-            display={display}
-            gridColumns={gridColumns}
-            gridGap={gridGap}
-            justifyContent={justifyContent}
-            alignItems={alignItems}
-            flexDirection={flexDirection}>
-            {children}
-        </LayoutContainer>
+        <LayoutContainer {...otherProps}>{children}</LayoutContainer>
     </MainContainer>
 );
 

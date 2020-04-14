@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components/macro';
 import { IoMdEye, IoMdStarOutline, IoMdStar } from 'react-icons/io';
 import Image from 'react-image';
-import { Button, Flex } from 'shared/components';
+import { Button, CustomLink } from 'shared/components';
 import { mixins } from 'shared/styles';
 
 const coverImageHeight = 18;
@@ -17,11 +17,12 @@ export const CoverImage = styled(Image)`
 
 const topCardPadding = 2.4;
 
-export const ContentContainer = styled(Flex).attrs({
-    justifyContent: `flex-between`,
-    alignItems: 'flex-start',
-    padding: `${topCardPadding}rem`,
-})`
+export const ContentContainer = styled.div`
+    display: flex;
+    justify-content: flex-between;
+    align-items: flex-start;
+    padding: ${topCardPadding}rem;
+    width: 100%;
     line-height: 1.3;
 `;
 
@@ -38,71 +39,88 @@ export const Avatar = styled(Image)`
     border-radius: 50%;
 `;
 
-const contentLeftMargin = '0.8rem';
+const lineMargin = '0.8rem';
 
 export const Name = styled.h1`
     font-size: 2.4rem;
     font-weight: 400;
-    margin-top: ${contentLeftMargin};
+    margin-top: ${lineMargin};
 `;
 
 export const Headline = styled.h2`
     font-size: 1.8rem;
     font-weight: 400;
-    margin-top: ${contentLeftMargin};
+    margin-top: ${lineMargin};
 `;
 
 export const TopSubHeading = styled.h3`
     font-size: 1.6rem;
     font-weight: 400;
-    margin-top: ${contentLeftMargin};
+    margin-top: ${lineMargin};
 `;
 
-export const ContentRightContainer = styled(Flex).attrs({
-    flexDirection: 'column',
-    justifyContent: `space-between`,
-    alignItems: 'flex-end',
-})`
+// TODO: link styles (make bolder & grey background on hover?), make global button variant?
+export const ContactSocialContainer = styled.div`
+    display: flex;
+    justify-content: 'flex-start';
+    height: max-content;
+    margin-top: ${lineMargin};
+
+    & > * :not(:first-child) {
+        margin-left: 0.4rem;
+    }
+
+    & > * :not(:last-child) {
+        margin-right: 0.4rem;
+    }
+`;
+
+export const ContentRightContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: 'flex-end';
     height: 100%;
+    width: 100%;
 
     & > * :not(:last-child) {
         margin-bottom: 1rem;
     }
 `;
 
-export const ButtonsContainer = styled(Flex).attrs({
-    justifyContent: 'flex-end',
-})`
+export const ButtonsContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
     & > button :not(:first-child) {
         margin-left: 1.4rem;
     }
 `;
 
-const sharedToggleButtonStyles = css`
+const sharedWatchStarStyles = css`
     font-size: 1.3rem;
     height: 3rem;
     padding: 0 0.8rem;
-    border: 1px solid ${({ theme }) => theme.colors.greyLight3};
+    border: 1px solid ${({ theme }) => theme.colors.border2};
 `;
 
 // TODO: Have a round icon only button that changes color/background color on hover & click?
+// TODO: if keeping border, change outline color to match hover background color
 export const ToggleButton = styled(Button).attrs({
-    backgroundColor: 'white2',
+    backgroundColor: 'buttonWhite1',
     lightenDarkenPercentage: 0.05,
 })`
-    ${sharedToggleButtonStyles}
-    color: ${({ theme }) => theme.colors.textPrimary1};
+    ${sharedWatchStarStyles}
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
 
     &:hover {
-        border: 1px solid ${({ theme }) => mixins.darken(theme.colors.greyLight3, 0.1)};
+        border: 1px solid ${({ theme }) => mixins.darken(theme.colors.border2, 0.1)};
     }
 `;
 
 export const CountContainer = styled.div`
     ${mixins.inlineFlexCenter}
-    ${sharedToggleButtonStyles}
+    ${sharedWatchStarStyles}
     border-left: none;
     font-size: 1.4rem;
     border-top-left-radius: 0px;
@@ -123,16 +141,14 @@ export const WatchIcon = styled(IoMdEye)`
     font-size: 1.6em;
 `;
 
-// TODO: link styles (make bolder & grey background on hover?), make global button variant?
-export const ContactSocialContainer = styled(Flex).attrs({
-    justifyContent: 'flex-end',
+export const SkillsButton = styled(CustomLink).attrs({
+    backgroundColor: 'buttonPrimaryLighter',
+    textColor: 'primaryDark',
 })`
-    height: max-content;
-    & > * :not(:first-child) {
-        margin-left: 0.4rem;
-    }
-
-    & > * :not(:last-child) {
-        margin-right: 0.4rem;
-    }
+    border-radius: 50px;
+    font-size: 1.3rem;
+    padding: 0 1rem;
+    height: 2.8rem;
+    margin-top: 0.8rem;
+    margin-left: 0.8rem;
 `;

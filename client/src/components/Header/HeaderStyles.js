@@ -30,6 +30,6 @@ export const HeaderContainer = styled.header`
     padding: 0 ${({ theme }) => theme.layout.pagePadding};
     height: ${({ theme }) => theme.layout.headerHeight};
     width: 100%;
-    background-color: ${({ theme }) => theme.colors.white1};
+    background-color: ${({ theme }) => theme.colors.background1};
     z-index: ${({ theme }) => theme.zIndex.header};
 `;

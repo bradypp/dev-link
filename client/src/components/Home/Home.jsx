@@ -9,13 +9,13 @@ const Home = () => {
     useClearAlerts();
 
     return (
-        <Main>
+        <Main background="background1">
             <Heading>Discover and link-up with like-minded developers</Heading>
             <SearchContainer>
                 <form>
                     <StyledInput Icon={IoIosSearch} />
                     <Button type="submit">Search</Button>
-                    <CustomLink to="/#" backgroundColor="white2">
+                    <CustomLink to="/#" background="buttonWhite2">
                         Advanced Search
                     </CustomLink>
                 </form>

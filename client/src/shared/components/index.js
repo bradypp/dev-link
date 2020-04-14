@@ -4,6 +4,7 @@ export { default as ButtonWrapper } from './Button/ButtonWrapper';
 export { default as Button } from './Button/Button';
 export { default as LinkWrapper } from './CustomLink/CustomLinkWrapper';
 export { default as CustomLink } from './CustomLink/CustomLink';
+export { default as SimpleLink } from './SimpleLink/SimpleLink';
 export { default as Input } from './Input/Input';
 export { default as Main } from './Main/Main';
 export { default as Modal } from './Modal/Modal';

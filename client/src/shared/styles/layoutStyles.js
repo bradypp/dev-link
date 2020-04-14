@@ -11,4 +11,5 @@ export const flexStyles = css`
     justify-content: ${({ justifyContent }) => justifyContent};
     align-items: ${({ alignItems }) => alignItems};
     flex-direction: ${({ flexDirection }) => flexDirection};
+    flex-wrap: ${({ flexWrap }) => flexWrap};
 `;

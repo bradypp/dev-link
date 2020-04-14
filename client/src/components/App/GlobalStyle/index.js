@@ -92,7 +92,7 @@ const GlobalStyle = createGlobalStyle`
   
   [role="button"], button {
     cursor: pointer;
-    background: none;
+    background-color: none;
     font-family: ${({ theme }) => theme.fonts.primary};
     font-size: 1.6rem;
   }
@@ -101,8 +101,6 @@ const GlobalStyle = createGlobalStyle`
     outline: none;
     border: 0;
     border-radius: 0;
-    color: ${({ theme }) => theme.colors.textPrimary1};
-    transition: all 0.1s ease;
 
     &:focus,
     &:active {

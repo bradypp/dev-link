@@ -19,11 +19,11 @@ const functions = {
             width: ${config.width || 8}px;
         }
         &::-webkit-scrollbar-track {
-            background: none;
+            background-color: none;
         }
         &::-webkit-scrollbar-thumb {
             border-radius: 99px;
-            background: ${({ theme }) => config.backgroundColor || theme.colors.scrollBar};
+            background-color: ${({ theme }) => config.background || theme.colors.scrollBar};
         }
     `,
     backgroundImage: imageURL => css`
@@ -61,7 +61,7 @@ const functions = {
         cursor: pointer;
         user-select: none;
         color: ${({ theme }) => config.textColor || theme.colors.textPrimary1};
-        background: ${({ theme }) => config.backgroundColor || theme.colors.background1};
+        background-color: ${({ theme }) => config.background || theme.colors.background1};
         i {
             margin-left: 4px;
         }
@@ -121,11 +121,31 @@ const mixins = {
     hardwareAccelerate: css`
         transform: translateZ(0);
     `,
+    button: css`
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        outline: none;
+        vertical-align: middle;
+        white-space: nowrap;
+        appearance: none;
+        overflow: hidden;
+        position: relative;
+        width: min-content;
+        color: ${({ theme, textColor }) => theme.colors[textColor] || theme.colors.textPrimary1};
+        transition: all 0.1s ease;
+
+        &:disabled {
+            opacity: 0.7;
+            cursor: default;
+        }
+    `,
     link: css`
         cursor: pointer;
         text-decoration: none;
         color: ${({ theme }) => theme.colors.textLink};
         transition: all 0.1s ease;
+
         &:hover,
         &:visited,
         &:active {

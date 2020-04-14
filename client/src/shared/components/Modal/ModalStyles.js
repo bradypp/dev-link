@@ -25,7 +25,7 @@ const clickOverlayStyles = {
 
 export const ClickableOverlay = styled.div`
     min-height: 100%;
-    background: rgba(9, 30, 66, 0.54);
+    background-color: rgba(9, 30, 66, 0.54);
     ${({ variant }) => clickOverlayStyles[variant]}
 `;
 
@@ -73,10 +73,11 @@ const closeButtonStyles = {
 };
 
 export const CloseButton = styled(Button).attrs(({ backgroundColor }) => ({
-    textColor: 'textPrimary2',
     backgroundColor,
 }))`
+    color: ${({ theme }) => theme.colors.textPrimary2};
     position: absolute;
     font-size: 2.5rem;
+    height: auto;
     ${({ styles }) => closeButtonStyles[styles]}
 `;

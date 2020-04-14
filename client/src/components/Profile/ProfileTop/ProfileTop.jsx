@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Flex, CustomLink } from 'shared/components';
+import { Flex, SimpleLink } from 'shared/components';
 import {
     selectProfileAvatar,
     selectProfileCoverImage,
@@ -12,6 +12,7 @@ import {
     selectProfileWatchers,
     selectProfileContact,
     selectProfileSocials,
+    selectProfileSkills,
     toggleStar,
     toggleWatch,
 } from 'redux/profiles';
@@ -37,6 +38,7 @@ import {
     StarredIcon,
     ContentRightContainer,
     ContactSocialContainer,
+    SkillsButton,
 } from './ProfileTopStyles';
 
 const propTypes = {
@@ -53,6 +55,7 @@ const propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
     profileContact: PropTypes.object.isRequired,
     profileSocials: PropTypes.array.isRequired,
+    profileSkills: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -66,6 +69,7 @@ const mapStateToProps = createStructuredSelector({
     isAuthenticated: selectIsAuthenticated,
     profileContact: selectProfileContact,
     profileSocials: selectProfileSocials,
+    profileSkills: selectProfileSkills,
 });
 
 const mapDispatchToProps = {
@@ -88,14 +92,15 @@ const ProfileTop = ({
     setAlert,
     profileSocials,
     profileContact,
+    profileSkills,
 }) => {
     const {
         headline,
         current_position,
         city,
         country,
-        // website,
-        // github_username,
+        website,
+        github_username,
         company,
     } = profileInfo;
     const { name } = profileUser;
@@ -120,7 +125,7 @@ const ProfileTop = ({
 
     // TODO: Add contact/socials popup & do button styling (add icon?) in separate sub-components
     // TODO: Watching/stars numbers hover effect and on click functionality
-    // TODO: Add skills below like/watch buttons with link to profiles page filtered for that skill?
+    // TODO: Add links to skills to profiles page filtered for that skill?
     // TODO: Add message button?
 
     return (
@@ -163,6 +168,15 @@ const ProfileTop = ({
                     ) : (
                         <>{current_position && <TopSubHeading>{current_position}</TopSubHeading>}</>
                     )}
+                    <ContactSocialContainer>
+                        <Contact name={name} profileContact={profileContact} /> &middot;
+                        <Socials name={name} profileSocials={profileSocials} />
+                        &middot; <SimpleLink href={website}>Website</SimpleLink>
+                        &middot;{' '}
+                        <SimpleLink href={`https://github.com/${github_username}`}>
+                            GitHub
+                        </SimpleLink>
+                    </ContactSocialContainer>
                 </Flex>
                 <ContentRightContainer>
                     <ButtonsContainer>
@@ -177,18 +191,11 @@ const ProfileTop = ({
                         </ToggleButton>
                         <CountContainer className="count">{profileStars.length}</CountContainer>
                     </ButtonsContainer>
-                    <ContactSocialContainer>
-                        <Contact name={name} profileContact={profileContact} /> &middot;
-                        <Socials name={name} profileSocials={profileSocials} />
-                        &middot;{' '}
-                        <CustomLink to="" variant="link">
-                            Website
-                        </CustomLink>
-                        &middot;{' '}
-                        <CustomLink to="" variant="link">
-                            GitHub
-                        </CustomLink>
-                    </ContactSocialContainer>
+                    <Flex>
+                        {profileSkills.map(skill => (
+                            <SkillsButton>{skill}</SkillsButton>
+                        ))}
+                    </Flex>
                 </ContentRightContainer>
             </ContentContainer>
         </ProfileCard>
