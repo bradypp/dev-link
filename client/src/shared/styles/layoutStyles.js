@@ -1,5 +1,6 @@
 import { css } from 'styled-components/macro';
 
+// TODO: move to mixins?
 export const gridStyles = css`
     display: grid;
     grid-template-columns: repeat(${({ gridColumns }) => gridColumns}, minmax(min-content, 1fr));

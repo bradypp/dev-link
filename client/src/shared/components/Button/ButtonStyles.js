@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components/macro';
 import { Spinner } from 'shared/components';
-import { mixins, helpers } from 'shared/styles';
+import { mixins, helpers, buttons } from 'shared/styles';
 import ButtonWrapper from './ButtonWrapper';
 
 export const ButtonText = styled.span`

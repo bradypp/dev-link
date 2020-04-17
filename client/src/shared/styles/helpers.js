@@ -16,7 +16,9 @@ const colorHelpers = {
             .string(),
 };
 
-const buttonHelpers = {
+// TODO: test the following mixins
+
+const effectHelpers = {
     lightenBackground: (
         config = {
             backgroundColor: null,
@@ -75,6 +77,32 @@ const buttonHelpers = {
     ) => css`
         &:not(:disabled) {
             &:hover {
+                background-color: ${colorHelpers.rgba(
+                    config.backgroundColor,
+                    config.opacity || 0.05,
+                )};
+            }
+
+            &:active {
+                background-color: ${config.backgroundColor};
+            }
+
+            ${({ isActive }) =>
+                isActive &&
+                css`
+                    background-color: ${config.backgroundColor} !important;
+                `}
+        }
+    `,
+    fillBackground: (
+        config = {
+            backgroundColor: null,
+            textColor: null,
+        },
+    ) => css`
+        &:not(:disabled) {
+            &:hover {
+                color: ${config.textColor ? config.textColor : 'currentColor'};
                 background-color: ${colorHelpers.rgba(
                     config.backgroundColor,
                     config.opacity || 0.05,
@@ -163,7 +191,7 @@ const buttonHelpers = {
 
 const helpers = {
     ...colorHelpers,
-    ...buttonHelpers,
+    ...effectHelpers,
     customScrollbar: (config = {}) => css`
         &::-webkit-scrollbar {
             width: ${config.width || 8}px;
