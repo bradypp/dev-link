@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Flex, SimpleLink } from 'shared/components';
+import { Flex, A } from 'shared/components';
 import {
     selectProfileAvatar,
     selectProfileCoverImage,
@@ -38,7 +38,7 @@ import {
     StarredIcon,
     ContentRightContainer,
     ContactSocialContainer,
-    SkillsButton,
+    SkillsLink,
 } from './ProfileTopStyles';
 
 const propTypes = {
@@ -171,29 +171,26 @@ const ProfileTop = ({
                     <ContactSocialContainer>
                         <Contact name={name} profileContact={profileContact} /> &middot;
                         <Socials name={name} profileSocials={profileSocials} />
-                        &middot; <SimpleLink href={website}>Website</SimpleLink>
-                        &middot;{' '}
-                        <SimpleLink href={`https://github.com/${github_username}`}>
-                            GitHub
-                        </SimpleLink>
+                        &middot; <A href={website}>Website</A>
+                        &middot; <A href={`https://github.com/${github_username}`}>GitHub</A>
                     </ContactSocialContainer>
                 </Flex>
                 <ContentRightContainer>
                     <ButtonsContainer>
-                        <ToggleButton Icon={() => <WatchIcon />} onClick={toggleWatchHandler}>
+                        <ToggleButton icon={<WatchIcon />} onClick={toggleWatchHandler}>
                             {watchedByCurrentUser ? `Unwatch` : `Watch`}
                         </ToggleButton>
                         <CountContainer className="count">{profileWatchers.length}</CountContainer>
                         <ToggleButton
-                            Icon={() => (starredByCurrentUser ? <StarredIcon /> : <StarIcon />)}
+                            icon={starredByCurrentUser ? <StarredIcon /> : <StarIcon />}
                             onClick={toggleStarHandler}>
                             {starredByCurrentUser ? `Unstar` : `Star`}
                         </ToggleButton>
                         <CountContainer className="count">{profileStars.length}</CountContainer>
                     </ButtonsContainer>
-                    <Flex>
+                    <Flex justifyContent="flex-end" alignItems="flex-end">
                         {profileSkills.map(skill => (
-                            <SkillsButton>{skill}</SkillsButton>
+                            <SkillsLink>{skill}</SkillsLink>
                         ))}
                     </Flex>
                 </ContentRightContainer>

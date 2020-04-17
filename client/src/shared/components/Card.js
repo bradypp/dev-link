@@ -7,7 +7,7 @@ const Card = styled(Section).attrs(({ padding }) => ({
     padding: padding || '2.4rem',
 }))`
     box-shadow: ${({ theme }) => theme.boxShadow.primary};
-    background-color: ${({ theme }) => theme.colors.background1};
+    background: ${({ theme }) => theme.colors.background1};
     width: 100%;
 `;
 

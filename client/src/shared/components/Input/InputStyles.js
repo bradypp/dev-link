@@ -23,18 +23,18 @@ export const InputElement = styled.input`
     border: 0.1rem solid ${({ theme }) => theme.colors.border1};
     border-radius: ${({ borderRadius }) => borderRadius};
     color: ${({ theme }) => theme.colors.textPrimary1};
-    background-color: ${({ theme }) => theme.colors.background1};
+    background: ${({ theme }) => theme.colors.background1};
     transition: background 0.1s;
     font-family: ${({ theme }) => theme.fonts.primary};
     font-size: ${({ height }) => `${height / 1.8}rem`};
     padding-left: ${({ hasIcon, height }) => (hasIcon ? `${height}rem` : `${height / 4.5}rem`)};
 
     &:hover {
-        background-color: ${({ theme }) => theme.colors.background2};
+        background: ${({ theme }) => theme.colors.background2};
     }
 
     &:focus {
-        background-color: #fff;
+        background: #fff;
         border: 0.1rem solid ${({ theme }) => theme.colors.borderFocus};
         box-shadow: 0 0 0 0.1rem ${({ theme }) => theme.colors.borderFocus};
     }

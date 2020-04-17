@@ -35,11 +35,6 @@ const light = {
     background3: base.white3,
     border1: base.greyLight2,
     border2: base.greyLight3,
-    buttonPrimary: base.primary,
-    buttonPrimaryLighter: base.primaryLighter,
-    buttonDanger: base.danger,
-    buttonWhite1: base.white1,
-    buttonWhite2: base.white2,
 };
 
 // TODO: customize dark theme
@@ -56,11 +51,6 @@ const dark = {
     background3: base.greyDark3,
     border1: base.greyDark3,
     border2: base.greyDark2,
-    buttonPrimary: base.primary,
-    buttonPrimaryLighter: base.primaryLighter,
-    buttonDanger: base.danger,
-    buttonWhite1: base.greyDark1,
-    buttonWhite2: base.greyDark2,
 };
 
 const selectTheme = theme => {

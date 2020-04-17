@@ -1,8 +1,7 @@
 import styled from 'styled-components/macro';
-import { buttonStyles } from 'shared/components/Button/ButtonStyles';
-import CustomLinkWrapper from './CustomLinkWrapper';
+import { mixins } from 'shared/styles';
+import LinkWrapper from './LinkWrapper';
 
-// TODO: just import the switch from button styles
-export const StyledLink = styled(CustomLinkWrapper)`
-    ${buttonStyles};
+export const StyledLink = styled(LinkWrapper)`
+    ${({ styledAsButton }) => (styledAsButton ? mixins.button : mixins.link)}
 `;

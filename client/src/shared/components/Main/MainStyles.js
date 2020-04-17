@@ -3,7 +3,7 @@ import { mixins, media, gridStyles, flexStyles } from 'shared/styles';
 
 export const MainContainer = styled.main`
     padding: 1.6rem ${({ theme }) => theme.layout.pagePadding};
-    background-color: ${({ theme, backgroundColor }) => theme.colors[backgroundColor]};
+    background: ${({ theme, backgroundColor }) => theme.colors[backgroundColor]};
     width: 100%;
     min-height: calc(100vh - ${({ theme }) => theme.layout.headerHeight});
 

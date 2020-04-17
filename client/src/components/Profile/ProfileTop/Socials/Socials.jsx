@@ -6,11 +6,7 @@ import {} from './SocialsStyles';
 const Socials = ({ name, profileSocials }) => {
     return (
         <Modal
-            renderLink={modal => (
-                <Button variant="link" onClick={modal.open}>
-                    Socials
-                </Button>
-            )}
+            renderLink={modal => <Button onClick={modal.open}>Socials</Button>}
             renderContent={modal => (
                 <Flex flexDirection="column">
                     <h1>{name}</h1>
@@ -21,9 +17,7 @@ const Socials = ({ name, profileSocials }) => {
                             <p>{social.link}</p>
                         </>
                     ))}
-                    <Button variant="link" onClick={modal.close}>
-                        Close
-                    </Button>
+                    <Button onClick={modal.close}>Close</Button>
                 </Flex>
             )}
         />

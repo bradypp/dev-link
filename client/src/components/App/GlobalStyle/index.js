@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components/macro';
-import { media } from 'shared/styles';
+import { media, mixins } from 'shared/styles';
 import './fontStyles.css';
 
 const GlobalStyle = createGlobalStyle`
@@ -40,7 +40,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1.6rem;
     line-height: 1.5;
     color: ${({ theme }) => theme.colors.textPrimary1};
-    background-color: ${({ theme }) => theme.colors.background1};
+    background: ${({ theme }) => theme.colors.background1};
     min-height: 100vh;
   }
 
@@ -64,6 +64,7 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
     text-decoration: none;
     color: ${({ theme }) => theme.colors.textLink};
+    transition: all 0.1s ease;
   }
 
   img {
@@ -91,13 +92,10 @@ const GlobalStyle = createGlobalStyle`
   }
   
   [role="button"], button {
-    cursor: pointer;
-    background-color: none;
-    font-family: ${({ theme }) => theme.fonts.primary};
-    font-size: 1.6rem;
+    ${mixins.button}
   }
 
-   [role="button"], button, input, select, textarea {
+  input, select, textarea {
     outline: none;
     border: 0;
     border-radius: 0;
@@ -113,7 +111,7 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
-  [role="button"], button, input, textarea {
+  input, textarea {
     appearance: none;
   }
 `;

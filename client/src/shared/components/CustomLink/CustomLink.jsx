@@ -8,11 +8,10 @@ const propTypes = {
     children: PropTypes.node,
     className: PropTypes.string,
     backgroundColor: PropTypes.string,
+    borderColor: PropTypes.string,
     textColor: PropTypes.string,
-    variant: PropTypes.string,
-    buttonBehaviour: PropTypes.string,
-    Icon: PropTypes.oneOf([PropTypes.element, PropTypes.func]),
-    lightenDarkenPercentage: PropTypes.number,
+    icon: PropTypes.node,
+    styledAsButton: PropTypes.bool,
     isWorking: PropTypes.bool,
     isActive: PropTypes.bool,
     disabled: PropTypes.bool,
@@ -22,23 +21,22 @@ const propTypes = {
 const defaultProps = {
     className: undefined,
     children: undefined,
-    backgroundColor: 'buttonPrimary',
+    backgroundColor: undefined,
+    borderColor: undefined,
     textColor: undefined,
-    variant: 'primary',
-    buttonBehaviour: 'default',
-    Icon: undefined,
-    lightenDarkenPercentage: 0.05,
+    icon: undefined,
+    styledAsButton: false,
     isWorking: false,
     isActive: false,
     disabled: false,
     onClick: undefined,
 };
 
-const CustomLink = forwardRef(({ children, Icon, isWorking, disabled, ...otherProps }, ref) => (
+const CustomLink = forwardRef(({ children, icon, isWorking, disabled, ...otherProps }, ref) => (
     <StyledLink disabled={disabled || isWorking} ref={ref} {...otherProps}>
         {isWorking && <ButtonSpinner />}
-        {Icon && <Icon className="icon" />}
-        {children && <ButtonText withPadding={Icon || isWorking}>{children}</ButtonText>}
+        {icon && icon}
+        {children && <ButtonText withPadding={icon || isWorking}>{children}</ButtonText>}
     </StyledLink>
 ));
 

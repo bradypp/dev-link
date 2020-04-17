@@ -36,9 +36,7 @@ const Header = ({ isUserLoading, isAuthenticated, signOut, user }) => {
 
     const guestMenu = (
         <>
-            <CustomLink to="/sign-in" variant="bordered">
-                Sign In
-            </CustomLink>
+            <CustomLink to="/sign-in">Sign In</CustomLink>
             <CustomLink to="/sign-up">Join Now</CustomLink>
         </>
     );

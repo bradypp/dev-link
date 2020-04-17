@@ -1,72 +1,5 @@
 import { css } from 'styled-components/macro';
-import Color from 'color';
-
-const functions = {
-    darken: (colorValue, amount) =>
-        Color(colorValue)
-            .darken(amount)
-            .string(),
-    lighten: (colorValue, amount) =>
-        Color(colorValue)
-            .lighten(amount)
-            .string(),
-    rgba: (colorValue, opacity) =>
-        Color(colorValue)
-            .alpha(opacity)
-            .string(),
-    customScrollbar: (config = {}) => css`
-        &::-webkit-scrollbar {
-            width: ${config.width || 8}px;
-        }
-        &::-webkit-scrollbar-track {
-            background-color: none;
-        }
-        &::-webkit-scrollbar-thumb {
-            border-radius: 99px;
-            background-color: ${({ theme }) => config.background || theme.colors.scrollBar};
-        }
-    `,
-    backgroundImage: imageURL => css`
-        background-image: url("${imageURL}");
-        background-position: 50% 50%;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-color: ${({ theme }) => theme.colors.background2};
-    `,
-    placeholderColor: colorValue => css`
-        ::-webkit-input-placeholder {
-            color: ${colorValue} !important;
-            opacity: 0.8 !important;
-        }
-        :-moz-placeholder {
-            color: ${colorValue} !important;
-            opacity: 0.8 !important;
-        }
-        ::-moz-placeholder {
-            color: ${colorValue} !important;
-            opacity: 0.8 !important;
-        }
-        :-ms-input-placeholder {
-            color: ${colorValue} !important;
-            opacity: 0.8 !important;
-        }
-    `,
-    tag: (config = {}) => css`
-        display: inline-flex;
-        align-items: center;
-        font-size: config.fontSize || 1.2rem;
-        height: 24px;
-        padding: 0 8px;
-        border-radius: 4px;
-        cursor: pointer;
-        user-select: none;
-        color: ${({ theme }) => config.textColor || theme.colors.textPrimary1};
-        background-color: ${({ theme }) => config.background || theme.colors.background1};
-        i {
-            margin-left: 4px;
-        }
-    `,
-};
+import { helpers } from 'shared/styles';
 
 const mixins = {
     flexCenter: css`
@@ -122,6 +55,10 @@ const mixins = {
         transform: translateZ(0);
     `,
     button: css`
+        cursor: pointer;
+        background: none;
+        font-family: ${({ theme }) => theme.fonts.primary};
+        font-size: 1.6rem;
         display: inline-flex;
         justify-content: center;
         align-items: center;
@@ -132,8 +69,15 @@ const mixins = {
         overflow: hidden;
         position: relative;
         width: min-content;
-        color: ${({ theme, textColor }) => theme.colors[textColor] || theme.colors.textPrimary1};
-        transition: all 0.1s ease;
+        outline: none;
+        border: 0;
+        border-radius: 0;
+        appearance: none;
+
+        &:focus,
+        &:active {
+            outline: none;
+        }
 
         &:disabled {
             opacity: 0.7;
@@ -144,18 +88,17 @@ const mixins = {
         cursor: pointer;
         text-decoration: none;
         color: ${({ theme }) => theme.colors.textLink};
-        transition: all 0.1s ease;
 
         &:hover,
         &:visited,
         &:active {
-            color: ${({ theme }) => mixins.lighten(theme.colors.textLink, 0.1)};
+            color: ${({ theme }) => helpers.lighten(theme.colors.textLink, 0.1)};
         }
+
         &:hover {
             text-decoration: underline;
         }
     `,
-    ...functions,
 };
 
 export default mixins;

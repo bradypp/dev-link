@@ -9,11 +9,7 @@ const Contact = ({ name, profileContact }) => {
 
     return (
         <Modal
-            renderLink={modal => (
-                <Button variant="link" onClick={modal.open}>
-                    Contact
-                </Button>
-            )}
+            renderLink={modal => <Button onClick={modal.open}>Contact</Button>}
             renderContent={modal => (
                 <Flex flexDirection="column">
                     <h1>{name}</h1>
@@ -22,9 +18,7 @@ const Contact = ({ name, profileContact }) => {
                     <p>{email}</p>
                     <h3>Phone</h3>
                     <p>{phone}</p>
-                    <Button variant="link" onClick={modal.close}>
-                        Close
-                    </Button>
+                    <Button onClick={modal.close}>Close</Button>
                 </Flex>
             )}
         />

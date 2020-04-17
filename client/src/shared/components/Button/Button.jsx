@@ -8,11 +8,9 @@ const propTypes = {
     children: PropTypes.node,
     type: PropTypes.oneOf(['button', 'reset', 'submit']),
     backgroundColor: PropTypes.string,
+    borderColor: PropTypes.string,
     textColor: PropTypes.string,
-    variant: PropTypes.string,
-    Icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
-    buttonBehaviour: PropTypes.string,
-    lightenDarkenPercentage: PropTypes.number,
+    icon: PropTypes.node,
     disabled: PropTypes.bool,
     isWorking: PropTypes.bool,
     isActive: PropTypes.bool,
@@ -22,12 +20,10 @@ const propTypes = {
 const defaultProps = {
     className: undefined,
     children: undefined,
-    backgroundColor: 'buttonPrimary',
+    backgroundColor: undefined,
+    borderColor: undefined,
     textColor: undefined,
-    variant: 'primary',
-    Icon: undefined,
-    buttonBehaviour: 'default',
-    lightenDarkenPercentage: 0.05,
+    icon: undefined,
     type: 'button',
     disabled: false,
     isWorking: false,
@@ -35,11 +31,11 @@ const defaultProps = {
     onClick: () => {},
 };
 
-const Button = forwardRef(({ children, Icon, disabled, isWorking, ...otherProps }, ref) => (
+const Button = forwardRef(({ children, icon, disabled, isWorking, ...otherProps }, ref) => (
     <StyledButton disabled={disabled || isWorking} iconOnly={!children} ref={ref} {...otherProps}>
         {isWorking && <ButtonSpinner />}
-        {Icon && <Icon className="icon" />}
-        {children && <ButtonText withPadding={Icon || isWorking}>{children}</ButtonText>}
+        {icon && icon}
+        {children && <ButtonText withPadding={icon || isWorking}>{children}</ButtonText>}
     </StyledButton>
 ));
 

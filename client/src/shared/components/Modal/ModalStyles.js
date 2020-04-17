@@ -25,7 +25,7 @@ const clickOverlayStyles = {
 
 export const ClickableOverlay = styled.div`
     min-height: 100%;
-    background-color: rgba(9, 30, 66, 0.54);
+    background: rgba(9, 30, 66, 0.54);
     ${({ variant }) => clickOverlayStyles[variant]}
 `;
 
@@ -48,7 +48,7 @@ export const StyledModal = styled.div`
     position: relative;
     width: 100%;
     height: 100%;
-    background-color: ${({ theme, backgroundColor }) => theme.colors[backgroundColor]};
+    background: ${({ theme, backgroundColor }) => theme.colors[backgroundColor]};
     ${({ variant }) => modalStyles[variant]};
 `;
 

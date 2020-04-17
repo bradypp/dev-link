@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components/macro';
 import { IoMdEye, IoMdStarOutline, IoMdStar } from 'react-icons/io';
 import Image from 'react-image';
 import { Button, CustomLink } from 'shared/components';
-import { mixins } from 'shared/styles';
+import { helpers, mixins } from 'shared/styles';
 
 const coverImageHeight = 18;
 
@@ -105,16 +105,13 @@ const sharedWatchStarStyles = css`
 
 // TODO: Have a round icon only button that changes color/background color on hover & click?
 // TODO: if keeping border, change outline color to match hover background color
-export const ToggleButton = styled(Button).attrs({
-    backgroundColor: 'buttonWhite1',
-    lightenDarkenPercentage: 0.05,
-})`
+export const ToggleButton = styled(Button)`
     ${sharedWatchStarStyles}
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
 
     &:hover {
-        border: 1px solid ${({ theme }) => mixins.darken(theme.colors.border2, 0.1)};
+        border: 1px solid ${({ theme }) => helpers.darken(theme.colors.border2, 0.1)};
     }
 `;
 
@@ -141,10 +138,7 @@ export const WatchIcon = styled(IoMdEye)`
     font-size: 1.6em;
 `;
 
-export const SkillsButton = styled(CustomLink).attrs({
-    backgroundColor: 'buttonPrimaryLighter',
-    textColor: 'primaryDark',
-})`
+export const SkillsLink = styled(CustomLink)`
     border-radius: 50px;
     font-size: 1.3rem;
     padding: 0 1rem;

@@ -21,7 +21,7 @@ const defaultProps = {
 };
 
 const ButtonWrapper = forwardRef(
-    ({ children, disabled, isWorking, onClick, className, type }, ref) => {
+    ({ children, className, type, disabled, isWorking, onClick }, ref) => {
         const handleClick = () => {
             if (!disabled && !isWorking) {
                 onClick();
@@ -29,7 +29,7 @@ const ButtonWrapper = forwardRef(
         };
 
         return (
-            <button className={className} onClick={handleClick} type={type} ref={ref}>
+            <button className={className} type={type} onClick={handleClick} ref={ref}>
                 {children}
             </button>
         );
