@@ -45,7 +45,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #root {
-    ${mixins.flexCenterColumn}
+    ${mixins.flexColumnCenter}
   }
 
   h1, h2, h3, h4, h5, h6 {

@@ -6,7 +6,7 @@ const ProfileCard = styled(Card)`
     grid-column: 1 / 11;
 
     header {
-        ${mixins.flexBetween}
+        ${mixins.flexCenterBetween}
 
         h2 {
             font-size: 2.2rem;

@@ -22,7 +22,7 @@ export const HeaderStyles = styled.header`
 
     nav {
         ${mixins.containAndCenter}
-        ${mixins.flexBetween}
+        ${mixins.flexCenterBetween}
 
         & > button, a:not(:first-child) {
             margin-left: 1.4rem;

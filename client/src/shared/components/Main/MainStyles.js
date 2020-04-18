@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled, { css } from 'styled-components/macro';
 import { mixins, media } from 'shared/styles';
 
 export const MainContainer = styled.main`
@@ -17,12 +17,5 @@ export const MainContainer = styled.main`
 
 export const LayoutContainer = styled.div`
     ${mixins.containAndCenter};
-    ${({ display }) => {
-        switch (display) {
-            case 'grid':
-                return mixins.gridStyles;
-            default:
-                return mixins.flexStyles;
-        }
-    }}
+    ${({ gridColumns }) => mixins.gridLayout(gridColumns, '1.6rem')};
 `;

@@ -102,7 +102,7 @@ export const ProfileTopStyles = styled(ProfileCard)`
                 ${'' /* TODO: if keeping border, change outline color to match hover background color */}
 
                    .toggle-button {
-                    ${sharedToggleButtonStyles}
+                    ${sharedToggleButtonStyles};
                     border-top-right-radius: 0px;
                     border-bottom-right-radius: 0px;
 
@@ -117,9 +117,9 @@ export const ProfileTopStyles = styled(ProfileCard)`
                 }
 
                 .count-container {
-                    ${mixins.inlineFlexCenter}
-                    ${sharedToggleButtonStyles}
-                border-left: none;
+                    ${mixins.inlineFlexCenter};
+                    ${sharedToggleButtonStyles};
+                    border-left: none;
                     font-size: 1.4rem;
                     border-top-left-radius: 0px;
                     border-bottom-left-radius: 0px;

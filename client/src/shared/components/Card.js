@@ -1,9 +1,9 @@
 import styled from 'styled-components/macro';
-import { Section } from 'shared/components';
 
-const Card = styled(Section)`
+const Card = styled.section`
     box-shadow: ${({ theme }) => theme.boxShadow.primary};
     background: ${({ theme }) => theme.colors.background1};
+    padding: 2.4rem;
     width: 100%;
 `;
 

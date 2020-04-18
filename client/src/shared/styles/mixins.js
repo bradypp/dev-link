@@ -1,39 +1,29 @@
 import { css } from 'styled-components/macro';
 import { helpers } from 'shared/styles';
 
-const mixins = {
-    gridStyles: css`
+// TODO: add every flex variation?
+const layoutMixins = {
+    gridLayout: (gridColumns = 16, gridGap = '1.6rem') => css`
         display: grid;
-        grid-template-columns: repeat(
-            ${({ gridColumns }) => gridColumns},
-            minmax(min-content, 1fr)
-        );
-        grid-gap: ${({ gridGap }) => gridGap};
-    `,
-
-    flexStyles: css`
-        display: flex;
-        justify-content: ${({ justifyContent }) => justifyContent};
-        align-items: ${({ alignItems }) => alignItems};
-        flex-direction: ${({ flexDirection }) => flexDirection};
-        flex-wrap: ${({ flexWrap }) => flexWrap};
+        grid-template-columns: repeat(${gridColumns}, minmax(min-content, 1fr));
+        grid-gap: ${gridGap};
     `,
     flexCenter: css`
         display: flex;
         justify-content: center;
         align-items: center;
     `,
-    flexLeft: css`
+    flexCenterLeft: css`
         display: flex;
-        justify-content: left;
+        justify-content: flex-start;
         align-items: center;
     `,
-    flexRight: css`
+    flexCenterRight: css`
         display: flex;
-        justify-content: right;
+        justify-content: flex-end;
         align-items: center;
     `,
-    flexBetween: css`
+    flexCenterBetween: css`
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -43,18 +33,43 @@ const mixins = {
         justify-content: center;
         align-items: center;
     `,
-    flexLeftColumn: css`
+    inlineFlexCenterLeft: css`
+        display: inline-flex;
+        justify-content: flex-start;
+        align-items: center;
+    `,
+    inlineFlexCenterRight: css`
+        display: inline-flex;
+        justify-content: flex-end;
+        align-items: center;
+    `,
+    inlineflexCenterBetween: css`
+        display: inline-flex;
+        justify-content: space-between;
+        align-items: center;
+    `,
+    flexColumnCenter: css`
         display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    `,
+    flexColumnLeft: css`
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+    `,
+    flexColumnRight: css`
+        display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: flex-end;
-        flex-direction: column;
     `,
-    flexRightColumn: css`
-        display: flex;
-        justify-content: center;
-        align-items: flex-end;
-        flex-direction: column;
-    `,
+};
+
+const mixins = {
+    ...layoutMixins,
     engulf: css`
         position: absolute;
         top: 0;
