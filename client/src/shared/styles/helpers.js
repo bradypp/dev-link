@@ -18,30 +18,67 @@ const colorHelpers = {
 
 // TODO: test the following effects mixins
 const effectHelpers = {
+    hoverEffect: (
+        config = { backgroundColor: null, textColor: null, borderColor: null, boxShadow: null },
+    ) => {
+        const { backgroundColor, textColor, borderColor, boxShadow } = config;
+        return css`
+            &:not(:disabled) {
+                &:hover {
+                    ${textColor && `color: ${textColor}`};
+                    ${backgroundColor && `background-color: ${backgroundColor}`};
+                    ${borderColor && `border-color: ${borderColor}`};
+                    ${boxShadow && `box-shadow: ${boxShadow}`};
+                }
+            }
+        `;
+    },
+    activeEffect: (
+        config = { backgroundColor: null, textColor: null, borderColor: null, boxShadow: null },
+    ) => {
+        const { backgroundColor, textColor, borderColor, boxShadow } = config;
+        const activeEffect = css`
+            ${textColor && `color: ${textColor}`};
+            ${backgroundColor && `background-color: ${backgroundColor}`};
+            ${borderColor && `border-color: ${borderColor}`};
+            ${boxShadow && `box-shadow: ${boxShadow}`};
+        `;
+        return css`
+            &:not(:disabled) {
+                &:active {
+                    ${activeEffect}
+                }
+                ${({ isActive }) =>
+                    isActive &&
+                    css`
+                        ${activeEffect};
+                    `}
+            }
+        `;
+    },
     lightenEffect: (
         config = {
             backgroundColor: null,
             textColor: null,
-            border: null,
             borderColor: null,
         },
         amount = 0.05,
     ) => {
-        const { backgroundColor, textColor, border, borderColor } = config;
+        const { backgroundColor, textColor, borderColor } = config;
         const activeAmount = amount + 0.05;
 
         const hoverEffect = css`
             ${backgroundColor &&
                 `background-color:  ${colorHelpers.lighten(backgroundColor, amount)}`};
             ${textColor && `color:  ${colorHelpers.lighten(textColor, amount)}`};
-            ${borderColor && `border: ${border} ${colorHelpers.lighten(textColor, amount)}`};
+            ${borderColor && `border-color: ${colorHelpers.lighten(textColor, amount)}`};
         `;
 
         const activeEffect = css`
             ${backgroundColor &&
                 `background-color:  ${colorHelpers.lighten(backgroundColor, activeAmount)}`};
             ${textColor && `color:  ${colorHelpers.lighten(textColor, activeAmount)}`};
-            ${borderColor && `border: ${border} ${colorHelpers.lighten(textColor, activeAmount)}`};
+            ${borderColor && `border-color: ${colorHelpers.lighten(textColor, activeAmount)}`};
         `;
 
         return css`
@@ -66,26 +103,25 @@ const effectHelpers = {
         config = {
             backgroundColor: null,
             textColor: null,
-            border: null,
             borderColor: null,
         },
         amount = 0.05,
     ) => {
-        const { backgroundColor, textColor, border, borderColor } = config;
+        const { backgroundColor, textColor, borderColor } = config;
         const activeAmount = amount + 0.05;
 
         const hoverEffect = css`
             ${backgroundColor &&
                 `background-color:  ${colorHelpers.darken(backgroundColor, amount)}`};
             ${textColor && `color:  ${colorHelpers.darken(textColor, amount)}`};
-            ${borderColor && `border: ${border} ${colorHelpers.darken(textColor, amount)}`};
+            ${borderColor && `border-color: ${colorHelpers.darken(textColor, amount)}`};
         `;
 
         const activeEffect = css`
             ${backgroundColor &&
                 `background-color:  ${colorHelpers.darken(backgroundColor, activeAmount)}`};
             ${textColor && `color:  ${colorHelpers.darken(textColor, activeAmount)}`};
-            ${borderColor && `border: ${border} ${colorHelpers.darken(textColor, activeAmount)}`};
+            ${borderColor && `border-color: ${colorHelpers.darken(textColor, activeAmount)}`};
         `;
 
         return css`
@@ -110,26 +146,25 @@ const effectHelpers = {
         config = {
             backgroundColor: null,
             textColor: null,
-            border: null,
             borderColor: null,
         },
         amount = 0.05,
     ) => {
-        const { backgroundColor, textColor, border, borderColor } = config;
+        const { backgroundColor, textColor, borderColor } = config;
         const activeAmount = amount + 0.05;
 
         const hoverEffect = css`
             ${backgroundColor &&
                 `background-color:  ${colorHelpers.rgba(backgroundColor, amount)}`};
             ${textColor && `color:  ${colorHelpers.rgba(textColor, amount)}`};
-            ${borderColor && `border: ${border} ${colorHelpers.rgba(textColor, amount)}`};
+            ${borderColor && `border-color: ${colorHelpers.rgba(textColor, amount)}`};
         `;
 
         const activeEffect = css`
             ${backgroundColor &&
                 `background-color:  ${colorHelpers.rgba(backgroundColor, activeAmount)}`};
             ${textColor && `color:  ${colorHelpers.rgba(textColor, activeAmount)}`};
-            ${borderColor && `border: ${border} ${colorHelpers.rgba(textColor, activeAmount)}`};
+            ${borderColor && `border-color: ${colorHelpers.rgba(textColor, activeAmount)}`};
         `;
 
         return css`
@@ -150,47 +185,7 @@ const effectHelpers = {
             }
         `;
     },
-    shadowEffect: boxShadow => {
-        const effect = css`
-            box-shadow: ${boxShadow};
-        `;
-
-        return css`
-            &:not(:disabled) {
-                &:hover,
-                &:active {
-                    ${effect};
-                }
-
-                ${({ isActive }) =>
-                    isActive &&
-                    css`
-                        ${effect} !important;
-                    `}
-            }
-        `;
-    },
-    fillBackground: (backgroundColor, textColor = null) => {
-        const fillEffect = css`
-            ${textColor && `color: ${textColor}`};
-            background-color: ${backgroundColor};
-        `;
-        return css`
-            &:not(:disabled) {
-                &:hover,
-                &:active {
-                    ${fillEffect};
-                }
-
-                ${({ isActive }) =>
-                    isActive &&
-                    css`
-                        ${fillEffect};
-                    `}
-            }
-        `;
-    },
-    insetBorder: (borderColor, amount = '0.01rem') => css`
+    insetBorderEffect: (borderColor, amount = '0.01rem') => css`
         &:not(:disabled) {
             &:hover,
             &:active {
