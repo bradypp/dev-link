@@ -2,7 +2,7 @@ import { createGlobalStyle, css } from 'styled-components/macro';
 import { media, mixins } from 'shared/styles';
 import './fontStyles.css';
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyles = createGlobalStyle`
   *,
   *:before,
   *:after {
@@ -133,4 +133,4 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export default GlobalStyle;
+export default GlobalStyles;

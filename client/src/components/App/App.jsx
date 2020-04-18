@@ -2,13 +2,15 @@ import React from 'react';
 import { useLoadUser } from 'shared/hooks';
 import ThemeProvider from './ThemeProvider';
 import Routes from './Routes';
-import GlobalStyle from './GlobalStyle';
+import GlobalStyles from './GlobalStyles';
+import NormalizeStyles from './NormalizeStyles';
 
 const App = () => {
     useLoadUser();
     return (
         <ThemeProvider>
-            <GlobalStyle />
+            <NormalizeStyles />
+            <GlobalStyles />
             <Routes />
         </ThemeProvider>
     );
