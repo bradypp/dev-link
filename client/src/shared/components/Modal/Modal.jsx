@@ -88,7 +88,7 @@ const Modal = ({
                                         styles={variant}
                                         onClick={closeModal}
                                         backgroundColor={backgroundColor}
-                                        Icon={IoIosClose}
+                                        icon={IoIosClose}
                                     />
                                 )}
                                 {renderContent({ close: closeModal })}

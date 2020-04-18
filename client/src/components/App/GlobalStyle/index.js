@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components/macro';
+import { createGlobalStyle, css } from 'styled-components/macro';
 import { media, mixins } from 'shared/styles';
 import './fontStyles.css';
 
@@ -45,9 +45,12 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #root {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    ${mixins.flexCenterColumn}
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0.8rem;
   }
 
   p {
@@ -89,13 +92,21 @@ const GlobalStyle = createGlobalStyle`
         opacity: 0.5;
       }
     }
+
+    ${({ isActive }) =>
+        isActive &&
+        css`
+            &::placeholder {
+                opacity: 0.5;
+            }
+        `}
   }
   
   [role="button"], button {
     ${mixins.button}
   }
 
-  input, select, textarea {
+  a, input, select, textarea {
     outline: none;
     border: 0;
     border-radius: 0;
@@ -109,6 +120,12 @@ const GlobalStyle = createGlobalStyle`
       opacity: 0.7;
       cursor: default;
     }
+
+    ${({ isActive }) =>
+        isActive &&
+        css`
+            outline: none;
+        `}
   }
 
   input, textarea {

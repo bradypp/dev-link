@@ -23,15 +23,37 @@ const mixins = {
         justify-content: center;
         align-items: center;
     `,
-    inlineFlexCenter: css`
-        display: inline-flex;
-        justify-content: center;
+    flexLeft: css`
+        display: flex;
+        justify-content: left;
+        align-items: center;
+    `,
+    flexRight: css`
+        display: flex;
+        justify-content: right;
         align-items: center;
     `,
     flexBetween: css`
         display: flex;
         justify-content: space-between;
         align-items: center;
+    `,
+    inlineFlexCenter: css`
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+    `,
+    flexLeftColumn: css`
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        flex-direction: column;
+    `,
+    flexRightColumn: css`
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        flex-direction: column;
     `,
     engulf: css`
         position: absolute;

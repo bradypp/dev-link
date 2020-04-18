@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from 'styled-components/macro';
 import { Button } from 'shared/components';
 import { mixins } from 'shared/styles';
 

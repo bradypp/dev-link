@@ -28,6 +28,7 @@ const Profile = ({ getProfileByUsername }) => {
             {/* bio card */}
             {/* languages & skills card */}
             {/* interests card */}
+            {/* profile sidebar */}
         </Main>
     );
 };

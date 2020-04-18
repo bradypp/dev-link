@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { IoMdEye, IoMdStarOutline, IoMdStar } from 'react-icons/io';
 import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Flex, A } from 'shared/components';
+import { ExternalLink, Button, CustomLink } from 'shared/components';
+import Image from 'react-image';
 import {
     selectProfileAvatar,
     selectProfileCoverImage,
@@ -19,28 +21,9 @@ import {
 } from 'redux/profiles';
 import { selectUser, selectIsAuthenticated } from 'redux/auth';
 import { setAlert } from 'redux/alerts';
-import { ProfileCard } from '../ProfileStyles';
 import Contact from './Contact/Contact';
 import Socials from './Socials/Socials';
-import {
-    ContentContainer,
-    CoverImage,
-    CoverImageContainer,
-    AvatarContainer,
-    Avatar,
-    Name,
-    Headline,
-    TopSubHeading,
-    ToggleButton,
-    StarIcon,
-    WatchIcon,
-    CountContainer,
-    ButtonsContainer,
-    StarredIcon,
-    ContentRightContainer,
-    ContactSocialContainer,
-    SkillsLink,
-} from './ProfileTopStyles';
+import { ProfileTopStyles } from './ProfileTopStyles';
 
 const propTypes = {
     toggleStar: PropTypes.func.isRequired,
@@ -130,75 +113,86 @@ const ProfileTop = ({
     // TODO: Add message button?
 
     return (
-        <ProfileCard padding="0">
-            <CoverImageContainer>
-                <CoverImage
+        <ProfileTopStyles>
+            <div className="cover-image-container">
+                <Image
+                    className="cover-image"
                     src={[
                         `http://localhost:5000/img/profile/cover_image/${coverImage}`,
                         ` http://localhost:5000/img/profile/cover_image/default.jpg`,
                     ]}
                     alt="Profile cover"
                 />
-            </CoverImageContainer>
-            <ContentContainer>
-                <Flex flexDirection="column" alignItems="flexStart">
-                    <AvatarContainer>
-                        <Avatar
+            </div>
+            <div className="content">
+                <div className="content-left">
+                    <div className="avatar-container">
+                        <Image
+                            className="avatar"
                             src={[
                                 `http://localhost:5000/img/profile/avatar/${avatar}`,
                                 `http://localhost:5000/img/profile/avatar/default.jpg`,
                             ]}
                             alt="Profile avatar"
                         />
-                    </AvatarContainer>
-                    <Name>{name}</Name>
-                    {headline && <Headline>{headline}</Headline>}
+                    </div>
+                    <h1 className="name">{name}</h1>
+                    {headline && <h2 className="headline">{headline}</h2>}
                     {city ? (
-                        <TopSubHeading>
+                        <h3 className="subheading">
                             {city}
                             {country && <>, {country}</>}
-                        </TopSubHeading>
+                        </h3>
                     ) : (
-                        <>{country && <TopSubHeading>{country}</TopSubHeading>}</>
+                        <>{country && <h3 className="subheading">{country}</h3>}</>
                     )}
                     {company ? (
-                        <TopSubHeading>
+                        <h3 className="subheading">
                             {company}
                             {current_position && <> &middot; {current_position}</>}
-                        </TopSubHeading>
+                        </h3>
                     ) : (
-                        <>{current_position && <TopSubHeading>{current_position}</TopSubHeading>}</>
+                        <>
+                            {current_position && <h3 className="subheading">{current_position}</h3>}
+                        </>
                     )}
-                    <ContactSocialContainer>
+                    <div className="info-buttons">
                         <Contact name={name} profileContact={profileContact} /> &middot;
                         <Socials name={name} profileSocials={profileSocials} />
-                        &middot; <A href={website}>Website</A>
-                        &middot; <A href={`https://github.com/${github_username}`}>GitHub</A>
-                    </ContactSocialContainer>
-                </Flex>
-                <ContentRightContainer>
-                    <ButtonsContainer>
-                        <ToggleButton Icon={WatchIcon} onClick={toggleWatchHandler}>
+                        &middot; <ExternalLink href={website}>Website</ExternalLink>
+                        &middot;{' '}
+                        <ExternalLink href={`https://github.com/${github_username}`}>
+                            GitHub
+                        </ExternalLink>
+                    </div>
+                </div>
+                <div className="content-right">
+                    <div className="toggle-buttons">
+                        <Button
+                            className="toggle-button"
+                            icon={IoMdEye}
+                            onClick={toggleWatchHandler}>
                             {watchedByCurrentUser ? `Unwatch` : `Watch`}
-                        </ToggleButton>
-                        <CountContainer className="count">{profileWatchers.length}</CountContainer>
-                        <ToggleButton
-                            Icon={starredByCurrentUser ? StarredIcon : StarIcon}
+                        </Button>
+                        <div className="count-container">{profileWatchers.length}</div>
+                        <Button
+                            className="toggle-button"
+                            icon={starredByCurrentUser ? IoMdStar : IoMdStarOutline}
                             onClick={toggleStarHandler}>
                             {starredByCurrentUser ? `Unstar` : `Star`}
-                        </ToggleButton>
-                        <CountContainer className="count">{profileStars.length}</CountContainer>
-                    </ButtonsContainer>
-                    <Flex justifyContent="flex-end" alignItems="flex-end">
+                        </Button>
+                        <div className="count-container">{profileStars.length}</div>
+                    </div>
+                    <div className="skills">
                         {profileSkills.map(skill => (
-                            <SkillsLink to="/" key={uuidv4()}>
+                            <CustomLink className="skill" to="#" key={uuidv4()}>
                                 {skill}
-                            </SkillsLink>
+                            </CustomLink>
                         ))}
-                    </Flex>
-                </ContentRightContainer>
-            </ContentContainer>
-        </ProfileCard>
+                    </div>
+                </div>
+            </div>
+        </ProfileTopStyles>
     );
 };
 

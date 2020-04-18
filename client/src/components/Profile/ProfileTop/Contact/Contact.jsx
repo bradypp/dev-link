@@ -1,9 +1,9 @@
 import React from 'react';
-import { Flex, Button, Modal } from 'shared/components';
+import { Button, Modal } from 'shared/components';
 import {} from './ContactStyles';
 
 // TODO: styling
-// TODO: Conditional appearance based on if profilem belongs to current authenticated user
+// TODO: Conditional appearance based on if profile belongs to current authenticated user
 const Contact = ({ name, profileContact }) => {
     const { email, phone } = profileContact;
 
@@ -11,7 +11,7 @@ const Contact = ({ name, profileContact }) => {
         <Modal
             renderLink={modal => <Button onClick={modal.open}>Contact</Button>}
             renderContent={modal => (
-                <Flex flexDirection="column">
+                <div>
                     <h1>{name}</h1>
                     <h2>Contact Info</h2>
                     <h3>Email</h3>
@@ -19,7 +19,7 @@ const Contact = ({ name, profileContact }) => {
                     <h3>Phone</h3>
                     <p>{phone}</p>
                     <Button onClick={modal.close}>Close</Button>
-                </Flex>
+                </div>
             )}
         />
     );

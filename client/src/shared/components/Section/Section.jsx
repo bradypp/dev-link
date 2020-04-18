@@ -11,7 +11,6 @@ const propTypes = {
     justifyContent: PropTypes.string,
     alignItems: PropTypes.string,
     flexDirection: PropTypes.string,
-    padding: PropTypes.string,
 };
 
 const defaultProps = {
@@ -22,11 +21,10 @@ const defaultProps = {
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    padding: '0',
 };
 
-const Section = ({ children, ...otherprops }) => (
-    <SectionContainer {...otherprops}>{children}</SectionContainer>
+const Section = ({ children, ...otherProps }) => (
+    <SectionContainer {...otherProps}>{children}</SectionContainer>
 );
 
 Section.propTypes = propTypes;

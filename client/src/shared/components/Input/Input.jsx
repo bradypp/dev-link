@@ -5,7 +5,7 @@ import { InputContainer, InputElement } from './InputStyles';
 const propTypes = {
     className: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    Icon: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.node]),
+    icon: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.node]),
     height: PropTypes.number,
     invalid: PropTypes.bool,
     onChange: PropTypes.func,
@@ -14,13 +14,13 @@ const propTypes = {
 const defaultProps = {
     className: undefined,
     value: undefined,
-    Icon: undefined,
+    icon: undefined,
     height: 3.2,
     invalid: false,
     onChange: () => {},
 };
 
-const Input = forwardRef(({ Icon, className, height, ...otherProps }, ref) => (
+const Input = forwardRef(({ icon: Icon, className, height, ...otherProps }, ref) => (
     <InputContainer className={className} height={height}>
         {Icon && <Icon className="icon" />}
         <InputElement hasIcon={!!Icon} height={height} ref={ref} {...otherProps} />

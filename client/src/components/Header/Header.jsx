@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { Button, CustomLink } from 'shared/components';
 import { selectIsUserLoading, selectIsAuthenticated, signOut, selectUser } from 'redux/auth';
-import { HeaderContainer, NavContainer, Logo } from './HeaderStyles';
+import { HeaderStyles, NavContainer, Logo } from './HeaderStyles';
 
 const propTypes = {
     signOut: PropTypes.func.isRequired,
@@ -43,15 +43,15 @@ const Header = ({ isUserLoading, isAuthenticated, signOut, user }) => {
 
     // TODO: Add search bar with location
     return (
-        <HeaderContainer>
-            <NavContainer>
-                <Logo to="/">
+        <HeaderStyles>
+            <nav>
+                <CustomLink className="logo" to="/">
                     <strong>Dev</strong>Link
-                </Logo>
+                </CustomLink>
                 {location.pathname !== '/' && `Search Bar Here!`}
                 {(isUserLoading && guestMenu) || isAuthenticated ? signedInMenu : guestMenu}
-            </NavContainer>
-        </HeaderContainer>
+            </nav>
+        </HeaderStyles>
     );
 };
 
