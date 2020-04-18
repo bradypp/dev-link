@@ -3,5 +3,5 @@ import { mixins } from 'shared/styles';
 import LinkWrapper from './LinkWrapper';
 
 export const StyledLink = styled(LinkWrapper)`
-    ${({ styledAsButton }) => (styledAsButton ? mixins.button : mixins.link)}
+    ${({ styledAsButton }) => styledAsButton && mixins.button}
 `;

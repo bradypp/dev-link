@@ -8,4 +8,3 @@ export { default as Input } from './Input/Input';
 export { default as Main } from './Main/Main';
 export { default as Modal } from './Modal/Modal';
 export { default as Card } from './Card';
-export * from './typography';

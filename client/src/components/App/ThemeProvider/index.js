@@ -13,7 +13,7 @@ export default ({ children }) => {
         animation,
         ...typography,
         ...utils,
-        theme,
+        theme: currentTheme,
     };
     return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };

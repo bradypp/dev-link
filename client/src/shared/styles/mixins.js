@@ -137,21 +137,6 @@ const mixins = {
             cursor: default;
         }
     `,
-    link: css`
-        cursor: pointer;
-        text-decoration: none;
-        color: ${({ theme }) => theme.colors.textLink};
-
-        &:hover,
-        &:visited,
-        &:active {
-            color: ${({ theme }) => helpers.lighten(theme.colors.textLink, 0.1)};
-        }
-
-        &:hover {
-            text-decoration: underline;
-        }
-    `,
 };
 
 export default mixins;

@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components/macro';
+import styled from 'styled-components/macro';
 import { mixins, media } from 'shared/styles';
 
 export const MainContainer = styled.main`

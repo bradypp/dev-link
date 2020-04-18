@@ -48,13 +48,9 @@ const GlobalStyles = createGlobalStyle`
     ${mixins.flexColumnCenter}
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1, h2, h3, h4, h5, h6,p {
     margin-top: 0;
     margin-bottom: 0.8rem;
-  }
-
-  p {
-    margin: 0 0 10px;
   }
 
   ol, ul {
@@ -67,7 +63,6 @@ const GlobalStyles = createGlobalStyle`
     cursor: pointer;
     text-decoration: none;
     color: ${({ theme }) => theme.colors.textLink};
-    transition: all 0.1s ease;
   }
 
   img {
@@ -110,6 +105,7 @@ const GlobalStyles = createGlobalStyle`
     outline: none;
     border: 0;
     border-radius: 0;
+    transition: all 0.1s ease;
 
     &:focus,
     &:active {

@@ -34,12 +34,13 @@ export const ProfileTopStyles = styled(ProfileCard)`
             width: 100%;
 
             .avatar-container {
-                margin-top: -14rem;
                 height: 16rem;
                 width: 16rem;
                 box-shadow: ${({ theme }) => theme.boxShadow.primary};
                 border-radius: 50%;
                 border: 5px solid #fff;
+                margin-top: -14rem;
+                margin-bottom: 0.8rem;
 
                 .avatar {
                     border-radius: 50%;

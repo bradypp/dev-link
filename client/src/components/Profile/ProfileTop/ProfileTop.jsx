@@ -4,7 +4,7 @@ import { IoMdEye, IoMdStarOutline, IoMdStar } from 'react-icons/io';
 import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { ExternalLink, Button, CustomLink } from 'shared/components';
+import { Button, CustomLink } from 'shared/components';
 import Image from 'react-image';
 import {
     selectProfileAvatar,
@@ -159,11 +159,8 @@ const ProfileTop = ({
                     <div className="info-buttons">
                         <Contact name={name} profileContact={profileContact} /> &middot;
                         <Socials name={name} profileSocials={profileSocials} />
-                        &middot; <ExternalLink href={website}>Website</ExternalLink>
-                        &middot;{' '}
-                        <ExternalLink href={`https://github.com/${github_username}`}>
-                            GitHub
-                        </ExternalLink>
+                        &middot; <a href={website}>Website</a>
+                        &middot; <a href={`https://github.com/${github_username}`}>GitHub</a>
                     </div>
                 </div>
                 <div className="content-right">

@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { Main } from 'shared/components';
 import { getProfileByUsername } from 'redux/profiles';
 import ProfileTop from './ProfileTop/ProfileTop';
+import { ProfileContainer } from './ProfileStyles';
 
 const propTypes = {
     getProfileByUsername: PropTypes.func.isRequired,

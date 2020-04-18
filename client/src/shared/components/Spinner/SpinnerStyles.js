@@ -2,13 +2,13 @@ import styled, { css } from 'styled-components/macro';
 import { mixins } from 'shared/styles';
 
 export const SpinnerOverlay = styled.div`
+    ${mixins.flexCenter}
     ${({ overlayActive }) =>
         overlayActive &&
         css`
             height: 60vh;
             width: 100%;
         `}
-    ${mixins.flexCenter}
 `;
 
 // TODO: change styling for light/dark color
