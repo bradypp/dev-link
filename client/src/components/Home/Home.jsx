@@ -4,7 +4,7 @@ import { Main, CustomLink, Button } from 'shared/components';
 import { useClearAlerts } from 'shared/hooks';
 import { Heading, SearchContainer, StyledInput } from './HomeStyles';
 
-// TODO: make form and advanced search link/button
+// TODO: make form
 const Home = () => {
     useClearAlerts();
 

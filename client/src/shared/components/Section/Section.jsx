@@ -25,28 +25,8 @@ const defaultProps = {
     padding: '0',
 };
 
-const Section = ({
-    children,
-    className,
-    display,
-    flexDirection,
-    gridColumns,
-    gridGap,
-    justifyContent,
-    alignItems,
-    padding,
-}) => (
-    <SectionContainer
-        className={className}
-        display={display}
-        gridColumns={gridColumns}
-        gridGap={gridGap}
-        justifyContent={justifyContent}
-        alignItems={alignItems}
-        padding={padding}
-        flexDirection={flexDirection}>
-        {children}
-    </SectionContainer>
+const Section = ({ children, ...otherprops }) => (
+    <SectionContainer {...otherprops}>{children}</SectionContainer>
 );
 
 Section.propTypes = propTypes;

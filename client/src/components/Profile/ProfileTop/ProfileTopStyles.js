@@ -62,7 +62,8 @@ export const TopSubHeading = styled.h3`
 // TODO: link styles (make bolder & grey background on hover?), make global button variant?
 export const ContactSocialContainer = styled.div`
     display: flex;
-    justify-content: 'flex-start';
+    justify-content: flex-start;
+    align-items: center;
     height: max-content;
     margin-top: ${lineMargin};
 

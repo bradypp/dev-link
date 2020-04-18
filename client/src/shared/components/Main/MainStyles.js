@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { mixins, media, gridStyles, flexStyles } from 'shared/styles';
+import { mixins, media } from 'shared/styles';
 
 export const MainContainer = styled.main`
     padding: 1.6rem ${({ theme }) => theme.layout.pagePadding};
@@ -20,9 +20,9 @@ export const LayoutContainer = styled.div`
     ${({ display }) => {
         switch (display) {
             case 'grid':
-                return gridStyles;
+                return mixins.gridStyles;
             default:
-                return flexStyles;
+                return mixins.flexStyles;
         }
     }}
 `;

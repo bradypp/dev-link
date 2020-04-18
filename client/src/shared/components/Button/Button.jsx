@@ -10,7 +10,7 @@ const propTypes = {
     backgroundColor: PropTypes.string,
     borderColor: PropTypes.string,
     textColor: PropTypes.string,
-    icon: PropTypes.node,
+    Icon: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.node]),
     disabled: PropTypes.bool,
     isWorking: PropTypes.bool,
     isActive: PropTypes.bool,
@@ -23,7 +23,7 @@ const defaultProps = {
     backgroundColor: undefined,
     borderColor: undefined,
     textColor: undefined,
-    icon: undefined,
+    Icon: undefined,
     type: 'button',
     disabled: false,
     isWorking: false,
@@ -31,11 +31,11 @@ const defaultProps = {
     onClick: () => {},
 };
 
-const Button = forwardRef(({ children, icon, disabled, isWorking, ...otherProps }, ref) => (
+const Button = forwardRef(({ children, Icon, disabled, isWorking, ...otherProps }, ref) => (
     <StyledButton disabled={disabled || isWorking} iconOnly={!children} ref={ref} {...otherProps}>
         {isWorking && <ButtonSpinner />}
-        {icon && icon}
-        {children && <ButtonText withPadding={icon || isWorking}>{children}</ButtonText>}
+        {Icon && <Icon className="icon" />}
+        {children && <ButtonText withPadding={Icon || isWorking}>{children}</ButtonText>}
     </StyledButton>
 ));
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Flex, A } from 'shared/components';
@@ -177,12 +178,12 @@ const ProfileTop = ({
                 </Flex>
                 <ContentRightContainer>
                     <ButtonsContainer>
-                        <ToggleButton icon={<WatchIcon />} onClick={toggleWatchHandler}>
+                        <ToggleButton Icon={WatchIcon} onClick={toggleWatchHandler}>
                             {watchedByCurrentUser ? `Unwatch` : `Watch`}
                         </ToggleButton>
                         <CountContainer className="count">{profileWatchers.length}</CountContainer>
                         <ToggleButton
-                            icon={starredByCurrentUser ? <StarredIcon /> : <StarIcon />}
+                            Icon={starredByCurrentUser ? StarredIcon : StarIcon}
                             onClick={toggleStarHandler}>
                             {starredByCurrentUser ? `Unstar` : `Star`}
                         </ToggleButton>
@@ -190,7 +191,9 @@ const ProfileTop = ({
                     </ButtonsContainer>
                     <Flex justifyContent="flex-end" alignItems="flex-end">
                         {profileSkills.map(skill => (
-                            <SkillsLink>{skill}</SkillsLink>
+                            <SkillsLink to="/" key={uuidv4()}>
+                                {skill}
+                            </SkillsLink>
                         ))}
                     </Flex>
                 </ContentRightContainer>

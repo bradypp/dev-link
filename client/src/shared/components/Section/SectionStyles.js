@@ -1,13 +1,13 @@
 import styled from 'styled-components/macro';
-import { gridStyles, flexStyles } from 'shared/styles';
+import { mixins } from 'shared/styles';
 
 export const SectionContainer = styled.section`
     ${({ display }) => {
         switch (display) {
             case 'grid':
-                return gridStyles;
+                return mixins.gridStyles;
             default:
-                return flexStyles;
+                return mixins.flexStyles;
         }
     }}
     padding: ${({ padding }) => padding};

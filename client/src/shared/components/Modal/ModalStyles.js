@@ -72,6 +72,7 @@ const closeButtonStyles = {
     `,
 };
 
+// TODO: close button styles
 export const CloseButton = styled(Button).attrs(({ backgroundColor }) => ({
     backgroundColor,
 }))`

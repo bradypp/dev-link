@@ -10,7 +10,7 @@ const propTypes = {
     backgroundColor: PropTypes.string,
     borderColor: PropTypes.string,
     textColor: PropTypes.string,
-    icon: PropTypes.node,
+    Icon: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.node]),
     styledAsButton: PropTypes.bool,
     isWorking: PropTypes.bool,
     isActive: PropTypes.bool,
@@ -24,7 +24,7 @@ const defaultProps = {
     backgroundColor: undefined,
     borderColor: undefined,
     textColor: undefined,
-    icon: undefined,
+    Icon: undefined,
     styledAsButton: false,
     isWorking: false,
     isActive: false,
@@ -32,11 +32,11 @@ const defaultProps = {
     onClick: undefined,
 };
 
-const CustomLink = forwardRef(({ children, icon, isWorking, disabled, ...otherProps }, ref) => (
+const CustomLink = forwardRef(({ children, Icon, isWorking, disabled, ...otherProps }, ref) => (
     <StyledLink disabled={disabled || isWorking} ref={ref} {...otherProps}>
         {isWorking && <ButtonSpinner />}
-        {icon && icon}
-        {children && <ButtonText withPadding={icon || isWorking}>{children}</ButtonText>}
+        {Icon && <Icon className="icon" />}
+        {children && <ButtonText withPadding={Icon || isWorking}>{children}</ButtonText>}
     </StyledLink>
 ));
 

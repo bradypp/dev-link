@@ -16,174 +16,191 @@ const colorHelpers = {
             .string(),
 };
 
-// TODO: test the following mixins
-
+// TODO: test the following effects mixins
 const effectHelpers = {
-    lightenBackground: (
-        config = {
-            backgroundColor: null,
-            amount: null,
-        },
-    ) => css`
-        &:not(:disabled) {
-            &:hover {
-                background-color: ${colorHelpers.lighten(
-                    config.backgroundColor,
-                    config.amount || 0.05,
-                )};
-            }
-
-            &:active {
-                background-color: ${config.backgroundColor};
-            }
-
-            ${({ isActive }) =>
-                isActive &&
-                css`
-                    background-color: ${config.backgroundColor} !important;
-                `}
-        }
-    `,
-    darkenBackground: (
-        config = {
-            backgroundColor: null,
-            amount: null,
-        },
-    ) => css`
-        &:not(:disabled) {
-            &:hover {
-                background-color: ${colorHelpers.darken(
-                    config.backgroundColor,
-                    config.amount || 0.05,
-                )};
-            }
-
-            &:active {
-                background-color: ${config.backgroundColor};
-            }
-
-            ${({ isActive }) =>
-                isActive &&
-                css`
-                    background-color: ${config.backgroundColor} !important;
-                `}
-        }
-    `,
-    rgbaBackground: (
-        config = {
-            backgroundColor: null,
-            opacity: null,
-        },
-    ) => css`
-        &:not(:disabled) {
-            &:hover {
-                background-color: ${colorHelpers.rgba(
-                    config.backgroundColor,
-                    config.opacity || 0.05,
-                )};
-            }
-
-            &:active {
-                background-color: ${config.backgroundColor};
-            }
-
-            ${({ isActive }) =>
-                isActive &&
-                css`
-                    background-color: ${config.backgroundColor} !important;
-                `}
-        }
-    `,
-    fillBackground: (
+    lightenEffect: (
         config = {
             backgroundColor: null,
             textColor: null,
-        },
-    ) => css`
-        &:not(:disabled) {
-            &:hover {
-                color: ${config.textColor ? config.textColor : 'currentColor'};
-                background-color: ${colorHelpers.rgba(
-                    config.backgroundColor,
-                    config.opacity || 0.05,
-                )};
-            }
-
-            &:active {
-                background-color: ${config.backgroundColor};
-            }
-
-            ${({ isActive }) =>
-                isActive &&
-                css`
-                    background-color: ${config.backgroundColor} !important;
-                `}
-        }
-    `,
-    insetBorder: (
-        config = {
+            border: null,
             borderColor: null,
-            amount: null,
         },
-    ) => css`
+        amount = 0.05,
+    ) => {
+        const { backgroundColor, textColor, border, borderColor } = config;
+        const activeAmount = amount + 0.05;
+
+        const hoverEffect = css`
+            ${backgroundColor &&
+                `background-color:  ${colorHelpers.lighten(backgroundColor, amount)}`};
+            ${textColor && `color:  ${colorHelpers.lighten(textColor, amount)}`};
+            ${borderColor && `border: ${border} ${colorHelpers.lighten(textColor, amount)}`};
+        `;
+
+        const activeEffect = css`
+            ${backgroundColor &&
+                `background-color:  ${colorHelpers.lighten(backgroundColor, activeAmount)}`};
+            ${textColor && `color:  ${colorHelpers.lighten(textColor, activeAmount)}`};
+            ${borderColor && `border: ${border} ${colorHelpers.lighten(textColor, activeAmount)}`};
+        `;
+
+        return css`
+            &:not(:disabled) {
+                &:hover {
+                    ${hoverEffect};
+                }
+
+                &:active {
+                    ${activeEffect};
+                }
+
+                ${({ isActive }) =>
+                    isActive &&
+                    css`
+                        ${activeEffect} !important;
+                    `}
+            }
+        `;
+    },
+    darkenEffect: (
+        config = {
+            backgroundColor: null,
+            textColor: null,
+            border: null,
+            borderColor: null,
+        },
+        amount = 0.05,
+    ) => {
+        const { backgroundColor, textColor, border, borderColor } = config;
+        const activeAmount = amount + 0.05;
+
+        const hoverEffect = css`
+            ${backgroundColor &&
+                `background-color:  ${colorHelpers.darken(backgroundColor, amount)}`};
+            ${textColor && `color:  ${colorHelpers.darken(textColor, amount)}`};
+            ${borderColor && `border: ${border} ${colorHelpers.darken(textColor, amount)}`};
+        `;
+
+        const activeEffect = css`
+            ${backgroundColor &&
+                `background-color:  ${colorHelpers.darken(backgroundColor, activeAmount)}`};
+            ${textColor && `color:  ${colorHelpers.darken(textColor, activeAmount)}`};
+            ${borderColor && `border: ${border} ${colorHelpers.darken(textColor, activeAmount)}`};
+        `;
+
+        return css`
+            &:not(:disabled) {
+                &:hover {
+                    ${hoverEffect};
+                }
+
+                &:active {
+                    ${activeEffect};
+                }
+
+                ${({ isActive }) =>
+                    isActive &&
+                    css`
+                        ${activeEffect} !important;
+                    `}
+            }
+        `;
+    },
+    rgbaEffect: (
+        config = {
+            backgroundColor: null,
+            textColor: null,
+            border: null,
+            borderColor: null,
+        },
+        amount = 0.05,
+    ) => {
+        const { backgroundColor, textColor, border, borderColor } = config;
+        const activeAmount = amount + 0.05;
+
+        const hoverEffect = css`
+            ${backgroundColor &&
+                `background-color:  ${colorHelpers.rgba(backgroundColor, amount)}`};
+            ${textColor && `color:  ${colorHelpers.rgba(textColor, amount)}`};
+            ${borderColor && `border: ${border} ${colorHelpers.rgba(textColor, amount)}`};
+        `;
+
+        const activeEffect = css`
+            ${backgroundColor &&
+                `background-color:  ${colorHelpers.rgba(backgroundColor, activeAmount)}`};
+            ${textColor && `color:  ${colorHelpers.rgba(textColor, activeAmount)}`};
+            ${borderColor && `border: ${border} ${colorHelpers.rgba(textColor, activeAmount)}`};
+        `;
+
+        return css`
+            &:not(:disabled) {
+                &:hover {
+                    ${hoverEffect};
+                }
+
+                &:active {
+                    ${activeEffect};
+                }
+
+                ${({ isActive }) =>
+                    isActive &&
+                    css`
+                        ${activeEffect} !important;
+                    `}
+            }
+        `;
+    },
+    shadowEffect: boxShadow => {
+        const effect = css`
+            box-shadow: ${boxShadow};
+        `;
+
+        return css`
+            &:not(:disabled) {
+                &:hover,
+                &:active {
+                    ${effect};
+                }
+
+                ${({ isActive }) =>
+                    isActive &&
+                    css`
+                        ${effect} !important;
+                    `}
+            }
+        `;
+    },
+    fillBackground: (backgroundColor, textColor = null) => {
+        const fillEffect = css`
+            ${textColor && `color: ${textColor}`};
+            background-color: ${backgroundColor};
+        `;
+        return css`
+            &:not(:disabled) {
+                &:hover,
+                &:active {
+                    ${fillEffect};
+                }
+
+                ${({ isActive }) =>
+                    isActive &&
+                    css`
+                        ${fillEffect};
+                    `}
+            }
+        `;
+    },
+    insetBorder: (borderColor, amount = '0.01rem') => css`
         &:not(:disabled) {
             &:hover,
             &:active {
-                box-shadow: inset 0 0 0 ${config.amount || '0.01rem'} ${config.borderColor};
+                box-shadow: inset 0 0 0 ${amount} ${borderColor};
             }
 
             ${({ isActive }) =>
                 isActive &&
                 css`
-                    box-shadow: inset 0 0 0 ${config.amount || '0.01rem'} ${config.borderColor} !important;
-                `}
-        }
-    `,
-    lightenBorder: (
-        config = {
-            border: null,
-            color: null,
-            amount: null,
-        },
-    ) => css`
-        &:not(:disabled) {
-            &:hover {
-                border: ${config.border || '1px solid'}
-                    ${colorHelpers.lighten(config.color, config.amount || 0.05)};
-            }
-
-            &:active {
-                border: ${config.border || '1px solid'} ${config.color};
-            }
-
-            ${({ isActive }) =>
-                isActive &&
-                css`
-                    border: ${config.border || '1px solid'} ${config.color} !important;
-                `}
-        }
-    `,
-    darkenBorder: (
-        config = {
-            border: null,
-            color: null,
-            amount: null,
-        },
-    ) => css`
-        &:not(:disabled) {
-            &:hover {
-                border: ${config.border || '1px solid'}
-                    ${colorHelpers.darken(config.color, config.amount || 0.05)};
-            }
-
-            &:active {
-                border: ${config.border || '1px solid'} ${config.color};
-            }
-
-            ${({ isActive }) =>
-                isActive &&
-                css`
-                    border: ${config.border || '1px solid'} ${config.color} !important;
+                    box-shadow: inset 0 0 0 ${amount} ${borderColor} !important;
                 `}
         }
     `,

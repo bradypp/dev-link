@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components/macro';
 import { Spinner } from 'shared/components';
-import { mixins, helpers, buttons } from 'shared/styles';
 import ButtonWrapper from './ButtonWrapper';
 
 export const ButtonText = styled.span`
@@ -14,9 +13,8 @@ export const ButtonSpinner = styled(Spinner).attrs({
 })``;
 
 const textColor = css`
-    color: ${({ theme, textColor, backgroundColor, borderColor, variant }) => {
+    color: ${({ theme, textColor, backgroundColor }) => {
         if (textColor) return theme.colors[textColor];
-        if (variant === 'bordered') return theme.colors[borderColor];
         switch (backgroundColor) {
             case 'buttonPrimary':
             case 'buttonDanger':

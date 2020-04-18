@@ -5,38 +5,27 @@ import { InputContainer, InputElement } from './InputStyles';
 const propTypes = {
     className: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    Icon: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+    Icon: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.node]),
+    height: PropTypes.number,
     invalid: PropTypes.bool,
     onChange: PropTypes.func,
-    height: PropTypes.number,
-    borderRadius: PropTypes.string,
 };
 
 const defaultProps = {
     className: undefined,
     value: undefined,
     Icon: undefined,
+    height: 3.2,
     invalid: false,
     onChange: () => {},
-    height: 3.2,
-    borderRadius: `1rem`,
 };
 
-const Input = forwardRef(
-    ({ Icon, className, onChange, height, borderRadius, ...inputProps }, ref) => (
-        <InputContainer className={className} height={height} borderRadius={borderRadius}>
-            {Icon && <Icon className="icon" />}
-            <InputElement
-                borderRadius={borderRadius}
-                onChange={onChange}
-                hasIcon={!!Icon}
-                height={height}
-                ref={ref}
-                {...inputProps}
-            />
-        </InputContainer>
-    ),
-);
+const Input = forwardRef(({ Icon, className, height, ...otherProps }, ref) => (
+    <InputContainer className={className} height={height}>
+        {Icon && <Icon className="icon" />}
+        <InputElement hasIcon={!!Icon} height={height} ref={ref} {...otherProps} />
+    </InputContainer>
+));
 
 Input.propTypes = propTypes;
 Input.defaultProps = defaultProps;

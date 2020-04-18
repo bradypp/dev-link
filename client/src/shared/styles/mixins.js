@@ -2,6 +2,22 @@ import { css } from 'styled-components/macro';
 import { helpers } from 'shared/styles';
 
 const mixins = {
+    gridStyles: css`
+        display: grid;
+        grid-template-columns: repeat(
+            ${({ gridColumns }) => gridColumns},
+            minmax(min-content, 1fr)
+        );
+        grid-gap: ${({ gridGap }) => gridGap};
+    `,
+
+    flexStyles: css`
+        display: flex;
+        justify-content: ${({ justifyContent }) => justifyContent};
+        align-items: ${({ alignItems }) => alignItems};
+        flex-direction: ${({ flexDirection }) => flexDirection};
+        flex-wrap: ${({ flexWrap }) => flexWrap};
+    `,
     flexCenter: css`
         display: flex;
         justify-content: center;
