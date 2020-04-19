@@ -2,7 +2,7 @@ import React from 'react';
 import { IoIosSearch } from 'react-icons/io';
 import { Main, CustomLink, Button } from 'shared/components';
 import { useClearAlerts } from 'shared/hooks';
-import { Heading, SearchContainer, StyledInput } from './HomeStyles';
+import * as S from './HomeStyles';
 
 // TODO: make form
 const Home = () => {
@@ -10,14 +10,14 @@ const Home = () => {
 
     return (
         <Main backgroundColor="background1">
-            <Heading>Discover and link-up with like-minded developers</Heading>
-            <SearchContainer>
+            <S.Heading>Discover and link-up with like-minded developers</S.Heading>
+            <S.SearchContainer>
                 <form>
-                    <StyledInput Icon={IoIosSearch} />
+                    <S.StyledInput icon={IoIosSearch} />
                     <Button type="submit">Search</Button>
                     <CustomLink to="/#">Advanced Search</CustomLink>
                 </form>
-            </SearchContainer>
+            </S.SearchContainer>
         </Main>
     );
 };

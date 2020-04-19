@@ -2,30 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import {} from 'redux/profiles';
-import { selectIsAuthenticated } from 'redux/auth';
-import { setAlert } from 'redux/alerts';
-import { Flex, Button } from 'shared/components';
-import { ProfileCard } from '../ProfileStyles';
-import {} from './ProfileAboutStyles';
+import { selectProfileBio } from 'redux/profiles';
+import { ProfileCard } from 'components';
 
 const propTypes = {
-    setAlert: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired,
+    bio: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-    isAuthenticated: selectIsAuthenticated,
+    bio: selectProfileBio,
 });
 
-const mapDispatchToProps = {
-    setAlert,
-};
+// TODO: make possible/ add prompt to add bio if it doesn't already exist and is current authenticated users profile
+// TODO: conditionally render component if viewed by other users & component is empty?
+// TODO: add loader/don't render anything while loading
+const ProfileAbout = ({ bio }) => (
+    <ProfileCard heading="About Me">{bio ? <p>{bio}</p> : 'No bio for this profile'}</ProfileCard>
+);
 
-const ProfileTop = ({ isAuthenticated, setAlert }) => {
-    return <ProfileCard></ProfileCard>;
-};
+ProfileAbout.propTypes = propTypes;
 
-ProfileTop.propTypes = propTypes;
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileTop);
+export default connect(mapStateToProps)(ProfileAbout);

@@ -33,6 +33,8 @@ export const selectProfileInfo = createSelector(
     }),
 );
 
+export const selectProfileBio = createSelector([selectProfile], profile => profile.bio);
+
 export const selectProfileUser = createSelector([selectProfile], profile => profile.user || {});
 
 export const selectProfileSkills = createSelector([selectProfile], profile => profile.skills || []);

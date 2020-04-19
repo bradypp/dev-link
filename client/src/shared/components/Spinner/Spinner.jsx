@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { StyledSpinner, SpinnerOverlay } from './SpinnerStyles';
 
 const propTypes = {
-    overlayActive: PropTypes.bool,
+    renderOverlay: PropTypes.bool,
     size: PropTypes.string,
     variant: PropTypes.oneOf(['button', 'default']),
     color: PropTypes.string,
@@ -11,16 +11,16 @@ const propTypes = {
 };
 
 const defaultProps = {
-    overlayActive: true,
+    renderOverlay: true,
     size: '4.5rem',
     variant: 'default',
     color: 'dark',
     className: undefined,
 };
 
-const Spinner = ({ overlayActive, size, color, variant, className }) => (
-    <SpinnerOverlay className={className} overlayActive={overlayActive}>
-        <StyledSpinner size={size} variant={variant} color={color} />
+const Spinner = ({ renderOverlay, className, ...otherProps }) => (
+    <SpinnerOverlay className={className} renderOverlay={renderOverlay}>
+        <StyledSpinner {...otherProps} />
     </SpinnerOverlay>
 );
 

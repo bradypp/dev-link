@@ -48,7 +48,7 @@ const GlobalStyles = createGlobalStyle`
     ${mixins.flexColumnCenter}
   }
 
-  h1, h2, h3, h4, h5, h6,p {
+  h1, h2, h3, h4, h5, h6, p {
     margin-top: 0;
     margin-bottom: 0.8rem;
   }

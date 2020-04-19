@@ -3,8 +3,8 @@ import { mixins } from 'shared/styles';
 
 export const SpinnerOverlay = styled.div`
     ${mixins.flexCenter}
-    ${({ overlayActive }) =>
-        overlayActive &&
+    ${({ renderOverlay }) =>
+        renderOverlay &&
         css`
             height: 60vh;
             width: 100%;

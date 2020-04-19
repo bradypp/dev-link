@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Main } from 'shared/components';
 import { getProfileByUsername } from 'redux/profiles';
-import ProfileTop from './ProfileTop/ProfileTop';
-import { ProfileContainer } from './ProfileStyles';
+import { ProfileTop, ProfileAbout, ProfilePortfolio } from 'components';
+import * as S from './ProfileStyles';
 
 const propTypes = {
     getProfileByUsername: PropTypes.func.isRequired,
@@ -25,10 +25,11 @@ const Profile = ({ getProfileByUsername }) => {
     // TODO: Conditional appearance for different components/buttons (such as contact, social & education etc) based on if profile belongs to current authenticated user or not. If it is the currently authenticated users profile, have prompts to edit/add profile info, that's if they haven't already clicked to remove that from their profile?
     return (
         <Main>
-            <ProfileTop />
-            {/* bio card */}
-            {/* languages & skills card */}
-            {/* interests card */}
+            <S.ProfileContainer>
+                <ProfileTop />
+                <ProfileAbout />
+                <ProfilePortfolio />
+            </S.ProfileContainer>
             {/* profile sidebar */}
         </Main>
     );

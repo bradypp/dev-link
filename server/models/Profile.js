@@ -53,16 +53,16 @@ const profileSchema = new Schema({
             trim: true,
         },
     },
+    bio: {
+        type: String,
+        trim: true,
+    },
     skills: [
         {
             type: String,
             trim: true,
         },
     ],
-    bio: {
-        type: String,
-        trim: true,
-    },
     looking_for: {
         role_title: {
             type: String,
@@ -93,7 +93,7 @@ const profileSchema = new Schema({
         {
             title: {
                 type: String,
-                required: [true, 'Title is required'],
+                // required: [true, 'Title is required'],
                 trim: true,
             },
             description: {

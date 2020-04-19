@@ -8,6 +8,7 @@ const { AppError, catchAsync, multerImageUpload } = require('../utils');
 
 // TODO: move education & experience validation (from/to fields) to the front end and allow in create/update profile by sending the whole experience/education array, remove from fields to omit
 // TODO: allow updating likes in update profile route? push user id to likes array then send to update endpoint
+// TODO: add routes to update/delete single or multiple profile images
 
 exports.getMe = (req, res, next) => {
     req.params.userId = req.user.id;
@@ -31,6 +32,9 @@ exports.deleteProfile = handlers.deleteOneByUserId(Profile, { errorMessage: notF
 exports.getAllProfiles = handlers.getAll(Profile);
 
 exports.createUpdateProfile = catchAsync(async (req, res, next) => {
+    // Exclude fields that shouldn't be saved in this route
+    if (req.body.portfolio) delete req.body.portfolio;
+
     // Profile fields to save to new profile
     const profileFields = {
         ...req.body,
@@ -91,6 +95,7 @@ exports.resizeProfileImages = catchAsync(async (req, res, next) => {
     next();
 });
 
+// TODO: create delete single image route/middleware for when an image is removed from a profile
 exports.deleteProfileImages = catchAsync(async (req, res, next) => {
     const profile = Profile.findOne({ user: req.params.userId });
 
@@ -212,26 +217,27 @@ exports.removeEducation = catchAsync(async (req, res, next) => {
 
 // TODO: test images upload
 // TODO: delete images on updating/deleting old items/images. Make this a more general portfolio image preparation middleware?
+// TODO: create utility image handlers for deletion, updating, resizing etc then create the needed middlewares
 exports.uploadProfilePortfolioImages = multerImageUpload.array('images', 5);
 
 exports.resizeProfilePortfolioImages = catchAsync(async (req, res, next) => {
-    if (!req.files.images) return next();
+    if (req.files) {
+        req.body.images = [];
 
-    req.body.images = [];
+        await Promise.all(
+            req.files.map(async (file, i) => {
+                const filename = `profile-portfolio-${i + 1}-${req.user.id}-${Date.now()}.jpeg`;
 
-    await Promise.all(
-        req.files.images.map(async (file, i) => {
-            const filename = `profile-portfolio-${i + 1}-${req.user.id}-${Date.now()}.jpeg`;
+                await sharp(file.buffer)
+                    .resize(500, 500)
+                    .toFormat('jpeg')
+                    .jpeg({ quality: 80 })
+                    .toFile(`public/img/profile/portfolio/${filename}`);
 
-            await sharp(file.buffer)
-                .resize(500, 500)
-                .toFormat('jpeg')
-                .jpeg({ quality: 80 })
-                .toFile(`public/img/profile/portfolio/${filename}`);
-
-            req.body.images.push(filename);
-        }),
-    );
+                req.body.images.push(filename);
+            }),
+        );
+    }
     next();
 });
 
@@ -244,8 +250,37 @@ exports.addPortfolioItem = catchAsync(async (req, res, next) => {
     }
 
     // Make new education object and add to profile
-    const newPortfolioItem = { ...req.body };
-    profile.portfolio.push(newPortfolioItem);
+    profile.portfolio.push(req.body);
+
+    // Save profile and send response
+    await profile.save();
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            profile,
+        },
+    });
+});
+
+// TODO: create separate route for updating portfolio images
+exports.editPortfolioItem = catchAsync(async (req, res, next) => {
+    if (req.body.images) {
+        return next(
+            new AppError('This is the incorrect route for editing profile portfolio images', 400),
+        );
+    }
+
+    const profile = await Profile.findOne({ user: req.params.userId });
+
+    if (!profile) {
+        return next(new AppError(notFoundErrorMessage, 404));
+    }
+
+    // Get item index and overwrite old data with new data
+    const itemIndex = profile.portfolio.map(item => item.id).indexOf(req.params.portId);
+    // eslint-disable-next-line no-underscore-dangle
+    profile.portfolio.splice(itemIndex, 1, { ...profile.portfolio[itemIndex]._doc, ...req.body });
 
     // Save profile and send response
     await profile.save();

@@ -32,27 +32,46 @@ router
         profileController.deleteProfile,
     );
 
-// TODO: add required routes (portfolio etc.)
+// TODO: create the routes for profile images
+// router
+//     .route('/images')
+//     .patch(
+//         validation.createUpdateProfile,
+//         profileController.getMe,
+//         profileController.uploadProfileImages,
+//         profileController.resizeProfileImages,
+//         profileController.updateProfileImages,
+//     )
+//     .delete(
+//         profileController.getMe,
+//         profileController.deleteProfileImages,
+//     );
+
+// TODO: delete?
 router
     .route('/experience')
-    .patch(validation.experience, profileController.getMe, profileController.addExperience);
+    .post(validation.experience, profileController.getMe, profileController.addExperience);
 
+// TODO: delete?
+// TODO: make an update route?
 router
     .route('/experience/:expId')
     .delete(profileController.getMe, profileController.removeExperience);
 
+// TODO: delete?
 router
     .route('/education')
-    .patch(validation.education, profileController.getMe, profileController.addEducation);
+    .post(validation.education, profileController.getMe, profileController.addEducation);
 
+// TODO: delete?
+// TODO: make an update route?
 router
     .route('/education/:eduId')
     .delete(profileController.getMe, profileController.removeEducation);
 
-// TODO: add portfolio validation?
 router
     .route('/portfolio')
-    .patch(
+    .post(
         profileController.getMe,
         profileController.uploadProfilePortfolioImages,
         profileController.resizeProfilePortfolioImages,
@@ -61,7 +80,19 @@ router
 
 router
     .route('/portfolio/:portId')
+    .put(profileController.getMe, profileController.editPortfolioItem)
     .delete(profileController.getMe, profileController.removePortfolioItem);
+
+// TODO: create the routes for portfolio images
+// router
+//     .route('/portfolio/:portId/images')
+//     .patch(
+//         profileController.getMe,
+//         profileController.uploadProfilePortfolioImages,
+//         profileController.resizeProfilePortfolioImages,
+//         profileController.editPortfolioImages,
+//     )
+//     .delete(profileController.getMe, profileController.deletePortfolioImages);
 
 router.route('/:id/star').patch(profileController.getMe, profileController.toggleStar);
 

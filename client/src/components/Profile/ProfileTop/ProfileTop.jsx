@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { IoMdEye, IoMdStarOutline, IoMdStar } from 'react-icons/io';
 import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Button, CustomLink } from 'shared/components';
+import { IoMdEye, IoMdStarOutline, IoMdStar } from 'react-icons/io';
 import Image from 'react-image';
 import {
     selectProfileAvatar,
@@ -23,7 +22,7 @@ import { selectUser, selectIsAuthenticated } from 'redux/auth';
 import { setAlert } from 'redux/alerts';
 import Contact from './Contact/Contact';
 import Socials from './Socials/Socials';
-import { ProfileTopStyles } from './ProfileTopStyles';
+import * as S from './ProfileTopStyles';
 
 const propTypes = {
     toggleStar: PropTypes.func.isRequired,
@@ -113,21 +112,20 @@ const ProfileTop = ({
     // TODO: Add message button?
 
     return (
-        <ProfileTopStyles>
-            <div className="cover-image-container">
+        <S.ProfileTopCard>
+            <S.CoverImageContainer>
                 <Image
-                    className="cover-image"
                     src={[
                         `http://localhost:5000/img/profile/cover_image/${coverImage}`,
                         ` http://localhost:5000/img/profile/cover_image/default.jpg`,
                     ]}
                     alt="Profile cover"
                 />
-            </div>
-            <div className="content">
-                <div className="content-left">
-                    <div className="avatar-container">
-                        <Image
+            </S.CoverImageContainer>
+            <S.ContentContainer>
+                <S.ContentLeftContainer>
+                    <S.AvatarContainer>
+                        <S.Avatar
                             className="avatar"
                             src={[
                                 `http://localhost:5000/img/profile/avatar/${avatar}`,
@@ -135,61 +133,55 @@ const ProfileTop = ({
                             ]}
                             alt="Profile avatar"
                         />
-                    </div>
-                    <h1 className="name">{name}</h1>
-                    {headline && <h2 className="headline">{headline}</h2>}
+                    </S.AvatarContainer>
+                    <h1>{name}</h1>
+                    {headline && <h2>{headline}</h2>}
                     {city ? (
-                        <h3 className="subheading">
+                        <h3>
                             {city}
                             {country && <>, {country}</>}
                         </h3>
                     ) : (
-                        <>{country && <h3 className="subheading">{country}</h3>}</>
+                        <>{country && <h3>{country}</h3>}</>
                     )}
                     {company ? (
-                        <h3 className="subheading">
+                        <h3>
                             {company}
                             {current_position && <> &middot; {current_position}</>}
                         </h3>
                     ) : (
-                        <>
-                            {current_position && <h3 className="subheading">{current_position}</h3>}
-                        </>
+                        <>{current_position && <h3>{current_position}</h3>}</>
                     )}
-                    <div className="info-buttons">
+                    <S.InfoButtonsContainer>
                         <Contact name={name} profileContact={profileContact} /> &middot;
                         <Socials name={name} profileSocials={profileSocials} />
                         &middot; <a href={website}>Website</a>
                         &middot; <a href={`https://github.com/${github_username}`}>GitHub</a>
-                    </div>
-                </div>
-                <div className="content-right">
-                    <div className="toggle-buttons">
-                        <Button
-                            className="toggle-button"
-                            icon={IoMdEye}
-                            onClick={toggleWatchHandler}>
+                    </S.InfoButtonsContainer>
+                </S.ContentLeftContainer>
+                <S.ContentRightContainer>
+                    <S.ToggleButtonsContainer>
+                        <S.ToggleButton icon={IoMdEye} onClick={toggleWatchHandler}>
                             {watchedByCurrentUser ? `Unwatch` : `Watch`}
-                        </Button>
-                        <div className="count-container">{profileWatchers.length}</div>
-                        <Button
-                            className="toggle-button"
+                        </S.ToggleButton>
+                        <S.CountContainer>{profileWatchers.length}</S.CountContainer>
+                        <S.ToggleButton
                             icon={starredByCurrentUser ? IoMdStar : IoMdStarOutline}
                             onClick={toggleStarHandler}>
                             {starredByCurrentUser ? `Unstar` : `Star`}
-                        </Button>
-                        <div className="count-container">{profileStars.length}</div>
-                    </div>
-                    <div className="skills">
+                        </S.ToggleButton>
+                        <S.CountContainer>{profileStars.length}</S.CountContainer>
+                    </S.ToggleButtonsContainer>
+                    <S.SkillsContainer>
                         {profileSkills.map(skill => (
-                            <CustomLink className="skill" to="#" key={uuidv4()}>
+                            <S.SkillLink to="#" key={uuidv4()}>
                                 {skill}
-                            </CustomLink>
+                            </S.SkillLink>
                         ))}
-                    </div>
-                </div>
-            </div>
-        </ProfileTopStyles>
+                    </S.SkillsContainer>
+                </S.ContentRightContainer>
+            </S.ContentContainer>
+        </S.ProfileTopCard>
     );
 };
 

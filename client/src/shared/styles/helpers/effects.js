@@ -1,23 +1,8 @@
 import { css } from 'styled-components/macro';
-import Color from 'color';
+import utils from './utils';
 
-const colorHelpers = {
-    darken: (colorValue, amount) =>
-        Color(colorValue)
-            .darken(amount)
-            .string(),
-    lighten: (colorValue, amount) =>
-        Color(colorValue)
-            .lighten(amount)
-            .string(),
-    rgba: (colorValue, opacity) =>
-        Color(colorValue)
-            .alpha(opacity)
-            .string(),
-};
-
-// TODO: test the following effects mixins
-const effectHelpers = {
+// TODO: test the effects helpers
+const effects = {
     hoverEffect: (
         config = { backgroundColor: null, textColor: null, borderColor: null, boxShadow: null },
     ) => {
@@ -68,17 +53,16 @@ const effectHelpers = {
         const activeAmount = amount + 0.05;
 
         const hoverEffect = css`
-            ${backgroundColor &&
-                `background-color:  ${colorHelpers.lighten(backgroundColor, amount)}`};
-            ${textColor && `color:  ${colorHelpers.lighten(textColor, amount)}`};
-            ${borderColor && `border-color: ${colorHelpers.lighten(textColor, amount)}`};
+            ${backgroundColor && `background-color:  ${utils.lighten(backgroundColor, amount)}`};
+            ${textColor && `color:  ${utils.lighten(textColor, amount)}`};
+            ${borderColor && `border-color: ${utils.lighten(textColor, amount)}`};
         `;
 
         const activeEffect = css`
             ${backgroundColor &&
-                `background-color:  ${colorHelpers.lighten(backgroundColor, activeAmount)}`};
-            ${textColor && `color:  ${colorHelpers.lighten(textColor, activeAmount)}`};
-            ${borderColor && `border-color: ${colorHelpers.lighten(textColor, activeAmount)}`};
+                `background-color:  ${utils.lighten(backgroundColor, activeAmount)}`};
+            ${textColor && `color:  ${utils.lighten(textColor, activeAmount)}`};
+            ${borderColor && `border-color: ${utils.lighten(textColor, activeAmount)}`};
         `;
 
         return css`
@@ -111,17 +95,16 @@ const effectHelpers = {
         const activeAmount = amount + 0.05;
 
         const hoverEffect = css`
-            ${backgroundColor &&
-                `background-color:  ${colorHelpers.darken(backgroundColor, amount)}`};
-            ${textColor && `color:  ${colorHelpers.darken(textColor, amount)}`};
-            ${borderColor && `border-color: ${colorHelpers.darken(textColor, amount)}`};
+            ${backgroundColor && `background-color:  ${utils.darken(backgroundColor, amount)}`};
+            ${textColor && `color:  ${utils.darken(textColor, amount)}`};
+            ${borderColor && `border-color: ${utils.darken(textColor, amount)}`};
         `;
 
         const activeEffect = css`
             ${backgroundColor &&
-                `background-color:  ${colorHelpers.darken(backgroundColor, activeAmount)}`};
-            ${textColor && `color:  ${colorHelpers.darken(textColor, activeAmount)}`};
-            ${borderColor && `border-color: ${colorHelpers.darken(textColor, activeAmount)}`};
+                `background-color:  ${utils.darken(backgroundColor, activeAmount)}`};
+            ${textColor && `color:  ${utils.darken(textColor, activeAmount)}`};
+            ${borderColor && `border-color: ${utils.darken(textColor, activeAmount)}`};
         `;
 
         return css`
@@ -154,17 +137,15 @@ const effectHelpers = {
         const activeAmount = amount + 0.05;
 
         const hoverEffect = css`
-            ${backgroundColor &&
-                `background-color:  ${colorHelpers.rgba(backgroundColor, amount)}`};
-            ${textColor && `color:  ${colorHelpers.rgba(textColor, amount)}`};
-            ${borderColor && `border-color: ${colorHelpers.rgba(textColor, amount)}`};
+            ${backgroundColor && `background-color:  ${utils.rgba(backgroundColor, amount)}`};
+            ${textColor && `color:  ${utils.rgba(textColor, amount)}`};
+            ${borderColor && `border-color: ${utils.rgba(textColor, amount)}`};
         `;
 
         const activeEffect = css`
-            ${backgroundColor &&
-                `background-color:  ${colorHelpers.rgba(backgroundColor, activeAmount)}`};
-            ${textColor && `color:  ${colorHelpers.rgba(textColor, activeAmount)}`};
-            ${borderColor && `border-color: ${colorHelpers.rgba(textColor, activeAmount)}`};
+            ${backgroundColor && `background-color:  ${utils.rgba(backgroundColor, activeAmount)}`};
+            ${textColor && `color:  ${utils.rgba(textColor, activeAmount)}`};
+            ${borderColor && `border-color: ${utils.rgba(textColor, activeAmount)}`};
         `;
 
         return css`
@@ -201,46 +182,4 @@ const effectHelpers = {
     `,
 };
 
-const helpers = {
-    ...colorHelpers,
-    ...effectHelpers,
-    customScrollbar: (config = {}) => css`
-        &::-webkit-scrollbar {
-            width: ${config.width || 8}px;
-        }
-        &::-webkit-scrollbar-track {
-            background: none;
-        }
-        &::-webkit-scrollbar-thumb {
-            border-radius: 99px;
-            background: ${({ theme }) => config.background || theme.colors.scrollBar};
-        }
-    `,
-    backgroundImage: imageURL => css`
-        background-image: url("${imageURL}");
-        background-position: 50% 50%;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background: ${({ theme }) => theme.colors.background2};
-    `,
-    placeholderColor: colorValue => css`
-        ::-webkit-input-placeholder {
-            color: ${colorValue} !important;
-            opacity: 0.8 !important;
-        }
-        :-moz-placeholder {
-            color: ${colorValue} !important;
-            opacity: 0.8 !important;
-        }
-        ::-moz-placeholder {
-            color: ${colorValue} !important;
-            opacity: 0.8 !important;
-        }
-        :-ms-input-placeholder {
-            color: ${colorValue} !important;
-            opacity: 0.8 !important;
-        }
-    `,
-};
-
-export default helpers;
+export default effects;
