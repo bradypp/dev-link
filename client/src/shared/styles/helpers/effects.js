@@ -4,7 +4,12 @@ import utils from './utils';
 // TODO: test the effects helpers
 const effects = {
     hoverEffect: (
-        config = { backgroundColor: null, textColor: null, borderColor: null, boxShadow: null },
+        config = {
+            backgroundColor: null,
+            textColor: null,
+            borderColor: null,
+            boxShadow: null,
+        },
     ) => {
         const { backgroundColor, textColor, borderColor, boxShadow } = config;
         return css`
@@ -19,7 +24,12 @@ const effects = {
         `;
     },
     activeEffect: (
-        config = { backgroundColor: null, textColor: null, borderColor: null, boxShadow: null },
+        config = {
+            backgroundColor: null,
+            textColor: null,
+            borderColor: null,
+            boxShadow: null,
+        },
     ) => {
         const { backgroundColor, textColor, borderColor, boxShadow } = config;
         const activeEffect = css`
@@ -46,16 +56,18 @@ const effects = {
             backgroundColor: null,
             textColor: null,
             borderColor: null,
+            boxShadow: null,
         },
         amount = 0.05,
     ) => {
-        const { backgroundColor, textColor, borderColor } = config;
+        const { backgroundColor, textColor, borderColor, boxShadow } = config;
         const activeAmount = amount + 0.05;
 
         const hoverEffect = css`
             ${backgroundColor && `background-color:  ${utils.lighten(backgroundColor, amount)}`};
             ${textColor && `color:  ${utils.lighten(textColor, amount)}`};
             ${borderColor && `border-color: ${utils.lighten(textColor, amount)}`};
+            ${boxShadow && `box-shadow: ${boxShadow}`};
         `;
 
         const activeEffect = css`
@@ -63,6 +75,7 @@ const effects = {
                 `background-color:  ${utils.lighten(backgroundColor, activeAmount)}`};
             ${textColor && `color:  ${utils.lighten(textColor, activeAmount)}`};
             ${borderColor && `border-color: ${utils.lighten(textColor, activeAmount)}`};
+            ${boxShadow && `box-shadow: ${boxShadow}`};
         `;
 
         return css`
@@ -88,16 +101,18 @@ const effects = {
             backgroundColor: null,
             textColor: null,
             borderColor: null,
+            boxShadow: null,
         },
         amount = 0.05,
     ) => {
-        const { backgroundColor, textColor, borderColor } = config;
+        const { backgroundColor, textColor, borderColor, boxShadow } = config;
         const activeAmount = amount + 0.05;
 
         const hoverEffect = css`
             ${backgroundColor && `background-color:  ${utils.darken(backgroundColor, amount)}`};
             ${textColor && `color:  ${utils.darken(textColor, amount)}`};
             ${borderColor && `border-color: ${utils.darken(textColor, amount)}`};
+            ${boxShadow && `box-shadow: ${boxShadow}`};
         `;
 
         const activeEffect = css`
@@ -105,6 +120,7 @@ const effects = {
                 `background-color:  ${utils.darken(backgroundColor, activeAmount)}`};
             ${textColor && `color:  ${utils.darken(textColor, activeAmount)}`};
             ${borderColor && `border-color: ${utils.darken(textColor, activeAmount)}`};
+            ${boxShadow && `box-shadow: ${boxShadow}`};
         `;
 
         return css`
@@ -130,22 +146,25 @@ const effects = {
             backgroundColor: null,
             textColor: null,
             borderColor: null,
+            boxShadow: null,
         },
         amount = 0.05,
     ) => {
-        const { backgroundColor, textColor, borderColor } = config;
+        const { backgroundColor, textColor, borderColor, boxShadow } = config;
         const activeAmount = amount + 0.05;
 
         const hoverEffect = css`
             ${backgroundColor && `background-color:  ${utils.rgba(backgroundColor, amount)}`};
             ${textColor && `color:  ${utils.rgba(textColor, amount)}`};
             ${borderColor && `border-color: ${utils.rgba(textColor, amount)}`};
+            ${boxShadow && `box-shadow: ${boxShadow}`};
         `;
 
         const activeEffect = css`
             ${backgroundColor && `background-color:  ${utils.rgba(backgroundColor, activeAmount)}`};
             ${textColor && `color:  ${utils.rgba(textColor, activeAmount)}`};
             ${borderColor && `border-color: ${utils.rgba(textColor, activeAmount)}`};
+            ${boxShadow && `box-shadow: ${boxShadow}`};
         `;
 
         return css`

@@ -4,6 +4,10 @@ import { mixins } from 'shared/styles';
 // TODO: move grid-column to a container for profile page (so it's separate )
 export const StyledSection = styled.section`
     ${mixins.card}
+
+    h3 {
+        font-size: 1.6rem;
+    }
 `;
 
 // TODO: move grid-column to a container for profile page (so it's separate )

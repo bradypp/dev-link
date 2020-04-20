@@ -14,5 +14,5 @@ export const copyToClipboard = value => {
 };
 
 export const isFocusedElementEditable = () =>
-  !!document.activeElement.getAttribute('contenteditable') ||
+  !!document.activeElement.getAttribute('content-editable') ||
   ['TEXTAREA', 'INPUT'].includes(document.activeElement.tagName);

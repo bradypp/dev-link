@@ -10,9 +10,6 @@ const router = express.Router({ mergeParams: true });
 router.route('/').get(profileController.getByUsername, profileController.getProfile);
 router.route('/all').get(profileController.getAllProfiles);
 
-// TODO: delete?
-router.route('/github-repos/:github_username').get(profileController.getGithubRepos);
-
 // All routes after this middleware are protected
 router.use(authController.protect);
 
@@ -23,76 +20,56 @@ router
         validation.createUpdateProfile,
         profileController.getMe,
         profileController.uploadProfileImages,
-        profileController.resizeProfileImages,
+        profileController.prepareProfileImages,
+        profileController.deleteReplacedProfileImages,
         profileController.createUpdateProfile,
     )
     .delete(
         profileController.getMe,
-        profileController.deleteProfileImages,
+        profileController.deleteAllProfileImages,
         profileController.deleteProfile,
     );
 
-// TODO: create the routes for profile images
+// TODO: delete?
 // router
-//     .route('/images')
-//     .patch(
-//         validation.createUpdateProfile,
-//         profileController.getMe,
-//         profileController.uploadProfileImages,
-//         profileController.resizeProfileImages,
-//         profileController.updateProfileImages,
-//     )
-//     .delete(
-//         profileController.getMe,
-//         profileController.deleteProfileImages,
-//     );
+//     .route('/experience')
+//     .post(validation.experience, profileController.getMe, profileController.addExperience);
 
-// TODO: delete?
-router
-    .route('/experience')
-    .post(validation.experience, profileController.getMe, profileController.addExperience);
+// // TODO: delete?
+// // TODO: make an update route?
+// router
+//     .route('/experience/:expId')
+//     .delete(profileController.getMe, profileController.removeExperience);
 
-// TODO: delete?
-// TODO: make an update route?
-router
-    .route('/experience/:expId')
-    .delete(profileController.getMe, profileController.removeExperience);
+// // TODO: delete?
+// router
+//     .route('/education')
+//     .post(validation.education, profileController.getMe, profileController.addEducation);
 
-// TODO: delete?
-router
-    .route('/education')
-    .post(validation.education, profileController.getMe, profileController.addEducation);
-
-// TODO: delete?
-// TODO: make an update route?
-router
-    .route('/education/:eduId')
-    .delete(profileController.getMe, profileController.removeEducation);
+// // TODO: delete?
+// // TODO: make an update route?
+// router
+//     .route('/education/:eduId')
+//     .delete(profileController.getMe, profileController.removeEducation);
 
 router
     .route('/portfolio')
     .post(
         profileController.getMe,
-        profileController.uploadProfilePortfolioImages,
-        profileController.resizeProfilePortfolioImages,
+        profileController.uploadProfileImages,
+        profileController.prepareProfileImages,
         profileController.addPortfolioItem,
     );
 
 router
     .route('/portfolio/:portId')
-    .put(profileController.getMe, profileController.editPortfolioItem)
+    .put(
+        profileController.getMe,
+        profileController.uploadProfileImages,
+        profileController.prepareProfileImages,
+        profileController.updatePortfolioItem,
+    )
     .delete(profileController.getMe, profileController.removePortfolioItem);
-
-// TODO: create the routes for portfolio images
-// router
-//     .route('/portfolio/:portId/images')
-//     .patch(
-//         profileController.getMe,
-//         profileController.uploadProfilePortfolioImages,
-//         profileController.resizeProfilePortfolioImages,
-//         profileController.editPortfolioImages,
-//     )
-//     .delete(profileController.getMe, profileController.deletePortfolioImages);
 
 router.route('/:id/star').patch(profileController.getMe, profileController.toggleStar);
 

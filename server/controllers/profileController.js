@@ -32,9 +32,6 @@ exports.deleteProfile = handlers.deleteOneByUserId(Profile, { errorMessage: notF
 exports.getAllProfiles = handlers.getAll(Profile);
 
 exports.createUpdateProfile = catchAsync(async (req, res, next) => {
-    // Exclude fields that shouldn't be saved in this route
-    if (req.body.portfolio) delete req.body.portfolio;
-
     // Profile fields to save to new profile
     const profileFields = {
         ...req.body,
@@ -66,12 +63,11 @@ exports.createUpdateProfile = catchAsync(async (req, res, next) => {
 exports.uploadProfileImages = multerImageUpload.fields([
     { name: 'avatar', maxCount: 1 },
     { name: 'cover_image', maxCount: 1 },
+    { name: 'portfolio_images', maxCount: 5 },
 ]);
 
-// TODO: delete profile avatar on uploading a new one (do this before image upload?). Make this a more general avatar preparation middleware?
-exports.resizeProfileImages = catchAsync(async (req, res, next) => {
+exports.prepareProfileImages = catchAsync(async (req, res, next) => {
     if (!req.files) return next();
-
     // Profile avatar
     if (req.files.avatar) {
         req.body.avatar = `profile-avatar-${req.user.id}-${Date.now()}.jpeg`;
@@ -92,36 +88,83 @@ exports.resizeProfileImages = catchAsync(async (req, res, next) => {
             .toFile(`public/img/profile/cover_image/${req.body.cover_image}`);
     }
 
+    if (req.files.portfolio_images) {
+        req.body.portfolio_images = [];
+        // Create an array of promises to name/resize the images then fulfill them all at once using Promise.all
+        await Promise.all(
+            req.files.portfolio_images.map(async (file, i) => {
+                const filename = `profile-portfolio-${i + 1}-${req.user.id}-${Date.now()}.jpeg`;
+
+                await sharp(file.buffer)
+                    .resize(1536, 864)
+                    .toFormat('jpeg')
+                    .jpeg({ quality: 90 })
+                    .toFile(`public/img/profile/portfolio/${filename}`);
+
+                req.body.portfolio_images.push(filename);
+            }),
+        );
+    }
+
     next();
 });
 
-// TODO: create delete single image route/middleware for when an image is removed from a profile
-exports.deleteProfileImages = catchAsync(async (req, res, next) => {
-    const profile = Profile.findOne({ user: req.params.userId });
+// TODO: test
+exports.deleteReplacedProfileImages = catchAsync(async (req, res, next) => {
+    if (!req.body.avatar && !req.body.cover_image) return next();
 
-    if (!profile) {
-        return next(new AppError(notFoundErrorMessage, 404));
-    }
+    // Check for existing images that are being replaced and delete them
+    const profile = await Profile.findOne({ user: req.params.userId });
 
-    if (profile.avatar && profile.avatar !== 'default.jpg') {
+    // If there's no profile, continue to the next stage (it might be a new profile)
+    if (!profile) return next();
+
+    if (req.body.avatar && profile.avatar !== 'default.jpg' && profile.avatar !== req.body.avatar) {
         fs.unlink(`public/img/profile/avatar/${profile.avatar}`, err => {
             if (err) next(new AppError(err.message, 500));
         });
     }
 
-    if (profile.cover_image && profile.cover_image !== 'default.jpg') {
+    if (
+        req.body.cover_image &&
+        profile.cover_image !== 'default.jpg' &&
+        profile.cover_image !== req.body.cover_image
+    ) {
         fs.unlink(`public/img/profile/cover_image/${profile.cover_image}`, err => {
             if (err) next(new AppError(err.message, 500));
         });
     }
 
-    // TODO: test
-    if (profile.portfolio && profile.portfolio.length > 0) {
-        profile.portfolio.images.forEach(image =>
-            fs.unlink(`public/img/profile/portfolio/${image}`, err => {
-                if (err) next(new AppError(err.message, 500));
-            }),
-        );
+    next();
+});
+
+exports.deleteAllProfileImages = catchAsync(async (req, res, next) => {
+    const profile = await Profile.findOne({ user: req.params.userId });
+
+    if (!profile) {
+        return next(new AppError(notFoundErrorMessage, 404));
+    }
+
+    if (profile.avatar !== 'default.jpg') {
+        fs.unlink(`public/img/profile/avatar/${profile.avatar}`, err => {
+            if (err) next(new AppError(err.message, 500));
+        });
+    }
+
+    if (profile.cover_image !== 'default.jpg') {
+        fs.unlink(`public/img/profile/cover_image/${profile.cover_image}`, err => {
+            if (err) next(new AppError(err.message, 500));
+        });
+    }
+
+    if (profile.portfolio.length > 0) {
+        profile.portfolio.forEach(item => {
+            item.images.forEach(image =>
+                fs.unlink(`public/img/profile/portfolio/${image}`, err => {
+                    if (err) next(new AppError(err.message, 500));
+                }),
+            );
+        });
     }
 
     next();
@@ -158,6 +201,10 @@ exports.removeExperience = catchAsync(async (req, res, next) => {
 
     // Get remove index and splice from experience array
     const removeIndex = profile.experience.map(item => item.id).indexOf(req.params.expId);
+    if (removeIndex === -1) {
+        return next(new AppError('Experience item not found or updated', 404));
+    }
+
     profile.experience.splice(removeIndex, 1);
 
     // Save profile and send response
@@ -202,6 +249,10 @@ exports.removeEducation = catchAsync(async (req, res, next) => {
 
     // Get remove index and splice from education array
     const removeIndex = profile.education.map(item => item.id).indexOf(req.params.eduId);
+    if (removeIndex === -1) {
+        return next(new AppError('Education item not found or updated', 404));
+    }
+
     profile.education.splice(removeIndex, 1);
 
     // Save profile and send response
@@ -215,29 +266,32 @@ exports.removeEducation = catchAsync(async (req, res, next) => {
     });
 });
 
-// TODO: test images upload
-// TODO: delete images on updating/deleting old items/images. Make this a more general portfolio image preparation middleware?
-// TODO: create utility image handlers for deletion, updating, resizing etc then create the needed middlewares
-exports.uploadProfilePortfolioImages = multerImageUpload.array('images', 5);
+// add uploaded images when creating a new item
+// add new images to the existing array
+// delete old images and upload new images when updating item
+// delete old images when deleting item
 
-exports.resizeProfilePortfolioImages = catchAsync(async (req, res, next) => {
-    if (req.files) {
-        req.body.images = [];
+exports.preparePortfolioItemImages = catchAsync(async (req, res, next) => {
+    if (!req.files.portfolio_images) return next();
 
-        await Promise.all(
-            req.files.map(async (file, i) => {
-                const filename = `profile-portfolio-${i + 1}-${req.user.id}-${Date.now()}.jpeg`;
+    req.body.portfolio_images = [];
 
-                await sharp(file.buffer)
-                    .resize(500, 500)
-                    .toFormat('jpeg')
-                    .jpeg({ quality: 80 })
-                    .toFile(`public/img/profile/portfolio/${filename}`);
+    // Create an array of promises to name/resize the images then fulfill them all at once using Promise.all
+    // Add the new images to req.body.portfolio_images
+    await Promise.all(
+        req.files.portfolio_images.map(async (file, i) => {
+            const filename = `profile-portfolio-${i + 1}-${req.user.id}-${Date.now()}.jpeg`;
 
-                req.body.images.push(filename);
-            }),
-        );
-    }
+            await sharp(file.buffer)
+                .resize(500, 500)
+                .toFormat('jpeg')
+                .jpeg({ quality: 80 })
+                .toFile(`public/img/profile/portfolio/${filename}`);
+
+            req.body.portfolio_images.push(filename);
+        }),
+    );
+
     next();
 });
 
@@ -250,7 +304,7 @@ exports.addPortfolioItem = catchAsync(async (req, res, next) => {
     }
 
     // Make new education object and add to profile
-    profile.portfolio.push(req.body);
+    profile.portfolio.push({ ...req.body, images: req.body.portfolio_images || [] });
 
     // Save profile and send response
     await profile.save();
@@ -263,24 +317,53 @@ exports.addPortfolioItem = catchAsync(async (req, res, next) => {
     });
 });
 
-// TODO: create separate route for updating portfolio images
-exports.editPortfolioItem = catchAsync(async (req, res, next) => {
-    if (req.body.images) {
-        return next(
-            new AppError('This is the incorrect route for editing profile portfolio images', 400),
-        );
-    }
-
+// If an image is uploaded, send it along with the whole portfolio item with field-name 'portfolio_images'
+exports.updatePortfolioItem = catchAsync(async (req, res, next) => {
     const profile = await Profile.findOne({ user: req.params.userId });
 
     if (!profile) {
         return next(new AppError(notFoundErrorMessage, 404));
     }
 
-    // Get item index and overwrite old data with new data
+    // Get portfolio item
     const itemIndex = profile.portfolio.map(item => item.id).indexOf(req.params.portId);
-    // eslint-disable-next-line no-underscore-dangle
-    profile.portfolio.splice(itemIndex, 1, { ...profile.portfolio[itemIndex]._doc, ...req.body });
+
+    if (itemIndex === -1) {
+        return next(new AppError('Portfolio item not found', 404));
+    }
+
+    const portfolioItem = profile.portfolio[itemIndex];
+
+    // Delete old images if some item images are removed from the images array
+    if (req.body.images) {
+        const imagesToDelete = portfolioItem.images.filter(
+            image => !req.body.images.includes(image),
+        );
+        if (imagesToDelete.length > 0) {
+            imagesToDelete.forEach(image =>
+                fs.unlink(`public/img/profile/portfolio/${image}`, err => {
+                    if (err) next(new AppError(err.message, 500));
+                }),
+            );
+        }
+    }
+
+    const uploadedImages = req.body.portfolio_images || [];
+    const currentImages = req.body.images || portfolioItem.images;
+    const imagesToSave = [...currentImages, ...uploadedImages];
+    console.log(req.body);
+    // Update the portfolio item
+    const { _id, title, description, skills, repo, demo } = portfolioItem;
+    profile.portfolio[itemIndex] = {
+        _id,
+        title,
+        description,
+        skills,
+        repo,
+        demo,
+        ...req.body,
+        images: imagesToSave,
+    };
 
     // Save profile and send response
     await profile.save();
@@ -293,7 +376,6 @@ exports.editPortfolioItem = catchAsync(async (req, res, next) => {
     });
 });
 
-// TODO: test
 exports.removePortfolioItem = catchAsync(async (req, res, next) => {
     const profile = await Profile.findOne({ user: req.params.userId });
 
@@ -303,6 +385,17 @@ exports.removePortfolioItem = catchAsync(async (req, res, next) => {
 
     // Get remove index and splice from education array
     const removeIndex = profile.portfolio.map(item => item.id).indexOf(req.params.portId);
+    if (removeIndex === -1) {
+        return next(new AppError('Portfolio item not found', 404));
+    }
+
+    // Delete portfolio item images
+    profile.portfolio[removeIndex].images.forEach(image =>
+        fs.unlink(`public/img/profile/portfolio/${image}`, err => {
+            if (err) next(new AppError(err.message, 500));
+        }),
+    );
+
     profile.portfolio.splice(removeIndex, 1);
 
     // Save profile and send response
@@ -388,28 +481,6 @@ exports.toggleWatch = catchAsync(async (req, res, next) => {
         data: {
             profile,
             user,
-        },
-    });
-});
-
-// TODO: delete?
-exports.getGithubRepos = catchAsync(async (req, res, next) => {
-    const githubRes = await axios.get(
-        `https://api.github.com/users/${req.params.github_username}/repos?per_page=10&sort=created:asc`,
-        {
-            headers: {
-                'user-agent': 'node.js',
-                Accept: 'application/vnd.github.v3+json',
-                client_id: process.env.GITHUB_CLIENT_ID,
-                client_secret: process.env.GITHUB_CLIENT_SECRET,
-            },
-        },
-    );
-
-    res.status(200).json({
-        status: 'success',
-        data: {
-            repos: githubRes.data,
         },
     });
 });

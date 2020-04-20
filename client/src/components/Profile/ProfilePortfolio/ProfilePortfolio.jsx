@@ -13,19 +13,20 @@ const mapStateToProps = createStructuredSelector({
     portfolio: selectProfilePortfolio,
 });
 
-// TODO: make possible/ add prompt to add bio if it doesn't already exist and is current authenticated users profile
-// TODO: conditionally render component if viewed by other users & component is empty?
-// TODO: add loader/don't render anything while loading
+// TODO: make possible/ add prompt to add to portfolio if it doesn't already exist and is current authenticated users profile
 const ProfilePortfolio = ({ portfolio }) => {
     return (
         <ProfileCard heading="Portfolio">
             {portfolio.map(item => {
+                const { title, description, repo, skills, demo, images } = item;
                 return (
                     <div>
-                        <h3>{item.title}</h3>
-                        <p>{item.description}</p>
-                        <p>{item.repo}</p>
-                        <p>{item.demo}</p>
+                        <h3>{title}</h3>
+                        {description && <p>{description}</p>}
+                        <div>
+                            {repo && <a href={repo}>Repo</a>}
+                            {demo && <a href={demo}>Repo</a>}
+                        </div>
                     </div>
                 );
             })}

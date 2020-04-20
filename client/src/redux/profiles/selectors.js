@@ -64,9 +64,15 @@ export const selectProfileLookingFor = createSelector(
     profile => profile.looking_for,
 );
 
-export const selectProfileInterests = createSelector([selectProfile], profile => profile.interests);
+export const selectProfileInterests = createSelector(
+    [selectProfile],
+    profile => profile.interests || [],
+);
 
-export const selectProfilePortfolio = createSelector([selectProfile], profile => profile.portfolio);
+export const selectProfilePortfolio = createSelector(
+    [selectProfile],
+    profile => profile.portfolio || [],
+);
 
 export const selectProfileStars = createSelector([selectProfile], profile => profile.stars || []);
 
