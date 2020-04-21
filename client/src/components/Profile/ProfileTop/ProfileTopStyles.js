@@ -126,7 +126,6 @@ export const SkillLink = styled(CustomLink)`
     /* border-radius: 50px; */
     /* height: 2.8rem; */
     font-size: 1.3rem;
-    padding: 0 1rem;
     margin-top: 0.8rem;
-    margin-left: 0.8rem;
+    margin-left: 1.6rem;
 `;

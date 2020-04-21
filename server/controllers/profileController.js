@@ -1,5 +1,4 @@
 const sharp = require('sharp');
-const axios = require('axios');
 const fs = require('fs');
 const handlers = require('./handlers');
 const Profile = require('../models/Profile');
@@ -351,7 +350,7 @@ exports.updatePortfolioItem = catchAsync(async (req, res, next) => {
     const uploadedImages = req.body.portfolio_images || [];
     const currentImages = req.body.images || portfolioItem.images;
     const imagesToSave = [...currentImages, ...uploadedImages];
-    console.log(req.body);
+
     // Update the portfolio item
     const { _id, title, description, skills, repo, demo } = portfolioItem;
     profile.portfolio[itemIndex] = {

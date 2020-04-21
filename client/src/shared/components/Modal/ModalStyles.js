@@ -4,13 +4,13 @@ import { mixins } from 'shared/styles';
 
 // TODO: customize modal styling
 export const ScrollOverlay = styled.div`
+    ${mixins.scrollableY}
     z-index: ${({ theme }) => theme.zIndex.modal};
     position: fixed;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
-    ${mixins.scrollableY}
 `;
 
 const clickOverlayStyles = {
@@ -24,7 +24,7 @@ const clickOverlayStyles = {
 };
 
 export const ClickableOverlay = styled.div`
-    min-height: 100%;
+    min-height: 100vh;
     background: rgba(9, 30, 66, 0.54);
     ${({ variant }) => clickOverlayStyles[variant]}
 `;

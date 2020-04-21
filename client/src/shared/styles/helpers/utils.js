@@ -51,6 +51,22 @@ const utils = {
             opacity: 0.8 !important;
         }
     `,
+    listElementPadding: (padding = '0.8rem') => css`
+        & > *:first-child {
+            padding: 0 0 ${padding};
+        }
+        & > *:not(:first-child):not(:last-child) {
+            padding: ${padding} 0;
+        }
+        & > *:last-child {
+            padding: ${padding} 0 0;
+        }
+    `,
+    listElementSeparators: (color = 'border1') => css`
+        & > *:not(:last-child) {
+            border-bottom: solid 1px ${({ theme }) => theme.colors[color] || color};
+        }
+    `,
 };
 
 export default utils;

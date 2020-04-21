@@ -20,10 +20,8 @@ const defaultProps = {
 const ProfileCard = ({ children, isCurrentUser, heading, subHeading, ...otherProps }) => (
     <S.StyledSection {...otherProps}>
         <S.Header>
-            <div>
-                <S.Heading>{heading}</S.Heading>
-                {subHeading && <S.SubHeading>{subHeading}</S.SubHeading>}
-            </div>
+            <S.Heading>{heading}</S.Heading>
+            {subHeading && <S.SubHeading>{subHeading}</S.SubHeading>}
             {/* TODO: show edit button/icon here if the current auth user is on their profile */}
             {/* TODO: show add + button? */}
             {/* TODO: show a dotted border clickable section if empty & current user? */}
