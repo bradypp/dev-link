@@ -1,39 +1,37 @@
 import styled from 'styled-components/macro';
-import { mixins, helpers } from 'shared/styles';
-
-export const PortfolioContentContainer = styled.div`
-    ${helpers.listElementPadding('1.6rem')}
-    ${helpers.listElementSeparators()}
-`;
 
 export const PortfolioItemContainer = styled.div`
-    ${mixins.flexCenterBetween};
+    display: flex;
 `;
 
 export const ItemInfoContainer = styled.div`
-    width: 66%;
-`;
-
-const linkMargin = `1.6rem`;
-export const SkillsContainer = styled.div`
-    ${mixins.flexCenterLeft};
-    flex-wrap: wrap;
-    margin-bottom: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    width: 66.6666%;
 
     a {
-        margin-right: ${linkMargin};
+        margin-right: 1.6rem;
+    }
+`;
+
+export const SkillsContainer = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 0.8rem;
+    margin-top: auto;
+
+    a {
+        font-size: 1.3rem;
     }
 `;
 
 export const LinksContainer = styled.div`
-    ${mixins.flexCenterLeft};
+    display: flex;
+    justify-content: flex-start;
     flex-wrap: wrap;
-
-    a {
-        margin-right: ${linkMargin};
-    }
 `;
 
 export const ItemImagesContainer = styled.div`
-    width: 33%;
+    width: 33.3333%;
 `;

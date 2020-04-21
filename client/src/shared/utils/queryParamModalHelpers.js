@@ -1,21 +1,25 @@
-import history from 'browserHistory';
-import { queryStringToObject, addToQueryString, omitFromQueryString } from 'shared/utils/url';
+import {
+    queryStringToObject,
+    addToQueryString,
+    omitFromQueryString,
+    browserHistory,
+} from 'shared/utils';
 
 const open = param =>
-    history.push({
-        pathname: history.location.pathname,
-        search: addToQueryString(history.location.search, { [`modal-${param}`]: true }),
+    browserHistory.push({
+        pathname: browserHistory.location.pathname,
+        search: addToQueryString(browserHistory.location.search, { [`modal-${param}`]: true }),
     });
 
 const close = param =>
-    history.push({
-        pathname: history.location.pathname,
-        search: omitFromQueryString(history.location.search, [`modal-${param}`]),
+    browserHistory.push({
+        pathname: browserHistory.location.pathname,
+        search: omitFromQueryString(browserHistory.location.search, [`modal-${param}`]),
     });
 
-const isOpen = param => !!queryStringToObject(history.location.search)[`modal-${param}`];
+const isOpen = param => !!queryStringToObject(browserHistory.location.search)[`modal-${param}`];
 
-export const createQueryParamModalHelpers = param => ({
+export default param => ({
     open: () => open(param),
     close: () => close(param),
     isOpen: () => isOpen(param),

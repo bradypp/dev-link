@@ -22,7 +22,6 @@ export const ContentContainer = styled.div`
 `;
 
 export const ContentLeftContainer = styled.div`
-    ${mixins.flexColumnLeft};
     flex: 1;
 
     h1 {
@@ -56,7 +55,8 @@ export const Avatar = styled(Image)`
 
 /* TODO: link styles (make bolder & grey background on hover?), make global button variant? */
 export const InfoButtonsContainer = styled.div`
-    ${mixins.flexCenterLeft}
+    display: flex;
+    justify-content: flex-start;
 
     & > * :not(:first-child) {
         margin-left: 0.4rem;
@@ -68,8 +68,10 @@ export const InfoButtonsContainer = styled.div`
 `;
 
 export const ContentRightContainer = styled.div`
-    ${mixins.flexColumnRightBetween}
-    flex:1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
 
     & > * :not(:last-child) {
         margin-bottom: 1rem;
@@ -118,7 +120,8 @@ export const CountContainer = styled.div`
 `;
 
 export const SkillsContainer = styled.div`
-    ${mixins.flexCenterRight}
+    display: flex;
+    justify-content: flex-end;
     flex-wrap: wrap-reverse;
 `;
 

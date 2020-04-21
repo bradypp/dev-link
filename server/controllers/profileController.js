@@ -67,48 +67,113 @@ exports.uploadProfileImages = multerImageUpload.fields([
 
 exports.prepareProfileImages = catchAsync(async (req, res, next) => {
     if (!req.files) return next();
+
     // Profile avatar
     if (req.files.avatar) {
-        req.body.avatar = `profile-avatar-${req.user.id}-${Date.now()}.jpeg`;
+        const avatar = {};
+        const filename = `profile-avatar-${req.user.id}-${Date.now()}`;
+
+        avatar.medium = `${filename}-medium.jpeg`;
         await sharp(req.files.avatar[0].buffer)
             .resize(400, 400)
             .toFormat('jpeg')
             .jpeg({ quality: 90 })
-            .toFile(`public/img/profile/avatar/${req.body.avatar}`);
+            .toFile(`public/img/profile/avatar/${avatar.medium}`);
+
+        avatar.small = `${filename}-small.jpeg`;
+        await sharp(req.files.avatar[0].buffer)
+            .resize(200, 200)
+            .toFormat('jpeg')
+            .jpeg({ quality: 85 })
+            .toFile(`public/img/profile/avatar/${avatar.small}`);
+
+        avatar.thumbnail = `${filename}-thumbnail.jpeg`;
+        await sharp(req.files.avatar[0].buffer)
+            .resize(50, 50)
+            .toFormat('jpeg')
+            .jpeg({ quality: 80 })
+            .toFile(`public/img/profile/avatar/${avatar.thumbnail}`);
+
+        req.body.avatar = avatar;
     }
 
     // Cover image
     if (req.files.cover_image) {
-        req.body.cover_image = `profile-cover_image-${req.user.id}-${Date.now()}.jpeg`;
+        const cover_image = {};
+        const filename = `profile-cover_image-${req.user.id}-${Date.now()}`;
+
+        cover_image.large = `${filename}-large.jpeg`;
         await sharp(req.files.cover_image[0].buffer)
-            .resize(1188, 297)
+            .resize(1010, 253)
             .toFormat('jpeg')
             .jpeg({ quality: 90 })
-            .toFile(`public/img/profile/cover_image/${req.body.cover_image}`);
+            .toFile(`public/img/profile/cover_image/${cover_image.large}`);
+
+        cover_image.medium = `${filename}-medium.jpeg`;
+        await sharp(req.files.cover_image[0].buffer)
+            .resize(713, 178)
+            .toFormat('jpeg')
+            .jpeg({ quality: 85 })
+            .toFile(`public/img/profile/cover_image/${cover_image.medium}`);
+
+        cover_image.small = `${filename}-small.jpeg`;
+        await sharp(req.files.cover_image[0].buffer)
+            .resize(451, 113)
+            .toFormat('jpeg')
+            .jpeg({ quality: 80 })
+            .toFile(`public/img/profile/cover_image/${cover_image.small}`);
+
+        req.body.cover_image = cover_image;
     }
 
+    // Portfolio item images
     if (req.files.portfolio_images) {
-        req.body.portfolio_images = [];
+        const portfolio_images = [];
+
         // Create an array of promises to name/resize the images then fulfill them all at once using Promise.all
         await Promise.all(
             req.files.portfolio_images.map(async (file, i) => {
-                const filename = `profile-portfolio-${i + 1}-${req.user.id}-${Date.now()}.jpeg`;
+                const image = {};
+                const filename = `profile-portfolio-${i + 1}-${req.user.id}-${Date.now()}`;
 
+                image.large = `${filename}-large.jpeg`;
                 await sharp(file.buffer)
-                    .resize(1536, 864)
+                    .resize(1152, 648)
                     .toFormat('jpeg')
                     .jpeg({ quality: 90 })
-                    .toFile(`public/img/profile/portfolio/${filename}`);
+                    .toFile(`public/img/profile/portfolio/${image.large}`);
 
-                req.body.portfolio_images.push(filename);
+                image.medium = `${filename}-medium.jpeg`;
+                await sharp(file.buffer)
+                    .resize(768, 432)
+                    .toFormat('jpeg')
+                    .jpeg({ quality: 90 })
+                    .toFile(`public/img/profile/portfolio/${image.medium}`);
+
+                image.small = `${filename}-small.jpeg`;
+                await sharp(file.buffer)
+                    .resize(480, 270)
+                    .toFormat('jpeg')
+                    .jpeg({ quality: 80 })
+                    .toFile(`public/img/profile/portfolio/${image.small}`);
+
+                image.thumbnail = `${filename}-thumbnail.jpeg`;
+                await sharp(file.buffer)
+                    .resize(192, 108)
+                    .toFormat('jpeg')
+                    .jpeg({ quality: 80 })
+                    .toFile(`public/img/profile/portfolio/${image.thumbnail}`);
+
+                portfolio_images.push(image);
             }),
         );
+
+        req.body.portfolio_images = portfolio_images;
     }
 
     next();
 });
 
-// TODO: test
 exports.deleteReplacedProfileImages = catchAsync(async (req, res, next) => {
     if (!req.body.avatar && !req.body.cover_image) return next();
 
@@ -118,20 +183,40 @@ exports.deleteReplacedProfileImages = catchAsync(async (req, res, next) => {
     // If there's no profile, continue to the next stage (it might be a new profile)
     if (!profile) return next();
 
-    if (req.body.avatar && profile.avatar !== 'default.jpg' && profile.avatar !== req.body.avatar) {
-        fs.unlink(`public/img/profile/avatar/${profile.avatar}`, err => {
-            if (err) next(new AppError(err.message, 500));
-        });
+    if (req.body.avatar) {
+        if (profile.avatar.medium !== 'default-medium.jpg') {
+            fs.unlink(`public/img/profile/avatar/${profile.avatar.medium}`, err => {
+                if (err) next(new AppError(err.message, 500));
+            });
+        }
+        if (profile.avatar.small !== 'default-small.jpg') {
+            fs.unlink(`public/img/profile/avatar/${profile.avatar.small}`, err => {
+                if (err) next(new AppError(err.message, 500));
+            });
+        }
+        if (profile.avatar.thumbnail !== 'default-thumbnail.jpg') {
+            fs.unlink(`public/img/profile/avatar/${profile.avatar.thumbnail}`, err => {
+                if (err) next(new AppError(err.message, 500));
+            });
+        }
     }
 
-    if (
-        req.body.cover_image &&
-        profile.cover_image !== 'default.jpg' &&
-        profile.cover_image !== req.body.cover_image
-    ) {
-        fs.unlink(`public/img/profile/cover_image/${profile.cover_image}`, err => {
-            if (err) next(new AppError(err.message, 500));
-        });
+    if (req.body.cover_image) {
+        if (profile.cover_image.large !== 'default-large.jpg') {
+            fs.unlink(`public/img/profile/cover_image/${profile.cover_image.large}`, err => {
+                if (err) next(new AppError(err.message, 500));
+            });
+        }
+        if (profile.cover_image.medium !== 'default-medium.jpg') {
+            fs.unlink(`public/img/profile/cover_image/${profile.cover_image.medium}`, err => {
+                if (err) next(new AppError(err.message, 500));
+            });
+        }
+        if (profile.cover_image.small !== 'default-small.jpg') {
+            fs.unlink(`public/img/profile/cover_image/${profile.cover_image.small}`, err => {
+                if (err) next(new AppError(err.message, 500));
+            });
+        }
     }
 
     next();
@@ -144,25 +229,53 @@ exports.deleteAllProfileImages = catchAsync(async (req, res, next) => {
         return next(new AppError(notFoundErrorMessage, 404));
     }
 
-    if (profile.avatar !== 'default.jpg') {
-        fs.unlink(`public/img/profile/avatar/${profile.avatar}`, err => {
+    if (profile.avatar.medium !== 'default-medium.jpg') {
+        fs.unlink(`public/img/profile/avatar/${profile.avatar.medium}`, err => {
             if (err) next(new AppError(err.message, 500));
         });
     }
-
-    if (profile.cover_image !== 'default.jpg') {
-        fs.unlink(`public/img/profile/cover_image/${profile.cover_image}`, err => {
+    if (profile.avatar.small !== 'default-small.jpg') {
+        fs.unlink(`public/img/profile/avatar/${profile.avatar.small}`, err => {
+            if (err) next(new AppError(err.message, 500));
+        });
+    }
+    if (profile.avatar.thumbnail !== 'default-thumbnail.jpg') {
+        fs.unlink(`public/img/profile/avatar/${profile.avatar.thumbnail}`, err => {
+            if (err) next(new AppError(err.message, 500));
+        });
+    }
+    if (profile.cover_image.large !== 'default-large.jpg') {
+        fs.unlink(`public/img/profile/cover_image/${profile.cover_image.large}`, err => {
+            if (err) next(new AppError(err.message, 500));
+        });
+    }
+    if (profile.cover_image.medium !== 'default-medium.jpg') {
+        fs.unlink(`public/img/profile/cover_image/${profile.cover_image.medium}`, err => {
+            if (err) next(new AppError(err.message, 500));
+        });
+    }
+    if (profile.cover_image.small !== 'default-small.jpg') {
+        fs.unlink(`public/img/profile/cover_image/${profile.cover_image.small}`, err => {
             if (err) next(new AppError(err.message, 500));
         });
     }
 
     if (profile.portfolio.length > 0) {
         profile.portfolio.forEach(item => {
-            item.images.forEach(image =>
-                fs.unlink(`public/img/profile/portfolio/${image}`, err => {
+            item.images.forEach(imageObj => {
+                fs.unlink(`public/img/profile/portfolio/${imageObj.large}`, err => {
                     if (err) next(new AppError(err.message, 500));
-                }),
-            );
+                });
+                fs.unlink(`public/img/profile/portfolio/${imageObj.medium}`, err => {
+                    if (err) next(new AppError(err.message, 500));
+                });
+                fs.unlink(`public/img/profile/portfolio/${imageObj.small}`, err => {
+                    if (err) next(new AppError(err.message, 500));
+                });
+                fs.unlink(`public/img/profile/portfolio/${imageObj.thumbnail}`, err => {
+                    if (err) next(new AppError(err.message, 500));
+                });
+            });
         });
     }
 
@@ -265,36 +378,6 @@ exports.removeEducation = catchAsync(async (req, res, next) => {
     });
 });
 
-// add uploaded images when creating a new item
-// add new images to the existing array
-// delete old images and upload new images when updating item
-// delete old images when deleting item
-
-exports.preparePortfolioItemImages = catchAsync(async (req, res, next) => {
-    if (!req.files.portfolio_images) return next();
-
-    req.body.portfolio_images = [];
-
-    // Create an array of promises to name/resize the images then fulfill them all at once using Promise.all
-    // Add the new images to req.body.portfolio_images
-    await Promise.all(
-        req.files.portfolio_images.map(async (file, i) => {
-            const filename = `profile-portfolio-${i + 1}-${req.user.id}-${Date.now()}.jpeg`;
-
-            await sharp(file.buffer)
-                .resize(500, 500)
-                .toFormat('jpeg')
-                .jpeg({ quality: 80 })
-                .toFile(`public/img/profile/portfolio/${filename}`);
-
-            req.body.portfolio_images.push(filename);
-        }),
-    );
-
-    next();
-});
-
-// TODO: test portfolio updating using update/create route with images
 exports.addPortfolioItem = catchAsync(async (req, res, next) => {
     const profile = await Profile.findOne({ user: req.params.userId });
 
@@ -302,10 +385,13 @@ exports.addPortfolioItem = catchAsync(async (req, res, next) => {
         return next(new AppError(notFoundErrorMessage, 404));
     }
 
-    // Make new education object and add to profile
-    profile.portfolio.push({ ...req.body, images: req.body.portfolio_images || [] });
+    const images = req.body.portfolio_images || [];
 
-    // Save profile and send response
+    profile.portfolio.push({
+        ...req.body,
+        images,
+    });
+
     await profile.save();
 
     res.status(200).json({
@@ -316,6 +402,7 @@ exports.addPortfolioItem = catchAsync(async (req, res, next) => {
     });
 });
 
+// TODO: add validation to only allow 5 images
 // If an image is uploaded, send it along with the whole portfolio item with field-name 'portfolio_images'
 exports.updatePortfolioItem = catchAsync(async (req, res, next) => {
     const profile = await Profile.findOne({ user: req.params.userId });
@@ -331,28 +418,42 @@ exports.updatePortfolioItem = catchAsync(async (req, res, next) => {
         return next(new AppError('Portfolio item not found', 404));
     }
 
-    const portfolioItem = profile.portfolio[itemIndex];
-
-    // Delete old images if some item images are removed from the images array
+    // Check if the images array is different and delete any deleted images
     if (req.body.images) {
-        const imagesToDelete = portfolioItem.images.filter(
-            image => !req.body.images.includes(image),
+        // eslint-disable-next-line no-underscore-dangle
+        const bodyImageIds = req.body.images.map(image => image._id);
+        const currentImageIds = profile.portfolio[itemIndex].images.map(image =>
+            image.id.toString(),
         );
-        if (imagesToDelete.length > 0) {
-            imagesToDelete.forEach(image =>
-                fs.unlink(`public/img/profile/portfolio/${image}`, err => {
+        const idsOfImagesToRemove = currentImageIds.filter(id => !bodyImageIds.includes(id));
+
+        if (idsOfImagesToRemove.length > 0) {
+            idsOfImagesToRemove.forEach(id => {
+                const image = profile.portfolio[itemIndex].images.find(el => el.id === id);
+                fs.unlink(`public/img/profile/portfolio/${image.large}`, err => {
                     if (err) next(new AppError(err.message, 500));
-                }),
-            );
+                });
+                fs.unlink(`public/img/profile/portfolio/${image.medium}`, err => {
+                    if (err) next(new AppError(err.message, 500));
+                });
+                fs.unlink(`public/img/profile/portfolio/${image.small}`, err => {
+                    if (err) next(new AppError(err.message, 500));
+                });
+                fs.unlink(`public/img/profile/portfolio/${image.thumbnail}`, err => {
+                    if (err) next(new AppError(err.message, 500));
+                });
+            });
         }
     }
 
+    // Create the new images array after uploads and deletions
     const uploadedImages = req.body.portfolio_images || [];
-    const currentImages = req.body.images || portfolioItem.images;
-    const imagesToSave = [...currentImages, ...uploadedImages];
+    const currentImages = req.body.images || profile.portfolio[itemIndex].images;
+    const savedImages = [...currentImages, ...uploadedImages];
+    console.log(savedImages);
 
     // Update the portfolio item
-    const { _id, title, description, skills, repo, demo } = portfolioItem;
+    const { _id, title, description, skills, repo, demo } = profile.portfolio[itemIndex];
     profile.portfolio[itemIndex] = {
         _id,
         title,
@@ -361,7 +462,7 @@ exports.updatePortfolioItem = catchAsync(async (req, res, next) => {
         repo,
         demo,
         ...req.body,
-        images: imagesToSave,
+        images: savedImages,
     };
 
     // Save profile and send response
@@ -389,11 +490,20 @@ exports.removePortfolioItem = catchAsync(async (req, res, next) => {
     }
 
     // Delete portfolio item images
-    profile.portfolio[removeIndex].images.forEach(image =>
-        fs.unlink(`public/img/profile/portfolio/${image}`, err => {
+    profile.portfolio[removeIndex].images.forEach(imageObj => {
+        fs.unlink(`public/img/profile/portfolio/${imageObj.large}`, err => {
             if (err) next(new AppError(err.message, 500));
-        }),
-    );
+        });
+        fs.unlink(`public/img/profile/portfolio/${imageObj.medium}`, err => {
+            if (err) next(new AppError(err.message, 500));
+        });
+        fs.unlink(`public/img/profile/portfolio/${imageObj.small}`, err => {
+            if (err) next(new AppError(err.message, 500));
+        });
+        fs.unlink(`public/img/profile/portfolio/${imageObj.thumbnail}`, err => {
+            if (err) next(new AppError(err.message, 500));
+        });
+    });
 
     profile.portfolio.splice(removeIndex, 1);
 

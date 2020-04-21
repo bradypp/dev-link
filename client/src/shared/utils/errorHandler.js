@@ -1,5 +1,6 @@
 import { setAlert } from 'redux/alerts';
 
+// TODO: look at jira clone to improve (send alert if not form)
 const errorHandler = (err, alertType = 'danger') => async dispatch => {
     if (process.env.NODE_ENV === 'development') console.error(err.response || err);
 

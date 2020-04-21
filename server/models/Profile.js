@@ -1,19 +1,40 @@
 const { Schema, model } = require('mongoose');
 
 // TODO: make repos model and save featured repos into it with link to user/profile & populate on get
-
+// TODO: mongoose validators
+// TODO: edit default image sizes & optimize them
 const profileSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User',
     },
     avatar: {
-        type: String,
-        default: 'default.jpg',
+        medium: {
+            type: String,
+            default: 'default-medium.jpg',
+        },
+        small: {
+            type: String,
+            default: 'default-small.jpg',
+        },
+        thumbnail: {
+            type: String,
+            default: 'default-thumbnail.jpg',
+        },
     },
     cover_image: {
-        type: String,
-        default: 'default.jpg',
+        large: {
+            type: String,
+            default: 'default-large.jpg',
+        },
+        medium: {
+            type: String,
+            default: 'default-medium.jpg',
+        },
+        small: {
+            type: String,
+            default: 'default-small.jpg',
+        },
     },
     headline: {
         type: String,
@@ -114,7 +135,19 @@ const profileSchema = new Schema({
                 type: String,
                 trim: true,
             },
-            images: [String],
+            images: [
+                {
+                    large: {
+                        type: String,
+                    },
+                    medium: {
+                        type: String,
+                    },
+                    small: {
+                        type: String,
+                    },
+                },
+            ],
         },
     ],
     experience: [
