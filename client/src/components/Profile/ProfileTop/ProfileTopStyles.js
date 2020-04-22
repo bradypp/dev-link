@@ -57,6 +57,7 @@ export const Avatar = styled(Image)`
 export const InfoButtonsContainer = styled.div`
     display: flex;
     justify-content: flex-start;
+    align-content: center;
 
     & > * :not(:first-child) {
         margin-left: 0.4rem;

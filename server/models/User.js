@@ -76,6 +76,7 @@ const userSchema = new Schema(
     options,
 );
 
+// TODO: update indexes
 // Indexes allow for more efficient queries
 userSchema.index({ name: 1, username: 1, email: 1 });
 

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Button, Modal } from 'shared/components';
-import {} from './ContactStyles';
+import {} from './ContactModalStyles';
 
 // TODO: styling
 // TODO: Conditional appearance based on if profile belongs to current authenticated user
-const Contact = ({ name, profileContact }) => {
-    const { email, phone } = profileContact;
+const Contact = ({ name, contact }) => {
+    const { email, phone } = contact;
 
     return (
         <Modal

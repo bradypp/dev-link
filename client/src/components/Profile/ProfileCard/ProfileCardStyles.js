@@ -2,15 +2,19 @@ import styled from 'styled-components/macro';
 import { mixins } from 'shared/styles';
 
 // TODO: move grid-column to a container for profile page (so it's separate )
-export const StyledSection = styled.section`
+export const ProfileCardContainer = styled.section`
     ${mixins.card}
 
-    & > *:not(:first-child):not(:last-child) {
+    * {
+        margin: 0;
+    }
+
+    & > *:not(header):not(:last-child) {
         border-bottom: solid 1px ${({ theme }) => theme.colors.border1};
         padding: 1.6rem 0;
     }
 
-    & > *:last-child {
+    & > *:not(header):last-child {
         padding: 1.6rem 0 0;
     }
 `;
@@ -25,7 +29,7 @@ export const Heading = styled.h2`
     margin: 0;
 `;
 
-export const SubHeading = styled.h3`
+export const Subtitle = styled.p`
     font-size: 1.6rem;
     font-style: italic;
     font-weight: 400;

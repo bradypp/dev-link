@@ -20,25 +20,24 @@ import {
 } from 'redux/profiles';
 import { selectUser, selectIsAuthenticated } from 'redux/auth';
 import { setAlert } from 'redux/alerts';
-import Contact from './Contact/Contact';
-import Socials from './Socials/Socials';
+import { ContactModal, SocialsModal } from 'components';
 import * as S from './ProfileTopStyles';
 
 const propTypes = {
     toggleStar: PropTypes.func.isRequired,
     toggleWatch: PropTypes.func.isRequired,
     setAlert: PropTypes.func.isRequired,
-    avatar: PropTypes.string.isRequired,
-    coverImage: PropTypes.string.isRequired,
+    avatar: PropTypes.object.isRequired,
+    coverImage: PropTypes.object.isRequired,
     currentUser: PropTypes.object.isRequired,
     profileInfo: PropTypes.object.isRequired,
     profileUser: PropTypes.object.isRequired,
-    profileStars: PropTypes.array.isRequired,
-    profileWatchers: PropTypes.array.isRequired,
+    stars: PropTypes.array.isRequired,
+    watchers: PropTypes.array.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
-    profileContact: PropTypes.object.isRequired,
-    profileSocials: PropTypes.array.isRequired,
-    profileSkills: PropTypes.array.isRequired,
+    contact: PropTypes.object.isRequired,
+    socials: PropTypes.array.isRequired,
+    skills: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -47,12 +46,12 @@ const mapStateToProps = createStructuredSelector({
     currentUser: selectUser,
     profileInfo: selectProfileInfo,
     profileUser: selectProfileUser,
-    profileStars: selectProfileStars,
-    profileWatchers: selectProfileWatchers,
+    stars: selectProfileStars,
+    watchers: selectProfileWatchers,
     isAuthenticated: selectIsAuthenticated,
-    profileContact: selectProfileContact,
-    profileSocials: selectProfileSocials,
-    profileSkills: selectProfileSkills,
+    contact: selectProfileContact,
+    socials: selectProfileSocials,
+    skills: selectProfileSkills,
 });
 
 const mapDispatchToProps = {
@@ -61,25 +60,26 @@ const mapDispatchToProps = {
     setAlert,
 };
 
+// TODO: add available toggle & display in ui
 const ProfileTop = ({
     avatar,
     coverImage,
     currentUser,
     profileInfo,
     profileUser,
-    profileStars,
-    profileWatchers,
+    stars,
+    watchers,
     toggleStar,
     toggleWatch,
     isAuthenticated,
     setAlert,
-    profileSocials,
-    profileContact,
-    profileSkills,
+    socials,
+    contact,
+    skills,
 }) => {
     const {
         headline,
-        current_position,
+        current_position: currentPosition,
         city,
         country,
         website,
@@ -103,8 +103,8 @@ const ProfileTop = ({
         }
     };
 
-    const starredByCurrentUser = profileStars.includes(currentUser._id);
-    const watchedByCurrentUser = profileWatchers.includes(currentUser._id);
+    const starredByCurrentUser = stars.includes(currentUser._id);
+    const watchedByCurrentUser = watchers.includes(currentUser._id);
 
     // TODO: Add contact/socials popup & do button styling (add icon?) in separate sub-components
     // TODO: Watching/stars numbers hover effect and on click functionality
@@ -117,7 +117,7 @@ const ProfileTop = ({
                 <Image
                     src={[
                         `http://localhost:5000/img/profile/cover_image/${coverImage.medium}`,
-                        ` http://localhost:5000/img/profile/cover_image/default.jpg`,
+                        ` http://localhost:5000/img/profile/cover_image/default-medium.jpg`,
                     ]}
                     alt="Profile cover"
                 />
@@ -129,7 +129,7 @@ const ProfileTop = ({
                             className="avatar"
                             src={[
                                 `http://localhost:5000/img/profile/avatar/${avatar.small}`,
-                                `http://localhost:5000/img/profile/avatar/default.jpg`,
+                                `http://localhost:5000/img/profile/avatar/default-small.jpg`,
                             ]}
                             alt="Profile avatar"
                         />
@@ -147,14 +147,14 @@ const ProfileTop = ({
                     {company ? (
                         <h3>
                             {company}
-                            {current_position && <> &middot; {current_position}</>}
+                            {currentPosition && <> &middot; {currentPosition}</>}
                         </h3>
                     ) : (
-                        <>{current_position && <h3>{current_position}</h3>}</>
+                        <>{currentPosition && <h3>{currentPosition}</h3>}</>
                     )}
                     <S.InfoButtonsContainer>
-                        <Contact name={name} profileContact={profileContact} /> &middot;
-                        <Socials name={name} profileSocials={profileSocials} />
+                        <ContactModal name={name} contact={contact} /> &middot;
+                        <SocialsModal name={name} socials={socials} />
                         &middot; <a href={website}>Website</a>
                         &middot; <a href={`https://github.com/${github_username}`}>GitHub</a>
                     </S.InfoButtonsContainer>
@@ -164,16 +164,16 @@ const ProfileTop = ({
                         <S.ToggleButton icon={IoMdEye} onClick={toggleWatchHandler}>
                             {watchedByCurrentUser ? `Unwatch` : `Watch`}
                         </S.ToggleButton>
-                        <S.CountContainer>{profileWatchers.length}</S.CountContainer>
+                        <S.CountContainer>{watchers.length}</S.CountContainer>
                         <S.ToggleButton
                             icon={starredByCurrentUser ? IoMdStar : IoMdStarOutline}
                             onClick={toggleStarHandler}>
                             {starredByCurrentUser ? `Unstar` : `Star`}
                         </S.ToggleButton>
-                        <S.CountContainer>{profileStars.length}</S.CountContainer>
+                        <S.CountContainer>{stars.length}</S.CountContainer>
                     </S.ToggleButtonsContainer>
                     <S.SkillsContainer>
-                        {profileSkills.map(skill => (
+                        {skills.map(skill => (
                             <S.SkillLink to="#" key={uuidv4()}>
                                 {skill}
                             </S.SkillLink>

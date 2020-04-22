@@ -30,28 +30,6 @@ router
         profileController.deleteProfile,
     );
 
-// TODO: delete?
-// router
-//     .route('/experience')
-//     .post(validation.experience, profileController.getMe, profileController.addExperience);
-
-// // TODO: delete?
-// // TODO: make an update route?
-// router
-//     .route('/experience/:expId')
-//     .delete(profileController.getMe, profileController.removeExperience);
-
-// // TODO: delete?
-// router
-//     .route('/education')
-//     .post(validation.education, profileController.getMe, profileController.addEducation);
-
-// // TODO: delete?
-// // TODO: make an update route?
-// router
-//     .route('/education/:eduId')
-//     .delete(profileController.getMe, profileController.removeEducation);
-
 router
     .route('/portfolio')
     .post(
@@ -63,7 +41,7 @@ router
 
 router
     .route('/portfolio/:portId')
-    .put(
+    .patch(
         profileController.getMe,
         profileController.uploadProfileImages,
         profileController.prepareProfileImages,

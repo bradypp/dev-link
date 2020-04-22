@@ -35,6 +35,18 @@ export const selectProfileInfo = createSelector(
 
 export const selectProfileBio = createSelector([selectProfile], profile => profile.bio);
 
+export const selectProfileLookingFor = createSelector([selectProfile], profile => {
+    const { roles, types, availability } = profile.looking_for;
+    return { roles: roles || [], types: types || [], availability };
+});
+
+export const selectProfileInterests = createSelector(
+    [selectProfile],
+    profile => profile.interests || [],
+);
+
+export const selectProfileGoals = createSelector([selectProfile], profile => profile.goals || []);
+
 export const selectProfileUser = createSelector([selectProfile], profile => profile.user || {});
 
 export const selectProfileSkills = createSelector([selectProfile], profile => profile.skills || []);
@@ -49,24 +61,11 @@ export const selectProfileContact = createSelector(
     profile => profile.contact || {},
 );
 
-export const selectProfileAvatar = createSelector(
-    [selectProfile],
-    profile => profile.avatar || 'default.jpg',
-);
+export const selectProfileAvatar = createSelector([selectProfile], profile => profile.avatar || {});
 
 export const selectProfileCoverImage = createSelector(
     [selectProfile],
-    profile => profile.cover_image || 'default.jpg',
-);
-
-export const selectProfileLookingFor = createSelector(
-    [selectProfile],
-    profile => profile.looking_for,
-);
-
-export const selectProfileInterests = createSelector(
-    [selectProfile],
-    profile => profile.interests || [],
+    profile => profile.cover_image || {},
 );
 
 export const selectProfilePortfolio = createSelector(
@@ -82,6 +81,11 @@ export const selectProfileWatchers = createSelector(
 );
 
 export const selectProfileEducation = createSelector([selectProfile], profile => profile.education);
+
+export const selectProfileCertifications = createSelector(
+    [selectProfile],
+    profile => profile.certifications,
+);
 
 export const selectProfileExperience = createSelector(
     [selectProfile],

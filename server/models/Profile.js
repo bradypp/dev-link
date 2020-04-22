@@ -56,11 +56,11 @@ const profileSchema = new Schema({
         type: String,
         trim: true,
     },
-    website: {
+    github_username: {
         type: String,
         trim: true,
     },
-    github_username: {
+    website: {
         type: String,
         trim: true,
     },
@@ -74,31 +74,42 @@ const profileSchema = new Schema({
             trim: true,
         },
     },
-    bio: {
-        type: String,
-        trim: true,
-    },
     skills: [
         {
             type: String,
             trim: true,
         },
     ],
+    bio: {
+        type: String,
+        trim: true,
+    },
+    hireable: {
+        type: Boolean,
+        default: true,
+    },
     looking_for: {
-        role_title: {
-            type: String,
-            trim: true,
-        },
-        types: [
+        roles: [
             {
                 type: String,
                 trim: true,
             },
         ],
-        description: {
-            type: String,
-            trim: true,
-        },
+        types: [
+            {
+                type: String,
+                trim: true,
+                enum: [
+                    'full-time permanent',
+                    'full-time temporary',
+                    'part-time permanent',
+                    'part-time temporary',
+                    'open source',
+                    'freelance',
+                    'intern',
+                ],
+            },
+        ],
         availability: {
             type: String,
             trim: true,
@@ -110,11 +121,17 @@ const profileSchema = new Schema({
             trim: true,
         },
     ],
+    goals: [
+        {
+            type: String,
+            trim: true,
+        },
+    ],
     portfolio: [
         {
             title: {
                 type: String,
-                // required: [true, 'Title is required'],
+                required: [true, 'Title is required'],
                 trim: true,
             },
             description: {
@@ -169,7 +186,9 @@ const profileSchema = new Schema({
                     'part-time permanent',
                     'part-time temporary',
                     'self-employed',
+                    'open source',
                     'freelance',
+                    'intern',
                 ],
             },
             company: {
@@ -202,12 +221,16 @@ const profileSchema = new Schema({
     ],
     education: [
         {
-            type: {
+            school: {
                 type: String,
-                required: [true, 'Education type is required'],
+                required: true,
                 trim: true,
             },
-            school: {
+            school_type: {
+                type: String,
+                trim: true,
+            },
+            qualification_type: {
                 type: String,
                 trim: true,
             },
@@ -236,6 +259,27 @@ const profileSchema = new Schema({
             current: {
                 type: Boolean,
                 default: false,
+            },
+            description: {
+                type: String,
+                trim: true,
+            },
+        },
+    ],
+    certifications: [
+        {
+            title: {
+                type: String,
+                required: true,
+                trim: true,
+            },
+            issuer: {
+                type: String,
+                trim: true,
+            },
+            date: {
+                type: Date,
+                trim: true,
             },
             description: {
                 type: String,
@@ -275,7 +319,8 @@ const profileSchema = new Schema({
     },
 });
 
-// TODO: Indexes allow for more efficient queries
+// TODO: update indexes
+// Indexes allow for more efficient queries
 profileSchema.index({
     user: 1,
     city: 1,
