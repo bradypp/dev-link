@@ -116,7 +116,7 @@ const ProfileTop = ({
             <S.CoverImageContainer>
                 <Image
                     src={[
-                        `http://localhost:5000/img/profile/cover_image/${coverImage}`,
+                        `http://localhost:5000/img/profile/cover_image/${coverImage.medium}`,
                         ` http://localhost:5000/img/profile/cover_image/default.jpg`,
                     ]}
                     alt="Profile cover"
@@ -128,7 +128,7 @@ const ProfileTop = ({
                         <S.Avatar
                             className="avatar"
                             src={[
-                                `http://localhost:5000/img/profile/avatar/${avatar}`,
+                                `http://localhost:5000/img/profile/avatar/${avatar.small}`,
                                 `http://localhost:5000/img/profile/avatar/default.jpg`,
                             ]}
                             alt="Profile avatar"

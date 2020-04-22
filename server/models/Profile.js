@@ -146,6 +146,9 @@ const profileSchema = new Schema({
                     small: {
                         type: String,
                     },
+                    thumbnail: {
+                        type: String,
+                    },
                 },
             ],
         },
@@ -272,7 +275,7 @@ const profileSchema = new Schema({
     },
 });
 
-// Indexes allow for more efficient queries
+// TODO: Indexes allow for more efficient queries
 profileSchema.index({
     user: 1,
     city: 1,

@@ -84,7 +84,7 @@ exports.prepareProfileImages = catchAsync(async (req, res, next) => {
         await sharp(req.files.avatar[0].buffer)
             .resize(200, 200)
             .toFormat('jpeg')
-            .jpeg({ quality: 85 })
+            .jpeg({ quality: 90 })
             .toFile(`public/img/profile/avatar/${avatar.small}`);
 
         avatar.thumbnail = `${filename}-thumbnail.jpeg`;
@@ -113,14 +113,14 @@ exports.prepareProfileImages = catchAsync(async (req, res, next) => {
         await sharp(req.files.cover_image[0].buffer)
             .resize(713, 178)
             .toFormat('jpeg')
-            .jpeg({ quality: 85 })
+            .jpeg({ quality: 90 })
             .toFile(`public/img/profile/cover_image/${cover_image.medium}`);
 
         cover_image.small = `${filename}-small.jpeg`;
         await sharp(req.files.cover_image[0].buffer)
             .resize(451, 113)
             .toFormat('jpeg')
-            .jpeg({ quality: 80 })
+            .jpeg({ quality: 90 })
             .toFile(`public/img/profile/cover_image/${cover_image.small}`);
 
         req.body.cover_image = cover_image;
@@ -138,28 +138,28 @@ exports.prepareProfileImages = catchAsync(async (req, res, next) => {
 
                 image.large = `${filename}-large.jpeg`;
                 await sharp(file.buffer)
-                    .resize(1152, 648)
+                    .resize(1152, 777)
                     .toFormat('jpeg')
                     .jpeg({ quality: 90 })
                     .toFile(`public/img/profile/portfolio/${image.large}`);
 
                 image.medium = `${filename}-medium.jpeg`;
                 await sharp(file.buffer)
-                    .resize(768, 432)
+                    .resize(768, 518)
                     .toFormat('jpeg')
                     .jpeg({ quality: 90 })
                     .toFile(`public/img/profile/portfolio/${image.medium}`);
 
                 image.small = `${filename}-small.jpeg`;
                 await sharp(file.buffer)
-                    .resize(480, 270)
+                    .resize(480, 324)
                     .toFormat('jpeg')
-                    .jpeg({ quality: 80 })
+                    .jpeg({ quality: 90 })
                     .toFile(`public/img/profile/portfolio/${image.small}`);
 
                 image.thumbnail = `${filename}-thumbnail.jpeg`;
                 await sharp(file.buffer)
-                    .resize(192, 108)
+                    .resize(200, 200)
                     .toFormat('jpeg')
                     .jpeg({ quality: 80 })
                     .toFile(`public/img/profile/portfolio/${image.thumbnail}`);
@@ -450,7 +450,6 @@ exports.updatePortfolioItem = catchAsync(async (req, res, next) => {
     const uploadedImages = req.body.portfolio_images || [];
     const currentImages = req.body.images || profile.portfolio[itemIndex].images;
     const savedImages = [...currentImages, ...uploadedImages];
-    console.log(savedImages);
 
     // Update the portfolio item
     const { _id, title, description, skills, repo, demo } = profile.portfolio[itemIndex];

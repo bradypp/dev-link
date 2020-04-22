@@ -37,7 +37,6 @@ const layout = {
         justify-content: center;
         align-items: center;
     `,
-
     inlineFlexCenter: css`
         display: inline-flex;
         justify-content: center;
