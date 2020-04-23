@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { Main, Spinner } from 'shared/components';
+import { useIsFirstRender } from 'shared/hooks';
 import { getProfileByUsername, selectIsProfileLoading } from 'redux/profile';
 import {
     ProfileTop,
@@ -31,6 +32,7 @@ const mapDispatchToProps = {
 };
 
 const Profile = ({ getProfileByUsername, profileIsLoading }) => {
+    const isFirstRender = useIsFirstRender();
     const { username } = useParams();
 
     useEffect(() => {
@@ -47,7 +49,7 @@ const Profile = ({ getProfileByUsername, profileIsLoading }) => {
     return (
         <Main>
             <S.ProfileContainer>
-                {profileIsLoading ? (
+                {isFirstRender || profileIsLoading ? (
                     <Spinner />
                 ) : (
                     <>
