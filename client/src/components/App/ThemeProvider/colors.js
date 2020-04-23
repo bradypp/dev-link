@@ -20,6 +20,7 @@ const base = {
     greyLight3: '#ccc',
     borderFocus: '#4c9aff',
     textLink: '#0052cc',
+    overlay: 'rgba(9, 30, 66, 0.54)',
 };
 
 const light = {

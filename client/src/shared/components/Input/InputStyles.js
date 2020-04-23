@@ -1,4 +1,5 @@
-import styled, { css } from 'styled-components/macro';
+import styled from 'styled-components/macro';
+import { mixins } from 'shared/styles';
 
 export const InputContainer = styled.div`
     position: relative;
@@ -23,29 +24,12 @@ export const InputElement = styled.input`
     border: 0.1rem solid ${({ theme }) => theme.colors.border1};
     border-radius: 0.3rem;
     color: ${({ theme }) => theme.colors.textPrimary1};
-    background: ${({ theme }) => theme.colors.background1};
+    background-color: ${({ theme }) => theme.colors.background1};
     transition: background 0.1s;
     font-family: ${({ theme }) => theme.fonts.primary};
     font-size: ${({ height }) => `${height / 2.4}rem`};
     padding-left: ${({ hasIcon, height }) => (hasIcon ? `${height}rem` : `${height / 4.5}rem`)};
-
-    &:hover {
-        background: ${({ theme }) => theme.colors.background2};
-    }
-
-    &:focus {
-        background: #fff;
-        border: 0.1rem solid ${({ theme }) => theme.colors.borderFocus};
-        box-shadow: 0 0 0 0.1rem ${({ theme }) => theme.colors.borderFocus};
-    }
-
-    ${({ invalid, theme }) =>
-        invalid &&
-        css`
-            &,
-            &:focus {
-                border: 0.1rem solid ${theme.colors.danger};
-                box-shadow: none;
-            }
-        `}
+    ${mixins.fieldHover}
+    ${mixins.fieldFocus}
+    ${mixins.fieldInvalid}
 `;

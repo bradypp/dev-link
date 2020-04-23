@@ -25,7 +25,7 @@ const clickOverlayStyles = {
 
 export const ClickableOverlay = styled.div`
     min-height: 100vh;
-    background: rgba(9, 30, 66, 0.54);
+    background-color: ${({ theme }) => theme.colors.overlay};
     ${({ variant }) => clickOverlayStyles[variant]}
 `;
 
@@ -66,6 +66,7 @@ const closeButtonStyles = {
         text-align: center;
         border: 1px solid ${({ theme }) => theme.colors.border1};
         ${mixins.boxShadowMedium};
+
         &:hover {
             color: ${({ theme }) => theme.colors.primary1};
         }

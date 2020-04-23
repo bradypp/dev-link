@@ -33,6 +33,30 @@ const utils = {
     hardwareAccelerate: css`
         transform: translateZ(0);
     `,
+    fieldHover: css`
+        &:hover {
+            background-color: ${({ theme }) => theme.colors.background2};
+        }
+    `,
+    fieldFocus: css`
+        &:focus {
+            background-color: #fff;
+            border: 0.1rem solid ${({ theme }) => theme.colors.borderFocus};
+            box-shadow: 0 0 0 0.1rem ${({ theme }) => theme.colors.borderFocus};
+        }
+    `,
+    fieldInvalid: css`
+        ${({ invalid, theme }) =>
+            invalid &&
+            css`
+                &,
+                &:invalid,
+                &:focus {
+                    border: 0.1rem solid ${theme.colors.danger};
+                    box-shadow: none;
+                }
+            `};
+    `,
 };
 
 export default utils;

@@ -19,11 +19,17 @@ const defaultProps = {
     invalid: false,
     onChange: () => {},
 };
-
-const Input = forwardRef(({ icon: Icon, className, height, ...otherProps }, ref) => (
+// TODO: add loading prop & align it spinner to the right of the input if true?
+const Input = forwardRef(({ icon: Icon, className, height, onChange, ...otherProps }, ref) => (
     <InputContainer className={className} height={height}>
         {Icon && <Icon className="icon" />}
-        <InputElement hasIcon={!!Icon} height={height} ref={ref} {...otherProps} />
+        <InputElement
+            hasIcon={!!Icon}
+            onChange={event => onChange(event.target.value, event)}
+            height={height}
+            ref={ref}
+            {...otherProps}
+        />
     </InputContainer>
 ));
 
