@@ -16,7 +16,7 @@ export default (state = initialState, { type, payload }) => {
         case PROFILE_LOADED:
             return {
                 ...state,
-                currentProfile: payload,
+                profile: payload,
                 isLoading: initialState.isLoading,
             };
 
@@ -25,12 +25,12 @@ export default (state = initialState, { type, payload }) => {
                 ...state,
                 error: payload,
                 isLoading: initialState.isLoading,
-                currentProfile: initialState.currentProfile,
+                profile: initialState.profile,
             };
         case CLEAR_PROFILE:
             return {
                 ...state,
-                currentProfile: initialState.currentProfile,
+                profile: initialState.profile,
                 isLoading: initialState.isLoading,
             };
         default:

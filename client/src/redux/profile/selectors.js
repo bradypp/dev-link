@@ -20,11 +20,9 @@ export const selectProfileInfo = createSelector(
     }),
 );
 
-export const selectProfileBio = createSelector([selectCurrentProfile], profile => profile.bio);
-
-export const selectProfileLookingFor = createSelector(
+export const selectProfileAboutMe = createSelector(
     [selectCurrentProfile],
-    profile => profile.looking_for || {},
+    profile => profile.about_me || {},
 );
 
 export const selectProfileInterests = createSelector(

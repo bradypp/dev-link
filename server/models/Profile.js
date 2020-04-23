@@ -80,15 +80,16 @@ const profileSchema = new Schema({
             trim: true,
         },
     ],
-    bio: {
-        type: String,
-        trim: true,
-    },
+
     hireable: {
         type: Boolean,
         default: true,
     },
-    looking_for: {
+    about_me: {
+        bio: {
+            type: String,
+            trim: true,
+        },
         roles: [
             {
                 type: String,
@@ -289,14 +290,12 @@ const profileSchema = new Schema({
         {
             type: Schema.Types.ObjectId,
             ref: 'User',
-            unique: true,
         },
     ],
     watchers: [
         {
             type: Schema.Types.ObjectId,
             ref: 'User',
-            unique: true,
         },
     ],
     createdAt: {
@@ -307,12 +306,7 @@ const profileSchema = new Schema({
 
 // TODO: update indexes
 // Indexes allow for more efficient queries
-profileSchema.index({
-    user: 1,
-    city: 1,
-    country: 1,
-});
-profileSchema.index({ languages: 1 });
+profileSchema.index({ user: 1 });
 profileSchema.index({ skills: 1 });
 
 profileSchema.pre(/^find/, function(next) {

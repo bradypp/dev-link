@@ -58,9 +58,9 @@ const ProfileEducation = ({ education }) => (
 
             const timePeriod = (
                 <>
-                    <Moment format="DD/MM/YYYY">{moment.utc(from)}</Moment>
+                    <Moment format="MM/YYYY">{moment.utc(from)}</Moment>
                     {' - '}
-                    {!current ? <Moment format="DD/MM/YYYY">{moment.utc(to)}</Moment> : 'now'}
+                    {!current ? <Moment format="MM/YYYY">{moment.utc(to)}</Moment> : 'now'}
                 </>
             );
 

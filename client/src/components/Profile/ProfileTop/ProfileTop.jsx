@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
+import { isEmpty } from 'lodash';
 import { createStructuredSelector } from 'reselect';
 import { IoMdEye, IoMdStarOutline, IoMdStar } from 'react-icons/io';
 import Image from 'react-image';
@@ -60,7 +61,9 @@ const mapDispatchToProps = {
     setAlert,
 };
 
-// TODO: add available toggle & display in ui
+// TODO: add available for hire toggle?
+// TODO: have clickable placeholders/edit prompts for top section instead of nothing at all
+// TODO: add view profile as user button
 const ProfileTop = ({
     avatar,
     coverImage,
@@ -83,7 +86,7 @@ const ProfileTop = ({
         city,
         country,
         website,
-        github_username,
+        github_username: githubUsername,
         company,
     } = profileInfo;
     const { name } = profileUser;
@@ -152,12 +155,34 @@ const ProfileTop = ({
                     ) : (
                         <>{currentPosition && <h3>{currentPosition}</h3>}</>
                     )}
-                    <S.InfoButtonsContainer>
-                        <ContactModal name={name} contact={contact} /> &middot;
-                        <SocialsModal name={name} socials={socials} />
-                        &middot; <a href={website}>Website</a>
-                        &middot; <a href={`https://github.com/${github_username}`}>GitHub</a>
-                    </S.InfoButtonsContainer>
+                    {(!isEmpty(contact) || !isEmpty(socials) || website || githubUsername) && (
+                        <S.InfoButtonsContainer>
+                            {!isEmpty(contact) && <ContactModal name={name} contact={contact} />}
+                            {!isEmpty(contact) &&
+                                (!isEmpty(socials) || website || githubUsername) && <>&middot;</>}
+                            {!isEmpty(socials) && <SocialsModal name={name} socials={socials} />}
+                            {!isEmpty(socials) && (website || githubUsername) && <>&middot;</>}
+                            {website && (
+                                <a href={website} target="_blank" rel="noopener noreferrer">
+                                    Website
+                                </a>
+                            )}
+                            {website && githubUsername && <>&middot;</>}
+                            {githubUsername && (
+                                <a
+                                    href={`https://github.com/${githubUsername}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer">
+                                    GitHub
+                                </a>
+                            )}
+
+                            {/* <ContactModal name={name} contact={contact} /> &middot;
+                            <SocialsModal name={name} socials={socials} />
+                            &middot; <a href={website}>Website</a>
+                            &middot; <a href={`https://github.com/${githubUsername}`}>GitHub</a> */}
+                        </S.InfoButtonsContainer>
+                    )}
                 </S.ContentLeftContainer>
                 <S.ContentRightContainer>
                     <S.ToggleButtonsContainer>

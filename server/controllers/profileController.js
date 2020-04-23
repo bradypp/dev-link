@@ -5,10 +5,6 @@ const Profile = require('../models/Profile');
 const User = require('../models/User');
 const { AppError, catchAsync, multerImageUpload } = require('../utils');
 
-// TODO: move education & experience validation (from/to fields) to the front end and allow in create/update profile by sending the whole experience/education array, remove from fields to omit
-// TODO: allow updating likes in update profile route? push user id to likes array then send to update endpoint
-// TODO: add routes to update/delete single or multiple profile images
-
 exports.getMe = (req, res, next) => {
     req.params.userId = req.user.id;
     next();
@@ -24,30 +20,22 @@ exports.getByUsername = catchAsync(async (req, res, next) => {
 const notFoundErrorMessage = 'Profile not found';
 
 exports.createProfileAdmin = handlers.createOne(Profile);
-exports.updateProfileAdmin = handlers.updateOneByUserId(Profile);
-
+exports.updateProfile = handlers.updateOneByUserId(Profile);
 exports.getProfile = handlers.getOneByUserId(Profile, { errorMessage: notFoundErrorMessage });
 exports.deleteProfile = handlers.deleteOneByUserId(Profile, { errorMessage: notFoundErrorMessage });
 exports.getAllProfiles = handlers.getAll(Profile);
 
-exports.createUpdateProfile = catchAsync(async (req, res, next) => {
-    // Profile fields to save to new profile
-    const profileFields = {
+exports.createProfile = catchAsync(async (req, res, next) => {
+    const profile = await Profile.create({
         ...req.body,
         user: req.params.userId,
-    };
-
-    const profile = await Profile.findOneAndUpdate({ user: req.params.userId }, profileFields, {
-        new: true,
-        runValidators: true,
-        upsert: true,
     });
 
     if (!profile) {
-        return next(new AppError('Unable to update/create profile', 400));
+        return next(new AppError('Unable to create profile', 400));
     }
 
-    // Add reference to profile to user document
+    // Add profile reference to user
     req.user.profile = profile.id;
     req.user.save();
 

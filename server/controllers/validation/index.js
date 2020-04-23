@@ -12,6 +12,6 @@ exports.forgotPassword = validation(userRules.forgotPasswordRules);
 exports.resetPassword = validation(userRules.resetPasswordRules);
 exports.updatePassword = validation(userRules.updatePasswordRules);
 exports.updateUser = validation(userRules.updateUserRules);
-exports.createUpdateProfile = validation(profileRules.createUpdateProfileRules);
+exports.updateProfile = validation(profileRules.updateProfileRules);
 exports.experience = validation(profileRules.experienceRules);
 exports.education = validation(profileRules.educationRules);

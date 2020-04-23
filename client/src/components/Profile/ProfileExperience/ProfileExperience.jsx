@@ -26,7 +26,7 @@ const ProfileExperience = ({ experience }) => {
     return (
         <ProfileCard heading="Experience">
             {experience.map(item => {
-                const { title, type, company, location, from, to, current, description } = item;
+                const { title, company, location, from, to, current, description } = item;
 
                 const details = company ? (
                     <>
@@ -39,9 +39,9 @@ const ProfileExperience = ({ experience }) => {
 
                 const timePeriod = (
                     <>
-                        <Moment format="DD/MM/YYYY">{moment.utc(from)}</Moment>
+                        <Moment format="MM/YYYY">{moment.utc(from)}</Moment>
                         {' - '}
-                        {!current ? <Moment format="DD/MM/YYYY">{moment.utc(to)}</Moment> : 'now'}
+                        {!current ? <Moment format="MM/YYYY">{moment.utc(to)}</Moment> : 'now'}
                     </>
                 );
 

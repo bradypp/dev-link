@@ -16,13 +16,14 @@ router.use(authController.protect);
 router
     .route('/me')
     .get(profileController.getMe, profileController.getProfile)
-    .post(
-        validation.createUpdateProfile,
+    .post(profileController.getMe, profileController.createProfile)
+    .patch(
+        validation.updateProfile,
         profileController.getMe,
         profileController.uploadProfileImages,
         profileController.prepareProfileImages,
         profileController.deleteReplacedProfileImages,
-        profileController.createUpdateProfile,
+        profileController.updateProfile,
     )
     .delete(
         profileController.getMe,
@@ -59,7 +60,7 @@ router.use(authController.restrictTo('admin'));
 router
     .route('/')
     .post(profileController.createProfileAdmin)
-    .patch(profileController.updateProfileAdmin)
+    .patch(profileController.updateProfile)
     .delete(profileController.deleteProfile);
 
 module.exports = router;

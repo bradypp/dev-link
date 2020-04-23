@@ -1,6 +1,6 @@
 import { api, errorHandler } from 'shared/utils';
 import { setAlert } from 'redux/alerts';
-import { deleteProfile, clearCurrentProfile } from 'redux/profile';
+import { deleteProfile, createProfile } from 'redux/profile';
 import {
     SIGN_UP_SUCCESS,
     USER_LOADED,
@@ -23,11 +23,11 @@ export const loadUser = () => async dispatch => {
     }
 };
 
-export const signUp = ({ name, email, password, password2 }) => async dispatch => {
+export const signUp = ({ name, username, email, password, password2 }) => async dispatch => {
     try {
         dispatch(userLoading());
 
-        const body = JSON.stringify({ name, email, password, password2 });
+        const body = JSON.stringify({ name, username, email, password, password2 });
         const config = {
             headers: {
                 'Content-Type': 'application/json',
@@ -37,6 +37,7 @@ export const signUp = ({ name, email, password, password2 }) => async dispatch =
         const res = await api.post('/auth/sign-up', body, config);
 
         dispatch(signUpSuccess(res.data.data.token));
+        dispatch(createProfile());
         dispatch(loadUser());
     } catch (err) {
         dispatch(errorHandler(err));

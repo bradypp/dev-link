@@ -3,6 +3,8 @@ import { setAlert } from 'redux/alerts';
 import { userLoaded } from 'redux/auth';
 import { PROFILE_LOADING, PROFILE_LOADED, PROFILE_ERROR, CLEAR_PROFILE } from 'redux/actionTypes';
 
+// TODO: could get current user profile on sign in/sign up/creation/updating and use a prop in the selector to decide whether to use the user profile or get the profile based on the url username
+
 export const getProfileByUsername = username => async dispatch => {
     try {
         dispatch(profileLoading());
@@ -42,7 +44,7 @@ export const getCurrentUserProfile = () => async dispatch => {
     }
 };
 
-export const createUpdateProfile = formData => async dispatch => {
+export const createProfile = (data = {}) => async dispatch => {
     try {
         const config = {
             headers: {
@@ -50,7 +52,24 @@ export const createUpdateProfile = formData => async dispatch => {
             },
         };
 
-        const res = await api.post('/profile/me', formData, config);
+        const res = await api.post('/profile/me', data, config);
+
+        dispatch(profileLoaded(res.data.data.profile));
+    } catch (err) {
+        dispatch(errorHandler(err));
+        dispatch(profileError(err));
+    }
+};
+
+export const updateProfile = data => async dispatch => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        const res = await api.patch('/profile/me', data, config);
 
         dispatch(profileLoaded(res.data.data.profile));
         // TODO: decide whether to keep this alert
