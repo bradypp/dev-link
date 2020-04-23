@@ -7,6 +7,7 @@ const options = {
     toObject: { virtuals: true },
 };
 
+// TODO: Add city & country to user on sign up, allow updating in update route & populate to profile along with the other user fields
 const userSchema = new Schema(
     {
         name: {
@@ -103,6 +104,15 @@ userSchema.pre('save', function(next) {
     this.passwordChangedAt = Date.now() - 1000;
     next();
 });
+
+// TODO: populate user with required profile information
+// userSchema.pre(/^find/, function(next) {
+//     this.populate({
+//         path: 'profile',
+//         select: 'avatar',
+//     });
+//     next();
+// });
 
 userSchema.statics.encryptPasswordResetToken = function(token) {
     return crypto

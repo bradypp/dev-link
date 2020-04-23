@@ -177,20 +177,6 @@ const profileSchema = new Schema({
                 required: [true, 'Title is required'],
                 trim: true,
             },
-            type: {
-                type: String,
-                required: [true, 'Type is required'],
-                enum: [
-                    'full-time permanent',
-                    'full-time temporary',
-                    'part-time permanent',
-                    'part-time temporary',
-                    'self-employed',
-                    'open source',
-                    'freelance',
-                    'intern',
-                ],
-            },
             company: {
                 type: String,
                 required: [true, 'Company is required'],
