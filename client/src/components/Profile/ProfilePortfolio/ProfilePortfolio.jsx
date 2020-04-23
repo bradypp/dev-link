@@ -5,7 +5,7 @@ import Image from 'react-image';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ProfileCard } from 'components';
-import { selectProfilePortfolio } from 'redux/profiles';
+import { selectProfilePortfolio } from 'redux/profile';
 import { CustomLink } from 'shared/components';
 import * as S from './ProfilePortfolioStyles';
 

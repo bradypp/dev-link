@@ -1,6 +1,6 @@
 import { api, errorHandler } from 'shared/utils';
 import { setAlert } from 'redux/alerts';
-import { deleteProfile } from 'redux/profiles';
+import { deleteProfile, clearCurrentProfile } from 'redux/profile';
 import {
     SIGN_UP_SUCCESS,
     USER_LOADED,
@@ -65,11 +65,10 @@ export const signIn = ({ login, password }) => async dispatch => {
 };
 
 export const signOut = () => dispatch => {
-    console.log('object');
     dispatch(signOutUser());
 };
 
-// TODO: add confirm modal
+// TODO: use confirm modal component which pop up, then on confirm send this action
 export const deleteAccount = () => async dispatch => {
     if (window.confirm('Are you sure? This can NOT be undone!')) {
         try {

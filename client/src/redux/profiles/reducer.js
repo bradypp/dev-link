@@ -1,61 +1,40 @@
 import {
-    PROFILE_LOADED,
     PROFILES_ERROR,
-    CLEAR_PROFILE,
+    CLEAR_PROFILES,
     PROFILES_LOADED,
-    PROFILE_LOADING,
     PROFILES_LOADING,
 } from 'redux/actionTypes';
 
 const initialState = {
-    profile: {},
     profiles: [],
-    isProfileLoading: false,
-    isProfilesLoading: false,
+    isLoading: false,
     error: {},
 };
 
 export default (state = initialState, { type, payload }) => {
     switch (type) {
-        case PROFILE_LOADING:
-            return {
-                ...state,
-                isProfileLoading: true,
-            };
-        case PROFILE_LOADED:
-            return {
-                ...state,
-                profile: payload,
-                isProfileLoading: false,
-                error: {},
-            };
         case PROFILES_LOADING:
             return {
                 ...state,
-                isProfilesLoading: true,
+                isLoading: true,
             };
         case PROFILES_LOADED:
             return {
                 ...state,
-                isProfilesLoading: false,
+                isLoading: false,
                 profiles: payload,
-                error: {},
             };
         case PROFILES_ERROR:
             return {
                 ...state,
-                isProfileLoading: false,
-                isProfilesLoading: false,
-                profile: {},
-                profiles: [],
+                profiles: initialState.profiles,
+                isLoading: initialState.isLoading,
                 error: payload,
             };
-        case CLEAR_PROFILE:
+        case CLEAR_PROFILES:
             return {
                 ...state,
-                profile: {},
-                isProfileLoading: false,
-                isProfilesLoading: false,
+                ...initialState,
             };
         default:
             return state;

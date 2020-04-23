@@ -8,7 +8,7 @@ import {
     selectProfileLookingFor,
     selectProfileInterests,
     selectProfileGoals,
-} from 'redux/profiles';
+} from 'redux/profile';
 import { ProfileCard, ProfileList } from 'components';
 import { CustomLink } from 'shared/components';
 

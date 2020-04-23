@@ -17,7 +17,7 @@ import {
     selectProfileSkills,
     toggleStar,
     toggleWatch,
-} from 'redux/profiles';
+} from 'redux/profile';
 import { selectUser, selectIsAuthenticated } from 'redux/auth';
 import { setAlert } from 'redux/alerts';
 import { ContactModal, SocialsModal } from 'components';

@@ -4,9 +4,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ProfileCard } from 'components';
-import { selectProfileExperience } from 'redux/profiles';
-import { CustomLink } from 'shared/components';
-import * as S from './ProfileExperienceStyles';
+import Moment from 'react-moment';
+import moment from 'moment';
+import { selectProfileExperience } from 'redux/profile';
+// import * as S from './ProfileExperienceStyles';
 
 const propTypes = {
     experience: PropTypes.array.isRequired,
@@ -25,8 +26,35 @@ const ProfileExperience = ({ experience }) => {
     return (
         <ProfileCard heading="Experience">
             {experience.map(item => {
-                const { title } = item;
-                return <ProfileCard.Item>experience</ProfileCard.Item>;
+                const { title, type, company, location, from, to, current, description } = item;
+
+                const details = company ? (
+                    <>
+                        {company}
+                        {location && <> &middot; {location} </>}
+                    </>
+                ) : (
+                    <>{location && <>{location}</>}</>
+                );
+
+                const timePeriod = (
+                    <>
+                        <Moment format="DD/MM/YYYY">{moment.utc(from)}</Moment>
+                        {' - '}
+                        {!current ? <Moment format="DD/MM/YYYY">{moment.utc(to)}</Moment> : 'now'}
+                    </>
+                );
+
+                return (
+                    <ProfileCard.Item key={uuidv4()}>
+                        <div>
+                            <ProfileCard.Item.Heading>{title}</ProfileCard.Item.Heading>
+                            <ProfileCard.Item.Subtitle>{details}</ProfileCard.Item.Subtitle>
+                            <ProfileCard.Item.Subtitle>{timePeriod}</ProfileCard.Item.Subtitle>
+                        </div>
+                        {description && <p>{description}</p>}
+                    </ProfileCard.Item>
+                );
             })}
         </ProfileCard>
     );

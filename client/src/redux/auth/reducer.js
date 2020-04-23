@@ -11,7 +11,7 @@ import {
 const initialState = {
     token: '',
     isAuthenticated: false,
-    isUserLoading: false,
+    isLoading: false,
     user: {},
     error: {},
 };
@@ -21,46 +21,43 @@ export default (state = initialState, { type, payload }) => {
         case USER_LOADING:
             return {
                 ...state,
-                isUserLoading: true,
-                isAuthenticated: false,
-                user: {},
+                isLoading: true,
+                isAuthenticated: initialState.isAuthenticated,
+                user: initialState.user,
             };
         case USER_LOADED:
             return {
                 ...state,
-                isAuthenticated: true,
-                isUserLoading: false,
                 user: payload,
-                error: {},
+                isAuthenticated: true,
+                isLoading: initialState.isLoading,
             };
         case SIGN_UP_SUCCESS:
         case SIGN_IN_SUCCESS:
             setAuthToken(payload);
             return {
                 ...state,
-                isAuthenticated: true,
                 token: payload,
-                error: {},
+                isAuthenticated: true,
             };
         case SIGN_OUT_USER:
             setAuthToken('');
             return {
                 ...state,
                 token: '',
-                isAuthenticated: false,
-                isUserLoading: false,
-                user: {},
-                error: {},
+                isAuthenticated: initialState.isAuthenticated,
+                isLoading: initialState.isLoading,
+                user: initialState.user,
             };
         case AUTH_ERROR:
             setAuthToken('');
             return {
                 ...state,
-                token: '',
-                isAuthenticated: false,
-                isUserLoading: false,
-                user: {},
                 error: payload,
+                token: initialState.token,
+                isAuthenticated: initialState.isAuthenticated,
+                isLoading: initialState.isLoading,
+                user: initialState.user,
             };
         default:
             return state;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Main } from 'shared/components';
-import { getProfileByUsername } from 'redux/profiles';
+import { getProfileByUsername } from 'redux/profile';
 import {
     ProfileTop,
     ProfileAbout,

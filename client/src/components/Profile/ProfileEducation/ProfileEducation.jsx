@@ -6,8 +6,8 @@ import { createStructuredSelector } from 'reselect';
 import { ProfileCard } from 'components';
 import Moment from 'react-moment';
 import moment from 'moment';
-import { selectProfileEducation } from 'redux/profiles';
-import * as S from './ProfileEducationStyles';
+import { selectProfileEducation } from 'redux/profile';
+// import * as S from './ProfileEducationStyles';
 
 const propTypes = {
     education: PropTypes.array.isRequired,
