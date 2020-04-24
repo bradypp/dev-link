@@ -88,7 +88,7 @@ const sendErrorProd = (err, req, res) => {
     });
 };
 
-const errorHandler = (err, req, res, next) => {
+const apiErrorHandler = (err, req, res, next) => {
     let error;
 
     // Handle and send validation errors
@@ -122,4 +122,4 @@ const errorHandler = (err, req, res, next) => {
     }
 };
 
-module.exports = errorHandler;
+module.exports = apiErrorHandler;

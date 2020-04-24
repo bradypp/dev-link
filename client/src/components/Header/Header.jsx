@@ -49,7 +49,7 @@ const Header = ({ isUserLoading, isAuthenticated, signOut, user }) => {
                     <strong>Dev</strong>Link
                 </S.Logo>
                 {location.pathname !== '/' && `Search Bar Here!`}
-                {(isUserLoading && guestMenu) || isAuthenticated ? signedInMenu : guestMenu}
+                {isAuthenticated ? signedInMenu : guestMenu}
             </S.NavContainer>
         </S.HeaderContainer>
     );

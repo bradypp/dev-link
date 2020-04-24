@@ -1,4 +1,4 @@
-import { api, errorHandler } from 'shared/utils';
+import { api, apiErrorHandler } from 'shared/utils';
 import {
     PROFILES_LOADED,
     PROFILES_ERROR,
@@ -15,7 +15,7 @@ export const getProfiles = () => async (dispatch, queryParams = '') => {
 
         dispatch(profilesLoaded(res.data.data.profiles));
     } catch (err) {
-        dispatch(errorHandler(err));
+        dispatch(apiErrorHandler(err));
         dispatch(profilesError(err));
     }
 };

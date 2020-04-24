@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import Image from 'react-image';
+// import Image from 'react-image';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ProfileCard } from 'components';
@@ -28,7 +28,7 @@ const ProfilePortfolio = ({ portfolio }) => {
     return (
         <ProfileCard heading="Portfolio">
             {portfolio.map(item => {
-                const { title, description, repo, skills, demo, images } = item;
+                const { title, description, repo, skills, demo } = item;
                 return (
                     <ProfileCard.Item key={uuidv4()}>
                         <ProfileCard.Item.Heading>{title}</ProfileCard.Item.Heading>

@@ -1,11 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Formik, Form as FormikForm, Field as FormikField } from 'formik';
-import { get, mapValues } from 'lodash';
-
-import toast from 'shared/utils/toast';
-import { is, generateErrors } from 'shared/utils/validation';
-
+import { generateValidationErrors } from 'shared/utils';
 import Field from './Field';
 
 const propTypes = {
@@ -20,52 +16,40 @@ const defaultProps = {
     validateOnBlur: false,
 };
 
-const Form = ({ validate, validations, ...otherProps }) => (
+// TODO: test validate on blur default prop for StyledForm
+const Form = ({ validate, validations, validateOnBlur, ...otherProps }) => (
     <Formik
-        {...otherProps}
         validate={values => {
-            if (validate) {
-                return validate(values);
-            }
-            if (validations) {
-                return generateErrors(values, validations);
-            }
-            return {};
+            if (validate) return validate(values);
+            if (validations) return generateValidationErrors(values, validations);
+            return null;
         }}
+        validateOnBlur={validateOnBlur}
+        {...otherProps}
     />
 );
 
 Form.Element = props => <FormikForm noValidate {...props} />;
 
-Form.Field = mapValues(Field, FieldComponent => ({ name, validate, ...props }) => (
+const fieldWrapper = FieldComponent => ({ name, validate, ...otherProps }) => (
     <FormikField name={name} validate={validate}>
         {({ field, form: { touched, errors, setFieldValue } }) => (
             <FieldComponent
                 {...field}
-                {...props}
+                {...otherProps}
                 name={name}
-                error={get(touched, name) && get(errors, name)}
+                error={touched[name] && errors[name]}
                 onChange={value => setFieldValue(name, value)}
             />
         )}
     </FormikField>
-));
+);
 
-Form.initialValues = (data, getFieldValues) =>
-    getFieldValues((key, defaultValue = '') => {
-        const value = get(data, key);
-        return value === undefined || value === null ? defaultValue : value;
-    });
-
-Form.handleAPIError = (error, form) => {
-    if (error.data.fields) {
-        form.setErrors(error.data.fields);
-    } else {
-        toast.error(error);
-    }
-};
-
-Form.is = is;
+Form.Input = fieldWrapper(Field.Input);
+// Form.Select = fieldWrapper(Field.Select);
+Form.TextArea = fieldWrapper(Field.TextArea);
+Form.TextEditor = fieldWrapper(Field.TextEditor);
+// Form.DatePicker = fieldWrapper(Field.DatePicker);
 
 Form.propTypes = propTypes;
 Form.defaultProps = defaultProps;

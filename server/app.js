@@ -10,7 +10,7 @@ const hpp = require('hpp');
 const { AppError } = require('./utils');
 const rateLimiter = require('./config/rateLimiter');
 const hppConfig = require('./config/hppConfig');
-const globalErrorHandler = require('./controllers/errorHandler');
+const errorHandler = require('./controllers/errorHandler');
 const authRouter = require('./controllers/routes/authRoutes');
 const profileRouter = require('./controllers/routes/profileRoutes');
 const userRouter = require('./controllers/routes/userRoutes');
@@ -83,6 +83,6 @@ app.all('*', (req, res, next) =>
 );
 
 // Global error handling middleware
-app.use(globalErrorHandler);
+app.use(errorHandler);
 
 module.exports = app;

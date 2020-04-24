@@ -1,11 +1,15 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { clearAlerts } from 'redux/alerts';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearAlerts, selectAlerts } from 'redux/alerts';
 
 const useClearAlerts = () => {
     const dispatch = useDispatch();
+    const alerts = useSelector(selectAlerts);
+
     useEffect(() => {
-        dispatch(clearAlerts());
+        if (alerts.length > 0) {
+            dispatch(clearAlerts());
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 };

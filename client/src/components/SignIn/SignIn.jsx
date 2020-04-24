@@ -1,83 +1,56 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { signIn, selectIsAuthenticated } from 'redux/auth';
-import { clearAlerts, selectAlerts } from 'redux/alerts';
+import { useClearAlerts } from 'shared/hooks';
+import { Form, Button, Main } from 'shared/components';
+import * as S from './SignInStyles';
 
 const propTypes = {
     signIn: PropTypes.func.isRequired,
-    clearAlerts: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
-    alerts: PropTypes.array.isRequired,
 };
 
-// TODO: redesign
-const SignIn = ({ signIn, clearAlerts, isAuthenticated, alerts }) => {
-    const [formData, setFormData] = useState({
-        login: '',
-        password: '',
-    });
+const mapStateToProps = createStructuredSelector({
+    isAuthenticated: selectIsAuthenticated,
+});
 
-    const { login, password } = formData;
-
-    const onChange = event => {
-        setFormData({ ...formData, [event.target.name]: event.target.value });
-    };
-
-    const onSubmit = async event => {
-        event.preventDefault();
-        signIn(formData);
-    };
-
-    useEffect(() => {
-        if (alerts.length > 0) {
-            clearAlerts();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+// TODO: styling
+const SignIn = ({ signIn, isAuthenticated }) => {
+    useClearAlerts();
 
     if (isAuthenticated) return <Redirect to="/dashboard" />;
 
     return (
-        <>
-            <h1 className="large text-primary">Sign In</h1>
-            <p className="lead">Sign Into Your Account</p>
-            <form className="form" onSubmit={onSubmit} noValidate>
-                <div className="form-group">
-                    <input
-                        type="text"
-                        placeholder="Username or email address"
+        <Main>
+            <Form
+                initialValues={{
+                    login: '',
+                    password: '',
+                }}
+                onSubmit={signIn}>
+                <S.StyledForm>
+                    <Form.Input
+                        label="Login"
                         name="login"
-                        value={login}
-                        onChange={onChange}
+                        type="text"
+                        tip="Please enter your username or email"
                     />
-                </div>
-                <div className="form-group">
-                    <input
-                        type="password"
-                        placeholder="Password"
+                    <Form.Input
+                        label="Password"
                         name="password"
-                        minLength="8"
-                        value={password}
-                        onChange={onChange}
+                        type="password"
+                        tip="Please enter your password"
                     />
-                </div>
-                <input type="submit" className="btn btn-primary" value="Sign In" />
-            </form>
-            <p className="my-1">
-                Don't have an account? <Link to="/sign-up">Sign Up</Link>
-            </p>
-        </>
+                    <Button type="submit">Submit</Button>
+                </S.StyledForm>
+            </Form>
+        </Main>
     );
 };
 
 SignIn.propTypes = propTypes;
 
-const mapStateToProps = createStructuredSelector({
-    isAuthenticated: selectIsAuthenticated,
-    alerts: selectAlerts,
-});
-
-export default connect(mapStateToProps, { signIn, clearAlerts })(SignIn);
+export default connect(mapStateToProps, { signIn })(SignIn);

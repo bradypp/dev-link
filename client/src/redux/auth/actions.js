@@ -1,4 +1,4 @@
-import { api, errorHandler } from 'shared/utils';
+import { api, apiErrorHandler } from 'shared/utils';
 import { setAlert } from 'redux/alerts';
 import { deleteProfile, createProfile } from 'redux/profile';
 import {
@@ -18,7 +18,7 @@ export const loadUser = () => async dispatch => {
 
         dispatch(userLoaded(res.data.data.user));
     } catch (err) {
-        dispatch(errorHandler(err));
+        dispatch(apiErrorHandler(err));
         dispatch(authError(err));
     }
 };
@@ -40,7 +40,7 @@ export const signUp = ({ name, username, email, password, password2 }) => async 
         dispatch(createProfile());
         dispatch(loadUser());
     } catch (err) {
-        dispatch(errorHandler(err));
+        dispatch(apiErrorHandler(err));
         dispatch(authError(err));
     }
 };
@@ -60,7 +60,7 @@ export const signIn = ({ login, password }) => async dispatch => {
         dispatch(signInSuccess(res.data.data.token));
         dispatch(loadUser());
     } catch (err) {
-        dispatch(errorHandler(err));
+        dispatch(apiErrorHandler(err));
         dispatch(authError(err));
     }
 };
@@ -78,7 +78,7 @@ export const deleteAccount = () => async dispatch => {
             dispatch(signOutUser());
             dispatch(setAlert('Your account has been permanently deleted'));
         } catch (err) {
-            dispatch(errorHandler(err));
+            dispatch(apiErrorHandler(err));
             dispatch(authError(err));
         }
     }

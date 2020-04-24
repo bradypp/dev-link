@@ -1,29 +1,28 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { color, font } from 'shared/utils/styles';
-
-export const StyledField = styled.div`
-  margin-top: 20px;
+export const FieldContainer = styled.div`
+    margin-top: 2rem;
 `;
 
 export const FieldLabel = styled.label`
-  display: block;
-  padding-bottom: 5px;
-  color: ${color.textMedium};
-  ${font.medium}
-  ${font.size(13)}
+    display: block;
+    padding-bottom: 0.6rem;
+    color: ${({ theme }) => theme.colors.textPrimary2};
+    font-size: 1.3rem;
+`;
+
+const sharedSubtitleStyles = css`
+    padding-top: 0.6rem;
+    font-size: 1.2rem;
+    line-height: 1;
 `;
 
 export const FieldTip = styled.div`
-  padding-top: 6px;
-  color: ${color.textMedium};
-  ${font.size(12.5)}
-`;
+  ${sharedSubtitleStyles}
+  color: ${({ theme }) => theme.colors.textPrimary2};
+  `;
 
 export const FieldError = styled.div`
-  margin-top: 6px;
-  line-height: 1;
-  color: ${color.danger};
-  ${font.medium}
-  ${font.size(12.5)}
+  ${sharedSubtitleStyles}
+  color: ${({ theme }) => theme.colors.danger};
 `;

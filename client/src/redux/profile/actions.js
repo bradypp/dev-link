@@ -1,4 +1,4 @@
-import { api, errorHandler } from 'shared/utils';
+import { api, apiErrorHandler } from 'shared/utils';
 import { setAlert } from 'redux/alerts';
 import { userLoaded } from 'redux/auth';
 import { PROFILE_LOADING, PROFILE_LOADED, PROFILE_ERROR, CLEAR_PROFILE } from 'redux/actionTypes';
@@ -13,7 +13,7 @@ export const getProfileByUsername = username => async dispatch => {
 
         dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {
-        dispatch(errorHandler(err));
+        dispatch(apiErrorHandler(err));
         dispatch(profileError(err));
     }
 };
@@ -26,7 +26,7 @@ export const getProfileById = userId => async dispatch => {
 
         dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {
-        dispatch(errorHandler(err));
+        dispatch(apiErrorHandler(err));
         dispatch(profileError(err));
     }
 };
@@ -39,7 +39,7 @@ export const getCurrentUserProfile = () => async dispatch => {
 
         dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {
-        dispatch(errorHandler(err));
+        dispatch(apiErrorHandler(err));
         dispatch(profileError(err));
     }
 };
@@ -56,7 +56,7 @@ export const createProfile = (data = {}) => async dispatch => {
 
         dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {
-        dispatch(errorHandler(err));
+        dispatch(apiErrorHandler(err));
         dispatch(profileError(err));
     }
 };
@@ -75,7 +75,7 @@ export const updateProfile = data => async dispatch => {
         // TODO: decide whether to keep this alert
         dispatch(setAlert('Profile Updated', 'success'));
     } catch (err) {
-        dispatch(errorHandler(err));
+        dispatch(apiErrorHandler(err));
         dispatch(profileError(err));
     }
 };
@@ -87,7 +87,7 @@ export const toggleStar = profileId => async dispatch => {
         dispatch(profileLoaded(res.data.data.profile));
         dispatch(userLoaded(res.data.data.user));
     } catch (err) {
-        dispatch(errorHandler(err));
+        dispatch(apiErrorHandler(err));
         dispatch(profileError(err));
     }
 };
@@ -99,7 +99,7 @@ export const toggleWatch = profileId => async dispatch => {
         dispatch(profileLoaded(res.data.data.profile));
         dispatch(userLoaded(res.data.data.user));
     } catch (err) {
-        dispatch(errorHandler(err));
+        dispatch(apiErrorHandler(err));
         dispatch(profileError(err));
     }
 };
@@ -109,7 +109,7 @@ export const deleteProfile = () => async dispatch => {
         await api.delete('/profile/me');
         dispatch(clearProfile());
     } catch (err) {
-        dispatch(errorHandler(err));
+        dispatch(apiErrorHandler(err));
         dispatch(profileError(err));
     }
 };

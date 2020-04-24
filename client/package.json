@@ -31,7 +31,8 @@
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "styled-components": "^5.0.1",
-    "uuid": "^7.0.3"
+    "uuid": "^7.0.3",
+    "yup": "^0.28.4"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -8,6 +8,7 @@ import utils from './utils';
 
 export default ({ children }) => {
     const [currentTheme, setCurrentTheme] = useState(themes.LIGHT);
+
     const theme = {
         colors: colors(currentTheme),
         animation,
