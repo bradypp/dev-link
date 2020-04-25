@@ -40,7 +40,7 @@ const utils = {
     `,
     fieldFocus: css`
         &:focus {
-            background-color: #fff;
+            background-color: ${({ theme }) => theme.colors.background1};
             border: 0.1rem solid ${({ theme }) => theme.colors.borderFocus};
             box-shadow: 0 0 0 0.1rem ${({ theme }) => theme.colors.borderFocus};
         }
