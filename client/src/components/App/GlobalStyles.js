@@ -38,6 +38,7 @@ const GlobalStyles = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     font-family: ${({ theme }) => theme.fonts.primary};
     font-size: 1.6rem;
+    font-weight: 400;
     line-height: 1.5;
     color: ${({ theme }) => theme.colors.textPrimary1};
     background: ${({ theme }) => theme.colors.background1};
@@ -101,7 +102,7 @@ const GlobalStyles = createGlobalStyle`
     ${mixins.button}
   }
 
-  a, input, select, textarea {
+  [role="button"], button, a, input, select, textarea {
     outline: none;
     border: 0;
     border-radius: 0;

@@ -1,6 +1,6 @@
 import { themes } from 'shared/constants';
 
-const base = {
+const baseColors = {
     primary: '#2977c9',
     primaryDark: '#105EB0',
     primaryLight: '#4391E3',
@@ -23,50 +23,48 @@ const base = {
     overlay: 'rgba(9, 30, 66, 0.54)',
 };
 
-const light = {
-    textPrimary1: base.greyDark1,
-    textPrimary2: base.greyDark2,
-    textPrimary3: base.greyDark3,
-    textSecondary1: base.white1,
-    textSecondary2: base.white2,
-    textSecondary3: base.white3,
-    textColored1: base.primary,
-    background1: base.white1,
-    background2: base.white2,
-    background3: base.white3,
-    border1: base.greyLight2,
-    border2: base.greyLight3,
+const lightTheme = {
+    textPrimary1: baseColors.greyDark1,
+    textPrimary2: baseColors.greyDark2,
+    textPrimary3: baseColors.greyDark3,
+    textSecondary1: baseColors.white1,
+    textSecondary2: baseColors.white2,
+    textSecondary3: baseColors.white3,
+    textColored1: baseColors.primary,
+    background1: baseColors.white1,
+    background2: baseColors.white2,
+    background3: baseColors.white3,
+    border1: baseColors.greyLight2,
+    border2: baseColors.greyLight3,
 };
 
 // TODO: customize dark theme
-const dark = {
-    textPrimary1: base.white1,
-    textPrimary2: base.white2,
-    textPrimary3: base.white3,
-    textSecondary1: base.greyDark1,
-    textSecondary2: base.greyDark2,
-    textSecondary3: base.greyDark3,
-    textColored1: base.primary,
-    background1: base.greyDark1,
-    background2: base.greyDark2,
-    background3: base.greyDark3,
-    border1: base.greyDark3,
-    border2: base.greyDark2,
+const darkTheme = {
+    textPrimary1: baseColors.white1,
+    textPrimary2: baseColors.white2,
+    textPrimary3: baseColors.white3,
+    textSecondary1: baseColors.greyDark1,
+    textSecondary2: baseColors.greyDark2,
+    textSecondary3: baseColors.greyDark3,
+    textColored1: baseColors.primary,
+    background1: baseColors.greyDark1,
+    background2: baseColors.greyDark2,
+    background3: baseColors.greyDark3,
+    border1: baseColors.greyDark3,
+    border2: baseColors.greyDark2,
 };
 
-const selectTheme = theme => {
+const getTheme = theme => {
     switch (theme) {
         case themes.DARK:
-            return dark;
+            return darkTheme;
         case themes.LIGHT:
         default:
-            return light;
+            return lightTheme;
     }
 };
 
-const colors = theme => ({
-    ...base,
-    ...selectTheme(theme),
+export default theme => ({
+    ...baseColors,
+    ...getTheme(theme),
 });
-
-export default colors;
