@@ -36,11 +36,11 @@ const SignUp = ({ signUp, isAuthenticated }) => {
                 }}
                 onSubmit={signUp}>
                 <S.StyledForm>
-                    <Form.Input label="Name" name="name" type="text" />
-                    <Form.Input label="Username" name="username" type="text" />
-                    <Form.Input label="Email" name="email" type="email" />
-                    <Form.Input label="Password" name="password" type="password" />
-                    <Form.Input label="Confirm password" name="passwords" type="password" />
+                    <Form.Field.Input label="Name" name="name" type="text" />
+                    <Form.Field.Input label="Username" name="username" type="text" />
+                    <Form.Field.Input label="Email" name="email" type="email" />
+                    <Form.Field.Input label="Password" name="password" type="password" />
+                    <Form.Field.Input label="Confirm password" name="passwords" type="password" />
                     <Button type="submit">Submit</Button>
                 </S.StyledForm>
             </Form>

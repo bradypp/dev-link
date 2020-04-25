@@ -7,6 +7,7 @@ const propTypes = {
     to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
     children: PropTypes.node,
     className: PropTypes.string,
+    variant: PropTypes.string,
     backgroundColor: PropTypes.string,
     borderColor: PropTypes.string,
     textColor: PropTypes.string,
@@ -20,6 +21,7 @@ const propTypes = {
 const defaultProps = {
     className: undefined,
     children: undefined,
+    variant: 'link',
     backgroundColor: undefined,
     borderColor: undefined,
     textColor: undefined,

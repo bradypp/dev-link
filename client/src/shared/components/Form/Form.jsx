@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Formik, Form as FormikForm, Field as FormikField } from 'formik';
 import { generateValidationErrors } from 'shared/utils';
+import { mapValues } from 'lodash';
 import Field from './Field';
 
 const propTypes = {
@@ -31,7 +32,8 @@ const Form = ({ validate, validations, validateOnBlur, ...otherProps }) => (
 
 Form.Element = props => <FormikForm noValidate {...props} />;
 
-const fieldWrapper = FieldComponent => ({ name, validate, ...otherProps }) => (
+// Allows the use of all fields exported from './Field' by wrapping them with the formik Field component
+Form.Field = mapValues(Field, FieldComponent => ({ name, validate, ...otherProps }) => (
     <FormikField name={name} validate={validate}>
         {({ field, form: { touched, errors, setFieldValue } }) => (
             <FieldComponent
@@ -43,13 +45,7 @@ const fieldWrapper = FieldComponent => ({ name, validate, ...otherProps }) => (
             />
         )}
     </FormikField>
-);
-
-Form.Input = fieldWrapper(Field.Input);
-// Form.Select = fieldWrapper(Field.Select);
-Form.TextArea = fieldWrapper(Field.TextArea);
-Form.TextEditor = fieldWrapper(Field.TextEditor);
-// Form.DatePicker = fieldWrapper(Field.DatePicker);
+));
 
 Form.propTypes = propTypes;
 Form.defaultProps = defaultProps;

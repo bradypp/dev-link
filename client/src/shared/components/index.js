@@ -10,7 +10,7 @@ export { default as Modal } from './Modal/Modal';
 export { default as TextArea } from './TextArea/TextArea';
 export { default as TextEditedContent } from './TextEditedContent/TextEditedContent';
 export { default as TextEditor } from './TextEditor/TextEditor';
-// export { default as Select } from './Select/Select';
+export { default as Select } from './Select/Select';
 export { default as Form } from './Form/Form';
 export { default as Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
 export { default as DatePicker } from './DatePicker/DatePicker';

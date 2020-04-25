@@ -52,16 +52,8 @@ const ProfilePortfolio = ({ portfolio }) => {
                                     );
                                 })} */}
                         <S.LinksContainer>
-                            {repo && (
-                                <a href={repo} target="_blank" rel="noopener noreferrer">
-                                    Repo
-                                </a>
-                            )}
-                            {demo && (
-                                <a href={demo} target="_blank" rel="noopener noreferrer">
-                                    Demo
-                                </a>
-                            )}
+                            {repo && <a href={repo}>Repo</a>}
+                            {demo && <a href={demo}>Demo</a>}
                         </S.LinksContainer>
                     </ProfileCard.Item>
                 );

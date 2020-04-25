@@ -20,7 +20,7 @@ const mapStateToProps = createStructuredSelector({
 // TODO: Conditional appearance based on if profile belongs to current authenticated user
 // TODO: Add loader?
 // TODO: Sort array by from (on backend)?
-// TODO: Use a calendar component to allow choosing of dates?
+// TODO: Edit date formatting using util functions
 const ProfileCertifications = ({ certifications }) => (
     <ProfileCard heading="Certifications">
         {certifications.map(item => {
