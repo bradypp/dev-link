@@ -6,7 +6,7 @@ export const SelectContainer = styled.div`
     position: relative;
     border-radius: 0.4rem;
     cursor: pointer;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     width: 100%;
     ${({ variant }) => variant === 'empty' && 'display: inline-block'};
     ${mixins.fieldInvalid}

@@ -9,6 +9,7 @@ const propTypes = {
     color: PropTypes.string,
     icon: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.node]),
     height: PropTypes.number,
+    fontSize: PropTypes.string,
     invalid: PropTypes.bool,
     onChange: PropTypes.func,
 };
@@ -19,6 +20,7 @@ const defaultProps = {
     color: 'textPrimary1',
     icon: undefined,
     height: 3.2,
+    fontSize: '1.5rem',
     invalid: false,
     onChange: () => {},
 };

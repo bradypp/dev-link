@@ -15,6 +15,7 @@ export const SearchContainer = styled.div`
 
 export const StyledInput = styled(Input).attrs({
     height: 5,
+    fontSize: '2.5rem',
 })`
     margin-bottom: 1rem;
 `;

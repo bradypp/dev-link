@@ -25,7 +25,7 @@ export const InputElement = styled.input`
     color: ${({ theme, color }) => theme.colors[color]};
     background-color: ${({ theme }) => theme.colors.background2};
     font-family: ${({ theme }) => theme.fonts.primary};
-    font-size: ${({ height }) => `${height / 2.4}rem`};
+    font-size: ${({ fontSize }) => fontSize || `1.6rem`};
     padding-left: ${({ hasIcon, height }) => (hasIcon ? `${height}rem` : `${height / 4.5}rem`)};
     transition: all 0.1s;
     ${mixins.fieldHover}

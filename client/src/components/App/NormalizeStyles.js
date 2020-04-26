@@ -67,7 +67,7 @@ const NormalizeStyles = createGlobalStyle`
   select,
   textarea {
     font-family: inherit;
-    font-size: 100%;
+    font-size: inherit;
     line-height: 1.15;
     margin: 0;
   }

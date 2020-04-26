@@ -88,7 +88,7 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
-  input {
+  input, textarea {
     &::placeholder {
       opacity: 0.7;
     }
