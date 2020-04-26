@@ -4,9 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ProfileCard } from 'components';
-import Moment from 'react-moment';
-import moment from 'moment';
 import { selectProfileExperience } from 'redux/profile';
+import { formatDate } from 'shared/utils';
 // import * as S from './ProfileExperienceStyles';
 
 const propTypes = {
@@ -20,7 +19,6 @@ const mapStateToProps = createStructuredSelector({
 // TODO: Conditional appearance based on if profile belongs to current authenticated user
 // TODO: Add loader?
 // TODO: Sort array by from (on backend)?
-// TODO: Edit date formatting using util functions
 // TODO: Have a current toggle on form to disable to
 const ProfileExperience = ({ experience }) => {
     return (
@@ -39,9 +37,9 @@ const ProfileExperience = ({ experience }) => {
 
                 const timePeriod = (
                     <>
-                        <Moment format="MM/YYYY">{moment.utc(from)}</Moment>
+                        <time>{formatDate(from)}</time>
                         {' - '}
-                        {!current ? <Moment format="MM/YYYY">{moment.utc(to)}</Moment> : 'now'}
+                        {!current ? <time>{formatDate(to)}</time> : 'now'}
                     </>
                 );
 

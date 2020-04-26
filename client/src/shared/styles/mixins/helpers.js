@@ -1,7 +1,7 @@
 import { css } from 'styled-components/macro';
 import Color from 'color';
 
-const utils = {
+const helpers = {
     darken: (colorValue, amount) =>
         Color(colorValue)
             .darken(amount)
@@ -22,7 +22,7 @@ const utils = {
             background: none;
         }
         &::-webkit-scrollbar-thumb {
-            border-radius: 99px;
+            border-radius: 10rem;
             background: ${({ theme }) => config.background || theme.colors.scrollBar};
         }
     `,
@@ -51,6 +51,9 @@ const utils = {
             opacity: 0.8 !important;
         }
     `,
+    translate: (left = 0, top = 0) => css`
+        transform: translate(${left}px, ${top}px);
+    `,
 };
 
-export default utils;
+export default helpers;

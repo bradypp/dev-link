@@ -1,7 +1,8 @@
 /* eslint-disable react/button-has-type */
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { StyledButton, ButtonText, ButtonSpinner } from './ButtonStyles';
+import { Icon, ButtonText, ButtonSpinner } from 'shared/components';
+import { StyledButton } from './ButtonStyles';
 
 const propTypes = {
     className: PropTypes.string,
@@ -9,8 +10,8 @@ const propTypes = {
     type: PropTypes.oneOf(['button', 'reset', 'submit']),
     backgroundColor: PropTypes.string,
     borderColor: PropTypes.string,
-    textColor: PropTypes.string,
-    icon: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.node]),
+    color: PropTypes.string,
+    icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     disabled: PropTypes.bool,
     isWorking: PropTypes.bool,
     isActive: PropTypes.bool,
@@ -20,9 +21,9 @@ const propTypes = {
 const defaultProps = {
     className: undefined,
     children: undefined,
-    backgroundColor: undefined,
-    borderColor: undefined,
-    textColor: undefined,
+    backgroundColor: 'primary',
+    borderColor: 'border1',
+    color: 'textPrimary1',
     icon: undefined,
     type: 'button',
     disabled: false,
@@ -31,11 +32,16 @@ const defaultProps = {
     onClick: () => {},
 };
 
-const Button = forwardRef(({ children, icon: Icon, disabled, isWorking, ...otherProps }, ref) => (
-    <StyledButton disabled={disabled || isWorking} iconOnly={!children} ref={ref} {...otherProps}>
+const Button = forwardRef(({ children, icon, disabled, isWorking, color, ...otherProps }, ref) => (
+    <StyledButton
+        disabled={disabled || isWorking}
+        iconOnly={!children}
+        ref={ref}
+        color={color}
+        {...otherProps}>
         {isWorking && <ButtonSpinner />}
-        {Icon && <Icon className="icon" />}
-        {children && <ButtonText withPadding={Icon || isWorking}>{children}</ButtonText>}
+        {!isWorking && icon && typeof icon === 'string' ? <Icon type={icon} /> : icon}
+        {children && <ButtonText withPadding={icon || isWorking}>{children}</ButtonText>}
     </StyledButton>
 ));
 

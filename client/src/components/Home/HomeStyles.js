@@ -16,6 +16,5 @@ export const SearchContainer = styled.div`
 export const StyledInput = styled(Input).attrs({
     height: 5,
 })`
-    box-shadow: ${({ theme }) => theme.boxShadow.primary};
     margin-bottom: 1rem;
 `;

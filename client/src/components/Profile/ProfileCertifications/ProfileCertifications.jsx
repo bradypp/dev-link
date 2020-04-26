@@ -5,8 +5,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ProfileCard } from 'components';
 import { selectProfileCertifications } from 'redux/profile';
-import Moment from 'react-moment';
-import moment from 'moment';
+import { formatDate } from 'shared/utils';
 // import * as S from './ProfileCertificationsStyles';
 
 const propTypes = {
@@ -33,7 +32,7 @@ const ProfileCertifications = ({ certifications }) => (
                         {issuer && <ProfileCard.Item.Subtitle>{issuer}</ProfileCard.Item.Subtitle>}
                         {date && (
                             <ProfileCard.Item.Subtitle>
-                                <Moment format="DD/MM/YYYY">{moment.utc(date)}</Moment>
+                                <time>{formatDate(date)}</time>
                             </ProfileCard.Item.Subtitle>
                         )}
                     </div>

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ProfileCard } from 'components';
 import { selectProfilePortfolio } from 'redux/profile';
-import { CustomLink } from 'shared/components';
+import { CustomLink, OutboundLink } from 'shared/components';
 import * as S from './ProfilePortfolioStyles';
 
 const propTypes = {
@@ -52,8 +52,8 @@ const ProfilePortfolio = ({ portfolio }) => {
                                     );
                                 })} */}
                         <S.LinksContainer>
-                            {repo && <a href={repo}>Repo</a>}
-                            {demo && <a href={demo}>Demo</a>}
+                            {repo && <OutboundLink href={repo}>Repo</OutboundLink>}
+                            {demo && <OutboundLink href={demo}>Demo</OutboundLink>}
                         </S.LinksContainer>
                     </ProfileCard.Item>
                 );

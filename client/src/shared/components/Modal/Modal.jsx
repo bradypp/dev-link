@@ -69,7 +69,6 @@ const Modal = ({
             };
         }
     }, [isOpen]);
-
     return (
         <>
             {!isControlled && renderLink({ open: () => setStateOpen(true) })}
@@ -90,7 +89,7 @@ const Modal = ({
                                         styles={variant}
                                         onClick={closeModal}
                                         backgroundColor={backgroundColor}
-                                        icon={IoIosClose}
+                                        icon={<IoIosClose />}
                                     />
                                 )}
                                 {renderContent({ close: closeModal })}

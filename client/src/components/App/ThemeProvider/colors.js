@@ -10,8 +10,8 @@ const baseColors = {
     danger: '#E13C3C',
     warning: '#F89C1C',
     white1: '#f4f5f7',
-    white2: '#edeff2',
-    white3: '#e7eaee',
+    white2: '#ebecf0',
+    white3: '#dfe1e6',
     greyDark1: '#333',
     greyDark2: '#555',
     greyDark3: '#777',
@@ -21,12 +21,15 @@ const baseColors = {
     borderFocus: '#4c9aff',
     textLink: '#0052cc',
     overlay: 'rgba(9, 30, 66, 0.54)',
+    activeBackground: '#d2e5fe',
+    successBackground: '#e4fcef',
 };
-
+// TODO: check border colors
 const lightTheme = {
     textPrimary1: baseColors.greyDark1,
     textPrimary2: baseColors.greyDark2,
     textPrimary3: baseColors.greyDark3,
+    textPrimary4: '#8993a4',
     textSecondary1: baseColors.white1,
     textSecondary2: baseColors.white2,
     textSecondary3: baseColors.white3,
@@ -34,8 +37,8 @@ const lightTheme = {
     background1: baseColors.white1,
     background2: baseColors.white2,
     background3: baseColors.white3,
-    border1: baseColors.greyLight2,
-    border2: baseColors.greyLight3,
+    border1: baseColors.white2,
+    border2: baseColors.white3,
 };
 
 // TODO: customize dark theme
@@ -43,6 +46,7 @@ const darkTheme = {
     textPrimary1: baseColors.white1,
     textPrimary2: baseColors.white2,
     textPrimary3: baseColors.white3,
+    textPrimary4: baseColors.greyLight1,
     textSecondary1: baseColors.greyDark1,
     textSecondary2: baseColors.greyDark2,
     textSecondary3: baseColors.greyDark3,
@@ -50,8 +54,8 @@ const darkTheme = {
     background1: baseColors.greyDark1,
     background2: baseColors.greyDark2,
     background3: baseColors.greyDark3,
-    border1: baseColors.greyDark3,
-    border2: baseColors.greyDark2,
+    border1: baseColors.greyDark2,
+    border2: baseColors.greyDark3,
 };
 
 const getTheme = theme => {

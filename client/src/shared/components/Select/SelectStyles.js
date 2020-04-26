@@ -1,139 +1,137 @@
 import styled, { css } from 'styled-components';
+import { IoIosClose, IoIosArrowDown } from 'react-icons/io';
 import { mixins } from 'shared/styles';
 
 export const SelectContainer = styled.div`
     position: relative;
-    border-radius: 4px;
+    border-radius: 0.4rem;
     cursor: pointer;
     font-size: 1.4rem;
-    display: ${({ variant }) => (variant === 'empty' ? 'inline-block' : 'initial')};
+    width: 100%;
+    ${({ variant }) => variant === 'empty' && 'display: inline-block'};
     ${mixins.fieldInvalid}
 
-    ${({ variant, theme }) =>
+    ${({ variant, disabled, theme }) =>
         variant === 'normal' &&
+        disabled !== true &&
         css`
-            width: 100%;
-            border: 1px solid ${theme.colors.border1};
-            background: ${theme.colors.background1};
-            transition: background 0.1s;
-
-            &:hover {
-                background-color: ${theme.colors.background2};
-            }
+            border: 0.1rem solid ${theme.colors.border1};
+            background-color: ${theme.colors.background1};
+            transition: all 0.1s;
+            ${mixins.fieldHover};
+            ${mixins.fieldFocus};
         `}
-
-  &:focus {
-        outline: none;
-
-        ${({ variant }) =>
-            variant === 'normal' &&
-            css`
-        border: 1px solid ${color.borderInputFocus};
-        box-shadow: 0 0 0 1px ${color.borderInputFocus};
-        background: #fff;
-      }
-    `}
-    }
 `;
 
 export const ValueContainer = styled.div`
     display: flex;
     align-items: center;
     width: 100%;
-    ${props =>
-        props.variant === 'normal' &&
+    ${({ variant }) =>
+        variant === 'normal' &&
         css`
-            min-height: 32px;
-            padding: 5px 5px 5px 10px;
+            min-height: 3.2rem;
+            padding: 0.5rem 0.5rem 0.5rem 1rem;
         `}
 `;
 
-export const ChevronIcon = styled(Icon)`
-    margin-left: auto;
-    font-size: 18px;
-    color: ${color.textMedium};
-`;
-
 export const Placeholder = styled.div`
-    color: ${color.textLight};
+    color: ${({ theme }) => theme.colors.textPrimary4};
 `;
 
 export const ValueMulti = styled.div`
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    ${props => props.variant === 'normal' && `padding-top: 5px;`}
+    ${({ variant }) =>
+        ({ variant } === 'normal' &&
+        css`
+            padding-top: 0.5rem;
+        `)}
 `;
 
 export const ValueMultiItem = styled.div`
-    margin: 0 5px 5px 0;
-    ${mixin.tag()}
+    ${({ variant }) => variant === 'empty' && 'margin: 0 0.5rem 0.5rem 0'};
+    ${mixins.tag}
 `;
 
 export const AddMore = styled.div`
     display: inline-block;
-    margin-bottom: 3px;
-    padding: 3px 0;
-    ${font.size(12.5)}
-    ${mixin.link()}
-  i {
-        margin-right: 3px;
+    padding: 0.3rem 0;
+    font-size: 1.2rem;
+    ${({ variant }) => variant === 'empty' && 'margin-bottom: 0.3rem'};
+    ${mixins.link}
+
+    svg {
+        margin-right: 0.3rem;
         vertical-align: middle;
-        font-size: 14px;
+        font-size: 1.4rem;
     }
 `;
 
 export const Dropdown = styled.div`
-    z-index: ${zIndexValues.dropdown};
+    z-index: ${({ theme }) => theme.zIndex.dropdown};
     position: absolute;
     top: 100%;
     left: 0;
-    border-radius: 0 0 4px 4px;
-    background: #fff;
-    ${mixin.boxShadowDropdown}
-    ${props => (props.width ? `width: ${props.width}px;` : 'width: 100%;')}
+    border-radius: 0 0 0.4rem 0.4rem;
+    background: ${({ theme }) => theme.colors.background1};
+    box-shadow: ${({ theme }) => theme.boxShadow.dropdown};
+    width: ${({ width }) => width || '100%'};
 `;
 
 export const DropdownInput = styled.input`
-    padding: 10px 14px 8px;
+    padding: 1rem 1.4rem 0.8rem;
     width: 100%;
     border: none;
-    color: ${color.textDarkest};
+    color: ${({ theme }) => theme.colors.textPrimary1};
     background: none;
     &:focus {
         outline: none;
     }
 `;
 
-export const ClearIcon = styled(Icon)`
+export const ArrowDownIcon = styled(IoIosArrowDown)`
+    margin-left: auto;
+    color: ${({ theme }) => theme.colors.textPrimary3};
+`;
+
+export const RemoveIcon = styled(IoIosClose)`
+    margin-right: -0.3rem;
+    font-size: 2rem;
+`;
+
+export const ClearIcon = styled(IoIosClose)`
     position: absolute;
-    top: 4px;
-    right: 7px;
-    padding: 5px;
-    font-size: 16px;
-    color: ${color.textMedium};
-    ${mixin.clickable}
+    top: 0.4rem;
+    right: 0.7rem;
+    padding: 0.5rem;
+    font-size: 1.8rem;
+    color: ${({ theme }) => theme.colors.textPrimary3};
+    ${mixins.clickable}
 `;
 
 export const Options = styled.div`
-    max-height: 200px;
-    ${mixin.scrollableY};
-    ${mixin.customScrollbar()};
+    max-height: 20rem;
+    ${mixins.scrollableY};
+    ${mixins.customScrollbar()};
 `;
 
 export const Option = styled.div`
-    padding: 8px 14px;
+    padding: 0.8rem 1.4rem;
     word-break: break-word;
     cursor: pointer;
-    &:last-of-type {
-        margin-bottom: 8px;
-    }
+
+    /* &:last-of-type {
+        margin-bottom: 0.8rem;
+    } */
+
     &.select-option-is-active {
-        background: ${color.backgroundLightPrimary};
+        background: ${({ theme }) => theme.colors.activeBackground};
     }
 `;
 
 export const OptionsNoResults = styled.div`
-    padding: 5px 15px 15px;
-    color: ${color.textLight};
+    padding: 0.5rem 1.5rem 1.5rem;
+    color: ${({ theme }) => theme.colors.textPrimary4};
 `;

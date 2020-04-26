@@ -33,7 +33,7 @@ const modalStyles = {
     center: css`
         max-width: ${props => props.width}px;
         vertical-align: middle;
-        border-radius: 3px;
+        border-radius: 0.3rem;
         ${mixins.boxShadowMedium}
     `,
     aside: css`
@@ -54,21 +54,21 @@ export const StyledModal = styled.div`
 
 const closeButtonStyles = {
     center: css`
-        top: 10px;
-        right: 12px;
+        top: 1rem;
+        right: 1.2rem;
         border-radius: 50%;
     `,
     aside: css`
-        top: 10px;
-        right: -30px;
+        top: 1rem;
+        right: -3rem;
         width: 5rem;
         height: 5rem;
         text-align: center;
-        border: 1px solid ${({ theme }) => theme.colors.border1};
+        border: 0.1rem solid ${({ theme }) => theme.colors.border2};
         ${mixins.boxShadowMedium};
 
         &:hover {
-            color: ${({ theme }) => theme.colors.primary1};
+            color: ${({ theme }) => theme.colors.primary};
         }
     `,
 };
@@ -80,6 +80,6 @@ export const CloseButton = styled(Button).attrs(({ backgroundColor }) => ({
     color: ${({ theme }) => theme.colors.textPrimary2};
     position: absolute;
     font-size: 2.5rem;
-    height: auto;
+
     ${({ styles }) => closeButtonStyles[styles]}
 `;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -25,28 +25,32 @@ const SignIn = ({ signIn, isAuthenticated }) => {
 
     return (
         <Main>
-            <Form
-                initialValues={{
-                    login: '',
-                    password: '',
-                }}
-                onSubmit={signIn}>
-                <S.StyledForm>
-                    <Form.Input
-                        label="Login"
-                        name="login"
-                        type="text"
-                        tip="Please enter your username or email"
-                    />
-                    <Form.Input
-                        label="Password"
-                        name="password"
-                        type="password"
-                        tip="Please enter your password"
-                    />
-                    <Button type="submit">Submit</Button>
-                </S.StyledForm>
-            </Form>
+            <S.Container>
+                <Form
+                    initialValues={{
+                        login: '',
+                        password: '',
+                        checkbox: false,
+                    }}
+                    onSubmit={signIn}>
+                    <Form.Element>
+                        <Form.Field.Input
+                            label="Login"
+                            name="login"
+                            type="text"
+                            placeholder="Email or username"
+                        />
+                        <Form.Field.Input
+                            label="Password"
+                            name="password"
+                            type="password"
+                            placeholder="Password"
+                        />
+                        <Form.Field.Checkbox name="checkbox" type="checkbox" />
+                        <Button type="submit">Submit</Button>
+                    </Form.Element>
+                </Form>
+            </S.Container>
         </Main>
     );
 };

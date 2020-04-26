@@ -1,28 +1,26 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { IoIosAdd } from 'react-icons/io';
 import { useOnOutsideClick } from 'shared/hooks';
 import { keyCodes } from 'shared/constants';
 import Dropdown from './Dropdown';
-import {
-    SelectContainer,
-    ValueContainer,
-    ChevronIcon,
-    Placeholder,
-    ValueMulti,
-    ValueMultiItem,
-    AddMore,
-} from './SelectStyles';
+import * as S from './SelectStyles';
 
 const propTypes = {
     className: PropTypes.string,
     variant: PropTypes.oneOf(['normal', 'empty']),
-    dropdownWidth: PropTypes.number,
+    dropdownWidth: PropTypes.string,
     name: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.array, PropTypes.string, PropTypes.number]),
     defaultValue: PropTypes.any,
     placeholder: PropTypes.string,
     invalid: PropTypes.bool,
-    options: PropTypes.array.isRequired,
+    options: PropTypes.arrayOf(
+        PropTypes.shape({
+            value: PropTypes.oneOfType([PropTypes.array, PropTypes.string, PropTypes.number]),
+            label: PropTypes.string.isRequired,
+        }),
+    ).isRequired,
     onChange: PropTypes.func.isRequired,
     onCreate: PropTypes.func,
     isMulti: PropTypes.bool,
@@ -47,7 +45,6 @@ const defaultProps = {
     renderOption: undefined,
 };
 
-// TODO: customize & test
 const Select = ({
     className,
     variant,
@@ -137,25 +134,23 @@ const Select = ({
     const isValueEmpty = isMulti ? !value.length : !getOption(value);
 
     return (
-        <SelectContainer
+        <S.SelectContainer
             className={className}
             variant={variant}
             ref={$selectRef}
             tabIndex="0"
             onKeyDown={handleFocusedSelectKeydown}
             invalid={invalid}>
-            <ValueContainer
+            <S.ValueContainer
                 variant={variant}
                 data-testid={name ? `select:${name}` : 'select'}
                 onClick={activateDropdown}>
-                {isValueEmpty && <Placeholder>{placeholder}</Placeholder>}
-
+                {isValueEmpty && <S.Placeholder>{placeholder}</S.Placeholder>}
                 {!isValueEmpty && !isMulti && propsRenderValue
                     ? propsRenderValue({ value })
                     : getOptionLabel(value)}
-
                 {!isValueEmpty && isMulti && (
-                    <ValueMulti variant={variant}>
+                    <S.ValueMulti variant={variant}>
                         {value.map(optionValue =>
                             propsRenderValue ? (
                                 propsRenderValue({
@@ -163,26 +158,23 @@ const Select = ({
                                     removeOptionValue: () => removeOptionValue(optionValue),
                                 })
                             ) : (
-                                <ValueMultiItem
+                                <S.ValueMultiItem
                                     key={optionValue}
+                                    variant={variant}
                                     onClick={() => removeOptionValue(optionValue)}>
                                     {getOptionLabel(optionValue)}
-                                    {/* TODO: add remove x icon */}
-                                </ValueMultiItem>
+                                    <S.RemoveIcon />
+                                </S.ValueMultiItem>
                             ),
                         )}
-                        <AddMore>
-                            {/* TODO: add add + icon */}
+                        <S.AddMore variant={variant}>
+                            <IoIosAdd />
                             Add more
-                        </AddMore>
-                    </ValueMulti>
+                        </S.AddMore>
+                    </S.ValueMulti>
                 )}
-
-                {(!isMulti || isValueEmpty) && variant !== 'empty' && (
-                    <ChevronIcon type="chevron-down" top={1} />
-                )}
-            </ValueContainer>
-
+                {(!isMulti || isValueEmpty) && variant !== 'empty' && <S.ArrowDownIcon />}
+            </S.ValueContainer>
             {isDropdownOpen && (
                 <Dropdown
                     dropdownWidth={dropdownWidth}
@@ -201,7 +193,7 @@ const Select = ({
                     propsRenderOption={propsRenderOption}
                 />
             )}
-        </SelectContainer>
+        </S.SelectContainer>
     );
 };
 

@@ -1,10 +1,12 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
+import { Icon } from 'shared/components';
 import { InputContainer, InputElement } from './InputStyles';
 
 const propTypes = {
     className: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    color: PropTypes.string,
     icon: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.node]),
     height: PropTypes.number,
     invalid: PropTypes.bool,
@@ -14,17 +16,19 @@ const propTypes = {
 const defaultProps = {
     className: undefined,
     value: undefined,
+    color: 'textPrimary1',
     icon: undefined,
     height: 3.2,
     invalid: false,
     onChange: () => {},
 };
+
 // TODO: add loading prop & align it spinner to the right of the input if true?
-const Input = forwardRef(({ icon: Icon, className, height, onChange, ...otherProps }, ref) => (
+const Input = forwardRef(({ icon, className, onChange, height, ...otherProps }, ref) => (
     <InputContainer className={className} height={height}>
-        {Icon && <Icon className="icon" />}
+        {icon && typeof icon === 'string' ? <Icon type={icon} /> : icon}
         <InputElement
-            hasIcon={!!Icon}
+            hasIcon={!!icon}
             onChange={event => onChange(event.target.value, event)}
             height={height}
             ref={ref}

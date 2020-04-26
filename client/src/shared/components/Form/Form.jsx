@@ -32,9 +32,8 @@ const Form = ({ validate, validations, validateOnBlur, ...otherProps }) => (
 
 Form.Element = props => <FormikForm noValidate {...props} />;
 
-// Allows the use of all fields exported from './Field' by wrapping them with the formik Field component
-Form.Field = mapValues(Field, FieldComponent => ({ name, validate, ...otherProps }) => (
-    <FormikField name={name} validate={validate}>
+const fieldWrapper = FieldComponent => ({ name, ...otherProps }) => (
+    <FormikField name={name} {...otherProps}>
         {({ field, form: { touched, errors, setFieldValue } }) => (
             <FieldComponent
                 {...field}
@@ -45,7 +44,27 @@ Form.Field = mapValues(Field, FieldComponent => ({ name, validate, ...otherProps
             />
         )}
     </FormikField>
-));
+);
+
+// Wraps all fields from './Field' with the formik Field component for general use (e.g. Form.Field.Input)
+Form.Field = mapValues(Field, fieldWrapper);
+Form.Field.Checkbox = ({ name, ...otherProps }) => (
+    <FormikField
+        name={name}
+        {...otherProps}
+        render={({ field, form: { touched, errors, setFieldValue } }) => (
+            <input
+                type="checkbox"
+                checked={field.value}
+                {...field}
+                {...otherProps}
+                name={name}
+                error={touched[name] && errors[name]}
+                onChange={value => setFieldValue(name, value)}
+            />
+        )}
+    />
+);
 
 Form.propTypes = propTypes;
 Form.defaultProps = defaultProps;

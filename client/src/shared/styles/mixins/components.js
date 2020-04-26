@@ -1,5 +1,5 @@
 import { css } from 'styled-components/macro';
-import { helpers } from 'shared/styles';
+import helpers from './helpers';
 
 const components = {
     button: css`
@@ -15,6 +15,7 @@ const components = {
         position: relative;
         width: min-content;
         appearance: none;
+        line-height: 1;
     `,
     card: css`
         box-shadow: ${({ theme }) => theme.boxShadow.primary};
@@ -36,6 +37,20 @@ const components = {
         &:hover {
             text-decoration: underline;
         }
+    `,
+    // TODO: create a tag component?
+    tag: css`
+        display: inline-flex;
+        align-items: center;
+        height: 2.4rem;
+        padding: 0 0.8rem;
+        border-radius: 0.4rem;
+        cursor: pointer;
+        user-select: none;
+        color: ${({ theme }) => theme.colors.textPrimary1};
+        background-color: ${({ theme }) => theme.colors.background3};
+        font-weight: 500;
+        font-size: 1.2rem;
     `,
 };
 

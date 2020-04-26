@@ -2,18 +2,10 @@ import React, { useState, useRef, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import { uniq } from 'lodash';
 import { keyCodes } from 'shared/constants';
-
-import {
-    ClearIcon,
-    Dropdown,
-    DropdownInput,
-    Options,
-    Option,
-    OptionsNoResults,
-} from './SelectStyles';
+import * as S from './SelectStyles';
 
 const propTypes = {
-    dropdownWidth: PropTypes.number,
+    dropdownWidth: PropTypes.string,
     value: PropTypes.any,
     isValueEmpty: PropTypes.bool.isRequired,
     searchValue: PropTypes.string.isRequired,
@@ -51,8 +43,8 @@ const SelectDropdown = ({
     propsRenderOption,
 }) => {
     const [isCreatingOption, setCreatingOption] = useState(false);
-
     const $optionsRef = useRef();
+    const activeOptionClass = 'select-option-is-active';
 
     useLayoutEffect(() => {
         const setFirstOptionAsActive = () => {
@@ -84,17 +76,18 @@ const SelectDropdown = ({
     };
 
     const clearOptionValues = () => {
+        // eslint-disable-next-line no-param-reassign
         $inputRef.current.value = '';
         $inputRef.current.focus();
         onChange(isMulti ? [] : null);
     };
 
     const handleInputKeyDown = event => {
-        if (event.keyCode === KeyCodes.ESCAPE) {
+        if (event.keyCode === keyCodes.ESCAPE) {
             handleInputEscapeKeyDown(event);
-        } else if (event.keyCode === KeyCodes.ENTER) {
+        } else if (event.keyCode === keyCodes.ENTER) {
             handleInputEnterKeyDown(event);
-        } else if (event.keyCode === KeyCodes.ARROW_DOWN || event.keyCode === KeyCodes.ARROW_UP) {
+        } else if (event.keyCode === keyCodes.ARROW_DOWN || event.keyCode === keyCodes.ARROW_UP) {
             handleInputArrowUpOrDownKeyDown(event);
         }
     };
@@ -128,7 +121,7 @@ const SelectDropdown = ({
         const $optionsHeight = $options.getBoundingClientRect().height;
         const $activeHeight = $active.getBoundingClientRect().height;
 
-        if (event.keyCode === KeyCodes.ARROW_DOWN) {
+        if (event.keyCode === keyCodes.ARROW_DOWN) {
             if ($options.lastElementChild === $active) {
                 $active.classList.remove(activeOptionClass);
                 $options.firstElementChild.classList.add(activeOptionClass);
@@ -140,7 +133,7 @@ const SelectDropdown = ({
                     $options.scrollTop += $activeHeight;
                 }
             }
-        } else if (event.keyCode === KeyCodes.ARROW_UP) {
+        } else if (event.keyCode === keyCodes.ARROW_UP) {
             if ($options.firstElementChild === $active) {
                 $active.classList.remove(activeOptionClass);
                 $options.lastElementChild.classList.add(activeOptionClass);
@@ -181,8 +174,8 @@ const SelectDropdown = ({
     const isOptionCreatable = onCreate && searchValue && !isSearchValueInOptions;
 
     return (
-        <Dropdown width={dropdownWidth}>
-            <DropdownInput
+        <S.Dropdown width={dropdownWidth}>
+            <S.DropdownInput
                 type="text"
                 placeholder="Search"
                 ref={$inputRef}
@@ -191,40 +184,36 @@ const SelectDropdown = ({
                 onChange={event => setSearchValue(event.target.value)}
             />
 
-            {!isValueEmpty && withClearValue && (
-                <ClearIcon type="close" onClick={clearOptionValues} />
-            )}
+            {!isValueEmpty && withClearValue && <S.ClearIcon onClick={clearOptionValues} />}
 
-            <Options ref={$optionsRef}>
+            <S.Options ref={$optionsRef}>
                 {filteredOptions.map(option => (
-                    <Option
+                    <S.Option
                         key={option.value}
                         data-select-option-value={option.value}
                         data-testid={`select-option:${option.label}`}
                         onMouseEnter={handleOptionMouseEnter}
                         onClick={() => selectOptionValue(option.value)}>
                         {propsRenderOption ? propsRenderOption(option) : option.label}
-                    </Option>
+                    </S.Option>
                 ))}
 
                 {isOptionCreatable && (
-                    <Option
+                    <S.Option
                         data-create-option-label={searchValue}
                         onMouseEnter={handleOptionMouseEnter}
                         onClick={() => createOption(searchValue)}>
                         {isCreatingOption
                             ? `Creating "${searchValue}"...`
                             : `Create "${searchValue}"`}
-                    </Option>
+                    </S.Option>
                 )}
-            </Options>
+            </S.Options>
 
-            {filteredOptions.length === 0 && <OptionsNoResults>No results</OptionsNoResults>}
-        </Dropdown>
+            {filteredOptions.length === 0 && <S.OptionsNoResults>No results</S.OptionsNoResults>}
+        </S.Dropdown>
     );
 };
-
-const activeOptionClass = 'select-option-is-active';
 
 SelectDropdown.propTypes = propTypes;
 SelectDropdown.defaultProps = defaultProps;

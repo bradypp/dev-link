@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
+import { IoMdEye, IoMdStarOutline } from 'react-icons/io';
 import { createStructuredSelector } from 'reselect';
-import { IoMdEye, IoMdStarOutline, IoMdStar } from 'react-icons/io';
 import Image from 'react-image';
 import {
     selectProfileAvatar,
@@ -22,6 +22,7 @@ import {
 import { selectUser, selectIsAuthenticated } from 'redux/auth';
 import { setAlert } from 'redux/alerts';
 import { ContactModal, SocialsModal } from 'components';
+import { OutboundLink } from 'shared/components';
 import * as S from './ProfileTopStyles';
 
 const propTypes = {
@@ -162,37 +163,23 @@ const ProfileTop = ({
                                 (!isEmpty(socials) || website || githubUsername) && <>&middot;</>}
                             {!isEmpty(socials) && <SocialsModal name={name} socials={socials} />}
                             {!isEmpty(socials) && (website || githubUsername) && <>&middot;</>}
-                            {website && (
-                                <a href={website} target="_blank" rel="noopener noreferrer">
-                                    Website
-                                </a>
-                            )}
+                            {website && <OutboundLink href={website}>Website</OutboundLink>}
                             {website && githubUsername && <>&middot;</>}
                             {githubUsername && (
-                                <a
-                                    href={`https://github.com/${githubUsername}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer">
+                                <OutboundLink href={`https://github.com/${githubUsername}`}>
                                     GitHub
-                                </a>
+                                </OutboundLink>
                             )}
-
-                            {/* <ContactModal name={name} contact={contact} /> &middot;
-                            <SocialsModal name={name} socials={socials} />
-                            &middot; <a href={website}>Website</a>
-                            &middot; <a href={`https://github.com/${githubUsername}`}>GitHub</a> */}
                         </S.InfoButtonsContainer>
                     )}
                 </S.ContentLeftContainer>
                 <S.ContentRightContainer>
                     <S.ToggleButtonsContainer>
-                        <S.ToggleButton icon={IoMdEye} onClick={toggleWatchHandler}>
+                        <S.ToggleButton icon={<IoMdEye />} onClick={toggleWatchHandler}>
                             {watchedByCurrentUser ? `Unwatch` : `Watch`}
                         </S.ToggleButton>
                         <S.CountContainer>{watchers.length}</S.CountContainer>
-                        <S.ToggleButton
-                            icon={starredByCurrentUser ? IoMdStar : IoMdStarOutline}
-                            onClick={toggleStarHandler}>
+                        <S.ToggleButton icon={<IoMdStarOutline />} onClick={toggleStarHandler}>
                             {starredByCurrentUser ? `Unstar` : `Star`}
                         </S.ToggleButton>
                         <S.CountContainer>{stars.length}</S.CountContainer>

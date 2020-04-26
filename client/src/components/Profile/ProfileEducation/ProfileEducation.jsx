@@ -4,8 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ProfileCard } from 'components';
-import Moment from 'react-moment';
-import moment from 'moment';
+import { formatDate } from 'shared/utils';
 import { selectProfileEducation } from 'redux/profile';
 // import * as S from './ProfileEducationStyles';
 
@@ -58,9 +57,9 @@ const ProfileEducation = ({ education }) => (
 
             const timePeriod = (
                 <>
-                    <Moment format="MM/YYYY">{moment.utc(from)}</Moment>
+                    <time>{formatDate(from)}</time>
                     {' - '}
-                    {!current ? <Moment format="MM/YYYY">{moment.utc(to)}</Moment> : 'now'}
+                    {!current ? <time>{formatDate(to)}</time> : 'now'}
                 </>
             );
 

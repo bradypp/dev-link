@@ -9,12 +9,15 @@ export const FieldLabel = styled.label`
     padding-bottom: 0.6rem;
     color: ${({ theme }) => theme.colors.textPrimary2};
     font-size: 1.3rem;
+    font-weight: 500;
+    width: max-content;
 `;
 
 const sharedSubtitleStyles = css`
     padding-top: 0.6rem;
     font-size: 1.2rem;
     line-height: 1;
+    font-weight: 400;
 `;
 
 export const FieldTip = styled.div`

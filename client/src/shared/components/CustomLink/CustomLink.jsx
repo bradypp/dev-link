@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { ButtonText, ButtonSpinner } from 'shared/components/Button/ButtonStyles';
+import { Icon, ButtonText, ButtonSpinner } from 'shared/components';
 import { StyledLink } from './CustomLinkStyles';
 
 const propTypes = {
@@ -10,7 +10,7 @@ const propTypes = {
     variant: PropTypes.string,
     backgroundColor: PropTypes.string,
     borderColor: PropTypes.string,
-    textColor: PropTypes.string,
+    color: PropTypes.string,
     icon: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.node]),
     isWorking: PropTypes.bool,
     isActive: PropTypes.bool,
@@ -24,7 +24,7 @@ const defaultProps = {
     variant: 'link',
     backgroundColor: undefined,
     borderColor: undefined,
-    textColor: undefined,
+    color: undefined,
     icon: undefined,
     isWorking: false,
     isActive: false,
@@ -33,11 +33,11 @@ const defaultProps = {
 };
 
 const CustomLink = forwardRef(
-    ({ children, icon: Icon, isWorking, disabled, ...otherProps }, ref) => (
-        <StyledLink disabled={disabled || isWorking} ref={ref} {...otherProps}>
+    ({ children, icon, isWorking, disabled, color, ...otherProps }, ref) => (
+        <StyledLink disabled={disabled || isWorking} ref={ref} color={color} {...otherProps}>
             {isWorking && <ButtonSpinner />}
-            {Icon && <Icon className="icon" />}
-            {children && <ButtonText withPadding={Icon || isWorking}>{children}</ButtonText>}
+            {!isWorking && icon && typeof icon === 'string' ? <Icon type={icon} /> : icon}
+            {children && <ButtonText withPadding={icon || isWorking}>{children}</ButtonText>}
         </StyledLink>
     ),
 );

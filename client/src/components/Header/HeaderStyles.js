@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { CustomLink } from 'shared/components';
+import { Link } from 'react-router-dom';
 import { mixins } from 'shared/styles';
 
 // TODO: Made header specific buttons
@@ -24,7 +24,7 @@ export const NavContainer = styled.header`
     }
 `;
 
-export const Logo = styled(CustomLink)`
+export const Logo = styled(Link)`
         color: ${({ theme }) => theme.colors.primary};
         font-size: 3.5rem;
         padding: 0;

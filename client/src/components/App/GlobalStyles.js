@@ -75,6 +75,17 @@ const GlobalStyles = createGlobalStyle`
   svg {
     fill: currentColor;
     vertical-align: middle;
+
+    &:before{
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
   }
 
   input {
@@ -100,6 +111,10 @@ const GlobalStyles = createGlobalStyle`
   
   [role="button"], button {
     ${mixins.button}
+  }
+  
+  [role="button"], button,a {
+    ${mixins.clickable}
   }
 
   [role="button"], button, a, input, select, textarea {

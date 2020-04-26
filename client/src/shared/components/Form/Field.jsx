@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { uniqueId } from 'lodash';
-import { Input, TextArea, TextEditor, Select, DatePicker } from 'shared/components';
+import { Input, TextArea, TextEditor, Select, Checkbox } from 'shared/components';
 import { FieldContainer, FieldLabel, FieldTip, FieldError } from './FormStyles';
 
 const propTypes = {
@@ -43,13 +43,9 @@ const generateField = FormComponent => {
     return FieldComponent;
 };
 
-// TODO: CheckBox and Radio components
 export default {
     Input: generateField(Input),
     Select: generateField(Select),
     TextArea: generateField(TextArea),
     TextEditor: generateField(TextEditor),
-    DatePicker: generateField(DatePicker),
-    // CheckBox: generateField(CheckBox),
-    // Radio: generateField(Radio),
 };

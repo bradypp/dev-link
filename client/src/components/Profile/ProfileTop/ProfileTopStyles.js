@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components/macro';
 import Image from 'react-image';
 import { CustomLink, Button } from 'shared/components';
-import { helpers, mixins } from 'shared/styles';
+import { mixins } from 'shared/styles';
 
 export const ProfileTopCard = styled.section`
     ${mixins.card}
@@ -103,7 +103,7 @@ export const ToggleButton = styled(Button)`
     border-bottom-right-radius: 0px;
 
     &:hover {
-        border: 1px solid ${({ theme }) => helpers.darken(theme.colors.border2, 0.1)};
+        border: 1px solid ${({ theme }) => mixins.darken(theme.colors.border2, 0.1)};
     }
 
     svg {
@@ -127,8 +127,6 @@ export const SkillsContainer = styled.div`
 `;
 
 export const SkillLink = styled(CustomLink)`
-    /* border-radius: 50px; */
-    /* height: 2.8rem; */
     font-size: 1.3rem;
     margin-top: 0.8rem;
     margin-left: 1.6rem;

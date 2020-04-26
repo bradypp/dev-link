@@ -24,26 +24,50 @@ const SignUp = ({ signUp, isAuthenticated }) => {
 
     if (isAuthenticated) return <Redirect to="/dashboard" />;
 
+    // TODO: update password tip
     return (
         <Main>
-            <Form
-                initialValues={{
-                    name: '',
-                    username: '',
-                    email: '',
-                    password: '',
-                    password2: '',
-                }}
-                onSubmit={signUp}>
-                <S.StyledForm>
-                    <Form.Field.Input label="Name" name="name" type="text" />
-                    <Form.Field.Input label="Username" name="username" type="text" />
-                    <Form.Field.Input label="Email" name="email" type="email" />
-                    <Form.Field.Input label="Password" name="password" type="password" />
-                    <Form.Field.Input label="Confirm password" name="passwords" type="password" />
-                    <Button type="submit">Submit</Button>
-                </S.StyledForm>
-            </Form>
+            <S.Container>
+                <Form
+                    initialValues={{
+                        name: '',
+                        username: '',
+                        email: '',
+                        password: '',
+                        password2: '',
+                    }}
+                    onSubmit={signUp}>
+                    <Form.Element>
+                        <Form.Field.Input label="Name" name="name" type="text" placeholder="Name" />
+                        <Form.Field.Input
+                            label="Username"
+                            name="username"
+                            type="text"
+                            placeholder="Username"
+                        />
+                        <Form.Field.Input
+                            label="Email"
+                            name="email"
+                            type="email"
+                            placeholder="Email"
+                        />
+                        <Form.Field.Input
+                            label="Password"
+                            name="password"
+                            type="password"
+                            placeholder="Password"
+                            tip="Ensure your password has a mix of letters, symbols & numbers and is at least 8 characters long"
+                        />
+                        <Form.Field.Input
+                            label="Confirm Password"
+                            name="passwords"
+                            type="password"
+                            placeholder="Confirm Password"
+                        />
+                        <Button type="submit">Submit</Button>
+                    </Form.Element>
+                </Form>
+            </S.Container>
         </Main>
     );
 };

@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ThemeProvider } from 'styled-components/macro';
 import { themes } from 'shared/constants';
 import colors from './colors';
 
 export default ({ children }) => {
-    const [currentTheme, setCurrentTheme] = useState(themes.LIGHT);
     const theme = {
-        colors: colors(currentTheme),
+        colors: colors(themes.LIGHT),
         fonts: {
-            primary: 'Inter, Open Sans, Helvetica, Arial, system, -apple-system, sans-serif',
+            primary: 'Inter, Open Sans, Arial, system, -apple-system, sans-serif',
         },
         animation: {
             transition: `all 0.25s cubic-bezier(0.3, 0, 0.4, 1)`,
@@ -42,7 +41,7 @@ export default ({ children }) => {
             medium: `0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1)`,
             header: `0 0.15rem 0.5rem rgba(9, 30, 66, 0.15)`,
             primary: `0 0.15rem 0.35rem rgba(9, 30, 66, 0.25)`,
-            dropdown: `0 0.4rem 0.8rem -0.2rem rgba(9, 30, 66, 0.25),  0 0 0.1rem rgba(9, 30, 66, 0.31)`,
+            dropdown: `0 0.4rem 0.8rem -0.2rem rgba(9, 30, 66, 0.25), 0 0 0.1rem rgba(9, 30, 66, 0.31)`,
             cover: `0 0 1rem rgba(0, 0, 0, 0.3)`,
         },
     };

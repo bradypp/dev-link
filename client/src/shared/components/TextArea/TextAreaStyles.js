@@ -12,9 +12,9 @@ export const TextAreaContainer = styled.div`
         border-radius: 0.3rem;
         border: 0.1rem solid ${({ theme }) => theme.colors.border1};
         color: ${({ theme }) => theme.colors.textPrimary1};
-        background-color: ${({ theme }) => theme.colors.background1};
+        background-color: ${({ theme }) => theme.colors.background2};
         ${mixins.fieldHover}
-    ${mixins.fieldFocus}
-    ${mixins.fieldInvalid}
+        ${mixins.fieldFocus}
+        ${mixins.fieldInvalid}
     }
 `;
