@@ -48,23 +48,6 @@ const fieldWrapper = FieldComponent => ({ name, ...otherProps }) => (
 
 // Wraps all fields from './Field' with the formik Field component for general use (e.g. Form.Field.Input)
 Form.Field = mapValues(Field, fieldWrapper);
-Form.Field.Checkbox = ({ name, ...otherProps }) => (
-    <FormikField
-        name={name}
-        {...otherProps}
-        render={({ field, form: { touched, errors, setFieldValue } }) => (
-            <input
-                type="checkbox"
-                checked={field.value}
-                {...field}
-                {...otherProps}
-                name={name}
-                error={touched[name] && errors[name]}
-                onChange={value => setFieldValue(name, value)}
-            />
-        )}
-    />
-);
 
 Form.propTypes = propTypes;
 Form.defaultProps = defaultProps;
