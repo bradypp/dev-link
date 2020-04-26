@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const propTypes = {
     className: PropTypes.string,
-    value: PropTypes.bool,
+    value: PropTypes.string,
     clicked: PropTypes.bool,
     type: PropTypes.string,
     onChange: PropTypes.func,
@@ -11,22 +11,22 @@ const propTypes = {
 
 const defaultProps = {
     className: undefined,
-    value: false,
+    value: '',
     clicked: false,
-    type: 'checkbox',
+    type: 'radio',
     onChange: () => {},
 };
 
-const CheckBox = forwardRef(({ clicked, onChange, ...props }, ref) => (
+const Radio = forwardRef(({ onChange, clicked, ...props }, ref) => (
     <input
         checked={clicked}
-        onChange={event => onChange(!!event.target.value, event)}
+        onChange={event => onChange(props.value, event)}
         ref={ref}
         {...props}
     />
 ));
 
-CheckBox.propTypes = propTypes;
-CheckBox.defaultProps = defaultProps;
+Radio.propTypes = propTypes;
+Radio.defaultProps = defaultProps;
 
-export default CheckBox;
+export default Radio;

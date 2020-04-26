@@ -139,10 +139,6 @@ const GlobalStyles = createGlobalStyle`
             outline: none;
         `}
   }
-
-  input, textarea {
-    appearance: none;
-  }
 `;
 
 export default GlobalStyles;

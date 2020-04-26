@@ -24,7 +24,7 @@ const defaultProps = {
 };
 
 // TODO: add loading prop & align it spinner to the right of the input if true?
-const Input = forwardRef(({ icon, className, onChange, height, ...otherProps }, ref) => (
+const Input = forwardRef(({ icon, className, onChange, height, ...props }, ref) => (
     <InputContainer className={className} height={height}>
         {icon && typeof icon === 'string' ? <Icon type={icon} /> : icon}
         <InputElement
@@ -32,7 +32,7 @@ const Input = forwardRef(({ icon, className, onChange, height, ...otherProps }, 
             onChange={event => onChange(event.target.value, event)}
             height={height}
             ref={ref}
-            {...otherProps}
+            {...props}
         />
     </InputContainer>
 ));

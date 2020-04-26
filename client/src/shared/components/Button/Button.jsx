@@ -32,13 +32,13 @@ const defaultProps = {
     onClick: () => {},
 };
 
-const Button = forwardRef(({ children, icon, disabled, isWorking, color, ...otherProps }, ref) => (
+const Button = forwardRef(({ children, icon, disabled, isWorking, color, ...props }, ref) => (
     <StyledButton
         disabled={disabled || isWorking}
         iconOnly={!children}
         ref={ref}
         color={color}
-        {...otherProps}>
+        {...props}>
         {isWorking && <ButtonSpinner />}
         {!isWorking && icon && typeof icon === 'string' ? <Icon type={icon} /> : icon}
         {children && <ButtonText withPadding={icon || isWorking}>{children}</ButtonText>}

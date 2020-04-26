@@ -173,6 +173,7 @@ const SelectDropdown = ({
     const isSearchValueInOptions = options.map(option => option.label).includes(searchValue);
     const isOptionCreatable = onCreate && searchValue && !isSearchValueInOptions;
 
+    // TODO: allow the search input render to be controlled via props
     return (
         <S.Dropdown width={dropdownWidth}>
             <S.DropdownInput

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ProfileCard } from 'components';
 import { selectProfileCertifications } from 'redux/profile';
-import { formatDate } from 'shared/utils';
+import { dateTime } from 'shared/utils';
 // import * as S from './ProfileCertificationsStyles';
 
 const propTypes = {
@@ -32,7 +32,7 @@ const ProfileCertifications = ({ certifications }) => (
                         {issuer && <ProfileCard.Item.Subtitle>{issuer}</ProfileCard.Item.Subtitle>}
                         {date && (
                             <ProfileCard.Item.Subtitle>
-                                <time>{formatDate(date)}</time>
+                                <time>{dateTime.formatDate(date)}</time>
                             </ProfileCard.Item.Subtitle>
                         )}
                     </div>

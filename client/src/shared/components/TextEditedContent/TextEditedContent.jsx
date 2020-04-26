@@ -9,13 +9,9 @@ const propTypes = {
 };
 
 // Allows for direct editing of element innerHTML
-const TextEditedContent = ({ content, ...otherProps }) => (
+const TextEditedContent = ({ content, ...props }) => (
     <div className="ql-snow">
-        <Content
-            className="ql-editor"
-            dangerouslySetInnerHTML={{ __html: content }}
-            {...otherProps}
-        />
+        <Content className="ql-editor" dangerouslySetInnerHTML={{ __html: content }} {...props} />
     </div>
 );
 

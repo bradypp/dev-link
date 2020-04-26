@@ -18,9 +18,9 @@ const defaultProps = {
     className: undefined,
 };
 
-const Spinner = ({ renderOverlay, className, ...otherProps }) => (
+const Spinner = ({ renderOverlay, className, ...props }) => (
     <SpinnerOverlay className={className} renderOverlay={renderOverlay}>
-        <StyledSpinner {...otherProps} />
+        <StyledSpinner {...props} />
     </SpinnerOverlay>
 );
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -6,6 +6,8 @@ import { createStructuredSelector } from 'reselect';
 import { signIn, selectIsAuthenticated } from 'redux/auth';
 import { useClearAlerts } from 'shared/hooks';
 import { Form, Button, Main } from 'shared/components';
+import { validators } from 'shared/utils';
+import * as Yup from 'yup';
 import * as S from './SignInStyles';
 
 const propTypes = {
@@ -21,6 +23,11 @@ const mapStateToProps = createStructuredSelector({
 const SignIn = ({ signIn, isAuthenticated }) => {
     useClearAlerts();
 
+    const signInValidation = Yup.object().shape({
+        login: validators.required('Login is required'),
+        password: validators.required('Password is required'),
+    });
+
     if (isAuthenticated) return <Redirect to="/dashboard" />;
 
     return (
@@ -30,8 +37,8 @@ const SignIn = ({ signIn, isAuthenticated }) => {
                     initialValues={{
                         login: '',
                         password: '',
-                        checkbox: false,
                     }}
+                    validationSchema={signInValidation}
                     onSubmit={signIn}>
                     <Form.Element>
                         <Form.Field.Input
@@ -46,7 +53,6 @@ const SignIn = ({ signIn, isAuthenticated }) => {
                             type="password"
                             placeholder="Password"
                         />
-                        <Form.Field.Checkbox name="checkbox" type="checkbox" />
                         <Button type="submit">Submit</Button>
                     </Form.Element>
                 </Form>

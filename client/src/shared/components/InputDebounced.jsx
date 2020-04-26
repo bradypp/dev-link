@@ -13,7 +13,7 @@ const defaultProps = {
 };
 
 // TODO: customize & test
-const InputDebounced = ({ onChange, value: propsValue, ...otherProps }) => {
+const InputDebounced = ({ onChange, value: propsValue, ...props }) => {
     const [value, setValue] = useState(propsValue);
     const isControlled = propsValue !== undefined;
 
@@ -38,7 +38,7 @@ const InputDebounced = ({ onChange, value: propsValue, ...otherProps }) => {
                 setValue(newValue);
                 handleChange(newValue);
             }}
-            {...otherProps}
+            {...props}
         />
     );
 };

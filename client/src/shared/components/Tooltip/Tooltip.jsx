@@ -26,9 +26,8 @@ const defaultProps = {
     width: 'min-content',
 };
 
-// TODO: customize and test
 // TODO: add onHover event options as well as click (make render link optional & have onHover option?)
-const Tooltip = ({ className, placement, offset, renderLink, renderContent, ...otherProps }) => {
+const Tooltip = ({ className, placement, offset, renderLink, renderContent, ...props }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const $linkRef = useRef();
@@ -64,7 +63,7 @@ const Tooltip = ({ className, placement, offset, renderLink, renderContent, ...o
 
             {isOpen &&
                 ReactDOM.createPortal(
-                    <TooltipContainer className={className} ref={$tooltipRef} {...otherProps}>
+                    <TooltipContainer className={className} ref={$tooltipRef} {...props}>
                         {renderContent({ close: closeTooltip })}
                     </TooltipContainer>,
                     $root,

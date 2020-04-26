@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ProfileCard } from 'components';
 import { selectProfileExperience } from 'redux/profile';
-import { formatDate } from 'shared/utils';
+import { dateTime } from 'shared/utils';
 // import * as S from './ProfileExperienceStyles';
 
 const propTypes = {
@@ -37,9 +37,9 @@ const ProfileExperience = ({ experience }) => {
 
                 const timePeriod = (
                     <>
-                        <time>{formatDate(from)}</time>
+                        <time>{dateTime.formatDate(from)}</time>
                         {' - '}
-                        {!current ? <time>{formatDate(to)}</time> : 'now'}
+                        {!current ? <time>{dateTime.formatDate(to)}</time> : 'now'}
                     </>
                 );
 

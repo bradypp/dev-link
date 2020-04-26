@@ -13,8 +13,8 @@ const defaultProps = {
     isCurrentUser: false,
 };
 
-const ProfileCardItem = ({ children, secondarySubtitle, ...otherProps }) => (
-    <S.ProfileCardItemContainer {...otherProps}>{children}</S.ProfileCardItemContainer>
+const ProfileCardItem = ({ children, secondarySubtitle, ...props }) => (
+    <S.ProfileCardItemContainer {...props}>{children}</S.ProfileCardItemContainer>
 );
 
 ProfileCardItem.Heading = S.ItemHeading;

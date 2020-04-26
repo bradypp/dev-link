@@ -22,9 +22,9 @@ const defaultProps = {
 // Icon library
 const types = {};
 
-const Icon = ({ type, ...otherProps }) => {
+const Icon = ({ type, ...props }) => {
     const RenderedIcon = StyledIcon(types[type]);
-    return <RenderedIcon data-testid={`icon:${type}`} {...otherProps} />;
+    return <RenderedIcon data-testid={`icon:${type}`} {...props} />;
 };
 
 Icon.propTypes = propTypes;

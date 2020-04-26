@@ -17,8 +17,8 @@ const defaultProps = {
     isCurrentUser: false,
 };
 
-const ProfileCard = ({ children, isCurrentUser, heading, subtitle, ...otherProps }) => (
-    <S.ProfileCardContainer {...otherProps}>
+const ProfileCard = ({ children, isCurrentUser, heading, subtitle, ...props }) => (
+    <S.ProfileCardContainer {...props}>
         <S.Header>
             <div>
                 <S.Heading>{heading}</S.Heading>

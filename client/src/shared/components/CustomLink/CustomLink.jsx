@@ -32,15 +32,13 @@ const defaultProps = {
     onClick: undefined,
 };
 
-const CustomLink = forwardRef(
-    ({ children, icon, isWorking, disabled, color, ...otherProps }, ref) => (
-        <StyledLink disabled={disabled || isWorking} ref={ref} color={color} {...otherProps}>
-            {isWorking && <ButtonSpinner />}
-            {!isWorking && icon && typeof icon === 'string' ? <Icon type={icon} /> : icon}
-            {children && <ButtonText withPadding={icon || isWorking}>{children}</ButtonText>}
-        </StyledLink>
-    ),
-);
+const CustomLink = forwardRef(({ children, icon, isWorking, disabled, color, ...props }, ref) => (
+    <StyledLink disabled={disabled || isWorking} ref={ref} color={color} {...props}>
+        {isWorking && <ButtonSpinner />}
+        {!isWorking && icon && typeof icon === 'string' ? <Icon type={icon} /> : icon}
+        {children && <ButtonText withPadding={icon || isWorking}>{children}</ButtonText>}
+    </StyledLink>
+));
 
 CustomLink.propTypes = propTypes;
 CustomLink.defaultProps = defaultProps;

@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ProfileCard } from 'components';
-import { formatDate } from 'shared/utils';
+import { dateTime } from 'shared/utils';
 import { selectProfileEducation } from 'redux/profile';
 // import * as S from './ProfileEducationStyles';
 
@@ -57,9 +57,9 @@ const ProfileEducation = ({ education }) => (
 
             const timePeriod = (
                 <>
-                    <time>{formatDate(from)}</time>
+                    <time>{dateTime.formatDate(from)}</time>
                     {' - '}
-                    {!current ? <time>{formatDate(to)}</time> : 'now'}
+                    {!current ? <time>{dateTime.formatDate(to)}</time> : 'now'}
                 </>
             );
 

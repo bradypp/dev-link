@@ -8,11 +8,11 @@ const propTypes = {
 };
 
 // TODO: button styling (use icon instead of text?)
-const CopyButton = ({ textToCopy, ...otherProps }) => {
+const CopyButton = ({ textToCopy, ...props }) => {
     const [isCopied, handleCopy] = useCopyText(textToCopy);
 
     return (
-        <Button onClick={handleCopy} {...otherProps}>
+        <Button onClick={handleCopy} {...props}>
             {isCopied ? 'Copied' : 'Copy'}
         </Button>
     );

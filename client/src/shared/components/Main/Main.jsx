@@ -18,9 +18,9 @@ const defaultProps = {
     backgroundColor: 'background2',
 };
 
-const Main = ({ children, backgroundColor, ...otherProps }) => (
+const Main = ({ children, backgroundColor, ...props }) => (
     <MainContainer backgroundColor={backgroundColor}>
-        <LayoutContainer {...otherProps}>{children}</LayoutContainer>
+        <LayoutContainer {...props}>{children}</LayoutContainer>
     </MainContainer>
 );
 

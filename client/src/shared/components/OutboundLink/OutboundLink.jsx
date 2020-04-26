@@ -13,9 +13,7 @@ const defaultProps = {
     rel: 'noopener noreferrer',
 };
 
-const OutboundLink = ({ children, ...otherProps }) => (
-    <StyledLink {...otherProps}>{children}</StyledLink>
-);
+const OutboundLink = ({ children, ...props }) => <StyledLink {...props}>{children}</StyledLink>;
 
 OutboundLink.propTypes = propTypes;
 OutboundLink.defaultProps = defaultProps;

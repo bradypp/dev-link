@@ -1,53 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Formik, Form as FormikForm, Field as FormikField } from 'formik';
-import { generateValidationErrors } from 'shared/utils';
-import { mapValues } from 'lodash';
-import Field from './Field';
+import { Formik, Form as FormikForm } from 'formik';
+import { Input, TextArea, TextEditor, Select } from 'shared/components';
+import generateField from './generateField';
 
 const propTypes = {
-    validate: PropTypes.func,
-    validations: PropTypes.object,
     validateOnBlur: PropTypes.bool,
 };
 
 const defaultProps = {
-    validate: undefined,
-    validations: undefined,
     validateOnBlur: false,
 };
 
-// TODO: test validate on blur default prop for StyledForm
-const Form = ({ validate, validations, validateOnBlur, ...otherProps }) => (
-    <Formik
-        validate={values => {
-            if (validate) return validate(values);
-            if (validations) return generateValidationErrors(values, validations);
-            return null;
-        }}
-        validateOnBlur={validateOnBlur}
-        {...otherProps}
-    />
-);
+const Form = props => <Formik {...props} />;
 
 Form.Element = props => <FormikForm noValidate {...props} />;
 
-const fieldWrapper = FieldComponent => ({ name, ...otherProps }) => (
-    <FormikField name={name} {...otherProps}>
-        {({ field, form: { touched, errors, setFieldValue } }) => (
-            <FieldComponent
-                {...field}
-                {...otherProps}
-                name={name}
-                error={touched[name] && errors[name]}
-                onChange={value => setFieldValue(name, value)}
-            />
-        )}
-    </FormikField>
-);
-
-// Wraps all fields from './Field' with the formik Field component for general use (e.g. Form.Field.Input)
-Form.Field = mapValues(Field, fieldWrapper);
+Form.Field = {
+    Input: generateField(Input),
+    Select: generateField(Select),
+    TextArea: generateField(TextArea),
+    TextEditor: generateField(TextEditor),
+    // Checkbox: generateField(Checkbox),
+    // Radio: generateField(Radio),
+};
 
 Form.propTypes = propTypes;
 Form.defaultProps = defaultProps;

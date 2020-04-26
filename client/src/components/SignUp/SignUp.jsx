@@ -7,6 +7,8 @@ import { setAlert, clearAlerts } from 'redux/alerts';
 import { signUp, selectIsAuthenticated } from 'redux/auth';
 import { Main, Form, Button } from 'shared/components';
 import { useClearAlerts } from 'shared/hooks';
+import { validators } from 'shared/utils';
+import * as Yup from 'yup';
 import * as S from './SignUpStyles';
 
 const propTypes = {
@@ -18,13 +20,20 @@ const mapStateToProps = createStructuredSelector({
     isAuthenticated: selectIsAuthenticated,
 });
 
+// TODO: add location to sign up?
 // TODO: styling
 const SignUp = ({ signUp, isAuthenticated }) => {
     useClearAlerts();
 
-    if (isAuthenticated) return <Redirect to="/dashboard" />;
+    const signUpValidation = Yup.object().shape({
+        name: validators.name,
+        username: validators.username,
+        email: validators.email,
+        password: validators.password,
+        password2: validators.password,
+    });
 
-    // TODO: update password tip
+    if (isAuthenticated) return <Redirect to="/dashboard" />;
     return (
         <Main>
             <S.Container>
@@ -36,6 +45,7 @@ const SignUp = ({ signUp, isAuthenticated }) => {
                         password: '',
                         password2: '',
                     }}
+                    validationSchema={signUpValidation}
                     onSubmit={signUp}>
                     <Form.Element>
                         <Form.Field.Input label="Name" name="name" type="text" placeholder="Name" />
@@ -56,13 +66,14 @@ const SignUp = ({ signUp, isAuthenticated }) => {
                             name="password"
                             type="password"
                             placeholder="Password"
-                            tip="Ensure your password has a mix of letters, symbols & numbers and is at least 8 characters long"
+                            tip="Password must contain a mix of letters, numbers and symbols"
                         />
                         <Form.Field.Input
                             label="Confirm Password"
-                            name="passwords"
+                            name="password2"
                             type="password"
                             placeholder="Confirm Password"
+                            tip="Please confirm your password"
                         />
                         <Button type="submit">Submit</Button>
                     </Form.Element>

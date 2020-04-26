@@ -20,12 +20,12 @@ const defaultProps = {
 };
 
 // TODO: customize & test
-const TextArea = forwardRef(({ className, invalid, onChange, ...otherProps }, ref) => (
+const TextArea = forwardRef(({ className, invalid, onChange, ...props }, ref) => (
     <TextAreaContainer className={className} invalid={invalid}>
         <TextAreaAutoSize
             onChange={event => onChange(event.target.value, event)}
             inputRef={ref || undefined}
-            {...otherProps}
+            {...props}
         />
     </TextAreaContainer>
 ));
