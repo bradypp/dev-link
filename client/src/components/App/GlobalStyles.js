@@ -91,6 +91,8 @@ const GlobalStyles = createGlobalStyle`
   input, textarea {
     &::placeholder {
       opacity: 0.7;
+      font-style: italic;
+      font-size: 0.8em;
     }
 
     &:focus,

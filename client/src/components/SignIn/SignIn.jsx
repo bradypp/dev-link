@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { signIn, selectIsAuthenticated } from 'redux/auth';
-import { useClearAlerts } from 'shared/hooks';
-import { Form, Button, Main } from 'shared/components';
+import { Form, Main, Button } from 'shared/components';
 import { validators } from 'shared/utils';
 import * as Yup from 'yup';
 import * as S from './SignInStyles';
@@ -21,8 +20,6 @@ const mapStateToProps = createStructuredSelector({
 
 // TODO: styling
 const SignIn = ({ signIn, isAuthenticated }) => {
-    useClearAlerts();
-
     const signInValidation = Yup.object().shape({
         login: validators.required('Login is required'),
         password: validators.required('Password is required'),
@@ -31,33 +28,23 @@ const SignIn = ({ signIn, isAuthenticated }) => {
     if (isAuthenticated) return <Redirect to="/dashboard" />;
 
     return (
-        <Main>
-            <S.Container>
-                <Form
-                    initialValues={{
-                        login: '',
-                        password: '',
-                    }}
-                    validationSchema={signInValidation}
-                    onSubmit={signIn}>
-                    <Form.Element>
-                        <Form.Field.Input
-                            label="Login"
-                            name="login"
-                            type="text"
-                            placeholder="Email or username"
-                        />
-                        <Form.Field.Input
-                            label="Password"
-                            name="password"
-                            type="password"
-                            placeholder="Password"
-                        />
-                        <Button type="submit">Submit</Button>
-                    </Form.Element>
-                </Form>
-            </S.Container>
-        </Main>
+        // <Main>
+        //     <S.Container>
+        <Form
+            initialValues={{
+                login: '',
+                password: '',
+            }}
+            validationSchema={signInValidation}
+            onSubmit={signIn}>
+            <Form.Element>
+                <Form.Field.Input autoFocus label="Email or username" name="login" type="text" />
+                <Form.Field.Input label="Password" name="password" type="password" />
+                <Form.Buttons />
+            </Form.Element>
+        </Form>
+        //     </S.Container>
+        // </Main>
     );
 };
 

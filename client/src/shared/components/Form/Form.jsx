@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Formik, Form as FormikForm } from 'formik';
-import { Input, TextArea, TextEditor, Select } from 'shared/components';
-import generateField from './generateField';
+import { Formik } from 'formik';
+import FormField from './FormField';
+import FormButtons from './FormButtons';
+import { FormikForm } from './FormStyles';
 
 const propTypes = {
     validateOnBlur: PropTypes.bool,
@@ -16,14 +17,8 @@ const Form = props => <Formik {...props} />;
 
 Form.Element = props => <FormikForm noValidate {...props} />;
 
-Form.Field = {
-    Input: generateField(Input),
-    Select: generateField(Select),
-    TextArea: generateField(TextArea),
-    TextEditor: generateField(TextEditor),
-    // Checkbox: generateField(Checkbox),
-    // Radio: generateField(Radio),
-};
+Form.Field = FormField;
+Form.Buttons = FormButtons;
 
 Form.propTypes = propTypes;
 Form.defaultProps = defaultProps;

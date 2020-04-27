@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { Input } from 'shared/components';
+import { Form } from 'shared/components';
 
 export const Heading = styled.h1`
     grid-column: 1 / 12;
@@ -13,7 +13,7 @@ export const SearchContainer = styled.div`
     grid-column: 1 / 9;
 `;
 
-export const StyledInput = styled(Input).attrs({
+export const StyledInput = styled(Form.Field.Input).attrs({
     height: 5,
     fontSize: '2.5rem',
 })`

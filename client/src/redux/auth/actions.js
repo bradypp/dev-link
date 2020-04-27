@@ -26,7 +26,7 @@ export const loadUser = () => async dispatch => {
 export const signUp = ({ name, username, email, password, password2 }) => async dispatch => {
     try {
         dispatch(userLoading());
-
+        console.log('object');
         const body = JSON.stringify({ name, username, email, password, password2 });
         const config = {
             headers: {

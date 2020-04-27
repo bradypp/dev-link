@@ -6,14 +6,16 @@ import { TooltipContainer } from './TooltipStyles';
 
 const propTypes = {
     className: PropTypes.string,
+    renderElement: PropTypes.func.isRequired,
+    renderContent: PropTypes.func.isRequired,
     placement: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
     offset: PropTypes.shape({
         top: PropTypes.number,
         left: PropTypes.number,
     }),
-    renderLink: PropTypes.func.isRequired,
-    renderContent: PropTypes.func.isRequired,
-    width: PropTypes.number,
+    position: PropTypes.object,
+    width: PropTypes.string,
+    padding: PropTypes.string,
 };
 
 const defaultProps = {
@@ -23,53 +25,9 @@ const defaultProps = {
         top: 0,
         left: 0,
     },
+    position: undefined,
     width: 'min-content',
-};
-
-// TODO: add onHover event options as well as click (make render link optional & have onHover option?)
-const Tooltip = ({ className, placement, offset, renderLink, renderContent, ...props }) => {
-    const [isOpen, setIsOpen] = useState(false);
-
-    const $linkRef = useRef();
-    const $tooltipRef = useRef();
-
-    const openTooltip = () => setIsOpen(true);
-    const closeTooltip = () => setIsOpen(false);
-
-    useOnOutsideClick([$tooltipRef, $linkRef], isOpen, closeTooltip);
-
-    useLayoutEffect(() => {
-        const setTooltipPosition = () => {
-            const { top, left } = calcPosition(offset, placement, $tooltipRef, $linkRef);
-            $tooltipRef.current.style.top = `${top}px`;
-            $tooltipRef.current.style.left = `${left}px`;
-        };
-
-        if (isOpen) {
-            setTooltipPosition();
-            window.addEventListener('resize', setTooltipPosition);
-            window.addEventListener('scroll', setTooltipPosition);
-        }
-
-        return () => {
-            window.removeEventListener('resize', setTooltipPosition);
-            window.removeEventListener('scroll', setTooltipPosition);
-        };
-    }, [isOpen, offset, placement]);
-
-    return (
-        <>
-            {renderLink({ ref: $linkRef, onClick: isOpen ? closeTooltip : openTooltip })}
-
-            {isOpen &&
-                ReactDOM.createPortal(
-                    <TooltipContainer className={className} ref={$tooltipRef} {...props}>
-                        {renderContent({ close: closeTooltip })}
-                    </TooltipContainer>,
-                    $root,
-                )}
-        </>
-    );
+    padding: undefined,
 };
 
 const calcPosition = (offset, placement, $tooltipRef, $linkRef) => {
@@ -78,7 +36,6 @@ const calcPosition = (offset, placement, $tooltipRef, $linkRef) => {
 
     const tooltipRect = $tooltipRef.current.getBoundingClientRect();
     const linkRect = $linkRef.current.getBoundingClientRect();
-
     const linkCenterY = linkRect.top + linkRect.height / 2;
     const linkCenterX = linkRect.left + linkRect.width / 2;
 
@@ -101,12 +58,70 @@ const calcPosition = (offset, placement, $tooltipRef, $linkRef) => {
         },
     };
     return {
-        top: placements[placement].top + finalOffset.top,
-        left: placements[placement].left + finalOffset.left,
+        top: `${placements[placement].top + finalOffset.top}px`,
+        left: `${placements[placement].left + finalOffset.left}px`,
     };
 };
 
-const $root = document.getElementById('root');
+// TODO: add the option to render tooltip on mouse when hovering over renderElement
+const Tooltip = ({
+    className,
+    placement,
+    offset,
+    renderElement,
+    renderContent,
+    position: customPosition,
+    ...props
+}) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [position, setPosition] = useState({});
+
+    const $linkRef = useRef();
+    const $tooltipRef = useRef();
+
+    const openTooltip = () => setIsOpen(true);
+    const closeTooltip = () => setIsOpen(false);
+
+    useOnOutsideClick([$tooltipRef, $linkRef], isOpen, closeTooltip);
+    useLayoutEffect(() => {
+        const setTooltipPosition = () => {
+            if (customPosition) {
+                setPosition(customPosition);
+            } else {
+                setPosition(calcPosition(offset, placement, $tooltipRef, $linkRef));
+            }
+        };
+
+        if (isOpen) {
+            setTooltipPosition();
+            window.addEventListener('resize', setTooltipPosition);
+            window.addEventListener('scroll', setTooltipPosition);
+        }
+
+        return () => {
+            window.removeEventListener('resize', setTooltipPosition);
+            window.removeEventListener('scroll', setTooltipPosition);
+        };
+    }, [isOpen, offset, placement]);
+
+    return (
+        <>
+            {renderElement({ ref: $linkRef, onClick: isOpen ? closeTooltip : openTooltip })}
+
+            {isOpen &&
+                ReactDOM.createPortal(
+                    <TooltipContainer
+                        className={className}
+                        position={position}
+                        ref={$tooltipRef}
+                        {...props}>
+                        {renderContent({ close: closeTooltip })}
+                    </TooltipContainer>,
+                    document.getElementById('root'),
+                )}
+        </>
+    );
+};
 
 Tooltip.propTypes = propTypes;
 Tooltip.defaultProps = defaultProps;

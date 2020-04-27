@@ -1,8 +1,16 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from 'styled-components/macro';
+import { Form } from 'formik';
+import { mixins } from 'shared/styles';
 
-export const FieldContainer = styled.div`
-    margin-top: 2rem;
+const fieldMargin = '2rem';
+
+export const FormikForm = styled(Form)`
+    & > *:not(:last-child) {
+        margin-bottom: ${fieldMargin};
+    }
 `;
+
+export const FieldContainer = styled.div``;
 
 export const FieldLabel = styled.label`
     display: block;
@@ -28,4 +36,13 @@ export const FieldTip = styled.div`
 export const FieldError = styled.div`
   ${sharedSubtitleStyles}
   color: ${({ theme }) => theme.colors.danger};
+`;
+
+export const ButtonsContainer = styled.div`
+    ${mixins.flexCenterLeft}
+    margin-top: ${fieldMargin};
+
+    & > *:not(:last-child) {
+      margin-right: ${({ theme }) => theme.layout.buttonGap}
+    }
 `;

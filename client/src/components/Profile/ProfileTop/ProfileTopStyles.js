@@ -129,5 +129,5 @@ export const SkillsContainer = styled.div`
 export const SkillLink = styled(CustomLink)`
     font-size: 1.3rem;
     margin-top: 0.8rem;
-    margin-left: 1.6rem;
+    margin-left: ${({ theme }) => theme.layout.tagGap};
 `;

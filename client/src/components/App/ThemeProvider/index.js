@@ -36,6 +36,8 @@ export default ({ children }) => {
             headerHeight: `6rem`,
             cardPadding: `2.4rem`,
             mainGridGap: `1.6rem`,
+            tagGap: `1.6rem`,
+            buttonGap: `1.6rem`,
         },
         boxShadow: {
             medium: `0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1)`,

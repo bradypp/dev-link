@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
-import { Button, CustomLink } from 'shared/components';
+import { SignIn, SignUp } from 'components';
+import { Button, CustomLink, Tooltip } from 'shared/components';
 import { selectIsUserLoading, selectIsAuthenticated, signOut, selectUser } from 'redux/auth';
 import * as S from './HeaderStyles';
 
@@ -34,10 +35,23 @@ const Header = ({ isUserLoading, isAuthenticated, signOut, user }) => {
         </>
     );
 
+    // TODO: change offset depending on screen size? (use react media queries)
     const guestMenu = (
         <>
-            <CustomLink to="/sign-in">Sign In</CustomLink>
-            <CustomLink to="/sign-up">Join Now</CustomLink>
+            <Tooltip
+                width="40rem"
+                offset={{ left: -105 }}
+                renderElement={props => <span {...props}>Sign In</span>}
+                renderContent={props => <SignIn {...props} />}
+            />
+            <Tooltip
+                width="40rem"
+                offset={{ left: -160 }}
+                renderElement={props => <span {...props}>Sign Up</span>}
+                renderContent={props => <SignUp {...props} />}
+            />
+            {/* <CustomLink to="/sign-in">Sign In</CustomLink> */}
+            {/* <CustomLink to="/sign-up">Join Now</CustomLink> */}
         </>
     );
 
