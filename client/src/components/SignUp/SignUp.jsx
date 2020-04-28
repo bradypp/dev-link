@@ -5,10 +5,10 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { setAlert, clearAlerts } from 'redux/alerts';
 import { signUp, selectIsAuthenticated } from 'redux/auth';
-import { Main, Form } from 'shared/components';
+import { Form } from 'shared/components';
 import { validators } from 'shared/utils';
 import * as Yup from 'yup';
-import * as S from './SignUpStyles';
+// import * as S from './SignUpStyles';
 
 const propTypes = {
     signUp: PropTypes.func.isRequired,

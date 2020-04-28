@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { signIn, selectIsAuthenticated } from 'redux/auth';
-import { Form, Main, Button } from 'shared/components';
+import { Form } from 'shared/components';
 import { validators } from 'shared/utils';
 import * as Yup from 'yup';
-import * as S from './SignInStyles';
+// import * as S from './SignInStyles';
 
 const propTypes = {
     signIn: PropTypes.func.isRequired,
@@ -28,8 +28,6 @@ const SignIn = ({ signIn, isAuthenticated }) => {
     if (isAuthenticated) return <Redirect to="/dashboard" />;
 
     return (
-        // <Main>
-        //     <S.Container>
         <Form
             initialValues={{
                 login: '',
@@ -38,13 +36,12 @@ const SignIn = ({ signIn, isAuthenticated }) => {
             validationSchema={signInValidation}
             onSubmit={signIn}>
             <Form.Element>
+                <h3>Sign In</h3>
                 <Form.Field.Input autoFocus label="Email or username" name="login" type="text" />
                 <Form.Field.Input label="Password" name="password" type="password" />
                 <Form.Buttons />
             </Form.Element>
         </Form>
-        //     </S.Container>
-        // </Main>
     );
 };
 

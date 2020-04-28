@@ -18,17 +18,45 @@ export const NavContainer = styled.header`
     ${mixins.containAndCenter}
     ${mixins.flexCenterBetween}
 
-    & > button, a:not(:first-child) {
-        margin-left: 1.4rem;
-        font-size: 1.5rem;
+    input {
+        width: 40rem;
+
+        &:focus {
+            width: 42rem;
+        }
+    }
+`;
+
+export const LinksContainer = styled.div`
+    ${mixins.flexCenter}
+    & > *:not(:first-child) {
+        margin-left: 1.6rem;
     }
 `;
 
 export const Logo = styled(Link)`
-        color: ${({ theme }) => theme.colors.primary};
-        font-size: 3.5rem;
-        padding: 0;
-        font-weight: 400;
-        margin-right: auto;
+    color: ${({ theme }) => theme.colors.primary};
+    font-size: 3.5rem;
+    padding: 0;
+    font-weight: 400;
+`;
+
+export const ClickableDiv = styled.div`
+    ${mixins.clickable}
+    position: relative;
+    display: inline-block;
+
+    &:hover > :first-child {
+        display: block;
     }
+`;
+
+export const DropdownContent = styled.div`
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    padding: 12px 16px;
+    z-index: 1;
 `;

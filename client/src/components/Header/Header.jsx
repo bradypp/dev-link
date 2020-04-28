@@ -3,27 +3,26 @@ import { connect } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
+import { IoIosSearch } from 'react-icons/io';
 import { SignIn, SignUp } from 'components';
-import { Button, CustomLink, Tooltip } from 'shared/components';
-import { selectIsUserLoading, selectIsAuthenticated, signOut, selectUser } from 'redux/auth';
+import { Button, CustomLink, Tooltip, Form } from 'shared/components';
+import { selectIsAuthenticated, signOut, selectUser } from 'redux/auth';
 import * as S from './HeaderStyles';
 
 const propTypes = {
     signOut: PropTypes.func.isRequired,
-    isUserLoading: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
     user: PropTypes.object.isRequired,
 };
 
 const stateToProps = {
-    isUserLoading: selectIsUserLoading,
     user: selectUser,
     isAuthenticated: selectIsAuthenticated,
 };
 
-// TODO: Edit content of header in different states when finished (for now include what you need to build the app & test)
-// TODO: Edit styling
-const Header = ({ isUserLoading, isAuthenticated, signOut, user }) => {
+// TODO: edit content of header in different states when finished (for now include what you need to build the app & test)
+// TODO: nav styling
+const Header = ({ isAuthenticated, signOut, user }) => {
     const location = useLocation();
 
     const signedInMenu = (
@@ -35,23 +34,22 @@ const Header = ({ isUserLoading, isAuthenticated, signOut, user }) => {
         </>
     );
 
-    // TODO: change offset depending on screen size? (use react media queries)
+    // TODO: redo tooltip dropdown menus (make new component?), they should stay in place below the header
+    // TODO: change tooltip offsets depending on screen size? (use react media queries/useBreakpoint hook) or render different components on mobile (go to signin/signup pages on mobile)
     const guestMenu = (
         <>
             <Tooltip
-                width="40rem"
-                offset={{ left: -105 }}
-                renderElement={props => <span {...props}>Sign In</span>}
+                width="45rem"
+                placement="bottomLeft"
+                renderElement={props => <S.ClickableDiv {...props}>Sign In</S.ClickableDiv>}
                 renderContent={props => <SignIn {...props} />}
             />
             <Tooltip
-                width="40rem"
-                offset={{ left: -160 }}
-                renderElement={props => <span {...props}>Sign Up</span>}
+                width="45rem"
+                placement="bottomLeft"
+                renderElement={props => <S.ClickableDiv {...props}>Sign Up</S.ClickableDiv>}
                 renderContent={props => <SignUp {...props} />}
             />
-            {/* <CustomLink to="/sign-in">Sign In</CustomLink> */}
-            {/* <CustomLink to="/sign-up">Join Now</CustomLink> */}
         </>
     );
 
@@ -62,8 +60,19 @@ const Header = ({ isUserLoading, isAuthenticated, signOut, user }) => {
                 <S.Logo to="/">
                     <strong>Dev</strong>Link
                 </S.Logo>
-                {location.pathname !== '/' && `Search Bar Here!`}
-                {isAuthenticated ? signedInMenu : guestMenu}
+                {location.pathname !== '/' && (
+                    <Form initialValues={{ search: '' }}>
+                        <Form.Element>
+                            <Form.Field.Input
+                                icon={<IoIosSearch />}
+                                name="search"
+                                placeholder="Search..."
+                                height={3.6}
+                            />
+                        </Form.Element>
+                    </Form>
+                )}
+                <S.LinksContainer>{isAuthenticated ? signedInMenu : guestMenu}</S.LinksContainer>
             </S.NavContainer>
         </S.HeaderContainer>
     );

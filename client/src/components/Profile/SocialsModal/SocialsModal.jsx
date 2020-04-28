@@ -6,8 +6,8 @@ import {} from './SocialsModalStyles';
 const Socials = ({ name, socials }) => {
     return (
         <Modal
-            renderLink={modal => <Button onClick={modal.open}>Socials</Button>}
-            renderContent={modal => (
+            renderLink={({ open }) => <Button onClick={open}>Socials</Button>}
+            renderContent={({ close }) => (
                 <div>
                     <h1>{name}</h1>
                     <h2>Socials</h2>
@@ -17,7 +17,7 @@ const Socials = ({ name, socials }) => {
                             <p>{social.link}</p>
                         </>
                     ))}
-                    <Button onClick={modal.close}>Close</Button>
+                    <Button onClick={close}>Close</Button>
                 </div>
             )}
         />
