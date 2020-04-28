@@ -29,7 +29,11 @@ const propTypes = {
     getProfileByUsername: PropTypes.func.isRequired,
     setIsCurrentUser: PropTypes.func.isRequired,
     profileUserId: PropTypes.string.isRequired,
-    currentUserId: PropTypes.string.isRequired,
+    currentUserId: PropTypes.string,
+};
+
+const defaultProps = {
+    currentUserId: undefined,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -95,5 +99,6 @@ const Profile = ({
 };
 
 Profile.propTypes = propTypes;
+Profile.defaultProps = defaultProps;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

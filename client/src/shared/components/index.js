@@ -9,6 +9,8 @@ export { default as Radio } from './Radio/Radio';
 export { default as LinkWrapper } from './CustomLink/LinkWrapper';
 export { default as Input } from './Input/Input';
 export { default as Icon } from './Icon/Icon';
+export { default as FileUpload } from './FileUpload/FileUpload';
+export { default as ImageUpload } from './ImageUpload';
 export { default as Tooltip } from './Tooltip/Tooltip';
 export { default as Main } from './Main/Main';
 export { default as Modal } from './Modal/Modal';

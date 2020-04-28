@@ -22,7 +22,7 @@ const Home = () => {
                         />
                         <Form.Buttons
                             submitText="Search"
-                            customButtons={[<CustomLink to="/#">Advanced Search</CustomLink>]}
+                            customButtons={<CustomLink to="/#">Advanced Search</CustomLink>}
                         />
                     </Form.Element>
                 </Form>

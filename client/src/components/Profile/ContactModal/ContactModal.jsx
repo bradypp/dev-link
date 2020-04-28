@@ -1,25 +1,39 @@
 import React from 'react';
-import { Button, Modal } from 'shared/components';
-import {} from './ContactModalStyles';
+import { Button, Modal, OutboundLink } from 'shared/components';
+import { StyledOutboundLink } from './ContactModalStyles';
 
-// TODO: styling
-// TODO: Conditional appearance based on if profile belongs to current authenticated user
-const Contact = ({ name, contact }) => {
+// TODO: styling button as a link
+// TODO: conditional appearance based on if profile belongs to current authenticated user (for editing)
+const Contact = ({ name, contact, socials }) => {
     const { email, phone } = contact;
 
     return (
         <Modal
-            renderLink={modal => <Button onClick={modal.open}>Contact</Button>}
-            renderContent={modal => (
-                <div>
-                    <h1>{name}</h1>
+            width="60rem"
+            renderLink={({ open }) => <Button onClick={open}>Contact Info</Button>}
+            renderContent={({ close }) => (
+                <>
                     <h2>Contact Info</h2>
-                    <h3>Email</h3>
-                    <p>{email}</p>
-                    <h3>Phone</h3>
-                    <p>{phone}</p>
-                    <Button onClick={modal.close}>Close</Button>
-                </div>
+                    {email && (
+                        <>
+                            <h3>Email</h3>
+                            <p>{email}</p>
+                        </>
+                    )}
+                    {phone && (
+                        <>
+                            <h3>Phone</h3>
+                            <p>{phone}</p>
+                        </>
+                    )}
+                    {socials.map(social => (
+                        <>
+                            <h3>{social.name}</h3>
+                            <StyledOutboundLink>{social.link}</StyledOutboundLink>
+                        </>
+                    ))}
+                    <Button onClick={close}>Close</Button>
+                </>
             )}
         />
     );

@@ -8,7 +8,7 @@ const propTypes = {
     withReset: PropTypes.bool,
     withCancel: PropTypes.bool,
     onCancel: PropTypes.func,
-    customButtons: PropTypes.arrayOf(PropTypes.node),
+    customButtons: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     submitText: PropTypes.string,
 };
 

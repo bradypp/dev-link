@@ -80,7 +80,8 @@ export const CloseButton = styled(Button).attrs(({ backgroundColor }) => ({
 }))`
     color: ${({ theme }) => theme.colors.textPrimary2};
     position: absolute;
-    font-size: 2.5rem;
-
     ${({ variant }) => closeButtonStyles[variant]}
+    svg {
+        font-size: 3.2rem;
+    }
 `;

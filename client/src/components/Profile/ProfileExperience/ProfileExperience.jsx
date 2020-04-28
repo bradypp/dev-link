@@ -29,7 +29,7 @@ const ProfileExperience = ({ experience }) => {
                 const details = company ? (
                     <>
                         {company}
-                        {location && <> &middot; {location} </>}
+                        {location && <span> &middot; {location} </span>}
                     </>
                 ) : (
                     <>{location && <>{location}</>}</>

@@ -37,22 +37,22 @@ const ProfileEducation = ({ education }) => (
 
             const details = schoolType ? (
                 <>
-                    {schoolType}
-                    {qualificationType && <> &middot; {qualificationType} </>}
+                    <span>{schoolType}</span>
+                    {qualificationType && <span> &middot; {qualificationType} </span>}
                     {subjects.length > 0 && <> &middot; </>}
                     {subjects.length > 0 &&
                         subjects.map((subject, i) => {
                             const { title, grade } = subject;
                             return (
-                                <>
+                                <span key={uuidv4()}>
                                     {grade ? `${title}: ${grade}` : title}
                                     {i !== subjects.length - 1 && ', '}
-                                </>
+                                </span>
                             );
                         })}
                 </>
             ) : (
-                <>{qualificationType && <>{qualificationType}</>}</>
+                <>{qualificationType && <span>{qualificationType}</span>}</>
             );
 
             const timePeriod = (

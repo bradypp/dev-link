@@ -12,6 +12,7 @@ const propTypes = {
     borderColor: PropTypes.string,
     color: PropTypes.string,
     icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+    iconSize: PropTypes.string,
     disabled: PropTypes.bool,
     isWorking: PropTypes.bool,
     isActive: PropTypes.bool,
@@ -25,6 +26,7 @@ const defaultProps = {
     borderColor: 'border1',
     color: 'textPrimary1',
     icon: undefined,
+    iconSize: '1.8rem',
     type: 'button',
     disabled: false,
     isWorking: false,
@@ -32,18 +34,24 @@ const defaultProps = {
     onClick: () => {},
 };
 
-const Button = forwardRef(({ children, icon, disabled, isWorking, color, ...props }, ref) => (
-    <StyledButton
-        disabled={disabled || isWorking}
-        iconOnly={!children}
-        ref={ref}
-        color={color}
-        {...props}>
-        {isWorking && <ButtonSpinner />}
-        {!isWorking && icon && typeof icon === 'string' ? <Icon type={icon} /> : icon}
-        {children && <ButtonText withPadding={icon || isWorking}>{children}</ButtonText>}
-    </StyledButton>
-));
+const Button = forwardRef(
+    ({ children, icon, iconSize, disabled, isWorking, color, ...props }, ref) => (
+        <StyledButton
+            disabled={disabled || isWorking}
+            iconOnly={!children}
+            ref={ref}
+            color={color}
+            {...props}>
+            {isWorking && <ButtonSpinner />}
+            {!isWorking && icon && typeof icon === 'string' ? (
+                <Icon size={iconSize} type={icon} />
+            ) : (
+                icon
+            )}
+            {children && <ButtonText withPadding={icon || isWorking}>{children}</ButtonText>}
+        </StyledButton>
+    ),
+);
 
 Button.propTypes = propTypes;
 Button.defaultProps = defaultProps;

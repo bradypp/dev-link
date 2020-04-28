@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FaEdit } from 'react-icons/fa';
 import { StyledIcon } from './IconStyles';
 
 const propTypes = {
@@ -15,12 +16,14 @@ const defaultProps = {
     className: undefined,
     size: '1.6rem',
     color: undefined,
-    left: 0,
+    left: 1,
     top: 0,
 };
 
 // Icon library
-const types = {};
+const types = {
+    [`edit`]: FaEdit,
+};
 
 const Icon = ({ type, ...props }) => {
     const RenderedIcon = StyledIcon(types[type]);

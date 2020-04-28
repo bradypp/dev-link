@@ -10,7 +10,6 @@ import {
     selectProfileAvatar,
     selectProfileCoverImage,
     selectProfileInfo,
-    selectProfileUser,
     selectProfileStars,
     selectProfileWatchers,
     selectProfileContact,
@@ -23,6 +22,7 @@ import { selectUser, selectIsAuthenticated } from 'redux/auth';
 import { setAlert } from 'redux/alerts';
 import { ContactModal, SocialsModal } from 'components';
 import { OutboundLink } from 'shared/components';
+import ProfileTopForm from './ProfileTopForm/ProfileTopForm';
 import * as S from './ProfileTopStyles';
 
 const propTypes = {
@@ -33,7 +33,6 @@ const propTypes = {
     coverImage: PropTypes.object.isRequired,
     currentUser: PropTypes.object.isRequired,
     profileInfo: PropTypes.object.isRequired,
-    profileUser: PropTypes.object.isRequired,
     stars: PropTypes.array.isRequired,
     watchers: PropTypes.array.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
@@ -47,7 +46,6 @@ const mapStateToProps = createStructuredSelector({
     coverImage: selectProfileCoverImage,
     currentUser: selectUser,
     profileInfo: selectProfileInfo,
-    profileUser: selectProfileUser,
     stars: selectProfileStars,
     watchers: selectProfileWatchers,
     isAuthenticated: selectIsAuthenticated,
@@ -65,12 +63,12 @@ const mapDispatchToProps = {
 // TODO: add available for hire toggle?
 // TODO: have clickable placeholders/edit prompts for top section instead of nothing at all
 // TODO: add view profile as user button
+// TODO: save name from user to profile on sign up/after initial profile creation
 const ProfileTop = ({
     avatar,
     coverImage,
     currentUser,
     profileInfo,
-    profileUser,
     stars,
     watchers,
     toggleStar,
@@ -89,8 +87,8 @@ const ProfileTop = ({
         website,
         github_username: githubUsername,
         company,
+        name,
     } = profileInfo;
-    const { name } = profileUser;
 
     const toggleWatchHandler = () => {
         if (isAuthenticated) {
@@ -114,7 +112,7 @@ const ProfileTop = ({
     // TODO: Watching/stars numbers hover effect and on click functionality
     // TODO: Add links to skills to profiles page filtered for that skill?
     // TODO: Add message button?
-
+    // TODO: edit coverImage/avatar modals on click if current user
     return (
         <S.ProfileTopCard>
             <S.CoverImageContainer>
@@ -158,11 +156,11 @@ const ProfileTop = ({
                     )}
                     {(!isEmpty(contact) || !isEmpty(socials) || website || githubUsername) && (
                         <S.InfoButtonsContainer>
-                            {!isEmpty(contact) && <ContactModal name={name} contact={contact} />}
-                            {!isEmpty(contact) &&
-                                (!isEmpty(socials) || website || githubUsername) && <>&middot;</>}
-                            {!isEmpty(socials) && <SocialsModal name={name} socials={socials} />}
-                            {!isEmpty(socials) && (website || githubUsername) && <>&middot;</>}
+                            {(!isEmpty(contact) || !isEmpty(socials)) && (
+                                <ContactModal contact={contact} socials={socials} />
+                            )}
+                            {(!isEmpty(contact) || !isEmpty(socials)) &&
+                                (website || githubUsername) && <>&middot;</>}
                             {website && <OutboundLink href={website}>Website</OutboundLink>}
                             {website && githubUsername && <>&middot;</>}
                             {githubUsername && (
@@ -183,6 +181,23 @@ const ProfileTop = ({
                             {starredByCurrentUser ? `Unstar` : `Star`}
                         </S.ToggleButton>
                         <S.CountContainer>{stars.length}</S.CountContainer>
+                        <ProfileTopForm
+                            formData={{
+                                avatar,
+                                headline,
+                                currentPosition,
+                                city,
+                                country,
+                                website,
+                                githubUsername,
+                                company,
+                                name,
+                                currentUser,
+                                socials,
+                                contact,
+                                skills,
+                            }}
+                        />
                     </S.ToggleButtonsContainer>
                     <S.SkillsContainer>
                         {skills.map(skill => (

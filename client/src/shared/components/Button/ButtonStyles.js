@@ -8,10 +8,6 @@ export const StyledButton = styled(ButtonWrapper)`
     padding: 0 ${({ iconOnly }) => (iconOnly ? '0' : '1.2rem')};
     border-radius: 0.3rem;
     font-size: 1.45rem;
-
-    svg {
-        font-size: 1.8rem;
-    }
 `;
 
 // const colored = css`
