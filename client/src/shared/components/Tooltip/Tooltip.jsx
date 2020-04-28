@@ -8,7 +8,7 @@ const propTypes = {
     className: PropTypes.string,
     renderElement: PropTypes.func.isRequired,
     renderContent: PropTypes.func.isRequired,
-    placement: PropTypes.oneOf(['top', 'right', 'bottom', 'left']),
+    placement: PropTypes.oneOf(['top', 'right', 'bottom', 'bottomLeft', 'bottomRight', 'left']),
     offset: PropTypes.shape({
         top: PropTypes.number,
         left: PropTypes.number,
@@ -51,6 +51,14 @@ const calcPosition = (offset, placement, $tooltipRef, $linkRef) => {
         bottom: {
             top: linkRect.bottom + margin,
             left: linkCenterX - tooltipRect.width / 2,
+        },
+        bottomLeft: {
+            top: linkRect.bottom + margin,
+            left: linkRect.right - tooltipRect.width,
+        },
+        bottomRight: {
+            top: linkRect.bottom + margin,
+            left: linkRect.left,
         },
         left: {
             top: linkCenterY - tooltipRect.height / 2,
@@ -102,7 +110,7 @@ const Tooltip = ({
             window.removeEventListener('resize', setTooltipPosition);
             window.removeEventListener('scroll', setTooltipPosition);
         };
-    }, [isOpen, offset, placement]);
+    }, [customPosition, isOpen, offset, placement]);
 
     return (
         <>

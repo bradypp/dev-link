@@ -9,6 +9,7 @@ export const TooltipContainer = styled.div`
     z-index: ${({ theme }) => theme.zIndex.modal + 1};
     background: ${({ theme }) => theme.colors.background1};
     box-shadow: ${({ theme }) => theme.boxShadow.dropdown};
+    ${mixins.hardwareAccelerate};
     ${({ position }) => css`
         ${position.top &&
             css`
@@ -27,6 +28,4 @@ export const TooltipContainer = styled.div`
                 right: ${position.right};
             `};
     `};
-
-    ${mixins.hardwareAccelerate};
 `;
