@@ -5,7 +5,13 @@ import { useParams } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { Main, Spinner } from 'shared/components';
 import { useIsFirstRender } from 'shared/hooks';
-import { getProfileByUsername, selectIsProfileLoading } from 'redux/profile';
+import {
+    getProfileByUsername,
+    selectIsProfileLoading,
+    setIsCurrentUser,
+    selectProfileUserId,
+} from 'redux/profile';
+import { selectUserId } from 'redux/auth';
 import {
     ProfileTop,
     ProfileAbout,
@@ -21,23 +27,43 @@ import * as S from './ProfileStyles';
 const propTypes = {
     profileIsLoading: PropTypes.bool.isRequired,
     getProfileByUsername: PropTypes.func.isRequired,
+    setIsCurrentUser: PropTypes.func.isRequired,
+    profileUserId: PropTypes.string.isRequired,
+    currentUserId: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
     profileIsLoading: selectIsProfileLoading,
+    profileUserId: selectProfileUserId,
+    currentUserId: selectUserId,
 });
 
 const mapDispatchToProps = {
     getProfileByUsername,
+    setIsCurrentUser,
 };
 
-const Profile = ({ getProfileByUsername, profileIsLoading }) => {
+const Profile = ({
+    getProfileByUsername,
+    setIsCurrentUser,
+    profileIsLoading,
+    currentUserId,
+    profileUserId,
+}) => {
     const isFirstRender = useIsFirstRender();
     const { username } = useParams();
 
     useEffect(() => {
         getProfileByUsername(username);
     }, [getProfileByUsername, username]);
+
+    useEffect(() => {
+        if (currentUserId === profileUserId) {
+            setIsCurrentUser(true);
+        } else {
+            setIsCurrentUser(false);
+        }
+    }, [profileUserId, currentUserId, setIsCurrentUser]);
 
     // TODO: Conditional appearance for different components/buttons (such as contact, social & education etc) based on if profile belongs to current authenticated user or not. If it is the currently authenticated users profile, have prompts to edit/add profile info, that's if they haven't already clicked to remove that from their profile?
     // TODO: conditionally render components if viewed by other users & component is empty?

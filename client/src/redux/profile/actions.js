@@ -1,9 +1,12 @@
 import { api, apiErrorHandler } from 'shared/utils';
-import { setAlert } from 'redux/alerts';
 import { userLoaded } from 'redux/auth';
-import { PROFILE_LOADING, PROFILE_LOADED, PROFILE_ERROR, CLEAR_PROFILE } from 'redux/actionTypes';
-
-// TODO: could get current user profile on sign in/sign up/creation/updating and use a prop in the selector to decide whether to use the user profile or get the profile based on the url username
+import {
+    PROFILE_LOADING,
+    PROFILE_LOADED,
+    PROFILE_ERROR,
+    CLEAR_PROFILE,
+    SET_IS_CURRENT_USER,
+} from 'redux/actionTypes';
 
 export const getProfileByUsername = username => async dispatch => {
     try {
@@ -72,8 +75,60 @@ export const updateProfile = data => async dispatch => {
         const res = await api.patch('/profile/me', data, config);
 
         dispatch(profileLoaded(res.data.data.profile));
-        // TODO: decide whether to keep this alert
-        dispatch(setAlert('Profile Updated', 'success'));
+    } catch (err) {
+        dispatch(apiErrorHandler(err));
+        dispatch(profileError(err));
+    }
+};
+
+// TODO:
+export const addPortfolioitem = data => async dispatch => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        const res = await api.patch('/profile/me', data, config);
+
+        dispatch(profileLoaded(res.data.data.profile));
+    } catch (err) {
+        dispatch(apiErrorHandler(err));
+        dispatch(profileError(err));
+    }
+};
+
+// TODO:
+export const updatePortfolioItem = data => async dispatch => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        const res = await api.patch('/profile/me', data, config);
+
+        dispatch(profileLoaded(res.data.data.profile));
+    } catch (err) {
+        dispatch(apiErrorHandler(err));
+        dispatch(profileError(err));
+    }
+};
+
+// TODO:
+export const deletePortfolioItem = data => async dispatch => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        const res = await api.patch('/profile/me', data, config);
+
+        dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {
         dispatch(apiErrorHandler(err));
         dispatch(profileError(err));
@@ -114,6 +169,16 @@ export const deleteProfile = () => async dispatch => {
     }
 };
 
+export const profileLoaded = payload => ({
+    type: PROFILE_LOADED,
+    payload,
+});
+
+export const setIsCurrentUser = payload => ({
+    type: SET_IS_CURRENT_USER,
+    payload,
+});
+
 export const clearProfile = () => ({
     type: CLEAR_PROFILE,
 });
@@ -124,9 +189,4 @@ export const profileError = () => ({
 
 export const profileLoading = () => ({
     type: PROFILE_LOADING,
-});
-
-export const profileLoaded = payload => ({
-    type: PROFILE_LOADED,
-    payload,
 });

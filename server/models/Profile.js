@@ -36,6 +36,10 @@ const profileSchema = new Schema({
             default: 'default-small.jpg',
         },
     },
+    name: {
+        type: String,
+        trim: true,
+    },
     headline: {
         type: String,
         trim: true,

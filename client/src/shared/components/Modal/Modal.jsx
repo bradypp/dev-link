@@ -9,7 +9,7 @@ const propTypes = {
     className: PropTypes.string,
     testid: PropTypes.string,
     variant: PropTypes.oneOf(['center', 'aside']),
-    width: PropTypes.number,
+    width: PropTypes.string,
     withCloseButton: PropTypes.bool,
     backgroundColor: PropTypes.string,
     isOpen: PropTypes.bool,
@@ -22,7 +22,7 @@ const defaultProps = {
     className: undefined,
     testid: 'modal',
     variant: 'center',
-    width: 600,
+    width: '80rem',
     withCloseButton: true,
     backgroundColor: 'background1',
     isOpen: undefined,
@@ -86,7 +86,7 @@ const Modal = ({
                                 {withCloseButton && (
                                     <CloseButton
                                         type="close"
-                                        styles={variant}
+                                        variant={variant}
                                         onClick={closeModal}
                                         backgroundColor={backgroundColor}
                                         icon={<IoIosClose />}

@@ -31,10 +31,11 @@ export const ClickableOverlay = styled.div`
 
 const modalStyles = {
     center: css`
-        max-width: ${props => props.width}px;
+        ${mixins.boxShadowMedium}
+        ${mixins.card}
+        max-width: ${({ width }) => width || 'min-content'};
         vertical-align: middle;
         border-radius: 0.3rem;
-        ${mixins.boxShadowMedium}
     `,
     aside: css`
         min-height: 100vh;
@@ -81,5 +82,5 @@ export const CloseButton = styled(Button).attrs(({ backgroundColor }) => ({
     position: absolute;
     font-size: 2.5rem;
 
-    ${({ styles }) => closeButtonStyles[styles]}
+    ${({ variant }) => closeButtonStyles[variant]}
 `;

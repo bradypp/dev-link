@@ -9,3 +9,7 @@ export const selectIsUserLoading = createSelector([selectAuth], auth => auth.isL
 export const selectToken = createSelector([selectAuth], auth => auth.token);
 
 export const selectUser = createSelector([selectAuth], auth => auth.user);
+
+export const selectUserUsername = createSelector([selectUser], user => user.username);
+
+export const selectUserId = createSelector([selectUser], user => user._id);

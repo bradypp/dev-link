@@ -26,7 +26,7 @@ export const loadUser = () => async dispatch => {
 export const signUp = ({ name, username, email, password, password2 }) => async dispatch => {
     try {
         dispatch(userLoading());
-        console.log('object');
+
         const body = JSON.stringify({ name, username, email, password, password2 });
         const config = {
             headers: {
@@ -37,8 +37,8 @@ export const signUp = ({ name, username, email, password, password2 }) => async 
         const res = await api.post('/auth/sign-up', body, config);
 
         dispatch(signUpSuccess(res.data.data.token));
-        dispatch(createProfile());
         dispatch(loadUser());
+        // TODO: redirect to profileTop form with name prefilled from loaded user
     } catch (err) {
         dispatch(apiErrorHandler(err));
         dispatch(authError(err));

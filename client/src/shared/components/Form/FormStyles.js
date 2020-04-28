@@ -2,11 +2,15 @@ import styled, { css } from 'styled-components/macro';
 import { Form } from 'formik';
 import { mixins } from 'shared/styles';
 
-const fieldMargin = '2rem';
-
 export const FormikForm = styled(Form)`
     & > *:not(:last-child) {
-        margin-bottom: ${fieldMargin};
+        margin-bottom: 2rem;
+    }
+
+    h1,
+    h2,
+    h3:not(:last-child) {
+        margin-bottom: 1.6rem;
     }
 `;
 
@@ -40,9 +44,8 @@ export const FieldError = styled.div`
 
 export const ButtonsContainer = styled.div`
     ${mixins.flexCenterLeft}
-    margin-top: ${fieldMargin};
 
     & > *:not(:last-child) {
-      margin-right: ${({ theme }) => theme.layout.buttonGap}
+        margin-right: ${({ theme }) => theme.layout.buttonGap};
     }
 `;

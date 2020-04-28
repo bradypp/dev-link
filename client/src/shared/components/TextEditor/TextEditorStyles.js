@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { mixins } from 'shared/styles';
 
 export const EditorContainer = styled.div`
     * {

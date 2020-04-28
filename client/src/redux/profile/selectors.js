@@ -4,6 +4,11 @@ export const selectProfile = state => state.profile;
 
 export const selectIsProfileLoading = createSelector([selectProfile], profile => profile.isLoading);
 
+export const selectIsCurrentUser = createSelector(
+    [selectProfile],
+    profile => profile.isCurrentUser,
+);
+
 export const selectCurrentProfile = createSelector([selectProfile], profile => profile.profile);
 
 export const selectProfileInfo = createSelector(
@@ -39,6 +44,8 @@ export const selectProfileUser = createSelector(
     [selectCurrentProfile],
     profile => profile.user || {},
 );
+
+export const selectProfileUserId = createSelector([selectProfileUser], user => user._id);
 
 export const selectProfileSkills = createSelector(
     [selectCurrentProfile],
