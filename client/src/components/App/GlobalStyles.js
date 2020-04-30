@@ -95,7 +95,7 @@ const GlobalStyles = createGlobalStyle`
     &::placeholder {
       opacity: 0.5;
       font-style: italic;
-      font-size: 0.8em;
+      font-size: 0.9em;
     }
 
     &:focus,

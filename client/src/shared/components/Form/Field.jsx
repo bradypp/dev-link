@@ -12,6 +12,7 @@ const propTypes = {
     name: PropTypes.string,
     submitOnChange: PropTypes.bool,
     type: PropTypes.string,
+    width: PropTypes.string,
 };
 
 const defaultProps = {
@@ -21,10 +22,20 @@ const defaultProps = {
     name: undefined,
     submitOnChange: false,
     type: 'text',
+    width: '100%',
 };
 
 const generateField = FormComponent => {
-    const FieldComponent = ({ className, label, tip, submitOnChange, name, type, ...props }) => (
+    const FieldComponent = ({
+        className,
+        label,
+        tip,
+        submitOnChange,
+        name,
+        type,
+        width,
+        ...props
+    }) => (
         <Field name={name} type={type}>
             {({ field, form, meta }) => {
                 const fieldId = uniqueId('form-field-');
@@ -71,7 +82,8 @@ const generateField = FormComponent => {
                 return (
                     <FieldContainer
                         className={className}
-                        data-testid={name ? `form-field:${name}` : 'form-field'}>
+                        data-testid={name ? `form-field:${name}` : 'form-field'}
+                        width={width}>
                         {fieldComponent}
                     </FieldContainer>
                 );
@@ -92,7 +104,8 @@ export default {
     Checkbox: generateField(Checkbox),
 };
 
-// const FieldComponent = ({
+// TODO: delete
+// const generateArrayField = FieldComponent => ({
 //     className,
 //     label,
 //     tip,

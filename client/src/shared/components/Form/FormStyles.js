@@ -22,7 +22,7 @@ export const FlexContainer = styled.div`
 `;
 
 export const FieldContainer = styled.div`
-    width: 100%;
+    width: ${({ width }) => width || `100%`};
 `;
 
 export const FieldLabel = styled.label`

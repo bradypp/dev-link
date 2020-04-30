@@ -11,11 +11,15 @@ const propTypes = {
     searchValue: PropTypes.string.isRequired,
     setSearchValue: PropTypes.func.isRequired,
     deactivateDropdown: PropTypes.func.isRequired,
+    inputPlaceholder: PropTypes.string.isRequired,
     options: PropTypes.array.isRequired,
     setOptions: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
     onCreate: PropTypes.func,
-    withCreate: PropTypes.bool,
+    withCreate: PropTypes.bool.isRequired,
+    inputId: PropTypes.string.isRequired,
+    withSearch: PropTypes.bool.isRequired,
+    withOptions: PropTypes.bool.isRequired,
     isMulti: PropTypes.bool.isRequired,
     withClearValue: PropTypes.bool.isRequired,
     propsRenderOption: PropTypes.func,
@@ -25,7 +29,6 @@ const defaultProps = {
     dropdownWidth: undefined,
     value: undefined,
     onCreate: undefined,
-    withCreate: false,
     propsRenderOption: undefined,
 };
 
@@ -36,14 +39,18 @@ const SelectDropdown = ({
     searchValue,
     setSearchValue,
     deactivateDropdown,
+    inputPlaceholder,
     options,
     onChange,
     onCreate,
     withCreate,
+    withSearch,
+    inputId,
     isMulti,
     withClearValue,
     propsRenderOption,
     setOptions,
+    withOptions,
 }) => {
     const [isCreatingOption, setCreatingOption] = useState(false);
     const $optionsRef = useRef();
@@ -182,46 +189,44 @@ const SelectDropdown = ({
     const isSearchValueInOptions = options.map(option => option.label).includes(searchValue);
     const isOptionCreatable = withCreate && searchValue && !isSearchValueInOptions;
 
-    // TODO: allow the search input render to be controlled via props
     return (
         <S.Dropdown width={dropdownWidth}>
-            <S.DropdownInput
-                id="select-search"
-                type="text"
-                placeholder="Search"
-                ref={$inputRef}
-                autoFocus
-                onKeyDown={handleInputKeyDown}
-                onChange={event => setSearchValue(event.target.value)}
-            />
-
+            {withSearch && (
+                <S.DropdownInput
+                    id={inputId}
+                    type="text"
+                    placeholder={inputPlaceholder}
+                    ref={$inputRef}
+                    autoFocus
+                    onKeyDown={handleInputKeyDown}
+                    onChange={event => setSearchValue(event.target.value)}
+                />
+            )}
             {!isValueEmpty && withClearValue && <S.ClearIcon onClick={clearOptionValues} />}
-
             <S.Options ref={$optionsRef}>
-                {filteredOptions.map(option => (
-                    <S.Option
-                        key={option.value}
-                        data-select-option-value={option.value}
-                        data-testid={`select-option:${option.label}`}
-                        onMouseEnter={handleOptionMouseEnter}
-                        onClick={() => selectOptionValue(option.value)}>
-                        {propsRenderOption ? propsRenderOption(option) : option.label}
-                    </S.Option>
-                ))}
-
+                {withOptions &&
+                    filteredOptions.map(option => (
+                        <S.Option
+                            key={option.value}
+                            data-select-option-value={option.value}
+                            data-testid={`select-option:${option.label}`}
+                            onMouseEnter={handleOptionMouseEnter}
+                            onClick={() => selectOptionValue(option.value)}>
+                            {propsRenderOption ? propsRenderOption(option) : option.label}
+                        </S.Option>
+                    ))}
                 {isOptionCreatable && (
                     <S.Option
                         data-create-option-label={searchValue}
                         onMouseEnter={handleOptionMouseEnter}
                         onClick={() => createOption(searchValue)}>
-                        {isCreatingOption
-                            ? `Creating "${searchValue}"...`
-                            : `Create "${searchValue}"`}
+                        {isCreatingOption ? `Adding "${searchValue}"...` : `Add "${searchValue}"`}
                     </S.Option>
                 )}
             </S.Options>
-
-            {filteredOptions.length === 0 && <S.OptionsNoResults>No results</S.OptionsNoResults>}
+            {withOptions && filteredOptions.length === 0 && (
+                <S.OptionsNoResults>No options</S.OptionsNoResults>
+            )}
         </S.Dropdown>
     );
 };

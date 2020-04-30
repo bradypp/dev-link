@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { IoIosAdd } from 'react-icons/io';
 import { useOnOutsideClick } from 'shared/hooks';
 import { keyCodes } from 'shared/constants';
+import { uniqueId } from 'lodash';
 import Dropdown from './Dropdown';
 import * as S from './SelectStyles';
 
@@ -13,17 +14,21 @@ const propTypes = {
     name: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.array, PropTypes.string, PropTypes.number]),
     defaultValue: PropTypes.any,
-    placeholder: PropTypes.string,
+    valuePlaceholder: PropTypes.string,
+    inputPlaceholder: PropTypes.string,
     invalid: PropTypes.bool,
     options: PropTypes.arrayOf(
         PropTypes.shape({
-            value: PropTypes.oneOfType([PropTypes.array, PropTypes.string, PropTypes.number]),
+            value: PropTypes.oneOfType([PropTypes.array, PropTypes.string, PropTypes.number])
+                .isRequired,
             label: PropTypes.string.isRequired,
         }),
     ).isRequired,
     onChange: PropTypes.func.isRequired,
     onCreate: PropTypes.func,
     withCreate: PropTypes.bool,
+    withSearch: PropTypes.bool,
+    withOptions: PropTypes.bool,
     isMulti: PropTypes.bool,
     withClearValue: PropTypes.bool,
     renderValue: PropTypes.func,
@@ -37,10 +42,13 @@ const defaultProps = {
     name: undefined,
     value: undefined,
     defaultValue: undefined,
-    placeholder: 'Select',
+    valuePlaceholder: 'Select',
+    inputPlaceholder: 'Search',
     invalid: false,
     onCreate: undefined,
     withCreate: false,
+    withSearch: true,
+    withOptions: true,
     isMulti: false,
     withClearValue: true,
     renderValue: undefined,
@@ -54,14 +62,17 @@ const Select = ({
     name,
     value: propsValue,
     defaultValue,
-    placeholder,
+    valuePlaceholder,
     invalid,
     options: propsOptions,
     onChange,
     onCreate,
     withCreate,
+    withSearch,
+    withOptions,
     isMulti,
     withClearValue,
+    inputPlaceholder,
     renderValue: propsRenderValue,
     renderOption: propsRenderOption,
 }) => {
@@ -133,6 +144,16 @@ const Select = ({
     const getOptionLabel = optionValue => (getOption(optionValue) || { label: '' }).label;
 
     const isValueEmpty = isMulti ? !value.length : !getOption(value);
+    const inputId = uniqueId('select-input-');
+
+    const valuePlaceholderElement = isMulti ? (
+        <S.AddMore htmlFor={inputId} variant={variant}>
+            <IoIosAdd />
+            {valuePlaceholder}
+        </S.AddMore>
+    ) : (
+        <S.Placeholder>{valuePlaceholder}</S.Placeholder>
+    );
 
     return (
         <S.SelectContainer
@@ -146,7 +167,7 @@ const Select = ({
                 variant={variant}
                 data-testid={name ? `select:${name}` : 'select'}
                 onClick={activateDropdown}>
-                {isValueEmpty && <S.Placeholder>{placeholder}</S.Placeholder>}
+                {isValueEmpty && valuePlaceholderElement}
                 {!isValueEmpty && !isMulti && propsRenderValue
                     ? propsRenderValue({ value })
                     : getOptionLabel(value)}
@@ -168,7 +189,7 @@ const Select = ({
                                 </S.ValueMultiItem>
                             ),
                         )}
-                        <S.AddMore htmlFor="select-search" variant={variant}>
+                        <S.AddMore htmlFor={inputId} variant={variant}>
                             <IoIosAdd />
                             Add more
                         </S.AddMore>
@@ -185,12 +206,16 @@ const Select = ({
                     setSearchValue={setSearchValue}
                     $selectRef={$selectRef}
                     deactivateDropdown={deactivateDropdown}
+                    inputPlaceholder={inputPlaceholder}
                     options={options}
                     setOptions={setOptions}
                     onChange={handleChange}
                     onCreate={onCreate}
                     withCreate={withCreate}
+                    withSearch={withSearch}
+                    withOptions={withOptions}
                     isMulti={isMulti}
+                    inputId={inputId}
                     withClearValue={withClearValue}
                     propsRenderOption={propsRenderOption}
                 />
