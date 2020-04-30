@@ -48,8 +48,6 @@ const components = {
         border-radius: 0.4rem;
         cursor: pointer;
         user-select: none;
-        color: ${({ theme }) => theme.colors.textPrimary1};
-        background-color: ${({ theme }) => theme.colors.background3};
         font-weight: 500;
         font-size: 1.2rem;
     `,

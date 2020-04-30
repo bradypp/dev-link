@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from 'styled-components/macro';
 import { IoIosClose, IoIosArrowDown } from 'react-icons/io';
 import { mixins } from 'shared/styles';
 
@@ -52,19 +52,21 @@ export const ValueMulti = styled.div`
 export const ValueMultiItem = styled.div`
     ${({ variant }) => variant === 'empty' && 'margin: 0 0.5rem 0.5rem 0'};
     ${mixins.tag}
+    color: ${({ theme }) => theme.colors.textPrimary1};
+    background-color: ${({ theme }) => theme.colors.background3};
 `;
 
 export const AddMore = styled.label`
-    display: inline-block;
+    ${mixins.inlineFlexCenter};
+    ${mixins.link}
     padding: 0.3rem 0;
     font-size: 1.2rem;
     ${({ variant }) => variant === 'empty' && 'margin-bottom: 0.3rem'};
-    ${mixins.link}
 
     svg {
         margin-right: 0.3rem;
         vertical-align: middle;
-        font-size: 1.4rem;
+        font-size: 1.6rem;
     }
 `;
 
@@ -103,10 +105,9 @@ export const RemoveIcon = styled(IoIosClose)`
 
 export const ClearIcon = styled(IoIosClose)`
     position: absolute;
-    top: 0.4rem;
-    right: 0.7rem;
-    padding: 0.5rem;
-    font-size: 1.8rem;
+    top: 0.6rem;
+    right: 0.6rem;
+    font-size: 2.4rem;
     color: ${({ theme }) => theme.colors.textPrimary3};
     ${mixins.clickable}
 `;

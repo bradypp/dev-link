@@ -17,5 +17,5 @@ export const MainContainer = styled.main`
 
 export const LayoutContainer = styled.div`
     ${mixins.containAndCenter};
-    ${({ gridColumns, theme }) => mixins.gridLayout(gridColumns, theme.layout.mainGridGap)};
+    ${({ numberOfColumns, theme }) => mixins.gridLayout(numberOfColumns, theme.layout.mainGridGap)};
 `;

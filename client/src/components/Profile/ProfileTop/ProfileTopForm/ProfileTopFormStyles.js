@@ -1,8 +1,9 @@
 import styled from 'styled-components/macro';
-// import { mixins } from 'shared/styles';
 
-export const SkillsContainer = styled.div`
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 2rem;
+export const SocialsName = styled.div`
+    grid-column: 1 / 2;
+`;
+
+export const SocialsLink = styled.div`
+    grid-column: 2 / 3;
 `;

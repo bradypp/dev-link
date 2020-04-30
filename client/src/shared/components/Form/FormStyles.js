@@ -21,6 +21,15 @@ export const FlexContainer = styled.div`
     }
 `;
 
+export const GridContainer = styled.div`
+    ${({ numberOfColumns, gridGap, columnWidth }) =>
+        mixins.gridLayout(
+            numberOfColumns || 2,
+            gridGap || '2rem',
+            columnWidth || 'minmax(min-content, 1fr)',
+        )}
+`;
+
 export const FieldContainer = styled.div`
     width: ${({ width }) => width || `100%`};
 `;

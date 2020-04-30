@@ -184,18 +184,16 @@ const ProfileTop = ({
                         <ProfileTopForm
                             currentUser={currentUser}
                             formData={{
-                                avatar,
-                                cover_image,
+                                name,
                                 headline,
-                                current_position,
                                 city,
                                 country,
-                                website,
-                                github_username,
                                 company,
-                                name,
+                                current_position,
                                 socials,
                                 contact,
+                                website,
+                                github_username,
                                 skills,
                             }}
                         />

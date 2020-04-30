@@ -17,6 +17,8 @@ const propTypes = {
     isWorking: PropTypes.bool,
     isActive: PropTypes.bool,
     onClick: PropTypes.func,
+    height: PropTypes.string,
+    width: PropTypes.string,
 };
 
 const defaultProps = {

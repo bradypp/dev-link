@@ -7,7 +7,7 @@ export const StyledButton = styled(ButtonWrapper)`
     height: ${({ iconOnly }) => (iconOnly ? iconOnlyHeightWidth : '3.2rem')};
     width: ${({ iconOnly }) => (iconOnly ? iconOnlyHeightWidth : 'auto')};
     padding: 0 ${({ iconOnly }) => (iconOnly ? '0' : '1.2rem')};
-    border-radius: 0.3rem;
+    border-radius: ${({ iconOnly }) => (iconOnly ? '50%' : '0.3rem')};
     font-size: 1.45rem;
     color: ${({ theme }) => theme.colors.textPrimary1};
 

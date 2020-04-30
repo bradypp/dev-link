@@ -1,9 +1,13 @@
 import { css } from 'styled-components/macro';
 
 const layout = {
-    gridLayout: (gridColumns = 16, gridGap = '1.6rem') => css`
+    gridLayout: (
+        numberOfColumns = 16,
+        gridGap = '1.6rem',
+        columnWidth = 'minmax(min-content, 1fr)',
+    ) => css`
         display: grid;
-        grid-template-columns: repeat(${gridColumns}, minmax(min-content, 1fr));
+        grid-template-columns: repeat(${numberOfColumns}, ${columnWidth});
         grid-gap: ${gridGap};
     `,
     containAndCenter: css`
