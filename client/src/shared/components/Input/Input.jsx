@@ -6,7 +6,7 @@ import { InputContainer, InputElement } from './InputStyles';
 const propTypes = {
     className: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    color: PropTypes.string,
+    type: PropTypes.string,
     icon: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.node]),
     height: PropTypes.number,
     fontSize: PropTypes.string,
@@ -17,10 +17,10 @@ const propTypes = {
 const defaultProps = {
     className: undefined,
     value: undefined,
-    color: 'textPrimary1',
+    type: 'text',
     icon: undefined,
     height: 3.2,
-    fontSize: '1.5rem',
+    fontSize: undefined,
     invalid: false,
     onChange: () => {},
 };

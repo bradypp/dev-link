@@ -12,6 +12,7 @@ const propTypes = {
     borderColor: PropTypes.string,
     color: PropTypes.string,
     icon: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.node]),
+    iconSize: PropTypes.string,
     isWorking: PropTypes.bool,
     isActive: PropTypes.bool,
     disabled: PropTypes.bool,
@@ -26,19 +27,29 @@ const defaultProps = {
     borderColor: undefined,
     color: undefined,
     icon: undefined,
+    iconSize: undefined,
     isWorking: false,
     isActive: false,
     disabled: false,
     onClick: undefined,
 };
 
-const CustomLink = forwardRef(({ children, icon, isWorking, disabled, color, ...props }, ref) => (
-    <StyledLink disabled={disabled || isWorking} ref={ref} color={color} {...props}>
-        {isWorking && <ButtonSpinner />}
-        {!isWorking && icon && typeof icon === 'string' ? <Icon type={icon} /> : icon}
-        {children && <ButtonText withPadding={icon || isWorking}>{children}</ButtonText>}
-    </StyledLink>
-));
+const CustomLink = forwardRef(
+    ({ children, icon, iconSize, isWorking, disabled, color, ...props }, ref) => (
+        <StyledLink
+            disabled={disabled || isWorking}
+            ref={ref}
+            color={color}
+            iconSize={iconSize}
+            {...props}>
+            {isWorking && <ButtonSpinner />}
+            {!isWorking && icon && typeof icon === 'string' ? <Icon type={icon} /> : icon}
+            {!isWorking && children && (
+                <ButtonText withPadding={icon || isWorking}>{children}</ButtonText>
+            )}
+        </StyledLink>
+    ),
+);
 
 CustomLink.propTypes = propTypes;
 CustomLink.defaultProps = defaultProps;

@@ -18,7 +18,7 @@ const mapStateToProps = createStructuredSelector({
     isAuthenticated: selectIsAuthenticated,
 });
 
-// TODO: styling
+// TODO: edit styling (look at other websites)
 const SignIn = ({ signIn, isAuthenticated }) => {
     const signInValidation = Yup.object().shape({
         login: validators.required('Login is required'),
@@ -36,8 +36,9 @@ const SignIn = ({ signIn, isAuthenticated }) => {
             validationSchema={signInValidation}
             onSubmit={signIn}>
             <Form.Element>
-                <h3>Sign In</h3>
-                <Form.Field.Input autoFocus label="Email or username" name="login" type="text" />
+                <h2>Welcome Back!</h2>
+                <p>Don't miss your next big opportunity.</p>
+                <Form.Field.Input autoFocus label="Email or username" name="login" />
                 <Form.Field.Input label="Password" name="password" type="password" />
                 <Form.Buttons />
             </Form.Element>

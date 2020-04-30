@@ -1,6 +1,6 @@
 import { api, apiErrorHandler } from 'shared/utils';
 import { setAlert } from 'redux/alerts';
-import { deleteProfile, createProfile } from 'redux/profile';
+import { deleteProfile } from 'redux/profile';
 import {
     SIGN_UP_SUCCESS,
     USER_LOADED,

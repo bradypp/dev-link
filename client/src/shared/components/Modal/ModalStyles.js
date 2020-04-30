@@ -65,7 +65,7 @@ const closeButtonStyles = {
         width: 5rem;
         height: 5rem;
         text-align: center;
-        border: 0.1rem solid ${({ theme }) => theme.colors.border2};
+        border: 1px solid ${({ theme }) => theme.colors.border2};
         ${mixins.boxShadowMedium};
 
         &:hover {

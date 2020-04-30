@@ -11,20 +11,6 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: inherit;
   }
 
-  html {
-    box-sizing: border-box;
-    font-size: 62.5%; 
-    touch-action: manipulation;
-
-    ${media.bp1200`
-        font-size: 56.25%; 
-    `}
-
-    ${media.bp800`
-        font-size: 50%; 
-    `}
-  }
-
   html,
   body, 
   #root {
@@ -32,12 +18,29 @@ const GlobalStyles = createGlobalStyle`
     max-width: 100%;
   }
 
+  html {
+    box-sizing: border-box;
+    font-size: 68.75%; /* 1rem = 11 px */
+    touch-action: manipulation;
+
+    /* TODO: decide on this font sizing media query (should be font-size: 62.5% by default?) */
+    ${media.bp2400`
+        font-size: 62.5%; /* 1rem = 10 px */
+    `}
+    ${media.bp1280`
+        font-size: 56.25%; /* 1rem = 9 px */
+    `}
+    ${media.bp800`
+        font-size: 50%; /* 1rem = 8 px */
+    `}
+  }
+
   body {
     overflow-x: hidden;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     font-family: ${({ theme }) => theme.fonts.primary};
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     font-weight: 400;
     line-height: 1.5;
     color: ${({ theme }) => theme.colors.textPrimary1};

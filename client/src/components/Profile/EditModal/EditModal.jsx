@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FaEdit } from 'react-icons/fa';
 import { Button, Modal } from 'shared/components';
 
 const propTypes = {
-    renderContent: PropTypes.node.isRequired,
+    renderContent: PropTypes.func.isRequired,
 };
 
 const EditModal = ({ renderContent }) => (
     <Modal
-        renderLink={({ open }) => <Button iconSize="2.4rem" icon="edit" onClick={open} />}
+        renderLink={({ open }) => <Button icon={<FaEdit />} onClick={open} />}
         renderContent={renderContent}
     />
 );

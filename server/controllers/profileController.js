@@ -5,6 +5,8 @@ const Profile = require('../models/Profile');
 const User = require('../models/User');
 const { AppError, catchAsync, multerImageUpload } = require('../utils');
 
+const notFoundErrorMessage = 'Profile not found';
+
 exports.getMe = (req, res, next) => {
     req.params.userId = req.user.id;
     next();
@@ -16,8 +18,6 @@ exports.getByUsername = catchAsync(async (req, res, next) => {
     req.params.userId = user.id;
     next();
 });
-
-const notFoundErrorMessage = 'Profile not found';
 
 exports.createProfileAdmin = handlers.createOne(Profile);
 exports.updateProfile = handlers.updateOneByUserId(Profile);
@@ -172,17 +172,26 @@ exports.deleteReplacedProfileImages = catchAsync(async (req, res, next) => {
     if (!profile) return next();
 
     if (req.body.avatar) {
-        if (profile.avatar.medium !== 'default-medium.jpg') {
+        if (
+            req.body.avatar.medium !== profile.avatar.medium &&
+            profile.avatar.medium !== 'default-medium.jpg'
+        ) {
             fs.unlink(`public/img/profile/avatar/${profile.avatar.medium}`, err => {
                 if (err) next(new AppError(err.message, 500));
             });
         }
-        if (profile.avatar.small !== 'default-small.jpg') {
+        if (
+            req.body.avatar.small !== profile.avatar.small &&
+            profile.avatar.small !== 'default-small.jpg'
+        ) {
             fs.unlink(`public/img/profile/avatar/${profile.avatar.small}`, err => {
                 if (err) next(new AppError(err.message, 500));
             });
         }
-        if (profile.avatar.thumbnail !== 'default-thumbnail.jpg') {
+        if (
+            req.body.avatar.thumbnail !== profile.avatar.thumbnail &&
+            profile.avatar.thumbnail !== 'default-thumbnail.jpg'
+        ) {
             fs.unlink(`public/img/profile/avatar/${profile.avatar.thumbnail}`, err => {
                 if (err) next(new AppError(err.message, 500));
             });
@@ -190,17 +199,26 @@ exports.deleteReplacedProfileImages = catchAsync(async (req, res, next) => {
     }
 
     if (req.body.cover_image) {
-        if (profile.cover_image.large !== 'default-large.jpg') {
+        if (
+            req.body.cover_image.large !== profile.cover_image.large &&
+            profile.cover_image.large !== 'default-large.jpg'
+        ) {
             fs.unlink(`public/img/profile/cover_image/${profile.cover_image.large}`, err => {
                 if (err) next(new AppError(err.message, 500));
             });
         }
-        if (profile.cover_image.medium !== 'default-medium.jpg') {
+        if (
+            req.body.cover_image.medium !== profile.cover_image.medium &&
+            profile.cover_image.medium !== 'default-medium.jpg'
+        ) {
             fs.unlink(`public/img/profile/cover_image/${profile.cover_image.medium}`, err => {
                 if (err) next(new AppError(err.message, 500));
             });
         }
-        if (profile.cover_image.small !== 'default-small.jpg') {
+        if (
+            req.body.cover_image.small !== profile.cover_image.small &&
+            profile.cover_image.small !== 'default-small.jpg'
+        ) {
             fs.unlink(`public/img/profile/cover_image/${profile.cover_image.small}`, err => {
                 if (err) next(new AppError(err.message, 500));
             });

@@ -21,7 +21,7 @@ const mapStateToProps = createStructuredSelector({
 
 // TODO: add location to sign up?
 // TODO: decide on redirect
-// TODO: styling
+// TODO: edit styling (look at other websites)
 const SignUp = ({ signUp, isAuthenticated }) => {
     const signUpValidation = Yup.object().shape({
         name: validators.name,
@@ -44,9 +44,10 @@ const SignUp = ({ signUp, isAuthenticated }) => {
             validationSchema={signUpValidation}
             onSubmit={signUp}>
             <Form.Element>
-                <h3>Sign Up</h3>
-                <Form.Field.Input autoFocus label="Name" name="name" type="text" />
-                <Form.Field.Input label="Username" name="username" type="text" />
+                <h2>Join our community</h2>
+                <p>Make the most of your career in development.</p>
+                <Form.Field.Input autoFocus label="Name" name="name" />
+                <Form.Field.Input label="Username" name="username" />
                 <Form.Field.Input label="Email" name="email" type="email" />
                 <Form.Field.Input
                     label="Password"
@@ -60,7 +61,7 @@ const SignUp = ({ signUp, isAuthenticated }) => {
                     type="password"
                     tip="Please confirm your password"
                 />
-                <Form.Buttons />
+                <Form.Buttons submitText="Join" />
             </Form.Element>
         </Form>
     );

@@ -9,6 +9,7 @@ export const ProfileTopCard = styled.section`
 `;
 
 export const CoverImageContainer = styled.div`
+    border-radius: 0.3rem 0.3rem 0 0;
     height: 18rem;
     overflow: hidden;
 `;
@@ -25,12 +26,12 @@ export const ContentLeftContainer = styled.div`
     flex: 1;
 
     h1 {
-        font-size: 2.4rem;
+        font-size: 2.2rem;
         font-weight: 400;
     }
 
     h2 {
-        font-size: 1.8rem;
+        font-size: 1.7rem;
         font-weight: 400;
     }
 

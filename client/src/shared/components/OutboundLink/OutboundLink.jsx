@@ -4,6 +4,7 @@ import { StyledLink } from './OutboundLinkStyles';
 
 const propTypes = {
     children: PropTypes.node.isRequired,
+    href: PropTypes.string.isRequired,
     target: PropTypes.string,
     rel: PropTypes.string,
 };
@@ -13,7 +14,14 @@ const defaultProps = {
     rel: 'noopener noreferrer',
 };
 
-const OutboundLink = ({ children, ...props }) => <StyledLink {...props}>{children}</StyledLink>;
+const OutboundLink = ({ children, href, ...props }) => {
+    const link = href.startsWith('http') ? href : `//${href}`;
+    return (
+        <StyledLink href={link} {...props}>
+            {children}
+        </StyledLink>
+    );
+};
 
 OutboundLink.propTypes = propTypes;
 OutboundLink.defaultProps = defaultProps;

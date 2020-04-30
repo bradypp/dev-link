@@ -10,7 +10,7 @@ export const MainContainer = styled.main`
     ${media.bp800`
         padding: 1.6rem ${({ theme }) => theme.layout.pagePaddingTablet};
     `}
-    ${media.bp450`
+    ${media.bp440`
         padding: 1.6rem ${({ theme }) => theme.layout.pagePaddingMobile};
     `}
 `;

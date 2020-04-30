@@ -8,7 +8,6 @@ export { default as NotFound } from './NotFound/NotFound';
 export { default as Profile } from './Profile/Profile';
 export { default as ProfileCard } from './Profile/ProfileCard/ProfileCard';
 export { default as ContactModal } from './Profile/ContactModal/ContactModal';
-export { default as EditModal } from './Profile/EditModal/EditModal';
 export { default as ProfileTop } from './Profile/ProfileTop/ProfileTop';
 export { default as ProfileAbout } from './Profile/ProfileAbout/ProfileAbout';
 export { default as ProfileInterests } from './Profile/ProfileInterests/ProfileInterests';
@@ -19,3 +18,4 @@ export { default as ProfileCertifications } from './Profile/ProfileCertification
 export { default as ProfileExperience } from './Profile/ProfileExperience/ProfileExperience';
 export { default as ProfileList } from './Profile/ProfileList';
 export { default as Profiles } from './Profiles/Profiles';
+export { default as EditModal } from './Profile/EditModal/EditModal';

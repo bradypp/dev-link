@@ -15,6 +15,7 @@ const propTypes = {
     }),
     position: PropTypes.object,
     width: PropTypes.string,
+    margin: PropTypes.number,
     padding: PropTypes.string,
 };
 
@@ -27,11 +28,11 @@ const defaultProps = {
     },
     position: undefined,
     width: 'min-content',
+    margin: 0,
     padding: undefined,
 };
 
-const calcPosition = (offset, placement, $tooltipRef, $linkRef) => {
-    const margin = 10;
+const calcPosition = (offset, placement, $tooltipRef, $linkRef, margin) => {
     const finalOffset = { ...defaultProps.offset, ...offset };
 
     const tooltipRect = $tooltipRef.current.getBoundingClientRect();
@@ -79,6 +80,7 @@ const Tooltip = ({
     renderElement,
     renderContent,
     position: customPosition,
+    margin,
     ...props
 }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -96,7 +98,7 @@ const Tooltip = ({
             if (customPosition) {
                 setPosition(customPosition);
             } else {
-                setPosition(calcPosition(offset, placement, $tooltipRef, $linkRef));
+                setPosition(calcPosition(offset, placement, $tooltipRef, $linkRef, margin));
             }
         };
 
@@ -110,7 +112,7 @@ const Tooltip = ({
             window.removeEventListener('resize', setTooltipPosition);
             window.removeEventListener('scroll', setTooltipPosition);
         };
-    }, [customPosition, isOpen, offset, placement]);
+    }, [customPosition, isOpen, margin, offset, placement]);
 
     return (
         <>

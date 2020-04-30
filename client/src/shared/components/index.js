@@ -5,7 +5,6 @@ export { default as ButtonSpinner } from './ButtonSpinner';
 export { default as ButtonText } from './ButtonText';
 export { default as CustomLink } from './CustomLink/CustomLink';
 export { default as Checkbox } from './Checkbox/Checkbox';
-export { default as Radio } from './Radio/Radio';
 export { default as LinkWrapper } from './CustomLink/LinkWrapper';
 export { default as Input } from './Input/Input';
 export { default as Icon } from './Icon/Icon';

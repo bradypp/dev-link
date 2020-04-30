@@ -17,6 +17,7 @@ export const HeaderContainer = styled.header`
 export const NavContainer = styled.header`
     ${mixins.containAndCenter}
     ${mixins.flexCenterBetween}
+    height:100%;
 
     input {
         width: 40rem;
@@ -29,6 +30,8 @@ export const NavContainer = styled.header`
 
 export const LinksContainer = styled.div`
     ${mixins.flexCenter}
+    height: 100%;
+
     & > *:not(:first-child) {
         margin-left: 1.6rem;
     }
@@ -42,9 +45,10 @@ export const Logo = styled(Link)`
 `;
 
 export const ClickableDiv = styled.div`
+    ${mixins.flexCenter}
     ${mixins.clickable}
     position: relative;
-    display: inline-block;
+    height: 100%;
 
     &:hover > :first-child {
         display: block;

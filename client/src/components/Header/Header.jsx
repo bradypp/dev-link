@@ -36,18 +36,19 @@ const Header = ({ isAuthenticated, signOut, user }) => {
 
     // TODO: redo tooltip dropdown menus (make new component?), they should stay in place below the header
     // TODO: change tooltip offsets depending on screen size? (use react media queries/useBreakpoint hook) or render different components on mobile (go to signin/signup pages on mobile)
+    // TODO: switch back to auth pages? Can make the styling better (like linked in sign in page)
     const guestMenu = (
         <>
             <Tooltip
-                width="45rem"
+                width="40rem"
                 placement="bottomLeft"
                 renderElement={props => <S.ClickableDiv {...props}>Sign In</S.ClickableDiv>}
                 renderContent={props => <SignIn {...props} />}
             />
             <Tooltip
-                width="45rem"
+                width="40rem"
                 placement="bottomLeft"
-                renderElement={props => <S.ClickableDiv {...props}>Sign Up</S.ClickableDiv>}
+                renderElement={props => <S.ClickableDiv {...props}>Join Now</S.ClickableDiv>}
                 renderContent={props => <SignUp {...props} />}
             />
         </>

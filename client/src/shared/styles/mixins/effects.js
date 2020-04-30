@@ -202,15 +202,15 @@ const effects = {
     `,
     fieldHover: css`
         &:hover {
-            border: 0.1rem solid ${({ theme }) => helpers.darken(theme.colors.border2, 0.025)};
-            background-color: ${({ theme }) => theme.colors.background3};
+            border: 1px solid ${({ theme }) => helpers.darken(theme.colors.fieldBorder, 0.025)};
+            background-color: ${({ theme }) => helpers.darken(theme.colors.fieldBackground, 0.03)};
         }
     `,
     fieldFocus: css`
         &:focus {
             outline: none;
-            background-color: ${({ theme }) => theme.colors.background1};
-            border: 0.1rem solid ${({ theme }) => theme.colors.borderFocus};
+            background-color: ${({ theme }) => helpers.lighten(theme.colors.fieldBackground, 0.03)};
+            border: 1px solid ${({ theme }) => theme.colors.borderFocus};
             box-shadow: 0 0 0 0.1rem ${({ theme }) => theme.colors.borderFocus};
         }
     `,
@@ -221,7 +221,7 @@ const effects = {
                 &,
                 &:invalid,
                 &:focus {
-                    border: 0.1rem solid ${theme.colors.danger} !important;
+                    border: 1px solid ${theme.colors.danger} !important;
                     box-shadow: none !important;
                 }
             `};

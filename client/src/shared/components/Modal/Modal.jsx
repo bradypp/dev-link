@@ -85,7 +85,6 @@ const Modal = ({
                                 ref={$modalRef}>
                                 {withCloseButton && (
                                     <CloseButton
-                                        type="close"
                                         variant={variant}
                                         onClick={closeModal}
                                         backgroundColor={backgroundColor}

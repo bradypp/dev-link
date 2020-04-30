@@ -41,6 +41,7 @@ const Button = forwardRef(
             iconOnly={!children}
             ref={ref}
             color={color}
+            iconSize={iconSize}
             {...props}>
             {isWorking && <ButtonSpinner />}
             {!isWorking && icon && typeof icon === 'string' ? (
@@ -48,7 +49,9 @@ const Button = forwardRef(
             ) : (
                 icon
             )}
-            {children && <ButtonText withPadding={icon || isWorking}>{children}</ButtonText>}
+            {!isWorking && children && (
+                <ButtonText withPadding={icon || isWorking}>{children}</ButtonText>
+            )}
         </StyledButton>
     ),
 );

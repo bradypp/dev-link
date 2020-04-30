@@ -33,6 +33,12 @@ const utils = {
     hardwareAccelerate: css`
         transform: translateZ(0);
     `,
+    hideElement: css`
+        position: absolute;
+        pointer-events: none;
+        visibility: hidden;
+        opacity: 0;
+    `,
 };
 
 export default utils;

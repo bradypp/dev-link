@@ -18,6 +18,7 @@ const components = {
         line-height: 1;
     `,
     card: css`
+        border-radius: 0.3rem;
         box-shadow: ${({ theme }) => theme.boxShadow.primary};
         background: ${({ theme }) => theme.colors.background1};
         padding: ${({ theme }) => theme.layout.cardPadding};
@@ -51,6 +52,21 @@ const components = {
         background-color: ${({ theme }) => theme.colors.background3};
         font-weight: 500;
         font-size: 1.2rem;
+    `,
+    fieldStyling: css`
+        width: 100%;
+        font-family: ${({ theme }) => theme.fonts.primary};
+        border-radius: ${({ theme }) => theme.form.fieldBorderRadius};
+        border: 1px solid ${({ theme }) => theme.colors.fieldBorder};
+        color: ${({ theme }) => theme.colors.fieldText};
+        background-color: ${({ theme }) => theme.colors.fieldBackground};
+        font-size: ${({ theme }) => theme.form.fontSize};
+    `,
+    fieldSubtitle: css`
+        padding-top: 0.6rem;
+        font-size: 1.2rem;
+        line-height: 1;
+        font-weight: 400;
     `,
 };
 

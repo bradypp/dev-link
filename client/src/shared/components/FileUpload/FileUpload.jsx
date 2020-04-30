@@ -12,6 +12,7 @@ const propTypes = {
     icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     height: PropTypes.string,
     width: PropTypes.string,
+    maxFiles: PropTypes.number,
 };
 
 const defaultProps = {
@@ -19,22 +20,24 @@ const defaultProps = {
     icon: undefined,
     height: '22rem',
     width: '100%',
+    maxFiles: undefined,
 };
 
-const FileUpload = ({ files, setFiles, description, icon, ...props }) => {
+const FileUpload = ({ files, setFiles, description, icon, maxFiles, ...props }) => {
     const onDrop = useCallback(
         acceptedFiles => {
-            console.log(acceptedFiles);
-            setFiles(
-                acceptedFiles.map(file =>
-                    Object.assign(file, {
-                        preview: URL.createObjectURL(file),
-                    }),
-                ),
+            const filesWithPreview = acceptedFiles.map(file =>
+                Object.assign(file, {
+                    preview: URL.createObjectURL(file),
+                }),
             );
+            files.push(filesWithPreview);
+            const newFiles = maxFiles ? files.flat().splice(0, maxFiles) : files.flat();
+            return setFiles(newFiles);
         },
-        [setFiles],
+        [files, maxFiles, setFiles],
     );
+
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
     useEffect(() => {

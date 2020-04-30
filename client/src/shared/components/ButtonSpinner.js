@@ -5,6 +5,8 @@ const ButtonSpinner = styled(Spinner).attrs({
     renderOverlay: false,
     variant: 'button',
     size: '1.8rem',
-})``;
+})`
+    position: absolute;
+`;
 
 export default ButtonSpinner;

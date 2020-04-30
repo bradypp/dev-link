@@ -13,7 +13,7 @@ const defaultProps = {
     isCurrentUser: false,
 };
 
-const ProfileCardItem = ({ children, secondarySubtitle, ...props }) => (
+const ProfileCardItem = ({ children, ...props }) => (
     <S.ProfileCardItemContainer {...props}>{children}</S.ProfileCardItemContainer>
 );
 

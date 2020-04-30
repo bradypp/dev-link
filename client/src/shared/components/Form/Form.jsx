@@ -1,9 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Formik } from 'formik';
-import FormField from './FormField';
+import { Formik, FieldArray } from 'formik';
+import Field from './Field';
 import FormButtons from './FormButtons';
-import { FormikForm } from './FormStyles';
+import {
+    FormikForm,
+    FieldContainer,
+    FlexContainer,
+    FieldLabel,
+    FieldError,
+    FieldTip,
+} from './FormStyles';
 
 const propTypes = {
     validateOnBlur: PropTypes.bool,
@@ -17,8 +24,14 @@ const Form = props => <Formik {...props} />;
 
 Form.Element = props => <FormikForm noValidate {...props} />;
 
-Form.Field = FormField;
+Form.Field = Field;
+Form.FieldArray = FieldArray;
+Form.FieldContainer = FieldContainer;
+Form.FieldLabel = FieldLabel;
+Form.FieldError = FieldError;
+Form.FieldTip = FieldTip;
 Form.Buttons = FormButtons;
+Form.Flex = FlexContainer;
 
 Form.propTypes = propTypes;
 Form.defaultProps = defaultProps;

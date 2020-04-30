@@ -6,7 +6,7 @@ import { TextAreaContainer } from './TextAreaStyles';
 const propTypes = {
     className: PropTypes.string,
     invalid: PropTypes.bool,
-    minRows: PropTypes.number,
+    height: PropTypes.number,
     value: PropTypes.string,
     onChange: PropTypes.func,
 };
@@ -14,14 +14,14 @@ const propTypes = {
 const defaultProps = {
     className: undefined,
     invalid: false,
-    minRows: 2,
+    height: 4.8,
     value: undefined,
     onChange: () => {},
 };
 
 // TODO: customize & test
-const TextArea = forwardRef(({ className, invalid, onChange, ...props }, ref) => (
-    <TextAreaContainer className={className} invalid={invalid}>
+const TextArea = forwardRef(({ className, invalid, onChange, height, ...props }, ref) => (
+    <TextAreaContainer className={className} invalid={invalid} height={height}>
         <TextAreaAutoSize
             onChange={event => onChange(event.target.value, event)}
             inputRef={ref || undefined}

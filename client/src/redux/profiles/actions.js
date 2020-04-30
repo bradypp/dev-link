@@ -20,6 +20,20 @@ export const getProfiles = () => async (dispatch, queryParams = '') => {
     }
 };
 
+export const getAllSkills = () => async (dispatch, queryParams = '') => {
+    try {
+        dispatch(clearProfiles());
+        dispatch(profilesLoading());
+
+        const res = await api.get(`/profile/all/${queryParams}`);
+
+        dispatch(profilesLoaded(res.data.data.profiles));
+    } catch (err) {
+        dispatch(apiErrorHandler(err));
+        dispatch(profilesError(err));
+    }
+};
+
 export const clearProfiles = () => ({
     type: CLEAR_PROFILES,
 });

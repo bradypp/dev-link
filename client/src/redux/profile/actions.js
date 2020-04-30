@@ -82,7 +82,7 @@ export const updateProfile = data => async dispatch => {
 };
 
 // TODO:
-export const addPortfolioitem = data => async dispatch => {
+export const addPortfolioItem = data => async dispatch => {
     try {
         const config = {
             headers: {

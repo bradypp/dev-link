@@ -1,12 +1,13 @@
 import { css } from 'styled-components/macro';
 
 const sizes = {
-    bp1800: 1800,
-    bp1200: 1200,
-    bp1000: 1000,
-    bp800: 800,
-    bp600: 600,
-    bp450: 450,
+    bp2400: 2400, // Huge monitor
+    bp1760: 1760, // Large monitor
+    bp1280: 1280, // Small laptop
+    bp1040: 1040, // Tablet landscape
+    bp800: 800, // Tablet portrait
+    bp440: 440, // Large phone
+    bp384: 384, // Small phone
 };
 
 const media = Object.keys(sizes).reduce((acc, label) => {

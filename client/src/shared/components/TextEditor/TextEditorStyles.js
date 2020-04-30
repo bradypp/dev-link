@@ -3,26 +3,28 @@ import styled from 'styled-components';
 export const EditorContainer = styled.div`
     * {
         font-family: ${({ theme }) => theme.fonts.primary};
-        font-size: 1.5rem;
-        color: ${({ theme }) => theme.colors.textPrimary1};
+        font-size: ${({ theme }) => theme.form.fontSize};
+        color: ${({ theme }) => theme.colors.fieldText};
     }
 
     .ql-editor.ql-blank::before {
-        color: ${({ theme }) => theme.colors.textPrimary1};
+        color: ${({ theme }) => theme.colors.fieldText};
         opacity: 0.5;
         font-style: normal;
     }
 
     .ql-snow {
-        border: 0.1rem solid ${({ theme }) => theme.colors.border2};
+        border: 1px solid ${({ theme }) => theme.colors.fieldBorder};
     }
 
     .ql-toolbar.ql-snow {
-        border-radius: 0.4rem 0.4rem 0 0;
+        border-radius: ${({ theme }) =>
+            `${theme.layout.fieldBorderRadius} ${theme.layout.fieldBorderRadius} 0 0`};
     }
 
     .ql-container.ql-snow {
-        border-radius: 0 0 0.4rem 0.4rem;
+        border-radius: ${({ theme }) =>
+            `0 0 ${theme.layout.fieldBorderRadius} ${theme.layout.fieldBorderRadius}`};
         border-top: none;
     }
 

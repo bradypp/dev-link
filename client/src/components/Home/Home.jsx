@@ -12,13 +12,14 @@ const Home = () => {
                 <Form
                     initialValues={{
                         search: '',
+                        check: false,
                     }}>
                     <Form.Element>
                         <S.StyledInput
                             autoFocus
                             icon={<IoIosSearch />}
                             name="search"
-                            placeholder="Search for developers by name, skill or company"
+                            placeholder="Search for developers..."
                         />
                         <Form.Buttons
                             submitText="Search"

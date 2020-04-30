@@ -3,7 +3,7 @@ import { Button, Modal, Icon } from 'shared/components';
 
 // TODO: Create profile buttons (primary & edit)
 export const ProfileContainer = styled.div`
-    grid-column: 1 / 11;
+    grid-column: 1 / 12;
     & > * {
         margin-bottom: ${({ theme }) => theme.layout.mainGridGap};
     }

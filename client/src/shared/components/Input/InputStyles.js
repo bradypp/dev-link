@@ -5,8 +5,7 @@ export const InputContainer = styled.div`
     position: relative;
     height: ${({ height }) => `${height}rem`};
     width: 100%;
-    border-radius: 0.3rem;
-
+    border-radius: ${({ theme }) => theme.layout.fieldBorderRadius};
     svg {
         position: absolute;
         top: ${({ height }) => `${height / 4.2}rem`};
@@ -18,16 +17,15 @@ export const InputContainer = styled.div`
 
 export const InputElement = styled.input`
     height: 100%;
-    width: 100%;
     padding: 0 0.7rem;
-    border: 0.1rem solid ${({ theme }) => theme.colors.border2};
-    border-radius: 0.3rem;
-    color: ${({ theme, color }) => theme.colors[color]};
-    background-color: ${({ theme }) => theme.colors.background2};
-    font-family: ${({ theme }) => theme.fonts.primary};
-    font-size: ${({ fontSize }) => fontSize || `1.6rem`};
     padding-left: ${({ hasIcon, height }) => (hasIcon ? `${height}rem` : `${height / 4.5}rem`)};
-    transition: all 0.1s;
+    width: 100%;
+    font-family: ${({ theme }) => theme.fonts.primary};
+    border-radius: ${({ theme }) => theme.form.fieldBorderRadius};
+    border: 1px solid ${({ theme }) => theme.colors.fieldBorder};
+    color: ${({ theme }) => theme.colors.fieldText};
+    background-color: ${({ theme }) => theme.colors.fieldBackground};
+    font-size: ${({ theme, fontSize }) => fontSize || theme.form.fontSize};
     ${mixins.fieldHover}
     ${mixins.fieldFocus}
     ${mixins.fieldInvalid}

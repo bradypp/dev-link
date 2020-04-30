@@ -4,21 +4,27 @@ import { Button } from 'shared/components';
 import { ButtonsContainer } from './FormStyles';
 
 const propTypes = {
+    className: PropTypes.string,
     withSubmit: PropTypes.bool,
     withReset: PropTypes.bool,
     withCancel: PropTypes.bool,
     onCancel: PropTypes.func,
     customButtons: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     submitText: PropTypes.string,
+    resetText: PropTypes.string,
+    cancelText: PropTypes.string,
 };
 
 const defaultProps = {
+    className: PropTypes.string,
     withSubmit: true,
     withReset: false,
     withCancel: false,
     onCancel: () => {},
     customButtons: undefined,
     submitText: 'Submit',
+    resetText: 'Reset',
+    cancelText: 'Cancel',
 };
 
 const FormButtons = ({
@@ -28,15 +34,17 @@ const FormButtons = ({
     onCancel,
     customButtons,
     submitText,
+    resetText,
+    cancelText,
     ...props
 }) => {
     return (
         <ButtonsContainer {...props}>
             {withSubmit && <Button type="submit">{submitText}</Button>}
-            {withReset && <Button type="reset">Reset</Button>}
+            {withReset && <Button type="reset">{resetText}</Button>}
             {withCancel && (
                 <Button type="button" onClick={onCancel}>
-                    Cancel
+                    {cancelText}
                 </Button>
             )}
             {customButtons && customButtons}

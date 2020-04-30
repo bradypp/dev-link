@@ -1,6 +1,7 @@
-import styled from 'styled-components/macro';
+import styled, { css } from 'styled-components/macro';
 import ButtonWrapper from './ButtonWrapper';
 
+// TODO: share all styles with custom link button variants
 const iconOnlyHeightWidth = '2.8rem';
 export const StyledButton = styled(ButtonWrapper)`
     height: ${({ iconOnly }) => (iconOnly ? iconOnlyHeightWidth : '3.2rem')};
@@ -8,6 +9,14 @@ export const StyledButton = styled(ButtonWrapper)`
     padding: 0 ${({ iconOnly }) => (iconOnly ? '0' : '1.2rem')};
     border-radius: 0.3rem;
     font-size: 1.45rem;
+    color: ${({ theme }) => theme.colors.textPrimary1};
+
+    svg {
+        ${({ iconSize }) =>
+            css`
+                font-size: ${iconSize};
+            `}
+    }
 `;
 
 // const colored = css`

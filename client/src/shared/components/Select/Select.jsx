@@ -23,6 +23,7 @@ const propTypes = {
     ).isRequired,
     onChange: PropTypes.func.isRequired,
     onCreate: PropTypes.func,
+    withCreate: PropTypes.bool,
     isMulti: PropTypes.bool,
     withClearValue: PropTypes.bool,
     renderValue: PropTypes.func,
@@ -39,6 +40,7 @@ const defaultProps = {
     placeholder: 'Select',
     invalid: false,
     onCreate: undefined,
+    withCreate: false,
     isMulti: false,
     withClearValue: true,
     renderValue: undefined,
@@ -54,15 +56,17 @@ const Select = ({
     defaultValue,
     placeholder,
     invalid,
-    options,
+    options: propsOptions,
     onChange,
     onCreate,
+    withCreate,
     isMulti,
     withClearValue,
     renderValue: propsRenderValue,
     renderOption: propsRenderOption,
 }) => {
     const [stateValue, setStateValue] = useState(defaultValue || (isMulti ? [] : null));
+    const [options, setOptions] = useState(propsOptions);
     const [isDropdownOpen, setDropdownOpen] = useState(false);
     const [searchValue, setSearchValue] = useState('');
 
@@ -70,12 +74,9 @@ const Select = ({
     const value = isControlled ? propsValue : stateValue;
 
     const $selectRef = useRef();
-    const $inputRef = useRef();
 
     const activateDropdown = () => {
-        if (isDropdownOpen) {
-            $inputRef.current.focus();
-        } else {
+        if (!isDropdownOpen) {
             setDropdownOpen(true);
         }
     };
@@ -167,7 +168,7 @@ const Select = ({
                                 </S.ValueMultiItem>
                             ),
                         )}
-                        <S.AddMore variant={variant}>
+                        <S.AddMore htmlFor="select-search" variant={variant}>
                             <IoIosAdd />
                             Add more
                         </S.AddMore>
@@ -183,11 +184,12 @@ const Select = ({
                     searchValue={searchValue}
                     setSearchValue={setSearchValue}
                     $selectRef={$selectRef}
-                    $inputRef={$inputRef}
                     deactivateDropdown={deactivateDropdown}
                     options={options}
+                    setOptions={setOptions}
                     onChange={handleChange}
                     onCreate={onCreate}
+                    withCreate={withCreate}
                     isMulti={isMulti}
                     withClearValue={withClearValue}
                     propsRenderOption={propsRenderOption}

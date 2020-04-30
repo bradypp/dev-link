@@ -13,8 +13,19 @@ export const selectCurrentProfile = createSelector([selectProfile], profile => p
 
 export const selectProfileInfo = createSelector(
     [selectCurrentProfile],
-    ({ _id, headline, current_position, city, country, website, github_username, company }) => ({
+    ({
         _id,
+        name,
+        headline,
+        current_position,
+        city,
+        country,
+        website,
+        github_username,
+        company,
+    }) => ({
+        _id,
+        name,
         headline,
         current_position,
         city,

@@ -10,11 +10,12 @@ const propTypes = {
     isValueEmpty: PropTypes.bool.isRequired,
     searchValue: PropTypes.string.isRequired,
     setSearchValue: PropTypes.func.isRequired,
-    $inputRef: PropTypes.object.isRequired,
     deactivateDropdown: PropTypes.func.isRequired,
     options: PropTypes.array.isRequired,
+    setOptions: PropTypes.func.isRequired,
     onChange: PropTypes.func.isRequired,
     onCreate: PropTypes.func,
+    withCreate: PropTypes.bool,
     isMulti: PropTypes.bool.isRequired,
     withClearValue: PropTypes.bool.isRequired,
     propsRenderOption: PropTypes.func,
@@ -24,6 +25,7 @@ const defaultProps = {
     dropdownWidth: undefined,
     value: undefined,
     onCreate: undefined,
+    withCreate: false,
     propsRenderOption: undefined,
 };
 
@@ -33,17 +35,19 @@ const SelectDropdown = ({
     isValueEmpty,
     searchValue,
     setSearchValue,
-    $inputRef,
     deactivateDropdown,
     options,
     onChange,
     onCreate,
+    withCreate,
     isMulti,
     withClearValue,
     propsRenderOption,
+    setOptions,
 }) => {
     const [isCreatingOption, setCreatingOption] = useState(false);
     const $optionsRef = useRef();
+    const $inputRef = useRef();
     const activeOptionClass = 'select-option-is-active';
 
     useLayoutEffect(() => {
@@ -69,17 +73,22 @@ const SelectDropdown = ({
 
     const createOption = newOptionLabel => {
         setCreatingOption(true);
-        onCreate(newOptionLabel, createdOptionValue => {
+        if (onCreate) {
+            onCreate(newOptionLabel, createdOptionValue => {
+                setCreatingOption(false);
+                selectOptionValue(createdOptionValue);
+            });
+        } else {
+            setOptions([...options, { label: newOptionLabel, value: newOptionLabel }]);
             setCreatingOption(false);
-            selectOptionValue(createdOptionValue);
-        });
+            selectOptionValue(newOptionLabel);
+        }
     };
 
     const clearOptionValues = () => {
-        // eslint-disable-next-line no-param-reassign
         $inputRef.current.value = '';
         $inputRef.current.focus();
-        onChange(isMulti ? [] : null);
+        setSearchValue('');
     };
 
     const handleInputKeyDown = event => {
@@ -171,12 +180,13 @@ const SelectDropdown = ({
         : removeSelectedOptionsSingle(optionsFilteredBySearchValue);
 
     const isSearchValueInOptions = options.map(option => option.label).includes(searchValue);
-    const isOptionCreatable = onCreate && searchValue && !isSearchValueInOptions;
+    const isOptionCreatable = withCreate && searchValue && !isSearchValueInOptions;
 
     // TODO: allow the search input render to be controlled via props
     return (
         <S.Dropdown width={dropdownWidth}>
             <S.DropdownInput
+                id="select-search"
                 type="text"
                 placeholder="Search"
                 ref={$inputRef}

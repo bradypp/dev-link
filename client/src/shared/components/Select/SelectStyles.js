@@ -4,10 +4,10 @@ import { mixins } from 'shared/styles';
 
 export const SelectContainer = styled.div`
     position: relative;
-    border-radius: 0.4rem;
     cursor: pointer;
-    font-size: 1.5rem;
     width: 100%;
+    border-radius: ${({ theme }) => theme.form.fieldBorderRadius};
+    font-size: ${({ theme }) => theme.form.fontSize};
     ${({ variant }) => variant === 'empty' && 'display: inline-block'};
     ${mixins.fieldInvalid}
 
@@ -15,9 +15,8 @@ export const SelectContainer = styled.div`
         variant === 'normal' &&
         disabled !== true &&
         css`
-            border: 0.1rem solid ${theme.colors.border1};
-            background-color: ${theme.colors.background1};
-            transition: all 0.1s;
+            border: 1px solid ${theme.colors.border1};
+            background-color: ${theme.colors.fieldBackground};
             ${mixins.fieldHover};
             ${mixins.fieldFocus};
         `}
@@ -55,7 +54,7 @@ export const ValueMultiItem = styled.div`
     ${mixins.tag}
 `;
 
-export const AddMore = styled.div`
+export const AddMore = styled.label`
     display: inline-block;
     padding: 0.3rem 0;
     font-size: 1.2rem;
@@ -74,8 +73,9 @@ export const Dropdown = styled.div`
     position: absolute;
     top: 100%;
     left: 0;
-    border-radius: 0 0 0.4rem 0.4rem;
-    background: ${({ theme }) => theme.colors.background1};
+    border-radius: ${({ theme }) =>
+        `0 0 ${theme.layout.fieldBorderRadius} ${theme.layout.fieldBorderRadius}`};
+    background-color: ${({ theme }) => theme.colors.fieldBackground};
     box-shadow: ${({ theme }) => theme.boxShadow.dropdown};
     width: ${({ width }) => width || '100%'};
 `;
@@ -84,7 +84,7 @@ export const DropdownInput = styled.input`
     padding: 1rem 1.4rem 0.8rem;
     width: 100%;
     border: none;
-    color: ${({ theme }) => theme.colors.textPrimary1};
+    color: ${({ theme }) => theme.colors.fieldText};
     background: none;
     &:focus {
         outline: none;
@@ -122,12 +122,8 @@ export const Option = styled.div`
     word-break: break-word;
     cursor: pointer;
 
-    /* &:last-of-type {
-        margin-bottom: 0.8rem;
-    } */
-
     &.select-option-is-active {
-        background: ${({ theme }) => theme.colors.activeBackground};
+        background-color: ${({ theme }) => theme.colors.activeBackground};
     }
 `;
 

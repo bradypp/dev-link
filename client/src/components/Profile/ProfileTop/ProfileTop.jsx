@@ -20,7 +20,7 @@ import {
 } from 'redux/profile';
 import { selectUser, selectIsAuthenticated } from 'redux/auth';
 import { setAlert } from 'redux/alerts';
-import { ContactModal, SocialsModal } from 'components';
+import { ContactModal } from 'components';
 import { OutboundLink } from 'shared/components';
 import ProfileTopForm from './ProfileTopForm/ProfileTopForm';
 import * as S from './ProfileTopStyles';
@@ -30,7 +30,7 @@ const propTypes = {
     toggleWatch: PropTypes.func.isRequired,
     setAlert: PropTypes.func.isRequired,
     avatar: PropTypes.object.isRequired,
-    coverImage: PropTypes.object.isRequired,
+    cover_image: PropTypes.object.isRequired,
     currentUser: PropTypes.object.isRequired,
     profileInfo: PropTypes.object.isRequired,
     stars: PropTypes.array.isRequired,
@@ -43,7 +43,7 @@ const propTypes = {
 
 const mapStateToProps = createStructuredSelector({
     avatar: selectProfileAvatar,
-    coverImage: selectProfileCoverImage,
+    cover_image: selectProfileCoverImage,
     currentUser: selectUser,
     profileInfo: selectProfileInfo,
     stars: selectProfileStars,
@@ -66,7 +66,7 @@ const mapDispatchToProps = {
 // TODO: save name from user to profile on sign up/after initial profile creation
 const ProfileTop = ({
     avatar,
-    coverImage,
+    cover_image,
     currentUser,
     profileInfo,
     stars,
@@ -81,11 +81,11 @@ const ProfileTop = ({
 }) => {
     const {
         headline,
-        current_position: currentPosition,
+        current_position,
         city,
         country,
         website,
-        github_username: githubUsername,
+        github_username,
         company,
         name,
     } = profileInfo;
@@ -118,7 +118,7 @@ const ProfileTop = ({
             <S.CoverImageContainer>
                 <Image
                     src={[
-                        `http://localhost:5000/img/profile/cover_image/${coverImage.medium}`,
+                        `http://localhost:5000/img/profile/cover_image/${cover_image.medium}`,
                         ` http://localhost:5000/img/profile/cover_image/default-medium.jpg`,
                     ]}
                     alt="Profile cover"
@@ -149,22 +149,22 @@ const ProfileTop = ({
                     {company ? (
                         <h3>
                             {company}
-                            {currentPosition && <> &middot; {currentPosition}</>}
+                            {current_position && <> &middot; {current_position}</>}
                         </h3>
                     ) : (
-                        <>{currentPosition && <h3>{currentPosition}</h3>}</>
+                        <>{current_position && <h3>{current_position}</h3>}</>
                     )}
-                    {(!isEmpty(contact) || !isEmpty(socials) || website || githubUsername) && (
+                    {(!isEmpty(contact) || !isEmpty(socials) || website || github_username) && (
                         <S.InfoButtonsContainer>
                             {(!isEmpty(contact) || !isEmpty(socials)) && (
                                 <ContactModal contact={contact} socials={socials} />
                             )}
                             {(!isEmpty(contact) || !isEmpty(socials)) &&
-                                (website || githubUsername) && <>&middot;</>}
+                                (website || github_username) && <>&middot;</>}
                             {website && <OutboundLink href={website}>Website</OutboundLink>}
-                            {website && githubUsername && <>&middot;</>}
-                            {githubUsername && (
-                                <OutboundLink href={`https://github.com/${githubUsername}`}>
+                            {website && github_username && <>&middot;</>}
+                            {github_username && (
+                                <OutboundLink href={`https://github.com/${github_username}`}>
                                     GitHub
                                 </OutboundLink>
                             )}
@@ -182,17 +182,18 @@ const ProfileTop = ({
                         </S.ToggleButton>
                         <S.CountContainer>{stars.length}</S.CountContainer>
                         <ProfileTopForm
+                            currentUser={currentUser}
                             formData={{
                                 avatar,
+                                cover_image,
                                 headline,
-                                currentPosition,
+                                current_position,
                                 city,
                                 country,
                                 website,
-                                githubUsername,
+                                github_username,
                                 company,
                                 name,
-                                currentUser,
                                 socials,
                                 contact,
                                 skills,

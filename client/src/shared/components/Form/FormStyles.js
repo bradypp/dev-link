@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components/macro';
+import styled from 'styled-components/macro';
 import { Form } from 'formik';
 import { mixins } from 'shared/styles';
 
@@ -7,38 +7,40 @@ export const FormikForm = styled(Form)`
         margin-bottom: 2rem;
     }
 
-    h1,
-    h2,
-    h3:not(:last-child) {
-        margin-bottom: 1.6rem;
+    && > h1,
+    && > h2,
+    && > h3 {
+        margin-bottom: 0.8rem;
     }
 `;
 
-export const FieldContainer = styled.div``;
+export const FlexContainer = styled.div`
+    ${mixins.flexCenter};
+    & > *:not(:first-child) {
+        margin-left: ${({ theme }) => theme.form.fieldGap};
+    }
+`;
+
+export const FieldContainer = styled.div`
+    width: 100%;
+`;
 
 export const FieldLabel = styled.label`
     display: block;
     padding-bottom: 0.6rem;
-    color: ${({ theme }) => theme.colors.textPrimary2};
+    color: ${({ theme }) => theme.colors.textPrimary1};
     font-size: 1.3rem;
     font-weight: 500;
     width: max-content;
 `;
 
-const sharedSubtitleStyles = css`
-    padding-top: 0.6rem;
-    font-size: 1.2rem;
-    line-height: 1;
-    font-weight: 400;
-`;
-
 export const FieldTip = styled.div`
-  ${sharedSubtitleStyles}
+  ${mixins.fieldSubtitle}
   color: ${({ theme }) => theme.colors.textPrimary2};
   `;
 
 export const FieldError = styled.div`
-  ${sharedSubtitleStyles}
+  ${mixins.fieldSubtitle}
   color: ${({ theme }) => theme.colors.danger};
 `;
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FaEdit } from 'react-icons/fa';
-import { StyledIcon } from './IconStyles';
+import { styleIcon } from './IconStyles';
 
 const propTypes = {
     type: PropTypes.string.isRequired,
@@ -16,18 +16,17 @@ const defaultProps = {
     className: undefined,
     size: '1.6rem',
     color: undefined,
-    left: 1,
+    left: 0,
     top: 0,
 };
 
+// TODO: covert icons over to this
 // Icon library
-const types = {
-    [`edit`]: FaEdit,
-};
+const types = {};
 
 const Icon = ({ type, ...props }) => {
-    const RenderedIcon = StyledIcon(types[type]);
-    return <RenderedIcon data-testid={`icon:${type}`} {...props} />;
+    const StyledIcon = styleIcon(types[type]);
+    return <StyledIcon data-testid={`icon:${type}`} {...props} />;
 };
 
 Icon.propTypes = propTypes;

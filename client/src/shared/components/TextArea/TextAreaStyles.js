@@ -7,14 +7,15 @@ export const TextAreaContainer = styled.div`
     
     textarea {
         overflow-y: hidden;
-        width: 100%;
         padding: 0.8rem 0.12rem 0.9rem;
-        border-radius: 0.3rem;
-        border: 0.1rem solid ${({ theme }) => theme.colors.border1};
-        color: ${({ theme }) => theme.colors.textPrimary1};
-        background-color: ${({ theme }) => theme.colors.background2};
-        font-size: 1.5rem;
-        min-height: 15rem;
+        min-height: ${({ height }) => `${height}rem !important`};
+        width: 100%;
+        font-family: ${({ theme }) => theme.fonts.primary};
+        border-radius: ${({ theme }) => theme.form.fieldBorderRadius};
+        border: 1px solid ${({ theme }) => theme.colors.fieldBorder};
+        color: ${({ theme }) => theme.colors.fieldText};
+        background-color: ${({ theme }) => theme.colors.fieldBackground};
+        font-size: ${({ theme }) => theme.form.fontSize};
         ${mixins.fieldHover}
         ${mixins.fieldFocus}
         ${mixins.fieldInvalid}

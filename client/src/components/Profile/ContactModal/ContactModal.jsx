@@ -4,7 +4,7 @@ import { StyledOutboundLink } from './ContactModalStyles';
 
 // TODO: styling button as a link
 // TODO: conditional appearance based on if profile belongs to current authenticated user (for editing)
-const Contact = ({ name, contact, socials }) => {
+const Contact = ({ contact, socials }) => {
     const { email, phone } = contact;
 
     return (
@@ -26,10 +26,10 @@ const Contact = ({ name, contact, socials }) => {
                             <p>{phone}</p>
                         </>
                     )}
-                    {socials.map(social => (
+                    {socials.map(({ name, link }) => (
                         <>
-                            <h3>{social.name}</h3>
-                            <StyledOutboundLink>{social.link}</StyledOutboundLink>
+                            <h3>{name}</h3>
+                            <StyledOutboundLink href={link}>{link}</StyledOutboundLink>
                         </>
                     ))}
                     <Button onClick={close}>Close</Button>
