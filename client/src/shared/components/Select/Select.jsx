@@ -27,7 +27,7 @@ const propTypes = {
     onChange: PropTypes.func.isRequired,
     onCreate: PropTypes.func,
     withCreate: PropTypes.bool,
-    withSearch: PropTypes.bool,
+    withInput: PropTypes.bool,
     withOptions: PropTypes.bool,
     isMulti: PropTypes.bool,
     withClearValue: PropTypes.bool,
@@ -47,7 +47,7 @@ const defaultProps = {
     invalid: false,
     onCreate: undefined,
     withCreate: false,
-    withSearch: true,
+    withInput: true,
     withOptions: true,
     isMulti: false,
     withClearValue: true,
@@ -68,7 +68,7 @@ const Select = ({
     onChange,
     onCreate,
     withCreate,
-    withSearch,
+    withInput,
     withOptions,
     isMulti,
     withClearValue,
@@ -212,7 +212,7 @@ const Select = ({
                     onChange={handleChange}
                     onCreate={onCreate}
                     withCreate={withCreate}
-                    withSearch={withSearch}
+                    withInput={withInput}
                     withOptions={withOptions}
                     isMulti={isMulti}
                     inputId={inputId}

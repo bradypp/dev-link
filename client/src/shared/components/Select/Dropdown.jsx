@@ -18,7 +18,7 @@ const propTypes = {
     onCreate: PropTypes.func,
     withCreate: PropTypes.bool.isRequired,
     inputId: PropTypes.string.isRequired,
-    withSearch: PropTypes.bool.isRequired,
+    withInput: PropTypes.bool.isRequired,
     withOptions: PropTypes.bool.isRequired,
     isMulti: PropTypes.bool.isRequired,
     withClearValue: PropTypes.bool.isRequired,
@@ -44,7 +44,7 @@ const SelectDropdown = ({
     onChange,
     onCreate,
     withCreate,
-    withSearch,
+    withInput,
     inputId,
     isMulti,
     withClearValue,
@@ -191,7 +191,7 @@ const SelectDropdown = ({
 
     return (
         <S.Dropdown width={dropdownWidth}>
-            {withSearch && (
+            {withInput && (
                 <S.DropdownInput
                     id={inputId}
                     type="text"

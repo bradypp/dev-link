@@ -34,8 +34,9 @@ const ProfileTopForm = ({ updateProfile, currentUser, formData }) => (
                         name: formData.name || currentUser.name,
                     }}
                     onSubmit={values => {
-                        updateProfile(values);
-                        close();
+                        console.log(values);
+                        // updateProfile(values);
+                        // close();
                     }}>
                     {({ values }) => (
                         <Form.Element>
@@ -69,6 +70,9 @@ const ProfileTopForm = ({ updateProfile, currentUser, formData }) => (
                             </div> */}
                             <Form.Field.Select
                                 isMulti
+                                withOptions={false}
+                                valuePlaceholder="Add"
+                                inputPlaceholder="Add a skill"
                                 withCreate
                                 label="Skills"
                                 tip="Choose your featured development skills"
