@@ -16,7 +16,6 @@ const propTypes = {
     onClose: PropTypes.func,
     renderLink: PropTypes.func,
     renderContent: PropTypes.func.isRequired,
-    shouldRender: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -29,7 +28,6 @@ const defaultProps = {
     isOpen: undefined,
     onClose: () => {},
     renderLink: () => {},
-    shouldRender: undefined,
 };
 
 const Modal = ({
@@ -43,7 +41,6 @@ const Modal = ({
     onClose: tellParentToClose,
     renderLink,
     renderContent,
-    shouldRender,
 }) => {
     const [stateIsOpen, setStateOpen] = useState(false);
     const isControlled = typeof propsIsOpen === 'boolean';
@@ -72,10 +69,6 @@ const Modal = ({
             };
         }
     }, [isOpen]);
-
-    useEffect(() => {
-        if (shouldRender) setStateOpen(true);
-    }, [shouldRender]);
 
     return (
         <>

@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import normalize from 'normalize-url';
 
 const validators = {
     required: (errorMessage = 'Field is required') =>

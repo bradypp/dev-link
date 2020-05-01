@@ -7,11 +7,21 @@ export const ProfileTopCard = styled.section`
     ${mixins.card}
     padding: 0;
 `;
+const coverImageContainer = css`
+    border-radius: 0.3rem 0.3rem 0 0;
+    height: 20rem;
+    width: 100%;
+    overflow: hidden;
+`;
 
 export const CoverImageContainer = styled.div`
-    border-radius: 0.3rem 0.3rem 0 0;
-    height: 18rem;
-    overflow: hidden;
+    position: relative;
+    ${coverImageContainer}
+`;
+
+export const CoverImageUploadContainer = styled.div`
+    position: absolute;
+    ${coverImageContainer}
 `;
 
 export const ContentContainer = styled.div`
@@ -57,7 +67,7 @@ export const AvatarContainer = styled.div`
     margin: -14rem 0 0.8rem;
 `;
 
-export const ImageUploadContainer = styled.div`
+export const AvatarUploadContainer = styled.div`
     position: absolute;
     ${avatarContainer}
 `;

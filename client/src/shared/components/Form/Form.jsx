@@ -4,7 +4,7 @@ import { Formik, FieldArray } from 'formik';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { AddMore } from 'shared/components';
 import Field from './Field';
-import FieldSection from './FieldSection';
+import FieldContainer from './FieldContainer';
 import FormButtons from './FormButtons';
 import {
     FormikForm,
@@ -31,7 +31,7 @@ Form.Element = props => <FormikForm noValidate {...props} />;
 Form.DeleteButton = props => <DeleteButton icon={<RiDeleteBinLine />} {...props} />;
 Form.Field = Field;
 Form.FieldArray = FieldArray;
-Form.FieldSection = FieldSection;
+Form.FieldContainer = FieldContainer;
 Form.Buttons = FormButtons;
 Form.AddMore = AddMore;
 Form.FieldLabel = FieldLabel;

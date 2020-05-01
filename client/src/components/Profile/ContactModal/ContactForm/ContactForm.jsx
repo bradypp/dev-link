@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { connect } from 'react-redux';
 import { Form } from 'shared/components';
 import * as S from './ContactFormStyles';
 
@@ -13,7 +12,6 @@ const propTypes = {
 
 export const ContactForm = ({ updateProfile, formData, setIsEditing }) => {
     const { socials, contact } = formData;
-
     return (
         <>
             <h2>Edit Contact Info</h2>
@@ -28,9 +26,9 @@ export const ContactForm = ({ updateProfile, formData, setIsEditing }) => {
                 }}>
                 {({ values }) => (
                     <Form.Element>
-                        <Form.FieldSection
+                        <Form.FieldContainer
                             label="Contact Info"
-                            tip="Please only enter the contact information that you're comfortable sharing">
+                            tip="Please enter any contact information that you're comfortable with sharing">
                             <Form.FieldArray name="contact">
                                 {arrayHelpers => (
                                     <>
@@ -38,7 +36,7 @@ export const ContactForm = ({ updateProfile, formData, setIsEditing }) => {
                                             {values.contact &&
                                                 values.contact.length > 0 &&
                                                 values.contact.map((contact, i) => (
-                                                    <React.Fragment key={uuidv4()}>
+                                                    <React.Fragment key={i}>
                                                         <S.GridLeft>
                                                             <Form.Field.Input
                                                                 name={`contact[${i}].name`}
@@ -69,11 +67,11 @@ export const ContactForm = ({ updateProfile, formData, setIsEditing }) => {
                                     </>
                                 )}
                             </Form.FieldArray>
-                        </Form.FieldSection>
+                        </Form.FieldContainer>
                         <Form.HorizontalDivider />
-                        <Form.FieldSection
+                        <Form.FieldContainer
                             label="Socials"
-                            tip="Please pick some of your social media that you'd like to share">
+                            tip="Enter any social media you'd like to share">
                             <Form.FieldArray name="socials">
                                 {arrayHelpers => (
                                     <>
@@ -81,7 +79,7 @@ export const ContactForm = ({ updateProfile, formData, setIsEditing }) => {
                                             {values.socials &&
                                                 values.socials.length > 0 &&
                                                 values.socials.map((social, i) => (
-                                                    <React.Fragment key={uuidv4()}>
+                                                    <React.Fragment key={i}>
                                                         <S.GridLeft>
                                                             <Form.Field.Input
                                                                 name={`socials[${i}].name`}
@@ -112,7 +110,7 @@ export const ContactForm = ({ updateProfile, formData, setIsEditing }) => {
                                     </>
                                 )}
                             </Form.FieldArray>
-                        </Form.FieldSection>
+                        </Form.FieldContainer>
                         <Form.Buttons withCancel onCancel={() => setIsEditing(false)} />
                     </Form.Element>
                 )}

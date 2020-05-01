@@ -22,6 +22,7 @@ import {
 import { selectUser, selectIsAuthenticated } from 'redux/auth';
 import { setAlert } from 'redux/alerts';
 import { ContactModal } from 'components';
+import CoverImageForm from './CoverImageForm/CoverImageForm';
 import AvatarForm from './AvatarForm/AvatarForm';
 import ProfileTopForm from './ProfileTopForm/ProfileTopForm';
 import * as S from './ProfileTopStyles';
@@ -111,6 +112,9 @@ const ProfileTop = ({
     return (
         <S.ProfileTopCard>
             <S.CoverImageContainer>
+                <S.CoverImageUploadContainer>
+                    <CoverImageForm />
+                </S.CoverImageUploadContainer>
                 <Image
                     src={[
                         `http://localhost:5000/img/profile/cover_image/${cover_image.medium}`,
@@ -122,9 +126,9 @@ const ProfileTop = ({
             <S.ContentContainer>
                 <S.ContentLeftContainer>
                     <S.AvatarContainer>
-                        <S.ImageUploadContainer>
+                        <S.AvatarUploadContainer>
                             <AvatarForm />
-                        </S.ImageUploadContainer>
+                        </S.AvatarUploadContainer>
                         <S.Avatar
                             className="avatar"
                             src={[

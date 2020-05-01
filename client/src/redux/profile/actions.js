@@ -81,10 +81,10 @@ export const updateProfile = data => async dispatch => {
     }
 };
 
-export const updateAvatar = avatar => async dispatch => {
+export const updateImage = (image, name) => async dispatch => {
     try {
         const formData = new FormData();
-        formData.append('avatar', avatar);
+        formData.append(name, image);
 
         const config = {
             headers: {

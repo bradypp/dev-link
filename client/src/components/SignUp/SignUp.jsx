@@ -46,17 +46,17 @@ const SignUp = ({ signUp, isAuthenticated }) => {
             <Form.Element>
                 <h2>Join our community</h2>
                 <p>Make the most of your career in development.</p>
-                <Form.Field.Input autoFocus label="Name" name="name" />
-                <Form.Field.Input label="Username" name="username" />
-                <Form.Field.Input label="Email" name="email" type="email" />
+                <Form.Field.Input autoFocus label="Name *" name="name" />
+                <Form.Field.Input label="Username *" name="username" />
+                <Form.Field.Input label="Email *" name="email" type="email" />
                 <Form.Field.Input
-                    label="Password"
+                    label="Password *"
                     name="password"
                     type="password"
                     tip="Password must contain a mix of letters, numbers and symbols"
                 />
                 <Form.Field.Input
-                    label="Confirm Password"
+                    label="Confirm Password *"
                     name="password2"
                     type="password"
                     tip="Please confirm your password"

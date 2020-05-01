@@ -10,7 +10,6 @@ import { updateProfile } from 'redux/profile';
 const propTypes = {
     formData: PropTypes.object.isRequired,
     updateProfile: PropTypes.func.isRequired,
-    currentUser: PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = {
@@ -18,59 +17,35 @@ const mapDispatchToProps = {
 };
 
 // TODO: split name into first name and last name?
-const ProfileTopForm = ({ updateProfile, currentUser, formData }) => {
-    const { name, headline, city, country, company, current_position, skills } = formData;
+const ProfileTopForm = ({ updateProfile, formData }) => {
+    const { bio, roles, roleTypes, availability } = formData;
 
-    const introValidation = Yup.object().shape({
-        name: validators.required('Name is required'),
-        headline: validators.required('Headline is required'),
-    });
+    const aboutValidation = Yup.object().shape({});
 
     return (
         <EditModal
             renderContent={({ close }) => (
                 <>
-                    <h2>Edit Intro</h2>
+                    <h2>Edit About Me</h2>
                     <Form
                         initialValues={{
-                            name: name || currentUser.name,
-                            headline,
-                            city,
-                            country,
-                            company,
-                            current_position,
-                            skills,
+                            bio,
+                            roles,
+                            types: roleTypes,
+                            availability,
                         }}
-                        validationSchema={introValidation}
+                        validationSchema={aboutValidation}
                         onSubmit={values => {
                             updateProfile(values);
                             close();
                         }}>
                         {({ values }) => (
                             <Form.Element>
-                                <Form.Field.Input
-                                    autoFocus
-                                    label="Name *"
-                                    name="name"
-                                    tip="Please enter your public name"
-                                />
-                                <Form.Field.TextArea
+                                <Form.Field.TextEditor
                                     label="Headline *"
                                     name="headline"
                                     tip="Write a catchy headline for your profile"
                                 />
-                                <Form.Flex>
-                                    <Form.Field.Input
-                                        label="Country"
-                                        name="country"
-                                        tip="What country do you live in?"
-                                    />
-                                    <Form.Field.Input
-                                        label="City"
-                                        name="city"
-                                        tip="What city do you live in?"
-                                    />
-                                </Form.Flex>
                                 <Form.Flex>
                                     <Form.Field.Input
                                         label="Company"

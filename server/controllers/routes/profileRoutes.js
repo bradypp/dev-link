@@ -34,6 +34,7 @@ router
 router
     .route('/portfolio')
     .post(
+        validation.updatePortfolio,
         profileController.getMe,
         profileController.uploadProfileImages,
         profileController.prepareProfileImages,
@@ -43,6 +44,7 @@ router
 router
     .route('/portfolio/:portId')
     .patch(
+        validation.updatePortfolio,
         profileController.getMe,
         profileController.uploadProfileImages,
         profileController.prepareProfileImages,

@@ -17,8 +17,7 @@ export const InputContainer = styled.div`
 
 export const InputElement = styled.input`
     height: 100%;
-    padding: 0 0.7rem;
-    padding-left: ${({ hasIcon, height }) => (hasIcon ? `${height}rem` : `${height / 4.5}rem`)};
+    padding-left: ${({ hasIcon, height }) => (hasIcon ? `${height}rem` : '0.2rem')};
     width: 100%;
     font-family: ${({ theme }) => theme.fonts.primary};
     border-radius: ${({ theme }) => theme.form.fieldBorderRadius};

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Image from 'react-image';
 import { updateImage } from 'redux/profile';
-import * as S from './AvatarFormStyles';
+import * as S from './CoverImageFormStyles';
 
 const propTypes = {
     updateImage: PropTypes.func.isRequired,
@@ -13,7 +13,8 @@ const mapDispatchToProps = {
     updateImage,
 };
 
-const AvatarForm = ({ updateImage }) => {
+// TODO: try to combine with avatar upload into a reusable upload component
+const CoverImageForm = ({ updateImage }) => {
     const [image, setImage] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -27,7 +28,7 @@ const AvatarForm = ({ updateImage }) => {
     };
 
     return image.length > 0 ? (
-        <S.AvatarModal
+        <S.CoverImageModal
             withCloseButton={false}
             isOpen={isOpen}
             onClose={onClose}
@@ -35,7 +36,7 @@ const AvatarForm = ({ updateImage }) => {
                 <form
                     onSubmit={event => {
                         event.preventDefault();
-                        updateImage(image[0], 'avatar');
+                        updateImage(image[0], 'cover_image');
                         setIsOpen(false);
                         setImage([]);
                     }}>
@@ -45,10 +46,10 @@ const AvatarForm = ({ updateImage }) => {
             )}
         />
     ) : (
-        <S.AvatarUpload files={image} setFiles={setImage} variant="edit" maxFiles={1} />
+        <S.CoverImageUpload files={image} setFiles={setImage} variant="edit" maxFiles={1} />
     );
 };
 
-AvatarForm.propTypes = propTypes;
+CoverImageForm.propTypes = propTypes;
 
-export default connect(null, mapDispatchToProps)(AvatarForm);
+export default connect(null, mapDispatchToProps)(CoverImageForm);

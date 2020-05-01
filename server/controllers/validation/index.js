@@ -13,5 +13,6 @@ exports.resetPassword = validation(userRules.resetPasswordRules);
 exports.updatePassword = validation(userRules.updatePasswordRules);
 exports.updateUser = validation(userRules.updateUserRules);
 exports.updateProfile = validation(profileRules.updateProfileRules);
+exports.updatePortfolio = validation(profileRules.updatePortfolioRules);
 exports.experience = validation(profileRules.experienceRules);
 exports.education = validation(profileRules.educationRules);

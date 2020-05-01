@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { uniqueId } from 'lodash';
 import { Field, getIn } from 'formik';
 import { Input, TextArea, TextEditor, Select, Checkbox } from 'shared/components';
+import FieldContainer from './FieldContainer';
 import * as S from './FormStyles';
 
 const propTypes = {
@@ -15,7 +16,7 @@ const propTypes = {
     width: PropTypes.string,
     fieldId: PropTypes.string,
     margin: PropTypes.string,
-    tipLocation: PropTypes.oneOf(['top', 'bottom']),
+    tipLocation: PropTypes.oneOf(['above', 'below']),
 };
 
 const defaultProps = {
@@ -28,7 +29,7 @@ const defaultProps = {
     width: '100%',
     fieldId: undefined,
     margin: undefined,
-    tipLocation: 'bottom',
+    tipLocation: 'above',
 };
 
 const generateField = FormComponent => {
@@ -53,27 +54,27 @@ const generateField = FormComponent => {
 
                 const defaultField = (
                     <>
-                        {label && <S.FieldLabel htmlFor={fieldId}>{label}</S.FieldLabel>}
-                        {tip && tipLocation === 'top' && (
-                            <S.FieldTip tipLocation={tipLocation}>{tip}</S.FieldTip>
-                        )}
-                        <FormComponent
-                            {...field}
-                            {...props}
-                            type={type}
-                            id={fieldId}
-                            invalid={error && touched}
-                            onChange={value => {
-                                form.setFieldValue(name, value);
-                                if (submitOnChange) form.submitForm();
-                            }}
-                        />
-                        {tip && tipLocation === 'bottom' && !error && (
-                            <S.FieldTip tipLocation={tipLocation}>{tip}</S.FieldTip>
-                        )}
-                        {touched && error ? (
-                            <S.FieldError className={className}>{error}</S.FieldError>
-                        ) : null}
+                        <FieldContainer
+                            name={name}
+                            label={label}
+                            tip={tip}
+                            htmlFor={fieldId}
+                            error={error}
+                            touched={touched}
+                            tipLocation={tipLocation}
+                            type={type}>
+                            <FormComponent
+                                {...field}
+                                {...props}
+                                type={type}
+                                id={fieldId}
+                                invalid={error && touched}
+                                onChange={value => {
+                                    form.setFieldValue(name, value);
+                                    if (submitOnChange) form.submitForm();
+                                }}
+                            />
+                        </FieldContainer>
                     </>
                 );
 
