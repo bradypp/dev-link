@@ -5,14 +5,12 @@ import { createStructuredSelector } from 'reselect';
 
 const propTypes = {};
 
-const stateToProps = {};
+const mapStateToProps = createStructuredSelector({});
 
 const Dashboard = () => {
     return <div>dashboard</div>;
 };
 
 Dashboard.propTypes = propTypes;
-
-const mapStateToProps = createStructuredSelector(stateToProps);
 
 export default connect(mapStateToProps)(Dashboard);

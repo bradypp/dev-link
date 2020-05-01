@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { uniqueId } from 'lodash';
-import { Field } from 'formik';
+import { Field, getIn } from 'formik';
 import { Input, TextArea, TextEditor, Select, Checkbox } from 'shared/components';
-import { FieldContainer, FieldLabel, FieldTip, FieldError } from './FormStyles';
+import * as S from './FormStyles';
 
 const propTypes = {
     className: PropTypes.string,
@@ -13,6 +13,9 @@ const propTypes = {
     submitOnChange: PropTypes.bool,
     type: PropTypes.string,
     width: PropTypes.string,
+    fieldId: PropTypes.string,
+    margin: PropTypes.string,
+    tipLocation: PropTypes.oneOf(['top', 'bottom']),
 };
 
 const defaultProps = {
@@ -23,6 +26,9 @@ const defaultProps = {
     submitOnChange: false,
     type: 'text',
     width: '100%',
+    fieldId: undefined,
+    margin: undefined,
+    tipLocation: 'bottom',
 };
 
 const generateField = FormComponent => {
@@ -34,31 +40,40 @@ const generateField = FormComponent => {
         name,
         type,
         width,
+        fieldId: propsId,
+        margin,
+        tipLocation,
         ...props
     }) => (
         <Field name={name} type={type}>
-            {({ field, form, meta }) => {
-                const fieldId = uniqueId('form-field-');
+            {({ field, form }) => {
+                const fieldId = propsId || uniqueId('form-field-');
+                const error = getIn(form.errors, name);
+                const touched = getIn(form.touched, name);
 
                 const defaultField = (
                     <>
-                        {label && <FieldLabel htmlFor={fieldId}>{label}</FieldLabel>}
+                        {label && <S.FieldLabel htmlFor={fieldId}>{label}</S.FieldLabel>}
+                        {tip && tipLocation === 'top' && (
+                            <S.FieldTip tipLocation={tipLocation}>{tip}</S.FieldTip>
+                        )}
                         <FormComponent
                             {...field}
                             {...props}
                             type={type}
                             id={fieldId}
-                            invalid={meta.error && meta.touched}
+                            invalid={error && touched}
                             onChange={value => {
                                 form.setFieldValue(name, value);
                                 if (submitOnChange) form.submitForm();
                             }}
                         />
-                        {meta.error && meta.touched ? (
-                            <FieldError>{meta.error}</FieldError>
-                        ) : (
-                            tip && <FieldTip>{tip}</FieldTip>
+                        {tip && tipLocation === 'bottom' && !error && (
+                            <S.FieldTip tipLocation={tipLocation}>{tip}</S.FieldTip>
                         )}
+                        {touched && error ? (
+                            <S.FieldError className={className}>{error}</S.FieldError>
+                        ) : null}
                     </>
                 );
 
@@ -69,7 +84,7 @@ const generateField = FormComponent => {
                         type={type}
                         label={label}
                         id={fieldId}
-                        invalid={meta.error && meta.touched}
+                        invalid={error && touched}
                         onChange={() => {
                             form.setFieldValue(name, !field.checked);
                             if (submitOnChange) form.submitForm();
@@ -80,16 +95,18 @@ const generateField = FormComponent => {
                 const fieldComponent = type === 'checkbox' ? checkboxField : defaultField;
 
                 return (
-                    <FieldContainer
+                    <S.FieldContainer
                         className={className}
                         data-testid={name ? `form-field:${name}` : 'form-field'}
-                        width={width}>
+                        width={width}
+                        margin={margin}>
                         {fieldComponent}
-                    </FieldContainer>
+                    </S.FieldContainer>
                 );
             }}
         </Field>
     );
+
     FieldComponent.propTypes = propTypes;
     FieldComponent.defaultProps = defaultProps;
 
@@ -103,49 +120,3 @@ export default {
     TextEditor: generateField(TextEditor),
     Checkbox: generateField(Checkbox),
 };
-
-// TODO: delete
-// const generateArrayField = FieldComponent => ({
-//     className,
-//     label,
-//     tip,
-//     submitOnChange,
-//     name,
-//     type,
-//     values,
-//     ...props
-// }) => {
-//     const fieldId = uniqueId('form-field-');
-//     const fields =
-//         values[name] &&
-//         values[name].length > 0 &&
-//         values[name].map((el, i) => {
-//             return (
-//                 <Field name={`${name}.${i}`} type={type}>
-//                     {({ field, form, meta }) => {
-//                         return (
-//                             <FieldContainer
-//                                 className={className}
-//                                 data-testid={name ? `form-field:${name}-${i}` : 'form-field'}>
-//                                 <FormComponent
-//                                     {...field}
-//                                     {...props}
-//                                     type={type}
-//                                     id={i === 0 ? fieldId : null}
-//                                     invalid={meta.error && meta.touched}
-//                                     onChange={value => {
-//                                         form.setFieldValue(name, value);
-//                                         if (submitOnChange) form.submitForm();
-//                                     }}
-//                                 />
-//                                 {meta.error && meta.touched ? (
-//                                     <FieldError>{meta.error}</FieldError>
-//                                 ) : (
-//                                     tip && <FieldTip>{tip}</FieldTip>
-//                                 )}
-//                             </FieldContainer>
-//                         );
-//                     }}
-//                 </Field>
-//             );
-//         });

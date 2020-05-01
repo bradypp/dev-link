@@ -26,6 +26,10 @@ exports.deleteProfile = handlers.deleteOneByUserId(Profile, { errorMessage: notF
 exports.getAllProfiles = handlers.getAll(Profile);
 
 exports.createProfile = catchAsync(async (req, res, next) => {
+    if (await Profile.findOne({ user: req.params.userId })) {
+        return next(new AppError('Profile already exists for this user', 400));
+    }
+
     const profile = await Profile.create({
         ...req.body,
         user: req.params.userId,

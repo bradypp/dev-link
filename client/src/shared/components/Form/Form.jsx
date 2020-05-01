@@ -1,15 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Formik, FieldArray } from 'formik';
+import { RiDeleteBinLine } from 'react-icons/ri';
+import { AddMore } from 'shared/components';
 import Field from './Field';
+import FieldSection from './FieldSection';
 import FormButtons from './FormButtons';
 import {
     FormikForm,
-    FieldContainer,
     FlexContainer,
+    GridContainer,
     FieldLabel,
-    FieldError,
     FieldTip,
+    HorizontalDivider,
+    VerticalDivider,
+    DeleteButton,
 } from './FormStyles';
 
 const propTypes = {
@@ -23,15 +28,18 @@ const defaultProps = {
 const Form = props => <Formik {...props} />;
 
 Form.Element = props => <FormikForm noValidate {...props} />;
-
+Form.DeleteButton = props => <DeleteButton icon={<RiDeleteBinLine />} {...props} />;
 Form.Field = Field;
 Form.FieldArray = FieldArray;
-Form.FieldContainer = FieldContainer;
-Form.FieldLabel = FieldLabel;
-Form.FieldError = FieldError;
-Form.FieldTip = FieldTip;
+Form.FieldSection = FieldSection;
 Form.Buttons = FormButtons;
+Form.AddMore = AddMore;
+Form.FieldLabel = FieldLabel;
+Form.FieldTip = FieldTip;
 Form.Flex = FlexContainer;
+Form.Grid = GridContainer;
+Form.HorizontalDivider = HorizontalDivider;
+Form.VerticalDivider = VerticalDivider;
 
 Form.propTypes = propTypes;
 Form.defaultProps = defaultProps;

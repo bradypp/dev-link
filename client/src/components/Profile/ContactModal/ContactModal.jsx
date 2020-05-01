@@ -1,42 +1,72 @@
-import React from 'react';
-import { Button, Modal, OutboundLink } from 'shared/components';
-import { StyledOutboundLink } from './ContactModalStyles';
+import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { isEmpty } from 'lodash';
+import { v4 as uuidv4 } from 'uuid';
+import { Button, Modal, Divider } from 'shared/components';
+import { updateProfile } from 'redux/profile';
+import { ContactForm } from './ContactForm/ContactForm';
+import { StyledOutboundLink, ItemContainer } from './ContactModalStyles';
+
+const mapDispatchToProps = {
+    updateProfile,
+};
 
 // TODO: styling button as a link
 // TODO: conditional appearance based on if profile belongs to current authenticated user (for editing)
-const Contact = ({ contact, socials }) => {
-    const { email, phone } = contact;
-
+const ContactModal = ({ contact, socials, isCurrentUser, updateProfile }) => {
+    const [isEditing, setIsEditing] = useState(false);
     return (
         <Modal
             width="60rem"
             renderLink={({ open }) => <Button onClick={open}>Contact Info</Button>}
             renderContent={({ close }) => (
                 <>
-                    <h2>Contact Info</h2>
-                    {email && (
+                    {!isEditing ? (
                         <>
-                            <h3>Email</h3>
-                            <p>{email}</p>
+                            {!isEmpty(contact) && (
+                                <ItemContainer>
+                                    <h2>Contact Info</h2>
+                                    <ul>
+                                        {contact.map(({ name, value }) => (
+                                            <li key={uuidv4()}>
+                                                {name}: {value}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </ItemContainer>
+                            )}
+                            <Divider />
+                            {!isEmpty(socials) && (
+                                <ItemContainer>
+                                    <h2>Socials</h2>
+                                    <ul>
+                                        {socials.map(({ name, value }) => (
+                                            <li key={uuidv4()}>
+                                                {name}:{' '}
+                                                <StyledOutboundLink href={value}>
+                                                    {value}
+                                                </StyledOutboundLink>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </ItemContainer>
+                            )}
+                            {isCurrentUser && (
+                                <Button onClick={() => setIsEditing(true)}>Edit</Button>
+                            )}
+                            <Button onClick={close}>Close</Button>
                         </>
+                    ) : (
+                        <ContactForm
+                            formData={{ contact, socials }}
+                            setIsEditing={setIsEditing}
+                            updateProfile={updateProfile}
+                        />
                     )}
-                    {phone && (
-                        <>
-                            <h3>Phone</h3>
-                            <p>{phone}</p>
-                        </>
-                    )}
-                    {socials.map(({ name, link }) => (
-                        <>
-                            <h3>{name}</h3>
-                            <StyledOutboundLink href={link}>{link}</StyledOutboundLink>
-                        </>
-                    ))}
-                    <Button onClick={close}>Close</Button>
                 </>
             )}
         />
     );
 };
 
-export default Contact;
+export default connect(null, mapDispatchToProps)(ContactModal);

@@ -52,7 +52,12 @@ const GlobalStyles = createGlobalStyle`
     ${mixins.flexColumnCenter}
   }
 
-  h1, h2, h3, h4, h5, h6, p {
+  h1, h2 {
+    margin-top: 0;
+    margin-bottom: 1.6rem;
+  }
+
+  h3, h4, h5, h6, p, li {
     margin-top: 0;
     margin-bottom: 0.8rem;
   }
@@ -126,7 +131,7 @@ const GlobalStyles = createGlobalStyle`
     outline: none;
     border: 0;
     border-radius: 0;
-    transition: all 0.1s ease;
+    transition: ${({ theme }) => theme.animation.basicTransition};
 
     &:focus,
     &:active {

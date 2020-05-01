@@ -15,10 +15,10 @@ const propTypes = {
     user: PropTypes.object.isRequired,
 };
 
-const stateToProps = {
+const mapStateToProps = createStructuredSelector({
     user: selectUser,
     isAuthenticated: selectIsAuthenticated,
-};
+});
 
 // TODO: edit content of header in different states when finished (for now include what you need to build the app & test)
 // TODO: nav styling
@@ -80,7 +80,5 @@ const Header = ({ isAuthenticated, signOut, user }) => {
 };
 
 Header.propTypes = propTypes;
-
-const mapStateToProps = createStructuredSelector(stateToProps);
 
 export default connect(mapStateToProps, { signOut })(Header);

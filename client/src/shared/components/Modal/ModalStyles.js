@@ -2,7 +2,6 @@ import styled, { css } from 'styled-components/macro';
 import { Button } from 'shared/components';
 import { mixins } from 'shared/styles';
 
-// TODO: customize modal styling
 export const ScrollOverlay = styled.div`
     ${mixins.scrollableY}
     z-index: ${({ theme }) => theme.zIndex.modal};

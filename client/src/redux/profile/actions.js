@@ -81,6 +81,26 @@ export const updateProfile = data => async dispatch => {
     }
 };
 
+export const updateAvatar = avatar => async dispatch => {
+    try {
+        const formData = new FormData();
+        formData.append('avatar', avatar);
+
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        };
+
+        const res = await api.patch('/profile/me', formData, config);
+
+        dispatch(profileLoaded(res.data.data.profile));
+    } catch (err) {
+        dispatch(apiErrorHandler(err));
+        dispatch(profileError(err));
+    }
+};
+
 // TODO:
 export const addPortfolioItem = data => async dispatch => {
     try {

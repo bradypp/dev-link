@@ -4,7 +4,7 @@ import { Button } from 'shared/components';
 import { ButtonsContainer } from './FormStyles';
 
 const propTypes = {
-    className: PropTypes.string,
+    className: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     withSubmit: PropTypes.bool,
     withReset: PropTypes.bool,
     withCancel: PropTypes.bool,

@@ -60,12 +60,6 @@ const components = {
         background-color: ${({ theme }) => theme.colors.fieldBackground};
         font-size: ${({ theme }) => theme.form.fontSize};
     `,
-    fieldSubtitle: css`
-        padding-top: 0.6rem;
-        font-size: 1.2rem;
-        line-height: 1;
-        font-weight: 400;
-    `,
 };
 
 export default components;

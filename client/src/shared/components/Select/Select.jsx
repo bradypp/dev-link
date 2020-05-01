@@ -4,6 +4,7 @@ import { IoIosAdd } from 'react-icons/io';
 import { useOnOutsideClick } from 'shared/hooks';
 import { keyCodes } from 'shared/constants';
 import { uniqueId } from 'lodash';
+import { AddMore } from 'shared/components';
 import Dropdown from './Dropdown';
 import * as S from './SelectStyles';
 
@@ -146,11 +147,15 @@ const Select = ({
     const isValueEmpty = isMulti ? !value.length : !getOption(value);
     const inputId = uniqueId('select-input-');
 
+    const addMorePadding = () => (variant === 'empty' ? '0.3rem 0' : '0.3rem 0 0 0');
+
     const valuePlaceholderElement = isMulti ? (
-        <S.AddMore htmlFor={inputId} variant={variant}>
-            <IoIosAdd />
-            {valuePlaceholder}
-        </S.AddMore>
+        <AddMore
+            htmlFor={inputId}
+            variant={variant}
+            placeholder={valuePlaceholder}
+            padding={addMorePadding}
+        />
     ) : (
         <S.Placeholder>{valuePlaceholder}</S.Placeholder>
     );
@@ -189,10 +194,12 @@ const Select = ({
                                 </S.ValueMultiItem>
                             ),
                         )}
-                        <S.AddMore htmlFor={inputId} variant={variant}>
-                            <IoIosAdd />
-                            Add more
-                        </S.AddMore>
+                        <AddMore
+                            htmlFor={inputId}
+                            variant={variant}
+                            placeholder="Add more"
+                            padding={addMorePadding}
+                        />
                     </S.ValueMulti>
                 )}
                 {(!isMulti || isValueEmpty) && variant !== 'empty' && <S.ArrowDownIcon />}

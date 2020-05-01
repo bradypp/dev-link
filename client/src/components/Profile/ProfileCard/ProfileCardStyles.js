@@ -11,11 +11,11 @@ export const ProfileCardContainer = styled.section`
 
     & > *:not(header):not(:last-child) {
         border-bottom: solid 1px ${({ theme }) => theme.colors.border1};
-        padding: 1.6rem 0;
+        padding: ${({ theme }) => theme.layout.itemGap} 0;
     }
 
     & > *:not(header):last-child {
-        padding: 1.6rem 0 0;
+        padding: ${({ theme }) => theme.layout.itemGap} 0 0;
     }
 `;
 

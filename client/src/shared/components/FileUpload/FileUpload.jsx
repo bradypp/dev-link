@@ -10,17 +10,15 @@ const propTypes = {
     setFiles: PropTypes.func.isRequired,
     description: PropTypes.string,
     icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-    height: PropTypes.string,
-    width: PropTypes.string,
     maxFiles: PropTypes.number,
+    variant: PropTypes.oneOf(['default', 'edit']),
 };
 
 const defaultProps = {
     description: 'Drop files here or click to select files',
     icon: undefined,
-    height: '22rem',
-    width: '100%',
     maxFiles: undefined,
+    variant: 'default',
 };
 
 const FileUpload = ({ files, setFiles, description, icon, maxFiles, ...props }) => {
@@ -60,7 +58,7 @@ const FileUpload = ({ files, setFiles, description, icon, maxFiles, ...props }) 
         <UploadContainer {...props} isDragActive={isDragActive} {...getRootProps()}>
             <input {...getInputProps()} />
             {renderedIcon}
-            <p>{description}</p>
+            {description && <p>{description}</p>}
         </UploadContainer>
     );
 };

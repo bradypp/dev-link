@@ -61,14 +61,12 @@ const userSchema = new Schema(
             {
                 type: Schema.Types.ObjectId,
                 ref: 'Profile',
-                unique: true,
             },
         ],
         watching: [
             {
                 type: Schema.Types.ObjectId,
                 ref: 'Profile',
-                unique: true,
             },
         ],
         createdAt: {

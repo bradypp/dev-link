@@ -12,9 +12,10 @@ const ThemeProvider = ({ children }) => {
         danger: '#E13C3C',
         warning: '#F89C1C',
         white1: '#f4f5f7',
-        white2: '#ebecf0',
-        white3: '#dfe1e6',
-        white4: '#d4d7dd',
+        white2: '#f1f2f4',
+        white3: '#e2e4e9',
+        white4: '#d3d6de',
+        white5: '#d4d7dd',
         greyDark1: '#333',
         greyDark2: '#555',
         greyDark3: '#777',
@@ -47,9 +48,9 @@ const ThemeProvider = ({ children }) => {
     };
 
     const borderColors = {
-        border1: baseColors.white2,
-        border2: baseColors.white3,
-        border3: baseColors.white4,
+        border1: baseColors.white3,
+        border2: baseColors.white4,
+        border3: baseColors.white5,
     };
 
     const formColors = {
@@ -71,7 +72,8 @@ const ThemeProvider = ({ children }) => {
             primary: 'Inter, Open Sans, Arial, system, -apple-system, sans-serif',
         },
         animation: {
-            transition: `all 0.25s cubic-bezier(0.3, 0, 0.4, 1)`,
+            basicTransition: `all 0.15s ease`,
+            primaryTransition: `all 0.25s cubic-bezier(0.3, 0, 0.4, 1)`,
             easeCustom: `cubic-bezier(0.3, 0, 0.4, 1)`,
             easeInCubic: `cubic-bezier(0.55, 0.055, 0.675, 0.19)`,
             easeOutCubic: `cubic-bezier(0.215, 0.61, 0.355, 1)`,
@@ -97,8 +99,10 @@ const ThemeProvider = ({ children }) => {
             headerHeight: `6rem`,
             cardPadding: `2.4rem`,
             mainGridGap: `1.6rem`,
+            itemGap: `1.6rem`,
             tagGap: `1.6rem`,
             buttonGap: `1.6rem`,
+            avatarWidth: `16rem`,
         },
         form: {
             fontSize: `1.5rem`,

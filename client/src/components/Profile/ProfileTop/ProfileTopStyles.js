@@ -28,11 +28,13 @@ export const ContentLeftContainer = styled.div`
     h1 {
         font-size: 2.2rem;
         font-weight: 400;
+        margin-bottom: 0.8rem;
     }
 
     h2 {
         font-size: 1.7rem;
         font-weight: 400;
+        margin-bottom: 0.8rem;
     }
 
     h3 {
@@ -40,18 +42,28 @@ export const ContentLeftContainer = styled.div`
         font-weight: 400;
     }
 `;
+const avatarContainer = css`
+    height: ${({ theme }) => theme.layout.avatarWidth};
+    width: ${({ theme }) => theme.layout.avatarWidth};
+    border-radius: 50%;
+`;
 
 export const AvatarContainer = styled.div`
-    height: 16rem;
-    width: 16rem;
+    ${avatarContainer}
+    position: relative;
+    overflow: hidden;
     box-shadow: ${({ theme }) => theme.boxShadow.primary};
-    border-radius: 50%;
     border: 5px solid #fff;
     margin: -14rem 0 0.8rem;
 `;
 
+export const ImageUploadContainer = styled.div`
+    position: absolute;
+    ${avatarContainer}
+`;
+
 export const Avatar = styled(Image)`
-    border-radius: 50%;
+    ${avatarContainer}
 `;
 
 /* TODO: link styles (make bolder & grey background on hover?), make global button variant? */

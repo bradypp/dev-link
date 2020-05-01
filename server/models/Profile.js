@@ -60,24 +60,18 @@ const profileSchema = new Schema({
         type: String,
         trim: true,
     },
-    github_username: {
-        type: String,
-        trim: true,
-    },
-    website: {
-        type: String,
-        trim: true,
-    },
-    contact: {
-        email: {
-            type: String,
-            trim: true,
+    contact: [
+        {
+            name: {
+                type: String,
+                trim: true,
+            },
+            value: {
+                type: String,
+                trim: true,
+            },
         },
-        phone: {
-            type: String,
-            trim: true,
-        },
-    },
+    ],
     skills: [
         {
             type: String,
@@ -284,7 +278,7 @@ const profileSchema = new Schema({
                 type: String,
                 trim: true,
             },
-            link: {
+            value: {
                 type: String,
                 trim: true,
             },

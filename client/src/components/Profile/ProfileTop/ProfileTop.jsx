@@ -17,11 +17,12 @@ import {
     selectProfileSkills,
     toggleStar,
     toggleWatch,
+    selectIsCurrentUser,
 } from 'redux/profile';
 import { selectUser, selectIsAuthenticated } from 'redux/auth';
 import { setAlert } from 'redux/alerts';
 import { ContactModal } from 'components';
-import { OutboundLink } from 'shared/components';
+import AvatarForm from './AvatarForm/AvatarForm';
 import ProfileTopForm from './ProfileTopForm/ProfileTopForm';
 import * as S from './ProfileTopStyles';
 
@@ -36,9 +37,10 @@ const propTypes = {
     stars: PropTypes.array.isRequired,
     watchers: PropTypes.array.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
-    contact: PropTypes.object.isRequired,
+    contact: PropTypes.array.isRequired,
     socials: PropTypes.array.isRequired,
     skills: PropTypes.array.isRequired,
+    isCurrentUser: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -52,6 +54,7 @@ const mapStateToProps = createStructuredSelector({
     contact: selectProfileContact,
     socials: selectProfileSocials,
     skills: selectProfileSkills,
+    isCurrentUser: selectIsCurrentUser,
 });
 
 const mapDispatchToProps = {
@@ -78,17 +81,9 @@ const ProfileTop = ({
     socials,
     contact,
     skills,
+    isCurrentUser,
 }) => {
-    const {
-        headline,
-        current_position,
-        city,
-        country,
-        website,
-        github_username,
-        company,
-        name,
-    } = profileInfo;
+    const { headline, current_position, city, country, company, name } = profileInfo;
 
     const toggleWatchHandler = () => {
         if (isAuthenticated) {
@@ -127,6 +122,9 @@ const ProfileTop = ({
             <S.ContentContainer>
                 <S.ContentLeftContainer>
                     <S.AvatarContainer>
+                        <S.ImageUploadContainer>
+                            <AvatarForm />
+                        </S.ImageUploadContainer>
                         <S.Avatar
                             className="avatar"
                             src={[
@@ -154,19 +152,14 @@ const ProfileTop = ({
                     ) : (
                         <>{current_position && <h3>{current_position}</h3>}</>
                     )}
-                    {(!isEmpty(contact) || !isEmpty(socials) || website || github_username) && (
+                    {(!isEmpty(contact) || !isEmpty(socials)) && (
                         <S.InfoButtonsContainer>
                             {(!isEmpty(contact) || !isEmpty(socials)) && (
-                                <ContactModal contact={contact} socials={socials} />
-                            )}
-                            {(!isEmpty(contact) || !isEmpty(socials)) &&
-                                (website || github_username) && <>&middot;</>}
-                            {website && <OutboundLink href={website}>Website</OutboundLink>}
-                            {website && github_username && <>&middot;</>}
-                            {github_username && (
-                                <OutboundLink href={`https://github.com/${github_username}`}>
-                                    GitHub
-                                </OutboundLink>
+                                <ContactModal
+                                    contact={contact}
+                                    socials={socials}
+                                    isCurrentUser={isCurrentUser}
+                                />
                             )}
                         </S.InfoButtonsContainer>
                     )}
@@ -181,22 +174,22 @@ const ProfileTop = ({
                             {starredByCurrentUser ? `Unstar` : `Star`}
                         </S.ToggleButton>
                         <S.CountContainer>{stars.length}</S.CountContainer>
-                        <ProfileTopForm
-                            currentUser={currentUser}
-                            formData={{
-                                name,
-                                headline,
-                                city,
-                                country,
-                                company,
-                                current_position,
-                                socials,
-                                contact,
-                                website,
-                                github_username,
-                                skills,
-                            }}
-                        />
+                        {isCurrentUser && (
+                            <ProfileTopForm
+                                currentUser={currentUser}
+                                formData={{
+                                    name,
+                                    headline,
+                                    city,
+                                    country,
+                                    company,
+                                    current_position,
+                                    socials,
+                                    contact,
+                                    skills,
+                                }}
+                            />
+                        )}
                     </S.ToggleButtonsContainer>
                     <S.SkillsContainer>
                         {skills.map(skill => (
