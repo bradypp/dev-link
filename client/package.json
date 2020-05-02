@@ -19,6 +19,7 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-dropzone": "^11.0.1",
+    "react-error-boundary": "^2.2.1",
     "react-icons": "^3.9.0",
     "react-image": "^2.4.0",
     "react-redux": "^7.2.0",

@@ -6,6 +6,7 @@ export const Heading = styled.h1`
     font-size: 5rem;
     font-weight: 300;
     color: ${({ theme }) => theme.colors.textColored1};
+    margin: 3rem 0 5rem;
 `;
 
 // TODO: Change to styled(Form) once you've made the form component
@@ -18,4 +19,7 @@ export const StyledInput = styled(Form.Field.Input).attrs({
     fontSize: '2.5rem',
 })`
     margin-bottom: 1rem;
+    input {
+        border-radius: 5rem;
+    }
 `;

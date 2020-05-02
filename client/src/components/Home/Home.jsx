@@ -3,7 +3,6 @@ import { Main, CustomLink, Form } from 'shared/components';
 import { IoIosSearch } from 'react-icons/io';
 import * as S from './HomeStyles';
 
-// TODO: update search placeholder
 const Home = () => {
     return (
         <Main backgroundColor="background1">
@@ -21,6 +20,7 @@ const Home = () => {
                             name="search"
                             placeholder="Search for developers..."
                         />
+                        {/* <Form.Field.Select options={[]} /> */}
                         <Form.Buttons
                             submitText="Search"
                             customButtons={<CustomLink to="/#">Advanced Search</CustomLink>}

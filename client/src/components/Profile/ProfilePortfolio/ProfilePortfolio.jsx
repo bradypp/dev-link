@@ -35,7 +35,7 @@ const ProfilePortfolio = ({ portfolio }) => {
                 return (
                     <ProfileCard.Item key={uuidv4()}>
                         <ProfileCard.Item.Heading>{title}</ProfileCard.Item.Heading>
-                        <Flex alignItems="flex-start">
+                        <Flex>
                             <S.ContentContainer>
                                 {description && <p>{description}</p>}
                                 <S.SkillsContainer>
