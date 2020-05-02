@@ -88,44 +88,40 @@ const profileSchema = new Schema({
             type: String,
             trim: true,
         },
-        roles: [
+        desired_roles: [
             {
                 type: String,
                 trim: true,
             },
         ],
-        types: [
+        role_types: [
             {
                 type: String,
                 trim: true,
                 enum: [
-                    'full-time permanent',
-                    'full-time temporary',
-                    'part-time permanent',
-                    'part-time temporary',
-                    'open source',
-                    'freelance',
-                    'intern',
+                    'Full-Time Permanent',
+                    'Full-Time Temporary',
+                    'Part-Time Permanent',
+                    'Part-Time Temporary',
+                    'Open Source',
+                    'Freelance',
+                    'Intern',
                 ],
             },
         ],
         availability: {
             type: String,
             trim: true,
+            enum: [
+                'Immediately',
+                'Less than 1 week',
+                '1 to 2 weeks',
+                '2 to 3 weeks',
+                '3 to 4 weeks',
+                'More than 4 weeks',
+            ],
         },
     },
-    interests: [
-        {
-            type: String,
-            trim: true,
-        },
-    ],
-    goals: [
-        {
-            type: String,
-            trim: true,
-        },
-    ],
     portfolio: [
         {
             title: {

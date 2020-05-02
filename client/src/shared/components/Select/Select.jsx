@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { IoIosAdd } from 'react-icons/io';
 import { useOnOutsideClick } from 'shared/hooks';
 import { keyCodes } from 'shared/constants';
 import { uniqueId } from 'lodash';
@@ -147,15 +146,10 @@ const Select = ({
     const isValueEmpty = isMulti ? !value.length : !getOption(value);
     const inputId = uniqueId('select-input-');
 
-    const addMorePadding = () => (variant === 'empty' ? '0.3rem 0' : '0.3rem 0 0 0');
-
     const valuePlaceholderElement = isMulti ? (
-        <AddMore
-            htmlFor={inputId}
-            variant={variant}
-            placeholder={valuePlaceholder}
-            padding={addMorePadding}
-        />
+        <S.AddMoreContainer variant={variant}>
+            <AddMore htmlFor={inputId} placeholder={valuePlaceholder} />
+        </S.AddMoreContainer>
     ) : (
         <S.Placeholder>{valuePlaceholder}</S.Placeholder>
     );
@@ -194,12 +188,9 @@ const Select = ({
                                 </S.ValueMultiItem>
                             ),
                         )}
-                        <AddMore
-                            htmlFor={inputId}
-                            variant={variant}
-                            placeholder="Add more"
-                            padding={addMorePadding}
-                        />
+                        <S.AddMoreContainer variant={variant}>
+                            <AddMore htmlFor={inputId} placeholder={valuePlaceholder} />
+                        </S.AddMoreContainer>
                     </S.ValueMulti>
                 )}
                 {(!isMulti || isValueEmpty) && variant !== 'empty' && <S.ArrowDownIcon />}

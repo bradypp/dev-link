@@ -7,8 +7,9 @@ const propTypes = {
     renderContent: PropTypes.func.isRequired,
 };
 
-const EditModal = ({ renderContent }) => (
+const EditModal = ({ renderContent, ...props }) => (
     <Modal
+        {...props}
         renderLink={({ open }) => <Button icon={<FaEdit />} onClick={open} />}
         renderContent={renderContent}
     />

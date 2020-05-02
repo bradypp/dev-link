@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { selectProfileAboutMe } from 'redux/profile';
 import { ProfileCard } from 'components';
 import { CustomLink } from 'shared/components';
+import ProfileAboutForm from './ProfileAboutForm/ProfileAboutForm';
 
 const propTypes = {
     aboutMe: PropTypes.object.isRequired,
@@ -22,39 +23,49 @@ const mapStateToProps = createStructuredSelector({
 // TODO: sanitize links to lower case on save
 // TODO: change lists below to buttons with margin between them?
 const ProfileAbout = ({ aboutMe }) => {
-    const { bio, roles, types: roleTypes, availability } = aboutMe;
+    const { bio, desired_roles, role_types, availability } = aboutMe;
 
     return (
-        <ProfileCard heading="About Me">
+        <ProfileCard heading="About Me" buttons={() => <ProfileAboutForm formData={aboutMe} />}>
             {!isEmpty(aboutMe) && (
-                <ProfileCard.Item>
-                    {bio && <p>{bio || "There's currently no bio for this profile"}</p>}
-                    {roles.length > 0 && (
-                        <p>
-                            {roles.length === 1 ? 'Desired role: ' : 'Desired roles: '}
-                            {roles.map((role, i) => (
-                                <span key={uuidv4()}>
-                                    <CustomLink to="#">{role}</CustomLink>
-                                    {i !== roles.length - 1 && ', '}
-                                </span>
-                            ))}
-                        </p>
+                <>
+                    {bio && (
+                        <ProfileCard.Item>
+                            <p>{bio}</p>
+                        </ProfileCard.Item>
                     )}
-                    {roleTypes.length > 0 && (
-                        <p>
-                            {roleTypes.length === 1
-                                ? 'Desired role type: '
-                                : 'Desired role types: '}
-                            {roleTypes.map((type, i) => (
-                                <span key={uuidv4()}>
-                                    <CustomLink to="#">{type}</CustomLink>
-                                    {i !== roleTypes.length - 1 && ', '}
-                                </span>
-                            ))}
-                        </p>
+                    {desired_roles.length > 0 && role_types.length > 0 && availability && (
+                        <ProfileCard.Item>
+                            {desired_roles.length > 0 && (
+                                <p>
+                                    {desired_roles.length === 1
+                                        ? 'Desired role: '
+                                        : 'Desired desired_roles: '}
+                                    {desired_roles.map((role, i) => (
+                                        <span key={uuidv4()}>
+                                            <CustomLink to="#">{role}</CustomLink>
+                                            {i !== desired_roles.length - 1 && ', '}
+                                        </span>
+                                    ))}
+                                </p>
+                            )}
+                            {role_types.length > 0 && (
+                                <p>
+                                    {role_types.length === 1
+                                        ? 'Desired role type: '
+                                        : 'Desired role types: '}
+                                    {role_types.map((type, i) => (
+                                        <span key={uuidv4()}>
+                                            <CustomLink to="#">{type}</CustomLink>
+                                            {i !== role_types.length - 1 && ', '}
+                                        </span>
+                                    ))}
+                                </p>
+                            )}
+                            {availability && <p>Available: {availability}</p>}
+                        </ProfileCard.Item>
                     )}
-                    {availability && <p>Available: {availability}</p>}
-                </ProfileCard.Item>
+                </>
             )}
         </ProfileCard>
     );

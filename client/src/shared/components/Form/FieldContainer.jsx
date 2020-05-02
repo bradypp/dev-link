@@ -13,8 +13,8 @@ const propTypes = {
     htmlFor: PropTypes.string,
     margin: PropTypes.string,
     tipLocation: PropTypes.oneOf(['above', 'below']),
-    touched: PropTypes.bool,
-    error: PropTypes.bool,
+    touched: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
+    error: PropTypes.oneOfType([PropTypes.bool, PropTypes.array]),
 };
 
 const defaultProps = {
@@ -46,10 +46,12 @@ const FieldContainer = ({
         {label && <S.FieldLabel htmlFor={htmlFor}>{label}</S.FieldLabel>}
         {tip && tipLocation === 'above' && <S.FieldTip tipLocation={tipLocation}>{tip}</S.FieldTip>}
         {children}
-        {tip && tipLocation === 'bottom' && (
+        {tip && tipLocation === 'bottom' && !error && (
             <S.FieldTip tipLocation={tipLocation}>{tip}</S.FieldTip>
         )}
-        {touched && error ? <S.FieldError>{error}</S.FieldError> : null}
+        {touched && error && typeof error === 'string' ? (
+            <S.FieldError>{error}</S.FieldError>
+        ) : null}
     </S.FieldContainer>
 );
 

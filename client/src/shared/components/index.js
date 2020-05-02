@@ -20,6 +20,7 @@ export { default as TextEditor } from './TextEditor/TextEditor';
 export { default as Divider } from './Divider/Divider';
 export { default as Select } from './Select/Select';
 export { default as Form } from './Form/Form';
+export { default as Flex } from './Flex/Flex';
 export { default as Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
 export { default as ImageUpload } from './ImageUpload/ImageUpload';
 export { default as CopyButton } from './CopyButton';

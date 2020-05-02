@@ -24,15 +24,21 @@ export const Header = styled.header`
 `;
 
 export const Heading = styled.h2`
-    font-size: 2rem;
     font-weight: 400;
     margin: 0;
 `;
 
 export const Subtitle = styled.p`
-    font-size: 1.6rem;
     font-style: italic;
     font-weight: 400;
     margin: 0;
     color: ${({ theme }) => theme.colors.textPrimary2};
+`;
+
+export const ButtonsContainer = styled.div`
+    ${mixins.flexCenterRight}
+
+    & > *:not(:first-child) {
+        margin: 0 0 0 ${({ theme }) => theme.layout.buttonGap};
+    }
 `;

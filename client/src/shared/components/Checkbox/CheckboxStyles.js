@@ -29,7 +29,7 @@ export const StyledCheckbox = styled.div`
     display: block;
     margin: 0;
     margin-left: -2.8rem;
-    border-radius: ${({ theme }) => theme.layout.fieldBorderRadius};
+    border-radius: ${({ theme }) => theme.form.fieldBorderRadius};
     border: 1px solid ${({ theme }) => theme.colors.border3};
     /* box-shadow: 0 0 0 1px ${({ theme }) => theme.colors.border3} inset; */
     background-color: ${backgroundColor};

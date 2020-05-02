@@ -55,11 +55,16 @@ const GlobalStyles = createGlobalStyle`
   h1, h2 {
     margin-top: 0;
     margin-bottom: 1.6rem;
+    font-size: 2rem;
   }
 
   h3, h4, h5, h6, p, li {
     margin-top: 0;
     margin-bottom: 0.8rem;
+  }
+
+  h3, h4, h5, h6 {
+    font-size: 1.6rem;
   }
 
   ol, ul {

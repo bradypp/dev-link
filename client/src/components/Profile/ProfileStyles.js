@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { Button, Modal, Icon } from 'shared/components';
+import { Icon } from 'shared/components';
 
 // TODO: Create profile buttons (primary & edit)
 export const ProfileContainer = styled.div`

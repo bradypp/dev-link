@@ -9,24 +9,24 @@ const propTypes = {
     subtitle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     className: PropTypes.string,
     isCurrentUser: PropTypes.bool,
+    buttons: PropTypes.func,
 };
 
 const defaultProps = {
     subtitle: undefined,
     className: undefined,
     isCurrentUser: false,
+    buttons: undefined,
 };
 
-const ProfileCard = ({ children, isCurrentUser, heading, subtitle, ...props }) => (
+const ProfileCard = ({ children, isCurrentUser, heading, subtitle, buttons, ...props }) => (
     <S.ProfileCardContainer {...props}>
         <S.Header>
             <div>
                 <S.Heading>{heading}</S.Heading>
                 {subtitle && <S.Subtitle>{subtitle}</S.Subtitle>}
             </div>
-            {/* TODO: show edit button/icon here if the current auth user is on their profile */}
-            {/* TODO: show add + button? */}
-            {/* TODO: show a dotted border clickable section if empty & current user? */}
+            {buttons && <S.ButtonsContainer>{buttons()}</S.ButtonsContainer>}
         </S.Header>
         {children}
     </S.ProfileCardContainer>

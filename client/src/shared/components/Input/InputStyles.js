@@ -5,7 +5,7 @@ export const InputContainer = styled.div`
     position: relative;
     height: ${({ height }) => `${height}rem`};
     width: 100%;
-    border-radius: ${({ theme }) => theme.layout.fieldBorderRadius};
+    border-radius: ${({ theme }) => theme.form.fieldBorderRadius};
     svg {
         position: absolute;
         top: ${({ height }) => `${height / 4.2}rem`};
@@ -17,7 +17,7 @@ export const InputContainer = styled.div`
 
 export const InputElement = styled.input`
     height: 100%;
-    padding-left: ${({ hasIcon, height }) => (hasIcon ? `${height}rem` : '0.2rem')};
+    padding-left: ${({ hasIcon, height }) => (hasIcon ? `${height}rem` : '0.6rem')};
     width: 100%;
     font-family: ${({ theme }) => theme.fonts.primary};
     border-radius: ${({ theme }) => theme.form.fieldBorderRadius};

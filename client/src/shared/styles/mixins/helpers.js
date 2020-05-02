@@ -23,7 +23,7 @@ const helpers = {
         }
         &::-webkit-scrollbar-thumb {
             border-radius: 10rem;
-            background: ${({ theme }) => config.background || theme.colors.scrollBar};
+            background-color: ${({ theme }) => config.background || theme.colors.scrollBar};
         }
     `,
     backgroundImage: imageURL => css`

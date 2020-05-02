@@ -12,6 +12,8 @@ const propTypes = {
 
 export const ContactForm = ({ updateProfile, formData, setIsEditing }) => {
     const { socials, contact } = formData;
+    const contactKey = uuidv4();
+    const socialsKey = uuidv4();
     return (
         <>
             <h2>Edit Contact Info</h2>
@@ -36,7 +38,7 @@ export const ContactForm = ({ updateProfile, formData, setIsEditing }) => {
                                             {values.contact &&
                                                 values.contact.length > 0 &&
                                                 values.contact.map((contact, i) => (
-                                                    <React.Fragment key={i}>
+                                                    <React.Fragment key={contactKey}>
                                                         <S.GridLeft>
                                                             <Form.Field.Input
                                                                 name={`contact[${i}].name`}
@@ -71,7 +73,7 @@ export const ContactForm = ({ updateProfile, formData, setIsEditing }) => {
                         <Form.HorizontalDivider />
                         <Form.FieldContainer
                             label="Socials"
-                            tip="Enter any social media you'd like to share">
+                            tip="Add any social media you'd like to share">
                             <Form.FieldArray name="socials">
                                 {arrayHelpers => (
                                     <>
@@ -79,7 +81,7 @@ export const ContactForm = ({ updateProfile, formData, setIsEditing }) => {
                                             {values.socials &&
                                                 values.socials.length > 0 &&
                                                 values.socials.map((social, i) => (
-                                                    <React.Fragment key={i}>
+                                                    <React.Fragment key={socialsKey}>
                                                         <S.GridLeft>
                                                             <Form.Field.Input
                                                                 name={`socials[${i}].name`}

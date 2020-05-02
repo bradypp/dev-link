@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FaEdit } from 'react-icons/fa';
 import { styleIcon } from './IconStyles';
 
 const propTypes = {

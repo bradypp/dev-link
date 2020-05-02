@@ -38,8 +38,8 @@ const SignIn = ({ signIn, isAuthenticated }) => {
             <Form.Element>
                 <h2>Welcome Back!</h2>
                 <p>Don't miss your next big opportunity.</p>
-                <Form.Field.Input autoFocus label="Email or username *" name="login" />
-                <Form.Field.Input label="Password *" name="password" type="password" />
+                <Form.Field.Input autoFocus label="Email or username" name="login" />
+                <Form.Field.Input label="Password" name="password" type="password" />
                 <Form.Buttons />
             </Form.Element>
         </Form>

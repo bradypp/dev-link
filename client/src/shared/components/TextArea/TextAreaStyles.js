@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { mixins } from 'shared/styles';
 
 export const TextAreaContainer = styled.div`
@@ -7,7 +7,7 @@ export const TextAreaContainer = styled.div`
     
     textarea {
         overflow-y: hidden;
-        padding: 0.8rem 0.12rem 0.9rem;
+        padding: 0.8rem 0.6rem 0.9rem;
         min-height: ${({ height }) => `${height}rem !important`};
         width: 100%;
         font-family: ${({ theme }) => theme.fonts.primary};

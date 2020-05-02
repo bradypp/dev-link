@@ -7,12 +7,11 @@ export const ProfileCardItemContainer = styled.div`
 `;
 
 export const ItemHeading = styled.h3`
-    font-size: 1.6rem;
     margin: 0;
 `;
 
 export const ItemSubtitle = styled.p`
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-style: italic;
     font-weight: 400;
     margin: 0;

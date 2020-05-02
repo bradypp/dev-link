@@ -1,5 +1,7 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
+import { mixins } from 'shared/styles';
 
 export const Content = styled.div`
-    padding: 0 !important;
+    ${mixins.clickable}
+    padding: 0 0 1.6rem !important;
 `;

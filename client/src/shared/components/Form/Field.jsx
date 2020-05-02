@@ -4,7 +4,6 @@ import { uniqueId } from 'lodash';
 import { Field, getIn } from 'formik';
 import { Input, TextArea, TextEditor, Select, Checkbox } from 'shared/components';
 import FieldContainer from './FieldContainer';
-import * as S from './FormStyles';
 
 const propTypes = {
     className: PropTypes.string,
@@ -17,6 +16,7 @@ const propTypes = {
     fieldId: PropTypes.string,
     margin: PropTypes.string,
     tipLocation: PropTypes.oneOf(['above', 'below']),
+    customOnChange: PropTypes.func,
 };
 
 const defaultProps = {
@@ -30,6 +30,7 @@ const defaultProps = {
     fieldId: undefined,
     margin: undefined,
     tipLocation: 'above',
+    customOnChange: undefined,
 };
 
 const generateField = FormComponent => {
@@ -44,38 +45,28 @@ const generateField = FormComponent => {
         fieldId: propsId,
         margin,
         tipLocation,
+        customOnChange,
         ...props
     }) => (
         <Field name={name} type={type}>
-            {({ field, form }) => {
+            {({ field, form, meta }) => {
                 const fieldId = propsId || uniqueId('form-field-');
                 const error = getIn(form.errors, name);
                 const touched = getIn(form.touched, name);
 
                 const defaultField = (
-                    <>
-                        <FieldContainer
-                            name={name}
-                            label={label}
-                            tip={tip}
-                            htmlFor={fieldId}
-                            error={error}
-                            touched={touched}
-                            tipLocation={tipLocation}
-                            type={type}>
-                            <FormComponent
-                                {...field}
-                                {...props}
-                                type={type}
-                                id={fieldId}
-                                invalid={error && touched}
-                                onChange={value => {
-                                    form.setFieldValue(name, value);
-                                    if (submitOnChange) form.submitForm();
-                                }}
-                            />
-                        </FieldContainer>
-                    </>
+                    <FormComponent
+                        {...field}
+                        {...props}
+                        type={type}
+                        id={fieldId}
+                        invalid={error && touched}
+                        onChange={value => {
+                            form.setFieldValue(name, value);
+                            if (customOnChange) customOnChange(value);
+                            if (submitOnChange) form.submitForm();
+                        }}
+                    />
                 );
 
                 const checkboxField = (
@@ -88,6 +79,7 @@ const generateField = FormComponent => {
                         invalid={error && touched}
                         onChange={() => {
                             form.setFieldValue(name, !field.checked);
+                            if (customOnChange) customOnChange({ field, form, meta });
                             if (submitOnChange) form.submitForm();
                         }}
                     />
@@ -96,13 +88,21 @@ const generateField = FormComponent => {
                 const fieldComponent = type === 'checkbox' ? checkboxField : defaultField;
 
                 return (
-                    <S.FieldContainer
+                    <FieldContainer
                         className={className}
                         data-testid={name ? `form-field:${name}` : 'form-field'}
                         width={width}
-                        margin={margin}>
+                        margin={margin}
+                        name={name}
+                        label={label}
+                        tip={tip}
+                        htmlFor={fieldId}
+                        error={error}
+                        touched={touched}
+                        tipLocation={tipLocation}
+                        type={type}>
                         {fieldComponent}
-                    </S.FieldContainer>
+                    </FieldContainer>
                 );
             }}
         </Field>

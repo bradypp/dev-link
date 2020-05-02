@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 
 export const EditorContainer = styled.div`
     * {
@@ -19,12 +19,12 @@ export const EditorContainer = styled.div`
 
     .ql-toolbar.ql-snow {
         border-radius: ${({ theme }) =>
-            `${theme.layout.fieldBorderRadius} ${theme.layout.fieldBorderRadius} 0 0`};
+            `${theme.form.fieldBorderRadius} ${theme.form.fieldBorderRadius} 0 0`};
     }
 
     .ql-container.ql-snow {
         border-radius: ${({ theme }) =>
-            `0 0 ${theme.layout.fieldBorderRadius} ${theme.layout.fieldBorderRadius}`};
+            `0 0 ${theme.form.fieldBorderRadius} ${theme.form.fieldBorderRadius}`};
         border-top: none;
     }
 

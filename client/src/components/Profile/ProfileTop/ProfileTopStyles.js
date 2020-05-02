@@ -42,14 +42,13 @@ export const ContentLeftContainer = styled.div`
     }
 
     h2 {
-        font-size: 1.7rem;
-        font-weight: 400;
-        margin-bottom: 0.8rem;
+        font-size: 1.8rem;
     }
 
+    h2,
     h3 {
-        font-size: 1.6rem;
         font-weight: 400;
+        margin-bottom: 0.8rem;
     }
 `;
 const avatarContainer = css`

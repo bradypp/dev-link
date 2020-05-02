@@ -18,7 +18,6 @@ export const SelectContainer = styled.div`
         css`
             border: 1px solid ${theme.colors.border1};
             background-color: ${theme.colors.fieldBackground};
-            ${mixins.fieldHover};
             ${mixins.fieldFocus};
         `}
 `;
@@ -57,18 +56,8 @@ export const ValueMultiItem = styled.div`
     background-color: ${({ theme }) => theme.colors.background3};
 `;
 
-export const AddMore = styled.label`
-    ${mixins.inlineFlexCenter};
-    ${mixins.link}
-    padding: 0.3rem 0;
-    font-size: 1.2rem;
-    ${({ variant }) => variant === 'empty' && 'margin-bottom: 0.3rem'};
-
-    svg {
-        margin-right: 0.3rem;
-        vertical-align: middle;
-        font-size: 1.6rem;
-    }
+export const AddMoreContainer = styled.div`
+    padding: ${({ variant }) => (variant === 'empty' ? '0.4rem 0 0.3rem' : '0.3rem 0 0 0')};
 `;
 
 export const Dropdown = styled.div`
@@ -77,10 +66,16 @@ export const Dropdown = styled.div`
     top: 100%;
     left: 0;
     border-radius: ${({ theme }) =>
-        `0 0 ${theme.layout.fieldBorderRadius} ${theme.layout.fieldBorderRadius}`};
+        `0 0 ${theme.form.fieldBorderRadius} ${theme.form.fieldBorderRadius}`};
     background-color: ${({ theme }) => theme.colors.fieldBackground};
     box-shadow: ${({ theme }) => theme.boxShadow.dropdown};
     width: ${({ width }) => width || '100%'};
+    overflow: hidden;
+    ${({ variant }) =>
+        variant === 'empty' &&
+        css`
+            margin: 0.8rem 0 0;
+        `}
 `;
 
 export const DropdownInput = styled.input`
@@ -96,7 +91,6 @@ export const DropdownInput = styled.input`
 
 export const ArrowDownIcon = styled(IoIosArrowDown)`
     margin-left: auto;
-    color: ${({ theme }) => theme.colors.textPrimary3};
 `;
 
 export const RemoveIcon = styled(IoIosClose)`
@@ -109,7 +103,7 @@ export const ClearIcon = styled(RiDeleteBack2Line)`
     top: 0.8rem;
     right: 0.8rem;
     font-size: 1.8rem;
-    color: ${({ theme }) => theme.colors.textPrimary1};
+    color: ${({ theme }) => theme.colors.textPrimary2};
     ${mixins.clickable}
 `;
 
@@ -123,6 +117,11 @@ export const Option = styled.div`
     padding: 0.8rem 1.4rem;
     word-break: break-word;
     cursor: pointer;
+
+    &:last-of-type {
+        border-radius: ${({ theme }) =>
+            `0 0 ${theme.form.fieldBorderRadius} ${theme.form.fieldBorderRadius}`};
+    }
 
     &.select-option-is-active {
         background-color: ${({ theme }) => theme.colors.activeBackground};

@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import normalize from 'normalize-url';
 
 const validators = {
     required: (errorMessage = 'Field is required') =>
@@ -31,7 +30,8 @@ const validators = {
     email: Yup.string()
         .trim()
         .email('Please enter a valid email address')
-        .required('Email is required'),
+        .required('Email is required')
+        .lowercase(),
 };
 
 export default validators;

@@ -19,8 +19,6 @@ import {
     ProfileEducation,
     ProfileCertifications,
     ProfileExperience,
-    ProfileInterests,
-    ProfileGoals,
 } from 'components';
 import * as S from './ProfileStyles';
 
@@ -85,8 +83,6 @@ const Profile = ({
                     <>
                         <ProfileTop />
                         <ProfileAbout />
-                        <ProfileInterests />
-                        <ProfileGoals />
                         <ProfilePortfolio />
                         <ProfileExperience />
                         <ProfileEducation />

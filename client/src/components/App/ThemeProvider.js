@@ -14,8 +14,8 @@ const ThemeProvider = ({ children }) => {
         white1: '#f4f5f7',
         white2: '#f1f2f4',
         white3: '#e2e4e9',
-        white4: '#d3d6de',
-        white5: '#d4d7dd',
+        white4: '#d3d7df',
+        white5: '#c4c9d4',
         greyDark1: '#333',
         greyDark2: '#555',
         greyDark3: '#777',
@@ -45,6 +45,7 @@ const ThemeProvider = ({ children }) => {
         background1: baseColors.white1,
         background2: baseColors.white2,
         background3: baseColors.white3,
+        scrollBar: baseColors.white5,
     };
 
     const borderColors = {
@@ -105,7 +106,7 @@ const ThemeProvider = ({ children }) => {
             avatarWidth: `16rem`,
         },
         form: {
-            fontSize: `1.5rem`,
+            fontSize: `1.4rem`,
             fieldGap: `2rem`,
             fieldBorderRadius: `0.3rem`,
         },

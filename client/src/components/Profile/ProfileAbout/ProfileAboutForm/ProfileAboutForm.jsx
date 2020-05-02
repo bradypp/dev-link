@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Form } from 'shared/components';
 import { EditModal } from 'components';
-import * as Yup from 'yup';
 import { validators } from 'shared/utils';
+import * as Yup from 'yup';
 import { updateProfile } from 'redux/profile';
 
 const propTypes = {
@@ -16,11 +16,31 @@ const mapDispatchToProps = {
     updateProfile,
 };
 
-// TODO: split name into first name and last name?
-const ProfileTopForm = ({ updateProfile, formData }) => {
-    const { bio, roles, roleTypes, availability } = formData;
+const ProfileAboutForm = ({ updateProfile, formData }) => {
+    const { bio, desired_roles, role_types, availability } = formData;
 
-    const aboutValidation = Yup.object().shape({});
+    const roleTypes = [
+        'Full-Time Permanent',
+        'Full-Time Temporary',
+        'Part-Time Permanent',
+        'Part-Time Temporary',
+        'Open Source',
+        'Freelance',
+        'Intern',
+    ];
+
+    const availabilityOptions = [
+        'Immediately',
+        'Less than 1 week',
+        '1 to 2 weeks',
+        '2 to 3 weeks',
+        '3 to 4 weeks',
+        'More than 4 weeks',
+    ];
+
+    const aboutValidation = Yup.object().shape({
+        bio: validators.required('Bio is required'),
+    });
 
     return (
         <EditModal
@@ -30,47 +50,62 @@ const ProfileTopForm = ({ updateProfile, formData }) => {
                     <Form
                         initialValues={{
                             bio,
-                            roles,
-                            types: roleTypes,
+                            desired_roles,
+                            role_types,
                             availability,
                         }}
                         validationSchema={aboutValidation}
                         onSubmit={values => {
-                            updateProfile(values);
+                            updateProfile({ about_me: values });
                             close();
                         }}>
                         {({ values }) => (
                             <Form.Element>
-                                <Form.Field.TextEditor
-                                    label="Headline *"
-                                    name="headline"
-                                    tip="Write a catchy headline for your profile"
+                                <Form.Field.TextArea
+                                    label="Bio *"
+                                    tip="Write a short paragraph about yourself"
+                                    name="bio"
                                 />
                                 <Form.Flex>
-                                    <Form.Field.Input
-                                        label="Company"
-                                        name="company"
-                                        tip="Where do you currently work?"
+                                    <Form.Field.Select
+                                        label="Desired roles"
+                                        tip="Add any roles that you're interested in"
+                                        isMulti
+                                        withOptions={false}
+                                        valuePlaceholder="Add role"
+                                        inputPlaceholder="Add a desired role"
+                                        withCreate
+                                        name="desired_roles"
+                                        variant="empty"
+                                        options={values.desired_roles.map(role => ({
+                                            label: role,
+                                            value: role,
+                                        }))}
                                     />
-                                    <Form.Field.Input
-                                        label="Current Position"
-                                        name="current_position"
-                                        tip="What is your current role?"
+                                    <Form.Field.Select
+                                        label="Desired role type"
+                                        tip="Choose what type of roles/contacts that you're interested in"
+                                        isMulti
+                                        valuePlaceholder="Add type"
+                                        inputPlaceholder="Search"
+                                        name="role_types"
+                                        variant="empty"
+                                        options={roleTypes.map(type => ({
+                                            label: type,
+                                            value: type,
+                                        }))}
                                     />
                                 </Form.Flex>
                                 <Form.Field.Select
-                                    label="Skills"
-                                    tip="Choose skills and languages to feature on your profile"
-                                    isMulti
-                                    withOptions={false}
-                                    valuePlaceholder="Add skill"
-                                    inputPlaceholder="Add a skill"
-                                    withCreate
-                                    name="skills"
-                                    variant="empty"
-                                    options={values.skills.map(skill => ({
-                                        label: skill,
-                                        value: skill,
+                                    label="Availability"
+                                    tip="When are you available?"
+                                    valuePlaceholder="Select"
+                                    inputPlaceholder="Search"
+                                    name="availability"
+                                    width="50%"
+                                    options={availabilityOptions.map(type => ({
+                                        label: type,
+                                        value: type,
                                     }))}
                                 />
                                 <Form.Buttons withCancel onCancel={close} />
@@ -83,6 +118,6 @@ const ProfileTopForm = ({ updateProfile, formData }) => {
     );
 };
 
-ProfileTopForm.propTypes = propTypes;
+ProfileAboutForm.propTypes = propTypes;
 
-export default connect(null, mapDispatchToProps)(ProfileTopForm);
+export default connect(null, mapDispatchToProps)(ProfileAboutForm);
