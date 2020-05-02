@@ -4,7 +4,7 @@ export const SkillsContainer = styled.div`
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
-    margin-top: auto;
+    margin: 0.8rem 0;
 
     a {
         margin-right: 1.6rem;
@@ -21,4 +21,17 @@ export const LinksContainer = styled.div`
     }
 `;
 
-export const ItemImagesContainer = styled.div``;
+export const ContentContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-self: stretch;
+
+    p {
+        margin-bottom: auto;
+    }
+`;
+
+export const CarouselContainer = styled.div`
+    flex: 1;
+`;

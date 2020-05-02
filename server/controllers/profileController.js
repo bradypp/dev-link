@@ -59,7 +59,8 @@ exports.uploadProfileImages = multerImageUpload.fields([
 
 exports.prepareProfileImages = catchAsync(async (req, res, next) => {
     if (!req.files) return next();
-
+    console.log(req.files);
+    console.log(req.body);
     // Profile avatar
     if (req.files.avatar) {
         const avatar = {};

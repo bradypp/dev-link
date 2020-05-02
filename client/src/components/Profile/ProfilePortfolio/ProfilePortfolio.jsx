@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-// import Image from 'react-image';
+import Image from 'react-image';
+import { Carousel } from 'react-responsive-carousel';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ProfileCard } from 'components';
 import { selectProfilePortfolio } from 'redux/profile';
-import { CustomLink, OutboundLink } from 'shared/components';
+import { CustomLink, OutboundLink, Flex } from 'shared/components';
 import * as S from './ProfilePortfolioStyles';
+import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 
 const propTypes = {
     portfolio: PropTypes.array.isRequired,
@@ -28,33 +30,50 @@ const ProfilePortfolio = ({ portfolio }) => {
     return (
         <ProfileCard heading="Portfolio">
             {portfolio.map(item => {
-                const { title, description, repo, skills, demo } = item;
+                const { title, description, repo, images, skills, demo } = item;
+                // TODO: look at lazy loading carousel
                 return (
                     <ProfileCard.Item key={uuidv4()}>
                         <ProfileCard.Item.Heading>{title}</ProfileCard.Item.Heading>
-                        {description && <p>{description}</p>}
-                        <S.SkillsContainer>
-                            {skills.length > 0 &&
-                                skills.map(skill => (
-                                    <CustomLink to="#" key={uuidv4()}>
-                                        {skill}
-                                    </CustomLink>
-                                ))}
-                        </S.SkillsContainer>
-                        {/* {images.length > 0 &&
-                                images.map(image => {
-                                    return (
-                                        <Image
-                                            src={`http://localhost:5000/img/profile/portfolio/${image.small}`}
-                                            alt="Portfolio image"
-                                            key={uuidv4()}
-                                        />
-                                    );
-                                })} */}
-                        <S.LinksContainer>
-                            {repo && <OutboundLink href={repo}>Repo</OutboundLink>}
-                            {demo && <OutboundLink href={demo}>Demo</OutboundLink>}
-                        </S.LinksContainer>
+                        <Flex alignItems="flex-start">
+                            <S.ContentContainer>
+                                {description && <p>{description}</p>}
+                                <S.SkillsContainer>
+                                    {skills.length > 0 &&
+                                        skills.map(skill => (
+                                            <CustomLink to="#" key={uuidv4()}>
+                                                {skill}
+                                            </CustomLink>
+                                        ))}
+                                </S.SkillsContainer>
+                                <S.LinksContainer>
+                                    {repo && <OutboundLink href={repo}>Repo</OutboundLink>}
+                                    {demo && <OutboundLink href={demo}>Demo</OutboundLink>}
+                                </S.LinksContainer>
+                            </S.ContentContainer>
+                            <S.CarouselContainer>
+                                {images.length > 0 && (
+                                    <Carousel
+                                        infiniteLoop
+                                        useKeyboardArrows
+                                        autoPlay
+                                        stopOnHover
+                                        swipeable
+                                        emulateTouch
+                                        showStatus={false}
+                                        showThumbs={false}
+                                        interval={5000}>
+                                        {images.map(image => (
+                                            <Image
+                                                src={`http://localhost:5000/img/profile/portfolio/${image.small}`}
+                                                alt="Portfolio image"
+                                                key={uuidv4()}
+                                            />
+                                        ))}
+                                    </Carousel>
+                                )}
+                            </S.CarouselContainer>
+                        </Flex>
                     </ProfileCard.Item>
                 );
             })}

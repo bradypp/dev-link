@@ -9,6 +9,7 @@ const propTypes = {
     justifyContent: PropTypes.string,
     alignItems: PropTypes.string,
     flexWrap: PropTypes.string,
+    alignContent: PropTypes.string,
 };
 
 const defaultProps = {
@@ -17,6 +18,7 @@ const defaultProps = {
     justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'wrap',
+    alignContent: 'flex-start',
 };
 
 const Flex = ({ children, ...props }) => {

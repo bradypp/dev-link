@@ -4,17 +4,19 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { isEmpty } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
-import { selectProfileAboutMe } from 'redux/profile';
+import { selectProfileAboutMe, selectIsCurrentUser } from 'redux/profile';
 import { ProfileCard } from 'components';
 import { CustomLink } from 'shared/components';
 import ProfileAboutForm from './ProfileAboutForm/ProfileAboutForm';
 
 const propTypes = {
     aboutMe: PropTypes.object.isRequired,
+    isCurrentUser: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
     aboutMe: selectProfileAboutMe,
+    isCurrentUser: selectIsCurrentUser,
 });
 
 // TODO: Conditional appearance based on if profile belongs to current authenticated user
@@ -22,11 +24,13 @@ const mapStateToProps = createStructuredSelector({
 // TODO: Add links to custom links
 // TODO: sanitize links to lower case on save
 // TODO: change lists below to buttons with margin between them?
-const ProfileAbout = ({ aboutMe }) => {
+const ProfileAbout = ({ aboutMe, isCurrentUser }) => {
     const { bio, desired_roles, role_types, availability } = aboutMe;
 
     return (
-        <ProfileCard heading="About Me" buttons={() => <ProfileAboutForm formData={aboutMe} />}>
+        <ProfileCard
+            heading="About Me"
+            buttons={() => isCurrentUser && <ProfileAboutForm formData={aboutMe} />}>
             {!isEmpty(aboutMe) && (
                 <>
                     {bio && (
