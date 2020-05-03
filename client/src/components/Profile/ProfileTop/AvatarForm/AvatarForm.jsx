@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Image from 'react-image';
-import { updateImage } from 'redux/profile';
+import { updateProfileImage } from 'redux/profile';
 import * as S from './AvatarFormStyles';
 
 const propTypes = {
-    updateImage: PropTypes.func.isRequired,
+    updateProfileImage: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
-    updateImage,
+    updateProfileImage,
 };
 
-const AvatarForm = ({ updateImage }) => {
+const AvatarForm = ({ updateProfileImage }) => {
     const [image, setImage] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -35,11 +35,11 @@ const AvatarForm = ({ updateImage }) => {
                 <form
                     onSubmit={event => {
                         event.preventDefault();
-                        updateImage(image[0], 'avatar');
+                        updateProfileImage(image[0], 'avatar');
                         setIsOpen(false);
                         setImage([]);
                     }}>
-                    <Image src={image[0].preview} />
+                    <Image src={image[0].preview} alt="Uploaded avatar preview" />
                     <S.ButtonsContainer withCancel onCancel={onClose} />
                 </form>
             )}

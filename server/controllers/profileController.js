@@ -6,6 +6,9 @@ const User = require('../models/User');
 const { AppError, catchAsync, multerImageUpload } = require('../utils');
 
 const notFoundErrorMessage = 'Profile not found';
+const logErrorToConsole = err => {
+    if (process.env.NODE_ENV === 'development') console.error(err);
+};
 
 exports.getMe = (req, res, next) => {
     req.params.userId = req.user.id;
@@ -54,13 +57,12 @@ exports.createProfile = catchAsync(async (req, res, next) => {
 exports.uploadProfileImages = multerImageUpload.fields([
     { name: 'avatar', maxCount: 1 },
     { name: 'cover_image', maxCount: 1 },
-    { name: 'portfolio_images', maxCount: 5 },
+    { name: 'portfolio_images', maxCount: 6 },
 ]);
 
 exports.prepareProfileImages = catchAsync(async (req, res, next) => {
     if (!req.files) return next();
-    console.log(req.files);
-    console.log(req.body);
+
     // Profile avatar
     if (req.files.avatar) {
         const avatar = {};
@@ -163,7 +165,6 @@ exports.prepareProfileImages = catchAsync(async (req, res, next) => {
 
         req.body.portfolio_images = portfolio_images;
     }
-
     next();
 });
 
@@ -181,25 +182,19 @@ exports.deleteReplacedProfileImages = catchAsync(async (req, res, next) => {
             req.body.avatar.medium !== profile.avatar.medium &&
             profile.avatar.medium !== 'default-medium.jpg'
         ) {
-            fs.unlink(`public/img/profile/avatar/${profile.avatar.medium}`, err => {
-                if (err) next(new AppError(err.message, 500));
-            });
+            fs.unlink(`public/img/profile/avatar/${profile.avatar.medium}`, logErrorToConsole);
         }
         if (
             req.body.avatar.small !== profile.avatar.small &&
             profile.avatar.small !== 'default-small.jpg'
         ) {
-            fs.unlink(`public/img/profile/avatar/${profile.avatar.small}`, err => {
-                if (err) next(new AppError(err.message, 500));
-            });
+            fs.unlink(`public/img/profile/avatar/${profile.avatar.small}`, logErrorToConsole);
         }
         if (
             req.body.avatar.thumbnail !== profile.avatar.thumbnail &&
             profile.avatar.thumbnail !== 'default-thumbnail.jpg'
         ) {
-            fs.unlink(`public/img/profile/avatar/${profile.avatar.thumbnail}`, err => {
-                if (err) next(new AppError(err.message, 500));
-            });
+            fs.unlink(`public/img/profile/avatar/${profile.avatar.thumbnail}`, logErrorToConsole);
         }
     }
 
@@ -208,25 +203,28 @@ exports.deleteReplacedProfileImages = catchAsync(async (req, res, next) => {
             req.body.cover_image.large !== profile.cover_image.large &&
             profile.cover_image.large !== 'default-large.jpg'
         ) {
-            fs.unlink(`public/img/profile/cover_image/${profile.cover_image.large}`, err => {
-                if (err) next(new AppError(err.message, 500));
-            });
+            fs.unlink(
+                `public/img/profile/cover_image/${profile.cover_image.large}`,
+                logErrorToConsole,
+            );
         }
         if (
             req.body.cover_image.medium !== profile.cover_image.medium &&
             profile.cover_image.medium !== 'default-medium.jpg'
         ) {
-            fs.unlink(`public/img/profile/cover_image/${profile.cover_image.medium}`, err => {
-                if (err) next(new AppError(err.message, 500));
-            });
+            fs.unlink(
+                `public/img/profile/cover_image/${profile.cover_image.medium}`,
+                logErrorToConsole,
+            );
         }
         if (
             req.body.cover_image.small !== profile.cover_image.small &&
             profile.cover_image.small !== 'default-small.jpg'
         ) {
-            fs.unlink(`public/img/profile/cover_image/${profile.cover_image.small}`, err => {
-                if (err) next(new AppError(err.message, 500));
-            });
+            fs.unlink(
+                `public/img/profile/cover_image/${profile.cover_image.small}`,
+                logErrorToConsole,
+            );
         }
     }
 
@@ -241,51 +239,34 @@ exports.deleteAllProfileImages = catchAsync(async (req, res, next) => {
     }
 
     if (profile.avatar.medium !== 'default-medium.jpg') {
-        fs.unlink(`public/img/profile/avatar/${profile.avatar.medium}`, err => {
-            if (err) next(new AppError(err.message, 500));
-        });
+        fs.unlink(`public/img/profile/avatar/${profile.avatar.medium}`, logErrorToConsole);
     }
     if (profile.avatar.small !== 'default-small.jpg') {
-        fs.unlink(`public/img/profile/avatar/${profile.avatar.small}`, err => {
-            if (err) next(new AppError(err.message, 500));
-        });
+        fs.unlink(`public/img/profile/avatar/${profile.avatar.small}`, logErrorToConsole);
     }
     if (profile.avatar.thumbnail !== 'default-thumbnail.jpg') {
-        fs.unlink(`public/img/profile/avatar/${profile.avatar.thumbnail}`, err => {
-            if (err) next(new AppError(err.message, 500));
-        });
+        fs.unlink(`public/img/profile/avatar/${profile.avatar.thumbnail}`, logErrorToConsole);
     }
     if (profile.cover_image.large !== 'default-large.jpg') {
-        fs.unlink(`public/img/profile/cover_image/${profile.cover_image.large}`, err => {
-            if (err) next(new AppError(err.message, 500));
-        });
+        fs.unlink(`public/img/profile/cover_image/${profile.cover_image.large}`, logErrorToConsole);
     }
     if (profile.cover_image.medium !== 'default-medium.jpg') {
-        fs.unlink(`public/img/profile/cover_image/${profile.cover_image.medium}`, err => {
-            if (err) next(new AppError(err.message, 500));
-        });
+        fs.unlink(
+            `public/img/profile/cover_image/${profile.cover_image.medium}`,
+            logErrorToConsole,
+        );
     }
     if (profile.cover_image.small !== 'default-small.jpg') {
-        fs.unlink(`public/img/profile/cover_image/${profile.cover_image.small}`, err => {
-            if (err) next(new AppError(err.message, 500));
-        });
+        fs.unlink(`public/img/profile/cover_image/${profile.cover_image.small}`, logErrorToConsole);
     }
 
     if (profile.portfolio.length > 0) {
         profile.portfolio.forEach(item => {
             item.images.forEach(imageObj => {
-                fs.unlink(`public/img/profile/portfolio/${imageObj.large}`, err => {
-                    if (err) next(new AppError(err.message, 500));
-                });
-                fs.unlink(`public/img/profile/portfolio/${imageObj.medium}`, err => {
-                    if (err) next(new AppError(err.message, 500));
-                });
-                fs.unlink(`public/img/profile/portfolio/${imageObj.small}`, err => {
-                    if (err) next(new AppError(err.message, 500));
-                });
-                fs.unlink(`public/img/profile/portfolio/${imageObj.thumbnail}`, err => {
-                    if (err) next(new AppError(err.message, 500));
-                });
+                fs.unlink(`public/img/profile/portfolio/${imageObj.large}`, logErrorToConsole);
+                fs.unlink(`public/img/profile/portfolio/${imageObj.medium}`, logErrorToConsole);
+                fs.unlink(`public/img/profile/portfolio/${imageObj.small}`, logErrorToConsole);
+                fs.unlink(`public/img/profile/portfolio/${imageObj.thumbnail}`, logErrorToConsole);
             });
         });
     }
@@ -317,11 +298,9 @@ exports.addPortfolioItem = catchAsync(async (req, res, next) => {
     });
 });
 
-// TODO: add validation to only allow 5 images
 // If an image is uploaded, send it along with the whole portfolio item with field-name 'portfolio_images'
 exports.updatePortfolioItem = catchAsync(async (req, res, next) => {
     const profile = await Profile.findOne({ user: req.params.userId });
-
     if (!profile) {
         return next(new AppError(notFoundErrorMessage, 404));
     }
@@ -345,18 +324,10 @@ exports.updatePortfolioItem = catchAsync(async (req, res, next) => {
         if (idsOfImagesToRemove.length > 0) {
             idsOfImagesToRemove.forEach(id => {
                 const image = profile.portfolio[itemIndex].images.find(el => el.id === id);
-                fs.unlink(`public/img/profile/portfolio/${image.large}`, err => {
-                    if (err) next(new AppError(err.message, 500));
-                });
-                fs.unlink(`public/img/profile/portfolio/${image.medium}`, err => {
-                    if (err) next(new AppError(err.message, 500));
-                });
-                fs.unlink(`public/img/profile/portfolio/${image.small}`, err => {
-                    if (err) next(new AppError(err.message, 500));
-                });
-                fs.unlink(`public/img/profile/portfolio/${image.thumbnail}`, err => {
-                    if (err) next(new AppError(err.message, 500));
-                });
+                fs.unlink(`public/img/profile/portfolio/${image.large}`, logErrorToConsole);
+                fs.unlink(`public/img/profile/portfolio/${image.medium}`, logErrorToConsole);
+                fs.unlink(`public/img/profile/portfolio/${image.small}`, logErrorToConsole);
+                fs.unlink(`public/img/profile/portfolio/${image.thumbnail}`, logErrorToConsole);
             });
         }
     }
@@ -405,18 +376,10 @@ exports.removePortfolioItem = catchAsync(async (req, res, next) => {
 
     // Delete portfolio item images
     profile.portfolio[removeIndex].images.forEach(imageObj => {
-        fs.unlink(`public/img/profile/portfolio/${imageObj.large}`, err => {
-            if (err) next(new AppError(err.message, 500));
-        });
-        fs.unlink(`public/img/profile/portfolio/${imageObj.medium}`, err => {
-            if (err) next(new AppError(err.message, 500));
-        });
-        fs.unlink(`public/img/profile/portfolio/${imageObj.small}`, err => {
-            if (err) next(new AppError(err.message, 500));
-        });
-        fs.unlink(`public/img/profile/portfolio/${imageObj.thumbnail}`, err => {
-            if (err) next(new AppError(err.message, 500));
-        });
+        fs.unlink(`public/img/profile/portfolio/${imageObj.large}`, logErrorToConsole);
+        fs.unlink(`public/img/profile/portfolio/${imageObj.medium}`, logErrorToConsole);
+        fs.unlink(`public/img/profile/portfolio/${imageObj.small}`, logErrorToConsole);
+        fs.unlink(`public/img/profile/portfolio/${imageObj.thumbnail}`, logErrorToConsole);
     });
 
     profile.portfolio.splice(removeIndex, 1);

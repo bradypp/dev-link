@@ -4,6 +4,7 @@ import ButtonWrapper from './ButtonWrapper';
 // TODO: share all styles with custom link button variants
 const iconOnlyHeightWidth = '2.8rem';
 export const StyledButton = styled(ButtonWrapper)`
+    position: relative;
     height: ${({ iconOnly }) => (iconOnly ? iconOnlyHeightWidth : '3.2rem')};
     width: ${({ iconOnly }) => (iconOnly ? iconOnlyHeightWidth : 'auto')};
     padding: 0 ${({ iconOnly }) => (iconOnly ? '0' : '1.2rem')};

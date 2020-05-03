@@ -1,14 +1,13 @@
 import { css } from 'styled-components/macro';
 
 const layout = {
-    gridLayout: (
-        numberOfColumns = 16,
-        gridGap = '1.6rem',
-        columnWidth = 'minmax(min-content, 1fr)',
-    ) => css`
+    gridLayout: (columnNumber, gridGap, columnWidth) => css`
         display: grid;
-        grid-template-columns: repeat(${numberOfColumns}, ${columnWidth});
-        grid-gap: ${gridGap};
+        grid-template-columns: repeat(
+            ${columnNumber || '16'},
+            ${columnWidth || 'minmax(min-content, 1fr)'}
+        );
+        grid-gap: ${gridGap || '1.6rem'};
     `,
     containAndCenter: css`
         max-width: ${({ theme }) => theme.layout.maxWidth};

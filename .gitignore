@@ -24,3 +24,5 @@ yarn-error.log*
 
 .local_resources
 .vscode
+
+/server/public/img

@@ -8,8 +8,9 @@ import { createStructuredSelector } from 'reselect';
 import { ProfileCard } from 'components';
 import { selectProfilePortfolio } from 'redux/profile';
 import { CustomLink, OutboundLink, Flex } from 'shared/components';
+import ProfilePortfolioForm from './ProfilePortfolioForm/ProfilePortfolioForm';
 import * as S from './ProfilePortfolioStyles';
-import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 const propTypes = {
     portfolio: PropTypes.array.isRequired,
@@ -19,22 +20,20 @@ const mapStateToProps = createStructuredSelector({
     portfolio: selectProfilePortfolio,
 });
 
-// TODO: Conditional appearance based on if profile belongs to current authenticated user
-// TODO: Add loader?
-// TODO: make possible/ add prompt to add to portfolio if it doesn't already exist and is current authenticated users profile (including clickable image square)
-// TODO: convert skills into tag link that can be clicked and taken to profiles search page filtered for that skill
-// TODO: decide on carousel component and have each be clickable to expand for a bigger image in a modal
-// TODO: decide on layout (images above or below?)
-// TODO: make sure external links work properly (normalize links?)
 const ProfilePortfolio = ({ portfolio }) => {
     return (
         <ProfileCard heading="Portfolio">
             {portfolio.map(item => {
                 const { title, description, repo, images, skills, demo } = item;
-                // TODO: look at lazy loading carousel
+                // TODO: lazy load carousel
                 return (
                     <ProfileCard.Item key={uuidv4()}>
-                        <ProfileCard.Item.Heading>{title}</ProfileCard.Item.Heading>
+                        <Flex justifyContent="space-between">
+                            <ProfileCard.Item.Heading>{title}</ProfileCard.Item.Heading>
+                            <div>
+                                <ProfilePortfolioForm formData={item} />
+                            </div>
+                        </Flex>
                         <Flex>
                             <S.ContentContainer>
                                 {description && <p>{description}</p>}
@@ -63,10 +62,10 @@ const ProfilePortfolio = ({ portfolio }) => {
                                         showStatus={false}
                                         showThumbs={false}
                                         interval={5000}>
-                                        {images.map(image => (
+                                        {images.map((image, i) => (
                                             <Image
                                                 src={`http://localhost:5000/img/profile/portfolio/${image.small}`}
-                                                alt="Portfolio image"
+                                                alt={`Portfolio item - ${title} - ${i + 1}`}
                                                 key={uuidv4()}
                                             />
                                         ))}

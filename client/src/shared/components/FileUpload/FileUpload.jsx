@@ -12,26 +12,47 @@ const propTypes = {
     icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     maxFiles: PropTypes.number,
     variant: PropTypes.oneOf(['default', 'edit']),
+    cleanupPreviews: PropTypes.bool,
 };
 
 const defaultProps = {
-    description: 'Drop files here or click to select files',
+    description: 'Drop files here, or click to select files',
     icon: undefined,
     maxFiles: undefined,
     variant: 'default',
+    cleanupPreviews: true,
 };
 
-const FileUpload = ({ files, setFiles, description, icon, maxFiles, ...props }) => {
+const FileUpload = ({
+    files,
+    setFiles,
+    description,
+    icon,
+    maxFiles,
+    cleanupPreviews,
+    ...props
+}) => {
     const onDrop = useCallback(
         acceptedFiles => {
-            const filesWithPreview = acceptedFiles.map(file =>
-                Object.assign(file, {
-                    preview: URL.createObjectURL(file),
-                }),
-            );
-            files.push(filesWithPreview);
-            const newFiles = maxFiles ? files.flat().splice(0, maxFiles) : files.flat();
-            return setFiles(newFiles);
+            const numberOfFilesOverLimit = maxFiles
+                ? files.length + acceptedFiles.length - maxFiles
+                : 0;
+
+            const filesToAdd =
+                numberOfFilesOverLimit > 0
+                    ? acceptedFiles.slice(0, -numberOfFilesOverLimit)
+                    : acceptedFiles;
+
+            if (filesToAdd) {
+                const filesWithPreview = filesToAdd.map(file =>
+                    Object.assign(file, {
+                        preview: URL.createObjectURL(file),
+                    }),
+                );
+                files.push(filesWithPreview);
+            }
+
+            return setFiles(files.flat());
         },
         [files, maxFiles, setFiles],
     );
@@ -39,10 +60,12 @@ const FileUpload = ({ files, setFiles, description, icon, maxFiles, ...props }) 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
     useEffect(() => {
-        return () => {
-            files.forEach(file => URL.revokeObjectURL(file.preview));
-        };
-    });
+        if (cleanupPreviews) {
+            return () => {
+                files.forEach(file => URL.revokeObjectURL(file.preview));
+            };
+        }
+    }, [cleanupPreviews, files]);
 
     const renderedIcon = icon ? (
         typeof icon === 'string' ? (

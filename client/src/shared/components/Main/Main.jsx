@@ -7,14 +7,14 @@ const propTypes = {
     children: PropTypes.node.isRequired,
     className: PropTypes.string,
     display: PropTypes.oneOf(['grid', 'flex']),
-    numberOfColumns: PropTypes.number,
+    columnNumber: PropTypes.number,
     backgroundColor: PropTypes.string,
 };
 
 const defaultProps = {
     className: undefined,
     display: 'grid',
-    numberOfColumns: 16,
+    columnNumber: 16,
     backgroundColor: 'background2',
 };
 

@@ -4,6 +4,7 @@ import { uniqueId } from 'lodash';
 import { Field, getIn } from 'formik';
 import { Input, TextArea, TextEditor, Select, Checkbox } from 'shared/components';
 import FieldContainer from './FieldContainer';
+import * as S from './FormStyles';
 
 const propTypes = {
     className: PropTypes.string,
@@ -49,24 +50,29 @@ const generateField = FormComponent => {
         ...props
     }) => (
         <Field name={name} type={type}>
-            {({ field, form, meta }) => {
+            {({ field, form }) => {
                 const fieldId = propsId || uniqueId('form-field-');
                 const error = getIn(form.errors, name);
                 const touched = getIn(form.touched, name);
 
                 const defaultField = (
-                    <FormComponent
-                        {...field}
-                        {...props}
-                        type={type}
-                        id={fieldId}
-                        invalid={error && touched}
-                        onChange={value => {
-                            form.setFieldValue(name, value);
-                            if (customOnChange) customOnChange(value);
-                            if (submitOnChange) form.submitForm();
-                        }}
-                    />
+                    <>
+                        <FormComponent
+                            {...field}
+                            {...props}
+                            type={type}
+                            id={fieldId}
+                            invalid={error && touched}
+                            onChange={value => {
+                                form.setFieldValue(name, value);
+                                if (customOnChange) customOnChange(value);
+                                if (submitOnChange) form.submitForm();
+                            }}
+                        />
+                        {touched && error && typeof error === 'string' && (
+                            <S.FieldError>{error}</S.FieldError>
+                        )}
+                    </>
                 );
 
                 const checkboxField = (
@@ -78,8 +84,9 @@ const generateField = FormComponent => {
                         id={fieldId}
                         invalid={error && touched}
                         onChange={() => {
-                            form.setFieldValue(name, !field.checked);
-                            if (customOnChange) customOnChange({ field, form, meta });
+                            const value = !field.checked;
+                            form.setFieldValue(name, value);
+                            if (customOnChange) customOnChange(value);
                             if (submitOnChange) form.submitForm();
                         }}
                     />
@@ -97,8 +104,6 @@ const generateField = FormComponent => {
                         label={label}
                         tip={tip}
                         htmlFor={fieldId}
-                        error={error}
-                        touched={touched}
                         tipLocation={tipLocation}
                         type={type}>
                         {fieldComponent}

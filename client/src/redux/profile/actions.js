@@ -1,5 +1,6 @@
 import { api, apiErrorHandler } from 'shared/utils';
 import { userLoaded } from 'redux/auth';
+import { isEmpty } from 'lodash';
 import {
     PROFILE_LOADING,
     PROFILE_LOADED,
@@ -81,16 +82,21 @@ export const updateProfile = data => async dispatch => {
     }
 };
 
-export const updateImage = (image, name) => async dispatch => {
-    try {
-        const formData = new FormData();
-        formData.append(name, image);
+const imagesFormData = (name, images) => {
+    const formData = new FormData();
 
-        const config = {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        };
+    images.forEach(image => formData.append(name, image));
+    const config = {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    };
+    return [formData, config];
+};
+
+export const updateProfileImage = (image, name) => async dispatch => {
+    try {
+        const [formData, config] = imagesFormData(name, [image]);
 
         const res = await api.patch('/profile/me', formData, config);
 
@@ -101,7 +107,6 @@ export const updateImage = (image, name) => async dispatch => {
     }
 };
 
-// TODO:
 export const addPortfolioItem = data => async dispatch => {
     try {
         const config = {
@@ -110,7 +115,7 @@ export const addPortfolioItem = data => async dispatch => {
             },
         };
 
-        const res = await api.patch('/profile/me', data, config);
+        const res = await api.patch('/profile/portfolio', data, config);
 
         dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {
@@ -119,16 +124,28 @@ export const addPortfolioItem = data => async dispatch => {
     }
 };
 
-// TODO:
 export const updatePortfolioItem = data => async dispatch => {
     try {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        };
+        let res;
 
-        const res = await api.patch('/profile/me', data, config);
+        // Other data upload
+        const otherData = { ...data };
+        delete otherData.imageFiles;
+
+        if (!isEmpty(otherData)) {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            res = await api.patch(`/profile/portfolio/${data._id}`, otherData, config);
+        }
+
+        // Images upload
+        if (data.imageFiles) {
+            const [formData, formConfig] = imagesFormData('portfolio_images', data.imageFiles);
+            res = await api.patch(`/profile/portfolio/${data._id}`, formData, formConfig);
+        }
 
         dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {
@@ -137,17 +154,39 @@ export const updatePortfolioItem = data => async dispatch => {
     }
 };
 
-// TODO:
-export const deletePortfolioItem = data => async dispatch => {
+// export const updatePortfolioItem = data => async dispatch => {
+//     try {
+//         const config = {
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//         };
+
+//         const res = await api.patch(`/profile/portfolio/${data._id}`, data, config);
+
+//         dispatch(profileLoaded(res.data.data.profile));
+//     } catch (err) {
+//         dispatch(apiErrorHandler(err));
+//         dispatch(profileError(err));
+//     }
+// };
+
+// export const updatePortfolioItemImages = data => async dispatch => {
+//     try {
+//         const [formData, formConfig] = imagesFormData('portfolio_images', data.imageFiles);
+
+//         const res = await api.patch(`/profile/portfolio/${data._id}`, formData, formConfig);
+
+//         dispatch(profileLoaded(res.data.data.profile));
+//     } catch (err) {
+//         dispatch(apiErrorHandler(err));
+//         dispatch(profileError(err));
+//     }
+// };
+
+export const deletePortfolioItem = _id => async dispatch => {
     try {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        };
-
-        const res = await api.patch('/profile/me', data, config);
-
+        const res = await api.delete(`/profile/portfolio/${_id}`);
         dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {
         dispatch(apiErrorHandler(err));

@@ -7,15 +7,19 @@ import { ImageUploadContainer } from './ImageUploadStyles';
 const propTypes = {
     files: PropTypes.array.isRequired,
     setFiles: PropTypes.func.isRequired,
+    className: PropTypes.string,
     description: PropTypes.string,
     maxFiles: PropTypes.number,
     variant: PropTypes.oneOf(['default', 'edit']),
+    cleanupPreviews: PropTypes.bool,
 };
 
 const defaultProps = {
-    description: 'Drop an image here or click here to select an image',
+    className: undefined,
+    description: 'Drop an image here, or click here to select an image',
     variant: 'default',
     maxFiles: undefined,
+    cleanupPreviews: true,
 };
 
 const ImageUpload = ({

@@ -24,9 +24,9 @@ export const FlexContainer = styled.div`
 
 export const GridContainer = styled.div`
     margin: ${({ margin, gridGap }) => (margin || gridGap ? `0 0 ${gridGap}` : '0 0 1rem')};
-    ${({ numberOfColumns, gridGap, columnWidth }) =>
+    ${({ columnNumber, gridGap, columnWidth }) =>
         mixins.gridLayout(
-            numberOfColumns || 2,
+            columnNumber || 2,
             gridGap || '1rem',
             columnWidth || 'minmax(min-content, 1fr)',
         )}

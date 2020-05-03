@@ -1,0 +1,157 @@
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
+import { updatePortfolioItem } from 'redux/profile';
+import { Form } from 'shared/components';
+import { EditModal } from 'components';
+import { validators } from 'shared/utils';
+import * as Yup from 'yup';
+import * as S from './ProfilePortfolioStyles';
+
+const propTypes = {
+    formData: PropTypes.object.isRequired,
+    updatePortfolioItem: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = {
+    updatePortfolioItem,
+};
+
+const ProfilePortfolioForm = ({ updatePortfolioItem, formData }) => {
+    const { _id, title, description, repo, images, skills, demo } = formData;
+    const [imagesFromApi, setImagesFromApi] = useState(images);
+    const [imageFiles, setImageFiles] = useState([]);
+    const [cleanupPreviews, setCleanupPreviews] = useState(false);
+
+    const portfolioValidation = Yup.object().shape({
+        title: validators.required('Title is required'),
+        description: validators.required('Description is required'),
+    });
+
+    return (
+        <EditModal
+            renderContent={({ close }) => (
+                <>
+                    <h2>Edit Portfolio Item</h2>
+                    <Form
+                        initialValues={{
+                            title,
+                            description,
+                            repo,
+                            skills,
+                            demo,
+                        }}
+                        validationSchema={portfolioValidation}
+                        onSubmit={values => {
+                            updatePortfolioItem({
+                                ...values,
+                                _id,
+                                imageFiles,
+                                images: imagesFromApi,
+                            });
+                            setCleanupPreviews(true);
+                            close();
+                        }}>
+                        {({ values }) => (
+                            <Form.Element>
+                                <Form.Field.Input label="Title *" name="title" />
+                                <Form.Field.TextArea
+                                    label="Description *"
+                                    tip="Write a short description about the project"
+                                    name="description"
+                                />
+                                <Form.Field.Select
+                                    label="Skills"
+                                    tip="Add any relevant skills that you used on this project"
+                                    isMulti
+                                    withOptions={false}
+                                    valuePlaceholder="Add skill"
+                                    inputPlaceholder="Add a skill"
+                                    withCreate
+                                    name="skills"
+                                    variant="empty"
+                                    options={values.skills.map(skill => ({
+                                        label: skill,
+                                        value: skill,
+                                    }))}
+                                />
+                                <Form.Flex>
+                                    <Form.Field.Input
+                                        label="Repo"
+                                        tip="Add a link to the project repo"
+                                        name="repo"
+                                    />
+                                    <Form.Field.Input
+                                        label="Demo"
+                                        tip="Add a link to the live demo"
+                                        name="demo"
+                                    />
+                                </Form.Flex>
+                                <Form.FieldContainer label="Project images">
+                                    <Form.Flex>
+                                        <S.StyledImageUpload
+                                            description="Drop up to 6 images here, or click here to select image files"
+                                            files={imageFiles}
+                                            setFiles={setImageFiles}
+                                            maxFiles={6 - imagesFromApi.length}
+                                            cleanupPreviews={cleanupPreviews}
+                                        />
+                                        <S.ImagesContainer>
+                                            {imagesFromApi.map((image, i) => (
+                                                <S.ImageContainer
+                                                    key={uuidv4()}
+                                                    url={`http://localhost:5000/img/profile/portfolio/${image.small}`}>
+                                                    <S.DeleteButton
+                                                        onClick={() => {
+                                                            const newImages = [...imagesFromApi];
+                                                            newImages.splice(i, 1);
+                                                            setImagesFromApi(newImages);
+                                                        }}
+                                                    />
+                                                </S.ImageContainer>
+                                            ))}
+                                            {imageFiles.map((image, i) => (
+                                                <S.ImageContainer
+                                                    key={uuidv4()}
+                                                    url={
+                                                        image.preview ||
+                                                        `http://localhost:5000/img/profile/portfolio/${image.small}`
+                                                    }>
+                                                    <S.DeleteButton
+                                                        // icon={<}
+                                                        onClick={() => {
+                                                            const newImages = [...imageFiles];
+                                                            newImages.splice(i, 1);
+                                                            setImageFiles(newImages);
+                                                        }}
+                                                    />
+                                                </S.ImageContainer>
+                                            ))}
+                                        </S.ImagesContainer>
+                                    </Form.Flex>
+                                </Form.FieldContainer>
+                                <Form.Buttons withCancel onCancel={close} />
+                            </Form.Element>
+                        )}
+                    </Form>
+                </>
+            )}
+        />
+    );
+};
+
+ProfilePortfolioForm.propTypes = propTypes;
+
+export default connect(null, mapDispatchToProps)(ProfilePortfolioForm);
+
+// <S.StyledImage
+//                                                             key={uuidv4()}
+//                                                             alt={`Portfolio item - ${
+//                                                                 values.title
+//                                                             } - ${i + 1}`}
+//                                                             src={
+//                                                                 image.preview ||
+//                                                                 `http://localhost:5000/img/profile/portfolio/${image.small} `
+//                                                             }
+//                                                         />

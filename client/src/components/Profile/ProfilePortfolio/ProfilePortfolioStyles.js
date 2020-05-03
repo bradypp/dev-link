@@ -24,7 +24,7 @@ export const LinksContainer = styled.div`
 export const ContentContainer = styled.div`
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 5;
     align-self: stretch;
 
     p {
@@ -33,5 +33,6 @@ export const ContentContainer = styled.div`
 `;
 
 export const CarouselContainer = styled.div`
-    flex: 1;
+    flex: 4;
+    box-shadow: ${({ theme }) => theme.boxShadow.medium};
 `;
