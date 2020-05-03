@@ -154,36 +154,6 @@ export const updatePortfolioItem = data => async dispatch => {
     }
 };
 
-// export const updatePortfolioItem = data => async dispatch => {
-//     try {
-//         const config = {
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//         };
-
-//         const res = await api.patch(`/profile/portfolio/${data._id}`, data, config);
-
-//         dispatch(profileLoaded(res.data.data.profile));
-//     } catch (err) {
-//         dispatch(apiErrorHandler(err));
-//         dispatch(profileError(err));
-//     }
-// };
-
-// export const updatePortfolioItemImages = data => async dispatch => {
-//     try {
-//         const [formData, formConfig] = imagesFormData('portfolio_images', data.imageFiles);
-
-//         const res = await api.patch(`/profile/portfolio/${data._id}`, formData, formConfig);
-
-//         dispatch(profileLoaded(res.data.data.profile));
-//     } catch (err) {
-//         dispatch(apiErrorHandler(err));
-//         dispatch(profileError(err));
-//     }
-// };
-
 export const deletePortfolioItem = _id => async dispatch => {
     try {
         const res = await api.delete(`/profile/portfolio/${_id}`);

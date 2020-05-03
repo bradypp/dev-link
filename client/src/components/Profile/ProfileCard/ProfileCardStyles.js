@@ -37,8 +37,7 @@ export const Subtitle = styled.p`
 
 export const ButtonsContainer = styled.div`
     ${mixins.flexCenterRight}
-
     & > *:not(:first-child) {
-        margin: 0 0 0 ${({ theme }) => theme.layout.buttonGap};
+        margin-left: ${({ theme }) => theme.layout.buttonGap};
     }
 `;

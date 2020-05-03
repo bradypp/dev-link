@@ -1,20 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FaEdit } from 'react-icons/fa';
-import { Button, Modal } from 'shared/components';
+import { Modal, Form } from 'shared/components';
+import { ButtonsContainer } from './EditModalStyles';
 
 const propTypes = {
     renderContent: PropTypes.func.isRequired,
+    onDelete: PropTypes.func,
 };
 
-const EditModal = ({ renderContent, ...props }) => (
+const defaultProps = {
+    onDelete: undefined,
+};
+
+const EditModal = ({ renderContent, onDelete, ...props }) => (
     <Modal
         {...props}
-        renderLink={({ open }) => <Button icon={<FaEdit />} onClick={open} />}
+        renderLink={({ open }) => (
+            <ButtonsContainer>
+                {onDelete && <Form.DeleteButton onClick={onDelete} />}
+                <Form.EditButton onClick={open} />
+            </ButtonsContainer>
+        )}
         renderContent={renderContent}
     />
 );
 
 EditModal.propTypes = propTypes;
+EditModal.defaultProps = defaultProps;
 
 export default EditModal;

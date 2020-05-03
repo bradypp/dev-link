@@ -8,7 +8,7 @@ export const ImageUploadContainer = styled(FileUpload)`
             svg {
                 opacity: 0;
                 color: ${theme.colors.white1};
-                font-size: 3rem;
+                font-size: 3.6rem;
             }
 
             &:hover {

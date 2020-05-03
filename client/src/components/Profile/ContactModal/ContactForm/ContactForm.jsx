@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { Form } from 'shared/components';
-import * as S from './ContactFormStyles';
+import { validators } from 'shared/utils';
+import * as Yup from 'yup';
 
 const propTypes = {
     formData: PropTypes.object.isRequired,
@@ -14,6 +15,22 @@ export const ContactForm = ({ updateProfile, formData, setIsEditing }) => {
     const { socials, contact } = formData;
     const contactKey = uuidv4();
     const socialsKey = uuidv4();
+
+    const contactValidation = Yup.object().shape({
+        contact: Yup.array().of(
+            Yup.object().shape({
+                name: validators.required('Name is required'),
+                value: validators.required('Field is required'),
+            }),
+        ),
+        socials: Yup.array().of(
+            Yup.object().shape({
+                name: validators.required('Name is required'),
+                value: validators.required('Link is required'),
+            }),
+        ),
+    });
+
     return (
         <>
             <h2>Edit Contact Info</h2>
@@ -22,6 +39,7 @@ export const ContactForm = ({ updateProfile, formData, setIsEditing }) => {
                     socials,
                     contact,
                 }}
+                validationSchema={contactValidation}
                 onSubmit={values => {
                     setIsEditing(false);
                     updateProfile(values);
@@ -39,18 +57,18 @@ export const ContactForm = ({ updateProfile, formData, setIsEditing }) => {
                                                 values.contact.length > 0 &&
                                                 values.contact.map((contact, i) => (
                                                     <React.Fragment key={contactKey}>
-                                                        <S.GridLeft>
+                                                        <div style={{ gridColumn: 1 / 2 }}>
                                                             <Form.Field.Input
                                                                 name={`contact[${i}].name`}
                                                                 placeholder="Contact method"
                                                             />
-                                                        </S.GridLeft>
-                                                        <S.GridRight>
+                                                        </div>
+                                                        <div style={{ gridColumn: 2 / 3 }}>
                                                             <Form.Field.Input
                                                                 name={`contact[${i}].value`}
                                                                 placeholder="Details"
                                                             />
-                                                        </S.GridRight>
+                                                        </div>
                                                         <Form.DeleteButton
                                                             onClick={() => arrayHelpers.remove(i)}
                                                         />
@@ -82,18 +100,18 @@ export const ContactForm = ({ updateProfile, formData, setIsEditing }) => {
                                                 values.socials.length > 0 &&
                                                 values.socials.map((social, i) => (
                                                     <React.Fragment key={socialsKey}>
-                                                        <S.GridLeft>
+                                                        <div style={{ gridColumn: 1 / 2 }}>
                                                             <Form.Field.Input
                                                                 name={`socials[${i}].name`}
                                                                 placeholder="Name"
                                                             />
-                                                        </S.GridLeft>
-                                                        <S.GridRight>
+                                                        </div>
+                                                        <div style={{ gridColumn: 2 / 3 }}>
                                                             <Form.Field.Input
                                                                 name={`socials[${i}].value`}
                                                                 placeholder="Link to your profile"
                                                             />
-                                                        </S.GridRight>
+                                                        </div>
                                                         <Form.DeleteButton
                                                             onClick={() => arrayHelpers.remove(i)}
                                                         />

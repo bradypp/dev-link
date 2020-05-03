@@ -57,21 +57,33 @@ const generateField = FormComponent => {
 
                 const defaultField = (
                     <>
-                        <FormComponent
-                            {...field}
-                            {...props}
-                            type={type}
-                            id={fieldId}
-                            invalid={error && touched}
-                            onChange={value => {
-                                form.setFieldValue(name, value);
-                                if (customOnChange) customOnChange(value);
-                                if (submitOnChange) form.submitForm();
-                            }}
-                        />
-                        {touched && error && typeof error === 'string' && (
-                            <S.FieldError>{error}</S.FieldError>
-                        )}
+                        <FieldContainer
+                            className={className}
+                            data-testid={name ? `form-field:${name}` : 'form-field'}
+                            width={width}
+                            margin={margin}
+                            name={name}
+                            label={label}
+                            tip={tip}
+                            htmlFor={fieldId}
+                            tipLocation={tipLocation}
+                            type={type}>
+                            <FormComponent
+                                {...field}
+                                {...props}
+                                type={type}
+                                id={fieldId}
+                                invalid={error && touched}
+                                onChange={value => {
+                                    form.setFieldValue(name, value);
+                                    if (customOnChange) customOnChange(value);
+                                    if (submitOnChange) form.submitForm();
+                                }}
+                            />
+                            {touched && error && typeof error === 'string' && (
+                                <S.FieldError>{error}</S.FieldError>
+                            )}
+                        </FieldContainer>
                     </>
                 );
 
@@ -79,6 +91,7 @@ const generateField = FormComponent => {
                     <FormComponent
                         {...field}
                         {...props}
+                        className={className}
                         type={type}
                         label={label}
                         id={fieldId}
@@ -92,23 +105,7 @@ const generateField = FormComponent => {
                     />
                 );
 
-                const fieldComponent = type === 'checkbox' ? checkboxField : defaultField;
-
-                return (
-                    <FieldContainer
-                        className={className}
-                        data-testid={name ? `form-field:${name}` : 'form-field'}
-                        width={width}
-                        margin={margin}
-                        name={name}
-                        label={label}
-                        tip={tip}
-                        htmlFor={fieldId}
-                        tipLocation={tipLocation}
-                        type={type}>
-                        {fieldComponent}
-                    </FieldContainer>
-                );
+                return type === 'checkbox' ? checkboxField : defaultField;
             }}
         </Field>
     );

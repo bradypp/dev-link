@@ -3,7 +3,14 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { IoIosClose } from 'react-icons/io';
 import { useOnOutsideClick, useOnEscapeKeyDown } from 'shared/hooks';
-import { ScrollOverlay, ClickableOverlay, StyledModal, CloseButton } from './ModalStyles';
+import { Form } from 'shared/components';
+import {
+    ScrollOverlay,
+    ClickableOverlay,
+    StyledModal,
+    CloseButton,
+    ButtonsContainer,
+} from './ModalStyles';
 
 const propTypes = {
     className: PropTypes.string,
@@ -11,11 +18,13 @@ const propTypes = {
     variant: PropTypes.oneOf(['center', 'aside']),
     width: PropTypes.string,
     withCloseButton: PropTypes.bool,
+    withDeleteButton: PropTypes.bool,
     backgroundColor: PropTypes.string,
     isOpen: PropTypes.bool,
     onClose: PropTypes.func,
     renderLink: PropTypes.func,
     renderContent: PropTypes.func.isRequired,
+    onDelete: PropTypes.func,
 };
 
 const defaultProps = {
@@ -24,10 +33,12 @@ const defaultProps = {
     variant: 'center',
     width: '80rem',
     withCloseButton: true,
+    withDeleteButton: false,
     backgroundColor: 'background1',
     isOpen: undefined,
     onClose: () => {},
     renderLink: () => {},
+    onDelete: undefined,
 };
 
 const Modal = ({
@@ -36,11 +47,13 @@ const Modal = ({
     variant,
     width,
     withCloseButton,
+    withDeleteButton,
     backgroundColor,
     isOpen: propsIsOpen,
     onClose: tellParentToClose,
     renderLink,
     renderContent,
+    onDelete,
 }) => {
     const [stateIsOpen, setStateOpen] = useState(false);
     const isControlled = typeof propsIsOpen === 'boolean';
@@ -84,14 +97,24 @@ const Modal = ({
                                 width={width}
                                 data-testid={testid}
                                 ref={$modalRef}>
-                                {withCloseButton && (
-                                    <CloseButton
-                                        variant={variant}
-                                        onClick={closeModal}
-                                        backgroundColor={backgroundColor}
-                                        icon={<IoIosClose />}
-                                    />
-                                )}
+                                <ButtonsContainer>
+                                    {withDeleteButton && (
+                                        <Form.DeleteButton
+                                            variant={variant}
+                                            onClick={onDelete}
+                                            backgroundColor={backgroundColor}
+                                            icon={<IoIosClose />}
+                                        />
+                                    )}
+                                    {withCloseButton && (
+                                        <CloseButton
+                                            variant={variant}
+                                            onClick={closeModal}
+                                            backgroundColor={backgroundColor}
+                                            icon={<IoIosClose />}
+                                        />
+                                    )}
+                                </ButtonsContainer>
                                 {renderContent({ close: closeModal })}
                             </StyledModal>
                         </ClickableOverlay>

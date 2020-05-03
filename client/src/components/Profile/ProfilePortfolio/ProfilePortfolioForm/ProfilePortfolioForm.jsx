@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { updatePortfolioItem } from 'redux/profile';
+import { updatePortfolioItem, deletePortfolioItem } from 'redux/profile';
 import { Form } from 'shared/components';
 import { EditModal } from 'components';
 import { validators } from 'shared/utils';
@@ -12,13 +12,15 @@ import * as S from './ProfilePortfolioStyles';
 const propTypes = {
     formData: PropTypes.object.isRequired,
     updatePortfolioItem: PropTypes.func.isRequired,
+    deletePortfolioItem: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = {
     updatePortfolioItem,
+    deletePortfolioItem,
 };
 
-const ProfilePortfolioForm = ({ updatePortfolioItem, formData }) => {
+const ProfilePortfolioForm = ({ updatePortfolioItem, deletePortfolioItem, formData }) => {
     const { _id, title, description, repo, images, skills, demo } = formData;
     const [imagesFromApi, setImagesFromApi] = useState(images);
     const [imageFiles, setImageFiles] = useState([]);
@@ -31,9 +33,11 @@ const ProfilePortfolioForm = ({ updatePortfolioItem, formData }) => {
 
     return (
         <EditModal
+            id={_id}
+            onDelete={() => deletePortfolioItem(_id)}
             renderContent={({ close }) => (
                 <>
-                    <h2>Edit Portfolio Item</h2>
+                    <h2>Edit Portfolio</h2>
                     <Form
                         initialValues={{
                             title,
@@ -144,14 +148,3 @@ const ProfilePortfolioForm = ({ updatePortfolioItem, formData }) => {
 ProfilePortfolioForm.propTypes = propTypes;
 
 export default connect(null, mapDispatchToProps)(ProfilePortfolioForm);
-
-// <S.StyledImage
-//                                                             key={uuidv4()}
-//                                                             alt={`Portfolio item - ${
-//                                                                 values.title
-//                                                             } - ${i + 1}`}
-//                                                             src={
-//                                                                 image.preview ||
-//                                                                 `http://localhost:5000/img/profile/portfolio/${image.small} `
-//                                                             }
-//                                                         />

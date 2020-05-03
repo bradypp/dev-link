@@ -19,7 +19,8 @@ export const StyledLabel = styled.label`
     margin: 0;
     margin-left: 2.8rem;
     padding: 0;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
+    color: ${({ theme }) => theme.colors.textPrimary2};
 `;
 const backgroundColor = css`
     ${({ theme }) => theme.colors.background2}

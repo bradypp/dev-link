@@ -52,36 +52,23 @@ export const StyledModal = styled.div`
     ${({ variant }) => modalStyles[variant]};
 `;
 
-const closeButtonStyles = {
-    center: css`
-        top: 1rem;
-        right: 1.2rem;
-        border-radius: 50%;
-    `,
-    aside: css`
-        top: 1rem;
-        right: -3rem;
-        width: 5rem;
-        height: 5rem;
-        text-align: center;
-        border: 1px solid ${({ theme }) => theme.colors.border2};
-        ${mixins.boxShadowMedium};
+export const ButtonsContainer = styled.div`
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    border-radius: 50%;
 
-        &:hover {
-            color: ${({ theme }) => theme.colors.primary};
-        }
-    `,
-};
+    & > * {
+        margin-left: ${({ theme }) => theme.layout.buttonGap};
+    }
+`;
 
-// TODO: close button styles
 export const CloseButton = styled(Button).attrs(({ backgroundColor }) => ({
     backgroundColor,
 }))`
     color: ${({ theme }) => theme.colors.textPrimary2};
-    position: absolute;
     height: 3.2rem;
     width: 3.2rem;
-    ${({ variant }) => closeButtonStyles[variant]}
 
     svg {
         font-size: 3.2rem;

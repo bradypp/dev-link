@@ -30,9 +30,7 @@ const ProfilePortfolio = ({ portfolio }) => {
                     <ProfileCard.Item key={uuidv4()}>
                         <Flex justifyContent="space-between">
                             <ProfileCard.Item.Heading>{title}</ProfileCard.Item.Heading>
-                            <div>
-                                <ProfilePortfolioForm formData={item} />
-                            </div>
+                            <ProfilePortfolioForm formData={item} />
                         </Flex>
                         <Flex>
                             <S.ContentContainer>

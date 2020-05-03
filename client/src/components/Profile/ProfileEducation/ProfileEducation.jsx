@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { Flex } from 'shared/components';
 import { ProfileCard } from 'components';
 import { dateTime } from 'shared/utils';
 import { selectProfileEducation } from 'redux/profile';
-// import * as S from './ProfileEducationStyles';
+import ProfileEducationForm from './ProfileEducationForm/ProfileEducationForm';
 
 const propTypes = {
     education: PropTypes.array.isRequired,
@@ -16,18 +17,14 @@ const mapStateToProps = createStructuredSelector({
     education: selectProfileEducation,
 });
 
-// TODO: Conditional appearance based on if profile belongs to current authenticated user
-// TODO: Add loader?
 // TODO: Sort array by from (on backend)?
-// TODO: Edit date formatting using util functions
-// TODO: Have a current toggle on form to disable to
 const ProfileEducation = ({ education }) => (
     <ProfileCard heading="Education">
-        {education.map(item => {
+        {education.map((item, i) => {
             const {
                 school,
-                school_type: schoolType,
-                qualification_type: qualificationType,
+                school_type,
+                qualification_type,
                 subjects,
                 from,
                 to,
@@ -35,10 +32,10 @@ const ProfileEducation = ({ education }) => (
                 description,
             } = item;
 
-            const details = schoolType ? (
+            const details = school_type ? (
                 <>
-                    <span>{schoolType}</span>
-                    {qualificationType && <span> &middot; {qualificationType} </span>}
+                    <span>{school_type}</span>
+                    {qualification_type && <span> &middot; {qualification_type} </span>}
                     {subjects.length > 0 && <> &middot; </>}
                     {subjects.length > 0 &&
                         subjects.map((subject, i) => {
@@ -52,23 +49,22 @@ const ProfileEducation = ({ education }) => (
                         })}
                 </>
             ) : (
-                <>{qualificationType && <span>{qualificationType}</span>}</>
-            );
-
-            const timePeriod = (
-                <>
-                    <time>{dateTime.formatDate(from)}</time>
-                    {' - '}
-                    {!current ? <time>{dateTime.formatDate(to)}</time> : 'now'}
-                </>
+                <>{qualification_type && <span>{qualification_type}</span>}</>
             );
 
             return (
                 <ProfileCard.Item key={uuidv4()}>
                     <div>
-                        <ProfileCard.Item.Heading>{school}</ProfileCard.Item.Heading>
+                        <Flex justifyContent="space-between">
+                            <ProfileCard.Item.Heading>{school}</ProfileCard.Item.Heading>
+                            <ProfileEducationForm education={education} index={i} />
+                        </Flex>
                         <ProfileCard.Item.Subtitle>{details}</ProfileCard.Item.Subtitle>
-                        <ProfileCard.Item.Subtitle>{timePeriod}</ProfileCard.Item.Subtitle>
+                        <ProfileCard.Item.Subtitle>
+                            <time>{dateTime.formatDate(from)}</time>
+                            {' - '}
+                            {!current ? <time>{dateTime.formatDate(to)}</time> : 'now'}
+                        </ProfileCard.Item.Subtitle>
                     </div>
                     {description && <p>{description}</p>}
                 </ProfileCard.Item>

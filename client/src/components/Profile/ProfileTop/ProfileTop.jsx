@@ -178,6 +178,7 @@ const ProfileTop = ({
                             {starredByCurrentUser ? `Unstar` : `Star`}
                         </S.ToggleButton>
                         <S.CountContainer>{stars.length}</S.CountContainer>
+                        {/* TODO: add button margin-left */}
                         {isCurrentUser && (
                             <ProfileTopForm
                                 currentUser={currentUser}

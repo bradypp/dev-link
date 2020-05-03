@@ -1,7 +1,5 @@
 import styled from 'styled-components/macro';
-import Image from 'react-image';
 import { ImageUpload, Form } from 'shared/components';
-import { mixins } from 'shared/styles';
 
 export const StyledImageUpload = styled(ImageUpload)`
     width: 35%;
@@ -25,7 +23,6 @@ export const ImageContainer = styled.div`
     height: 16rem;
 `;
 
-// TODO: styling
 export const DeleteButton = styled(Form.DeleteButton)`
     position: absolute;
     top: 5px;

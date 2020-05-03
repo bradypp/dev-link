@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FaEdit } from 'react-icons/fa';
-import { GrImage } from 'react-icons/gr';
+import { AiOutlineEdit, AiOutlineFileImage } from 'react-icons/ai';
 import { ImageUploadContainer } from './ImageUploadStyles';
 
 const propTypes = {
@@ -30,7 +29,7 @@ const ImageUpload = ({
     ...otherProps
 }) => {
     const description = variant === 'default' ? propsDescription : '';
-    const icon = variant === 'default' ? <GrImage /> : <FaEdit />;
+    const icon = variant === 'default' ? <AiOutlineFileImage /> : <AiOutlineEdit />;
     return (
         <ImageUploadContainer
             icon={icon}

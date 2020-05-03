@@ -6,7 +6,6 @@ import { createStructuredSelector } from 'reselect';
 import { ProfileCard } from 'components';
 import { selectProfileExperience } from 'redux/profile';
 import { dateTime } from 'shared/utils';
-// import * as S from './ProfileExperienceStyles';
 
 const propTypes = {
     experience: PropTypes.array.isRequired,
@@ -16,10 +15,7 @@ const mapStateToProps = createStructuredSelector({
     experience: selectProfileExperience,
 });
 
-// TODO: Conditional appearance based on if profile belongs to current authenticated user
-// TODO: Add loader?
 // TODO: Sort array by from (on backend)?
-// TODO: Have a current toggle on form to disable to
 const ProfileExperience = ({ experience }) => {
     return (
         <ProfileCard heading="Experience">
@@ -35,20 +31,16 @@ const ProfileExperience = ({ experience }) => {
                     <>{location && <>{location}</>}</>
                 );
 
-                const timePeriod = (
-                    <>
-                        <time>{dateTime.formatDate(from)}</time>
-                        {' - '}
-                        {!current ? <time>{dateTime.formatDate(to)}</time> : 'now'}
-                    </>
-                );
-
                 return (
                     <ProfileCard.Item key={uuidv4()}>
                         <div>
                             <ProfileCard.Item.Heading>{title}</ProfileCard.Item.Heading>
                             <ProfileCard.Item.Subtitle>{details}</ProfileCard.Item.Subtitle>
-                            <ProfileCard.Item.Subtitle>{timePeriod}</ProfileCard.Item.Subtitle>
+                            <ProfileCard.Item.Subtitle>
+                                <time>{dateTime.formatDate(from)}</time>
+                                {' - '}
+                                {!current ? <time>{dateTime.formatDate(to)}</time> : 'now'}
+                            </ProfileCard.Item.Subtitle>
                         </div>
                         {description && <p>{description}</p>}
                     </ProfileCard.Item>
