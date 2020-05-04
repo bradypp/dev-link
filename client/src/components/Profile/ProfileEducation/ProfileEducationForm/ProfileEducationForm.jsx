@@ -20,16 +20,19 @@ const mapDispatchToProps = {
 };
 
 const ProfileEducationForm = ({ updateProfile, education, index }) => {
-    const {
-        school,
-        school_type,
-        qualification_type,
-        subjects,
-        from,
-        to,
-        current,
-        description,
-    } = education[index];
+    const initialValues =
+        typeof index === 'number'
+            ? education[index]
+            : {
+                  school: '',
+                  school_type: '',
+                  qualification_type: '',
+                  subjects: [],
+                  from: '',
+                  to: '',
+                  current: false,
+                  description: '',
+              };
 
     const subjectsKey = uuidv4();
 
@@ -42,21 +45,8 @@ const ProfileEducationForm = ({ updateProfile, education, index }) => {
                 }),
             )
             .required('Must at least one subject'),
-        from: Yup.string()
-            .matches(
-                /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/,
-                'Must be in the format of DD/MM/YYYY',
-            )
-            .required('From date is required'),
-        to: Yup.string()
-            .matches(
-                /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/,
-                'Must be in the format of DD/MM/YYYY',
-            )
-            .when('current', {
-                is: false,
-                then: Yup.string().required('To date is required'),
-            }),
+        from: validators.date('From date is required'),
+        to: validators.to,
     });
 
     return (
@@ -70,23 +60,19 @@ const ProfileEducationForm = ({ updateProfile, education, index }) => {
                     <h2>Edit Education</h2>
                     <Form
                         initialValues={{
-                            school,
-                            school_type,
-                            qualification_type,
-                            subjects,
-                            from: dateTime.formatDate(from),
-                            to: dateTime.formatDate(to),
-                            current,
-                            description,
+                            ...initialValues,
+                            from: dateTime.formatDate(initialValues.from),
+                            to: dateTime.formatDate(initialValues.to),
                         }}
                         validationSchema={educationValidation}
                         onSubmit={values => {
-                            const educationItem = {
-                                ...values,
-                            };
-                            const newEducation = [...education];
-                            newEducation[index] = educationItem;
-                            updateProfile({ education: newEducation });
+                            const newArray = [...education];
+                            if (index) {
+                                newArray[index] = values;
+                            } else {
+                                newArray.push(values);
+                            }
+                            updateProfile({ education: newArray });
                             close();
                         }}>
                         {({ values }) => (
@@ -175,7 +161,7 @@ const ProfileEducationForm = ({ updateProfile, education, index }) => {
                                     <S.FormCheckbox
                                         style={{ gridColumn: 1 / 2 }}
                                         type="checkbox"
-                                        label="current?"
+                                        label="Are you still studying?"
                                         name="current"
                                     />
                                 </Form.Grid>

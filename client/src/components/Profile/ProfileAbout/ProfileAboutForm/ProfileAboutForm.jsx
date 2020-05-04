@@ -83,8 +83,8 @@ const ProfileAboutForm = ({ updateProfile, formData }) => {
                                         }))}
                                     />
                                     <Form.Field.Select
-                                        label="Desired role type"
-                                        tip="Choose what type of roles/contacts that you're interested in"
+                                        label="Desired role types"
+                                        tip="Choose what type of roles/contracts you're interested in"
                                         isMulti
                                         valuePlaceholder="Add type"
                                         inputPlaceholder="Search"
@@ -98,7 +98,7 @@ const ProfileAboutForm = ({ updateProfile, formData }) => {
                                 </Form.Flex>
                                 <Form.Field.Select
                                     label="Availability"
-                                    tip="When are you available?"
+                                    tip="When are you available to start work?"
                                     valuePlaceholder="Select"
                                     inputPlaceholder="Search"
                                     name="availability"

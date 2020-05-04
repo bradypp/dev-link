@@ -4,31 +4,43 @@ import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ProfileCard } from 'components';
-import { selectProfileCertifications } from 'redux/profile';
+import { selectProfileCertifications, selectIsCurrentUser } from 'redux/profile';
 import { dateTime } from 'shared/utils';
+import { Flex } from 'shared/components';
 // import * as S from './ProfileCertificationsStyles';
+import ProfileCertificationsForm from './ProfileCertificationsForm/ProfileCertificationsForm';
 
 const propTypes = {
     certifications: PropTypes.array.isRequired,
+    isCurrentUser: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
     certifications: selectProfileCertifications,
+    isCurrentUser: selectIsCurrentUser,
 });
 
 // TODO: Conditional appearance based on if profile belongs to current authenticated user
 // TODO: Add loader?
 // TODO: Sort array by from (on backend)?
 // TODO: Edit date formatting using util functions
-const ProfileCertifications = ({ certifications }) => (
+const ProfileCertifications = ({ certifications, isCurrentUser }) => (
     <ProfileCard heading="Certifications">
-        {certifications.map(item => {
+        {certifications.map((item, i) => {
             const { title, issuer, date, description } = item;
 
             return (
                 <ProfileCard.Item key={uuidv4()}>
                     <div>
-                        <ProfileCard.Item.Heading>{title}</ProfileCard.Item.Heading>
+                        <Flex justifyContent="space-between">
+                            <ProfileCard.Item.Heading>{title}</ProfileCard.Item.Heading>
+                            {isCurrentUser && (
+                                <ProfileCertificationsForm
+                                    certifications={certifications}
+                                    index={i}
+                                />
+                            )}
+                        </Flex>
                         {issuer && <ProfileCard.Item.Subtitle>{issuer}</ProfileCard.Item.Subtitle>}
                         {date && (
                             <ProfileCard.Item.Subtitle>

@@ -4,22 +4,26 @@ import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ProfileCard } from 'components';
-import { selectProfileExperience } from 'redux/profile';
+import { selectProfileExperience, selectIsCurrentUser } from 'redux/profile';
 import { dateTime } from 'shared/utils';
+import { Flex } from 'shared/components';
+import ProfileEducationForm from './ProfileExperienceForm/ProfileExperienceForm';
 
 const propTypes = {
     experience: PropTypes.array.isRequired,
+    isCurrentUser: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
     experience: selectProfileExperience,
+    isCurrentUser: selectIsCurrentUser,
 });
 
 // TODO: Sort array by from (on backend)?
-const ProfileExperience = ({ experience }) => {
+const ProfileExperience = ({ experience, isCurrentUser }) => {
     return (
         <ProfileCard heading="Experience">
-            {experience.map(item => {
+            {experience.map((item, i) => {
                 const { title, company, location, from, to, current, description } = item;
 
                 const details = company ? (
@@ -34,7 +38,12 @@ const ProfileExperience = ({ experience }) => {
                 return (
                     <ProfileCard.Item key={uuidv4()}>
                         <div>
-                            <ProfileCard.Item.Heading>{title}</ProfileCard.Item.Heading>
+                            <Flex justifyContent="space-between">
+                                <ProfileCard.Item.Heading>{title}</ProfileCard.Item.Heading>
+                                {isCurrentUser && (
+                                    <ProfileEducationForm experience={experience} index={i} />
+                                )}
+                            </Flex>
                             <ProfileCard.Item.Subtitle>{details}</ProfileCard.Item.Subtitle>
                             <ProfileCard.Item.Subtitle>
                                 <time>{dateTime.formatDate(from)}</time>

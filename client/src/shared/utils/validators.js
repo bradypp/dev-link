@@ -5,6 +5,13 @@ const validators = {
         Yup.string()
             .trim()
             .required(errorMessage),
+    date: (errorMessage = 'Field is required') =>
+        Yup.string()
+            .matches(
+                /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/,
+                'Must be in the format of DD/MM/YYYY',
+            )
+            .required(errorMessage),
     name: Yup.string()
         .trim()
         .min(2, 'Name is too short!')
@@ -14,7 +21,7 @@ const validators = {
         .trim()
         .min(2, 'Username is too short!')
         .max(50, 'Username is too long!')
-        .matches(/^\s*\S+\s*$/g, "Username mustn't contain any spaces")
+        .matches(/^\s*\S+\s*$/g, 'Username must not contain any spaces')
         .required('Username is required'),
     password: Yup.string()
         .trim()
@@ -32,6 +39,15 @@ const validators = {
         .email('Please enter a valid email address')
         .required('Email is required')
         .lowercase(),
+    to: Yup.string()
+        .matches(
+            /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/,
+            'Must be in the format of DD/MM/YYYY',
+        )
+        .when('current', {
+            is: false,
+            then: Yup.string().required('To date is required'),
+        }),
 };
 
 export default validators;
