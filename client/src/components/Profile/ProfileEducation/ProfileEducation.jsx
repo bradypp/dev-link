@@ -6,19 +6,21 @@ import { createStructuredSelector } from 'reselect';
 import { Flex } from 'shared/components';
 import { ProfileCard } from 'components';
 import { dateTime } from 'shared/utils';
-import { selectProfileEducation } from 'redux/profile';
+import { selectProfileEducation, selectIsCurrentUser } from 'redux/profile';
 import ProfileEducationForm from './ProfileEducationForm/ProfileEducationForm';
 
 const propTypes = {
     education: PropTypes.array.isRequired,
+    isCurrentUser: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
     education: selectProfileEducation,
+    isCurrentUser: selectIsCurrentUser,
 });
 
 // TODO: Sort array by from (on backend)?
-const ProfileEducation = ({ education }) => (
+const ProfileEducation = ({ education, isCurrentUser }) => (
     <ProfileCard heading="Education">
         {education.map((item, i) => {
             const {
@@ -57,7 +59,9 @@ const ProfileEducation = ({ education }) => (
                     <div>
                         <Flex justifyContent="space-between">
                             <ProfileCard.Item.Heading>{school}</ProfileCard.Item.Heading>
-                            <ProfileEducationForm education={education} index={i} />
+                            {isCurrentUser && (
+                                <ProfileEducationForm education={education} index={i} />
+                            )}
                         </Flex>
                         <ProfileCard.Item.Subtitle>{details}</ProfileCard.Item.Subtitle>
                         <ProfileCard.Item.Subtitle>

@@ -6,7 +6,7 @@ import { Carousel } from 'react-responsive-carousel';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ProfileCard } from 'components';
-import { selectProfilePortfolio } from 'redux/profile';
+import { selectProfilePortfolio, selectIsCurrentUser } from 'redux/profile';
 import { CustomLink, OutboundLink, Flex } from 'shared/components';
 import ProfilePortfolioForm from './ProfilePortfolioForm/ProfilePortfolioForm';
 import * as S from './ProfilePortfolioStyles';
@@ -14,13 +14,15 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 const propTypes = {
     portfolio: PropTypes.array.isRequired,
+    isCurrentUser: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
     portfolio: selectProfilePortfolio,
+    isCurrentUser: selectIsCurrentUser,
 });
 
-const ProfilePortfolio = ({ portfolio }) => {
+const ProfilePortfolio = ({ portfolio, isCurrentUser }) => {
     return (
         <ProfileCard heading="Portfolio">
             {portfolio.map(item => {
@@ -30,7 +32,7 @@ const ProfilePortfolio = ({ portfolio }) => {
                     <ProfileCard.Item key={uuidv4()}>
                         <Flex justifyContent="space-between">
                             <ProfileCard.Item.Heading>{title}</ProfileCard.Item.Heading>
-                            <ProfilePortfolioForm formData={item} />
+                            {isCurrentUser && <ProfilePortfolioForm formData={item} />}
                         </Flex>
                         <Flex>
                             <S.ContentContainer>
