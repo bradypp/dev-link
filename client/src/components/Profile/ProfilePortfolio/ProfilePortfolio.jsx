@@ -24,7 +24,7 @@ const mapStateToProps = createStructuredSelector({
 
 const ProfilePortfolio = ({ portfolio, isCurrentUser }) => {
     return (
-        <ProfileCard heading="Portfolio">
+        <ProfileCard heading="Portfolio" buttons={() => <ProfilePortfolioForm withAdd />}>
             {portfolio.map(item => {
                 const { title, description, repo, images, skills, demo } = item;
                 // TODO: lazy load carousel

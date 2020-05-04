@@ -115,7 +115,7 @@ export const addPortfolioItem = data => async dispatch => {
             },
         };
 
-        const res = await api.patch('/profile/portfolio', data, config);
+        const res = await api.post('/profile/portfolio', data, config);
 
         dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {

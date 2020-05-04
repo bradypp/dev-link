@@ -56,9 +56,6 @@ router.route('/:id/star').patch(profileController.getMe, profileController.toggl
 
 router.route('/:id/watch').patch(profileController.getMe, profileController.toggleWatch);
 
-// FIXME
-// router.route('/skills').get(profileController.getSkills);
-
 // Restrict the following routes to admin users only
 router.use(authController.restrictTo('admin'));
 

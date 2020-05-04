@@ -10,15 +10,19 @@ import * as S from './ProfileExperienceFormStyles';
 
 const propTypes = {
     experience: PropTypes.array.isRequired,
-    index: PropTypes.number.isRequired,
     updateProfile: PropTypes.func.isRequired,
+    index: PropTypes.number,
+};
+
+const defaultProps = {
+    index: undefined,
 };
 
 const mapDispatchToProps = {
     updateProfile,
 };
 
-const ProfileExperienceForm = ({ updateProfile, experience, index }) => {
+const ProfileExperienceForm = ({ updateProfile, experience, index, ...otherProps }) => {
     const initialValues =
         typeof index === 'number'
             ? experience[index]
@@ -42,6 +46,7 @@ const ProfileExperienceForm = ({ updateProfile, experience, index }) => {
 
     return (
         <EditModal
+            {...otherProps}
             onDelete={() => {
                 experience.splice(index, 1);
                 updateProfile({ experience });
@@ -123,5 +128,6 @@ const ProfileExperienceForm = ({ updateProfile, experience, index }) => {
 };
 
 ProfileExperienceForm.propTypes = propTypes;
+ProfileExperienceForm.defaultProps = defaultProps;
 
 export default connect(null, mapDispatchToProps)(ProfileExperienceForm);

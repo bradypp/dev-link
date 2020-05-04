@@ -6,11 +6,13 @@ const { normalizeUrls } = require('./utils');
 exports.updateProfileRules = [
     body('socials')
         .if(body('socials').exists())
-        .customSanitizer(value =>
-            value.map(el => ({
-                name: el.name,
-                value: normalize(el.value, { forceHttps: true }),
-            })),
+        .customSanitizer(
+            value =>
+                value.length > 0 &&
+                value.map(el => ({
+                    name: el.name,
+                    value: normalize(el.value, { forceHttps: true }),
+                })),
         ),
 ];
 

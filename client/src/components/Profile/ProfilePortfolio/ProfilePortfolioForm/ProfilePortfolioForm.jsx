@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { updatePortfolioItem, deletePortfolioItem } from 'redux/profile';
+import { updatePortfolioItem, deletePortfolioItem, addPortfolioItem } from 'redux/profile';
 import { Form } from 'shared/components';
 import { EditModal } from 'components';
 import { validators } from 'shared/utils';
@@ -10,18 +10,40 @@ import * as Yup from 'yup';
 import * as S from './ProfilePortfolioStyles';
 
 const propTypes = {
-    formData: PropTypes.object.isRequired,
     updatePortfolioItem: PropTypes.func.isRequired,
     deletePortfolioItem: PropTypes.func.isRequired,
+    addPortfolioItem: PropTypes.func.isRequired,
+    formData: PropTypes.object,
+};
+
+const defaultProps = {
+    formData: undefined,
 };
 
 const mapDispatchToProps = {
     updatePortfolioItem,
     deletePortfolioItem,
+    addPortfolioItem,
 };
 
-const ProfilePortfolioForm = ({ updatePortfolioItem, deletePortfolioItem, formData }) => {
-    const { _id, title, description, repo, images, skills, demo } = formData;
+const ProfilePortfolioForm = ({
+    updatePortfolioItem,
+    deletePortfolioItem,
+    addPortfolioItem,
+    formData,
+    ...otherProps
+}) => {
+    const data = formData || {
+        _id: undefined,
+        title: '',
+        description: '',
+        repo: '',
+        images: [],
+        skills: [],
+        demo: '',
+    };
+    const { _id, title, description, repo, images, skills, demo } = data;
+
     const [imagesFromApi, setImagesFromApi] = useState(images);
     const [imageFiles, setImageFiles] = useState([]);
     const [cleanupPreviews, setCleanupPreviews] = useState(false);
@@ -33,6 +55,7 @@ const ProfilePortfolioForm = ({ updatePortfolioItem, deletePortfolioItem, formDa
 
     return (
         <EditModal
+            {...otherProps}
             id={_id}
             onDelete={() => deletePortfolioItem(_id)}
             renderContent={({ close }) => (
@@ -48,12 +71,20 @@ const ProfilePortfolioForm = ({ updatePortfolioItem, deletePortfolioItem, formDa
                         }}
                         validationSchema={portfolioValidation}
                         onSubmit={values => {
-                            updatePortfolioItem({
-                                ...values,
-                                _id,
-                                imageFiles,
-                                images: imagesFromApi,
-                            });
+                            if (formData) {
+                                updatePortfolioItem({
+                                    ...values,
+                                    _id,
+                                    imageFiles,
+                                    images: imagesFromApi,
+                                });
+                            } else {
+                                addPortfolioItem({
+                                    ...values,
+                                    imageFiles,
+                                    images: imagesFromApi,
+                                });
+                            }
                             setCleanupPreviews(true);
                             close();
                         }}>
@@ -146,5 +177,6 @@ const ProfilePortfolioForm = ({ updatePortfolioItem, deletePortfolioItem, formDa
 };
 
 ProfilePortfolioForm.propTypes = propTypes;
+ProfilePortfolioForm.defaultProps = defaultProps;
 
 export default connect(null, mapDispatchToProps)(ProfilePortfolioForm);

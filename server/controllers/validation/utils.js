@@ -7,7 +7,7 @@ exports.normalizeUrls = fields =>
     fields.map(field =>
         body(field)
             .if(body(field).exists())
-            .customSanitizer(value => normalize(value, { forceHttps: true })),
+            .customSanitizer(value => value && normalize(value, { forceHttps: true })),
     );
 
 exports.sanitizeArrayOfStrings = field =>

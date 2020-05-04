@@ -11,15 +11,19 @@ import * as S from './ProfileEducationFormStyles';
 
 const propTypes = {
     education: PropTypes.array.isRequired,
-    index: PropTypes.number.isRequired,
     updateProfile: PropTypes.func.isRequired,
+    index: PropTypes.number,
+};
+
+const defaultProps = {
+    index: undefined,
 };
 
 const mapDispatchToProps = {
     updateProfile,
 };
 
-const ProfileEducationForm = ({ updateProfile, education, index }) => {
+const ProfileEducationForm = ({ updateProfile, education, index, ...otherProps }) => {
     const initialValues =
         typeof index === 'number'
             ? education[index]
@@ -51,6 +55,7 @@ const ProfileEducationForm = ({ updateProfile, education, index }) => {
 
     return (
         <EditModal
+            {...otherProps}
             onDelete={() => {
                 education.splice(index, 1);
                 updateProfile({ education });
@@ -176,5 +181,6 @@ const ProfileEducationForm = ({ updateProfile, education, index }) => {
 };
 
 ProfileEducationForm.propTypes = propTypes;
+ProfileEducationForm.defaultProps = defaultProps;
 
 export default connect(null, mapDispatchToProps)(ProfileEducationForm);

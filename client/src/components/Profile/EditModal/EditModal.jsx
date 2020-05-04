@@ -6,19 +6,27 @@ import { ButtonsContainer } from './EditModalStyles';
 const propTypes = {
     renderContent: PropTypes.func.isRequired,
     onDelete: PropTypes.func,
+    withAdd: PropTypes.bool,
 };
 
 const defaultProps = {
     onDelete: undefined,
+    withAdd: false,
 };
 
-const EditModal = ({ renderContent, onDelete, ...props }) => (
+const EditModal = ({ renderContent, onDelete, withAdd, ...props }) => (
     <Modal
         {...props}
         renderLink={({ open }) => (
             <ButtonsContainer>
-                {onDelete && <Form.DeleteButton onClick={onDelete} />}
-                <Form.EditButton onClick={open} />
+                {withAdd ? (
+                    <Form.AddButton onClick={open} />
+                ) : (
+                    <>
+                        {onDelete && <Form.DeleteButton onClick={onDelete} />}
+                        <Form.EditButton onClick={open} />
+                    </>
+                )}
             </ButtonsContainer>
         )}
         renderContent={renderContent}

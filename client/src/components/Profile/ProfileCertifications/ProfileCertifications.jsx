@@ -25,7 +25,9 @@ const mapStateToProps = createStructuredSelector({
 // TODO: Sort array by from (on backend)?
 // TODO: Edit date formatting using util functions
 const ProfileCertifications = ({ certifications, isCurrentUser }) => (
-    <ProfileCard heading="Certifications">
+    <ProfileCard
+        heading="Certifications"
+        buttons={() => <ProfileCertificationsForm withAdd certifications={certifications} />}>
         {certifications.map((item, i) => {
             const { title, issuer, date, description } = item;
 

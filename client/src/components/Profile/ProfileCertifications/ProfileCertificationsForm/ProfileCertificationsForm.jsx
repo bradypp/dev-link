@@ -6,19 +6,22 @@ import { Form } from 'shared/components';
 import { EditModal } from 'components';
 import { validators, dateTime } from 'shared/utils';
 import * as Yup from 'yup';
-import * as S from './ProfileCertificationsFormStyles';
 
 const propTypes = {
     certifications: PropTypes.array.isRequired,
-    index: PropTypes.number.isRequired,
     updateProfile: PropTypes.func.isRequired,
+    index: PropTypes.number,
+};
+
+const defaultProps = {
+    index: undefined,
 };
 
 const mapDispatchToProps = {
     updateProfile,
 };
 
-const ProfileCertificationsForm = ({ updateProfile, certifications, index }) => {
+const ProfileCertificationsForm = ({ updateProfile, certifications, index, ...otherProps }) => {
     const initialValues =
         typeof index === 'number'
             ? certifications[index]
@@ -37,6 +40,7 @@ const ProfileCertificationsForm = ({ updateProfile, certifications, index }) => 
 
     return (
         <EditModal
+            {...otherProps}
             onDelete={() => {
                 certifications.splice(index, 1);
                 updateProfile({ certifications });
@@ -93,5 +97,6 @@ const ProfileCertificationsForm = ({ updateProfile, certifications, index }) => 
 };
 
 ProfileCertificationsForm.propTypes = propTypes;
+ProfileCertificationsForm.defaultProps = defaultProps;
 
 export default connect(null, mapDispatchToProps)(ProfileCertificationsForm);

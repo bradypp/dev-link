@@ -22,7 +22,9 @@ const mapStateToProps = createStructuredSelector({
 // TODO: Sort array by from (on backend)?
 const ProfileExperience = ({ experience, isCurrentUser }) => {
     return (
-        <ProfileCard heading="Experience">
+        <ProfileCard
+            heading="Experience"
+            buttons={() => <ProfileEducationForm withAdd experience={experience} />}>
             {experience.map((item, i) => {
                 const { title, company, location, from, to, current, description } = item;
 
