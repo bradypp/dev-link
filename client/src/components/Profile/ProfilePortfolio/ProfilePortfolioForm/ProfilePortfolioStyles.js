@@ -23,9 +23,11 @@ export const ImageContainer = styled.div`
     height: 16rem;
 `;
 
-export const DeleteButton = styled(Form.DeleteButton)`
+export const DeleteButton = styled(Form.DeleteButton).attrs({
+    variant: 'text-darken',
+    color: 'white1',
+})`
     position: absolute;
     top: 5px;
     right: 5px;
-    color: #fff;
 `;

@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
-import { mixins } from 'shared/styles';
+import { buttonStyles, mixins } from 'shared/styles';
 import LinkWrapper from './LinkWrapper';
 
 export const StyledLink = styled(LinkWrapper)`
-    ${({ variant }) => variant === 'link' && mixins.link}
+    ${({ variant }) => (variant === 'link' ? mixins.link : buttonStyles)}
 `;

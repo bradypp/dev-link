@@ -104,7 +104,6 @@ export const VerticalDivider = styled(Divider).attrs(({ margin, theme }) => ({
 }))``;
 
 export const DeleteButton = styled(Button)`
-    color: ${({ theme }) => theme.colors.textPrimary1};
     align-self: start;
     justify-self: center;
 

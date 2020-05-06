@@ -71,6 +71,6 @@ export const CloseButton = styled(Button).attrs(({ backgroundColor }) => ({
     width: 3.2rem;
 
     svg {
-        font-size: 3.2rem;
+        font-size: 2.8rem;
     }
 `;

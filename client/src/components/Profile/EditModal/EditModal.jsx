@@ -17,6 +17,7 @@ const defaultProps = {
 const EditModal = ({ renderContent, onDelete, withAdd, ...props }) => (
     <Modal
         {...props}
+        onDelete={onDelete}
         renderLink={({ open }) => (
             <ButtonsContainer>
                 {withAdd ? (

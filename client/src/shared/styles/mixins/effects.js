@@ -3,40 +3,21 @@ import helpers from './helpers';
 
 // TODO: test the effects helpers
 const effects = {
-    hoverEffect: (
-        config = {
-            backgroundColor: null,
-            color: null,
-            borderColor: null,
-            boxShadow: null,
-        },
-    ) => {
-        const { backgroundColor, color, borderColor, boxShadow } = config;
-        return css`
-            &:not(:disabled) {
-                &:hover {
-                    ${color && `color: ${color}`};
-                    ${backgroundColor && `background-color: ${backgroundColor}`};
-                    ${borderColor && `border-color: ${borderColor}`};
-                    ${boxShadow && `box-shadow: ${boxShadow}`};
-                }
+    hoverEffect: (backgroundColor = null, color = null, borderColor = null) => css`
+        &:not(:disabled) {
+            &:hover {
+                ${color && `color: ${color}`};
+                ${backgroundColor && `background-color: ${backgroundColor}`};
+                ${borderColor && `border-color: ${borderColor}`};
             }
-        `;
-    },
-    activeEffect: (
-        config = {
-            backgroundColor: null,
-            color: null,
-            borderColor: null,
-            boxShadow: null,
-        },
-    ) => {
-        const { backgroundColor, color, borderColor, boxShadow } = config;
+        }
+    `,
+
+    activeEffect: (backgroundColor = null, color = null, borderColor = null) => {
         const activeEffect = css`
             ${color && `color: ${color}`};
             ${backgroundColor && `background-color: ${backgroundColor}`};
             ${borderColor && `border-color: ${borderColor}`};
-            ${boxShadow && `box-shadow: ${boxShadow}`};
         `;
         return css`
             &:not(:disabled) {
@@ -51,31 +32,20 @@ const effects = {
             }
         `;
     },
-    lightenEffect: (
-        config = {
-            backgroundColor: null,
-            color: null,
-            borderColor: null,
-            boxShadow: null,
-        },
-        amount = 0.05,
-    ) => {
-        const { backgroundColor, color, borderColor, boxShadow } = config;
-        const activeAmount = amount + 0.05;
+    lightenEffect: (backgroundColor = null, color = null, borderColor = null, amount = 0.06) => {
+        const activeAmount = amount * 2;
 
         const hoverEffect = css`
             ${backgroundColor && `background-color:  ${helpers.lighten(backgroundColor, amount)}`};
             ${color && `color:  ${helpers.lighten(color, amount)}`};
-            ${borderColor && `border-color: ${helpers.lighten(color, amount)}`};
-            ${boxShadow && `box-shadow: ${boxShadow}`};
+            ${borderColor && `border-color: ${helpers.lighten(borderColor, amount)}`};
         `;
 
         const activeEffect = css`
             ${backgroundColor &&
                 `background-color:  ${helpers.lighten(backgroundColor, activeAmount)}`};
             ${color && `color:  ${helpers.lighten(color, activeAmount)}`};
-            ${borderColor && `border-color: ${helpers.lighten(color, activeAmount)}`};
-            ${boxShadow && `box-shadow: ${boxShadow}`};
+            ${borderColor && `border-color: ${helpers.lighten(borderColor, activeAmount)}`};
         `;
 
         return css`
@@ -96,31 +66,20 @@ const effects = {
             }
         `;
     },
-    darkenEffect: (
-        config = {
-            backgroundColor: null,
-            color: null,
-            borderColor: null,
-            boxShadow: null,
-        },
-        amount = 0.05,
-    ) => {
-        const { backgroundColor, color, borderColor, boxShadow } = config;
-        const activeAmount = amount + 0.05;
+    darkenEffect: (backgroundColor = null, color = null, borderColor = null, amount = 0.06) => {
+        const activeAmount = amount * 2;
 
         const hoverEffect = css`
             ${backgroundColor && `background-color:  ${helpers.darken(backgroundColor, amount)}`};
             ${color && `color:  ${helpers.darken(color, amount)}`};
-            ${borderColor && `border-color: ${helpers.darken(color, amount)}`};
-            ${boxShadow && `box-shadow: ${boxShadow}`};
+            ${borderColor && `border-color: ${helpers.darken(borderColor, amount)}`};
         `;
 
         const activeEffect = css`
             ${backgroundColor &&
                 `background-color:  ${helpers.darken(backgroundColor, activeAmount)}`};
             ${color && `color:  ${helpers.darken(color, activeAmount)}`};
-            ${borderColor && `border-color: ${helpers.darken(color, activeAmount)}`};
-            ${boxShadow && `box-shadow: ${boxShadow}`};
+            ${borderColor && `border-color: ${helpers.darken(borderColor, activeAmount)}`};
         `;
 
         return css`
@@ -141,31 +100,20 @@ const effects = {
             }
         `;
     },
-    rgbaEffect: (
-        config = {
-            backgroundColor: null,
-            color: null,
-            borderColor: null,
-            boxShadow: null,
-        },
-        amount = 0.05,
-    ) => {
-        const { backgroundColor, color, borderColor, boxShadow } = config;
-        const activeAmount = amount + 0.05;
+    rgbaDarkenEffect: (backgroundColor = null, color = null, borderColor = null, amount = 0.04) => {
+        const activeAmount = amount * 2;
 
         const hoverEffect = css`
             ${backgroundColor && `background-color:  ${helpers.rgba(backgroundColor, amount)}`};
             ${color && `color:  ${helpers.rgba(color, amount)}`};
-            ${borderColor && `border-color: ${helpers.rgba(color, amount)}`};
-            ${boxShadow && `box-shadow: ${boxShadow}`};
+            ${borderColor && `border-color: ${helpers.rgba(borderColor, amount)}`};
         `;
 
         const activeEffect = css`
             ${backgroundColor &&
                 `background-color:  ${helpers.rgba(backgroundColor, activeAmount)}`};
             ${color && `color:  ${helpers.rgba(color, activeAmount)}`};
-            ${borderColor && `border-color: ${helpers.rgba(color, activeAmount)}`};
-            ${boxShadow && `box-shadow: ${boxShadow}`};
+            ${borderColor && `border-color: ${helpers.rgba(borderColor, activeAmount)}`};
         `;
 
         return css`
@@ -186,7 +134,43 @@ const effects = {
             }
         `;
     },
-    insetBorderEffect: (borderColor, amount = '0.01rem') => css`
+    rgbaLightenEffect: (
+        backgroundColor = null,
+        color = null,
+        borderColor = null,
+        amount = 0.04,
+    ) => {
+        const activeAmount = amount / 2;
+
+        const hoverEffect = css`
+            ${backgroundColor && `background-color:  ${helpers.rgba(backgroundColor, amount)}`};
+            ${color && `color:  ${helpers.rgba(color, amount)}`};
+            ${borderColor && `border-color: ${helpers.rgba(borderColor, amount)}`};
+        `;
+
+        const activeEffect = css`
+            ${backgroundColor &&
+                `background-color:  ${helpers.rgba(backgroundColor, activeAmount)}`};
+            ${color && `color:  ${helpers.rgba(color, activeAmount)}`};
+            ${borderColor && `border-color: ${helpers.rgba(borderColor, activeAmount)}`};
+        `;
+
+        return css`
+            &:not(:disabled) {
+                &:hover,
+                &:active {
+                    ${hoverEffect};
+                }
+
+                ${({ isActive }) =>
+                    isActive &&
+                    css`
+                        ${activeEffect} !important;
+                    `}
+            }
+        `;
+    },
+    insetBorderEffect: (borderColor, amount = '1px') => css`
         &:not(:disabled) {
             &:hover,
             &:active {
@@ -197,6 +181,20 @@ const effects = {
                 isActive &&
                 css`
                     box-shadow: inset 0 0 0 ${amount} ${borderColor} !important;
+                `}
+        }
+    `,
+    boxShadowEffect: boxShadow => css`
+        &:not(:disabled) {
+            &:hover,
+            &:active {
+                box-shadow: ${boxShadow};
+            }
+
+            ${({ isActive }) =>
+                isActive &&
+                css`
+                    box-shadow: ${boxShadow} !important;
                 `}
         }
     `,

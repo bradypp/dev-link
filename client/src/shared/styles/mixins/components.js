@@ -39,27 +39,6 @@ const components = {
             text-decoration: underline;
         }
     `,
-    // TODO: create a tag component?
-    tag: css`
-        display: inline-flex;
-        align-items: center;
-        height: 2.4rem;
-        padding: 0 0.8rem;
-        border-radius: 0.4rem;
-        cursor: pointer;
-        user-select: none;
-        font-weight: 500;
-        font-size: 1.2rem;
-    `,
-    fieldStyling: css`
-        width: 100%;
-        font-family: ${({ theme }) => theme.fonts.primary};
-        border-radius: ${({ theme }) => theme.form.fieldBorderRadius};
-        border: 1px solid ${({ theme }) => theme.colors.fieldBorder};
-        color: ${({ theme }) => theme.colors.fieldText};
-        background-color: ${({ theme }) => theme.colors.fieldBackground};
-        font-size: ${({ theme }) => theme.form.fontSize};
-    `,
 };
 
 export default components;

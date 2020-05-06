@@ -2,15 +2,15 @@ import { css } from 'styled-components/macro';
 import Color from 'color';
 
 const helpers = {
-    darken: (colorValue, amount) =>
+    darken: (colorValue, amount = '0.04') =>
         Color(colorValue)
             .darken(amount)
             .string(),
-    lighten: (colorValue, amount) =>
+    lighten: (colorValue, amount = '0.04') =>
         Color(colorValue)
             .lighten(amount)
             .string(),
-    rgba: (colorValue, opacity) =>
+    rgba: (colorValue, opacity = '0.04') =>
         Color(colorValue)
             .alpha(opacity)
             .string(),

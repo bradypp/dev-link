@@ -111,10 +111,12 @@ const ProfileTop = ({
     // TODO: edit coverImage/avatar modals on click if current user
     return (
         <S.ProfileTopCard>
-            <S.CoverImageContainer>
-                <S.CoverImageUploadContainer>
-                    <CoverImageForm />
-                </S.CoverImageUploadContainer>
+            <S.CoverImageContainer isCurrentUser={isCurrentUser}>
+                {isCurrentUser && (
+                    <S.CoverImageUploadContainer>
+                        <CoverImageForm />
+                    </S.CoverImageUploadContainer>
+                )}
                 <Image
                     src={[
                         `http://localhost:5000/img/profile/cover_image/${cover_image.medium}`,
@@ -125,10 +127,12 @@ const ProfileTop = ({
             </S.CoverImageContainer>
             <S.ContentContainer>
                 <S.ContentLeftContainer>
-                    <S.AvatarContainer>
-                        <S.AvatarUploadContainer>
-                            <AvatarForm />
-                        </S.AvatarUploadContainer>
+                    <S.AvatarContainer isCurrentUser={isCurrentUser}>
+                        {isCurrentUser && (
+                            <S.AvatarUploadContainer>
+                                <AvatarForm />
+                            </S.AvatarUploadContainer>
+                        )}
                         <S.Avatar
                             className="avatar"
                             src={[

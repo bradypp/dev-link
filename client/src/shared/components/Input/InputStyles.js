@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled, { css } from 'styled-components/macro';
 import { mixins } from 'shared/styles';
 
 export const InputContainer = styled.div`
@@ -8,16 +8,31 @@ export const InputContainer = styled.div`
     border-radius: ${({ theme }) => theme.form.fieldBorderRadius};
     svg {
         position: absolute;
-        top: ${({ height }) => `${height / 4.2}rem`};
-        left: ${({ height }) => `${height / 4.2}rem`};
         font-size: ${({ height }) => `${height / 1.8}rem`};
         pointer-events: none;
+        ${({ iconAlign }) =>
+            (iconAlign === 'left' &&
+                css`
+                    top: ${({ height }) => `${height / 4.2}rem`};
+                    left: ${({ height }) => `${height / 4.2}rem`};
+                `) ||
+            (iconAlign === 'right' &&
+                css`
+                    top: ${({ height }) => `${height / 4.2}rem`};
+                    right: ${({ height }) => `${height / 4.2}rem`};
+                `)}
     }
 `;
 
 export const InputElement = styled.input`
     height: 100%;
-    padding-left: ${({ hasIcon, height }) => (hasIcon ? `${height}rem` : '0.6rem')};
+    padding: ${({ hasIcon, iconAlign, height }) =>
+        hasIcon
+            ? css`
+                  ${(iconAlign === 'left' && `0 0 0 ${height}rem`) ||
+                      (iconAlign === 'right' && `0 ${height}rem 0 0.6rem`)};
+              `
+            : '0.6rem'};
     width: 100%;
     font-family: ${({ theme }) => theme.fonts.primary};
     border-radius: ${({ theme }) => theme.form.fieldBorderRadius};
@@ -28,4 +43,5 @@ export const InputElement = styled.input`
     ${mixins.fieldHover}
     ${mixins.fieldFocus}
     ${mixins.fieldInvalid}
+
 `;

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useOnOutsideClick } from 'shared/hooks';
 import { keyCodes } from 'shared/constants';
 import { uniqueId } from 'lodash';
+import { IoIosClose } from 'react-icons/io';
 import { AddMore } from 'shared/components';
 import Dropdown from './Dropdown';
 import * as S from './SelectStyles';
@@ -184,7 +185,7 @@ const Select = ({
                                     variant={variant}
                                     onClick={() => removeOptionValue(optionValue)}>
                                     {getOptionLabel(optionValue)}
-                                    <S.RemoveIcon />
+                                    <IoIosClose />
                                 </S.ValueMultiItem>
                             ),
                         )}

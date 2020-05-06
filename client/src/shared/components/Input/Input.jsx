@@ -8,6 +8,7 @@ const propTypes = {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     type: PropTypes.string,
     icon: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.node]),
+    iconAlign: PropTypes.oneOf(['left', 'right']),
     height: PropTypes.number,
     fontSize: PropTypes.string,
     invalid: PropTypes.bool,
@@ -19,17 +20,18 @@ const defaultProps = {
     value: undefined,
     type: 'text',
     icon: undefined,
+    iconAlign: 'left',
     height: 3.2,
     fontSize: undefined,
     invalid: false,
     onChange: () => {},
 };
 
-// TODO: add loading prop & align it spinner to the right of the input if true?
-const Input = forwardRef(({ icon, className, onChange, height, ...props }, ref) => (
-    <InputContainer className={className} height={height}>
+const Input = forwardRef(({ icon, iconAlign, className, onChange, height, ...props }, ref) => (
+    <InputContainer className={className} height={height} iconAlign={iconAlign}>
         {icon && typeof icon === 'string' ? <Icon type={icon} /> : icon}
         <InputElement
+            iconAlign={iconAlign}
             hasIcon={!!icon}
             onChange={event => onChange(event.target.value, event)}
             height={height}

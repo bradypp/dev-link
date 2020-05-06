@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
-import { IoIosSearch } from 'react-icons/io';
 import { SignIn, SignUp } from 'components';
-import { Button, CustomLink, Tooltip, Form } from 'shared/components';
+import { Button, CustomLink, Tooltip } from 'shared/components';
 import { selectIsAuthenticated, signOut, selectUser } from 'redux/auth';
+import { RiCodeBoxLine } from 'react-icons/ri';
 import * as S from './HeaderStyles';
 
 const propTypes = {
@@ -23,14 +22,14 @@ const mapStateToProps = createStructuredSelector({
 // TODO: edit content of header in different states when finished (for now include what you need to build the app & test)
 // TODO: nav styling
 const Header = ({ isAuthenticated, signOut, user }) => {
-    const location = useLocation();
-
     const signedInMenu = (
         <>
             <CustomLink to="/search">Developers</CustomLink>
             <CustomLink to={`/profile/${user.username}`}>Profile</CustomLink>
             <CustomLink to="/dashboard">Dashboard</CustomLink>
-            <Button onClick={signOut}>Sign Out</Button>
+            <CustomLink to="/" onClick={signOut}>
+                Sign Out
+            </CustomLink>
         </>
     );
 
@@ -58,21 +57,9 @@ const Header = ({ isAuthenticated, signOut, user }) => {
     return (
         <S.HeaderContainer>
             <S.NavContainer>
-                <S.Logo to="/">
+                <S.Logo variant="no-styles" to="/" icon={<RiCodeBoxLine />}>
                     <strong>Dev</strong>Link
                 </S.Logo>
-                {location.pathname !== '/' && (
-                    <Form initialValues={{ search: '' }}>
-                        <Form.Element>
-                            <Form.Field.Input
-                                icon={<IoIosSearch />}
-                                name="search"
-                                placeholder="Search..."
-                                height={3.6}
-                            />
-                        </Form.Element>
-                    </Form>
-                )}
                 <S.LinksContainer>{isAuthenticated ? signedInMenu : guestMenu}</S.LinksContainer>
             </S.NavContainer>
         </S.HeaderContainer>

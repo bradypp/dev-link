@@ -1,7 +1,8 @@
 import styled from 'styled-components/macro';
 
 const ButtonText = styled.span`
-    padding-left: ${({ withPadding }) => (withPadding ? 0.5 : 0)}rem;
+    padding: ${({ withPadding, iconAlign }) =>
+        withPadding ? (iconAlign === 'left' ? '0 0 0 0.5rem' : '0 0.5rem 0 0') : '0'};
 `;
 
 export default ButtonText;

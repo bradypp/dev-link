@@ -12,7 +12,6 @@ const defaultProps = {
     value: undefined,
 };
 
-// TODO: customize & test
 const InputDebounced = ({ onChange, value: propsValue, ...props }) => {
     const [value, setValue] = useState(propsValue);
     const isControlled = propsValue !== undefined;

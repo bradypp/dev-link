@@ -154,7 +154,6 @@ const ProfilePortfolioForm = ({
                                                         `http://localhost:5000/img/profile/portfolio/${image.small}`
                                                     }>
                                                     <S.DeleteButton
-                                                        // icon={<}
                                                         onClick={() => {
                                                             const newImages = [...imageFiles];
                                                             newImages.splice(i, 1);

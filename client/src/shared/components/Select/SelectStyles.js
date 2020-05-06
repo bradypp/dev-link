@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components/macro';
-import { IoIosClose, IoIosArrowDown } from 'react-icons/io';
+import { IoIosArrowDown } from 'react-icons/io';
 import { RiDeleteBack2Line } from 'react-icons/ri';
 import { mixins } from 'shared/styles';
 
@@ -50,10 +50,27 @@ export const ValueMulti = styled.div`
 `;
 
 export const ValueMultiItem = styled.div`
-    ${({ variant }) => variant === 'empty' && 'margin: 0 0.5rem 0.5rem 0'};
-    ${mixins.tag}
+    display: inline-flex;
+    align-items: center;
+    height: 2.4rem;
+    padding: 0 0.8rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 500;
+    font-size: 1.2rem;
     color: ${({ theme }) => theme.colors.textPrimary1};
     background-color: ${({ theme }) => theme.colors.background3};
+    ${({ variant }) => variant === 'empty' && 'margin: 0 0.5rem 0.5rem 0'};
+
+    &:hover {
+        background-color: ${({ theme }) => mixins.darken(theme.colors.background3)};
+    }
+
+    svg {
+        margin-right: -0.3rem;
+        font-size: 2rem;
+    }
 `;
 
 export const AddMoreContainer = styled.div`
@@ -91,11 +108,6 @@ export const DropdownInput = styled.input`
 
 export const ArrowDownIcon = styled(IoIosArrowDown)`
     margin-left: auto;
-`;
-
-export const RemoveIcon = styled(IoIosClose)`
-    margin-right: -0.3rem;
-    font-size: 2rem;
 `;
 
 export const ClearIcon = styled(RiDeleteBack2Line)`

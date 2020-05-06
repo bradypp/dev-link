@@ -7,12 +7,20 @@ const propTypes = {
     to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
     children: PropTypes.node,
     className: PropTypes.string,
-    variant: PropTypes.string,
+    variant: PropTypes.oneOf([
+        'link',
+        'no-styles',
+        'primary-darken',
+        'primary-lighten',
+        'bordered-fill',
+        'bordered-inset',
+    ]),
     backgroundColor: PropTypes.string,
     borderColor: PropTypes.string,
     color: PropTypes.string,
-    icon: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.node]),
+    icon: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
     iconSize: PropTypes.string,
+    iconAlign: PropTypes.oneOf[('left', 'right')],
     isWorking: PropTypes.bool,
     isActive: PropTypes.bool,
     disabled: PropTypes.bool,
@@ -23,11 +31,12 @@ const defaultProps = {
     className: undefined,
     children: undefined,
     variant: 'link',
-    backgroundColor: undefined,
+    backgroundColor: 'background1',
     borderColor: undefined,
-    color: undefined,
+    color: 'textPrimary1',
     icon: undefined,
     iconSize: undefined,
+    iconAlign: 'left',
     isWorking: false,
     isActive: false,
     disabled: false,
@@ -35,17 +44,20 @@ const defaultProps = {
 };
 
 const CustomLink = forwardRef(
-    ({ children, icon, iconSize, isWorking, disabled, color, ...props }, ref) => (
+    ({ children, icon, iconSize, iconAlign, isWorking, disabled, color, ...props }, ref) => (
         <StyledLink
             disabled={disabled || isWorking}
             ref={ref}
             color={color}
             iconSize={iconSize}
+            iconAlign={iconAlign}
             {...props}>
             {isWorking && <ButtonSpinner />}
             {!isWorking && icon && typeof icon === 'string' ? <Icon type={icon} /> : icon}
             {!isWorking && children && (
-                <ButtonText withPadding={icon || isWorking}>{children}</ButtonText>
+                <ButtonText withPadding={icon} iconAlign={iconAlign}>
+                    {children}
+                </ButtonText>
             )}
         </StyledLink>
     ),

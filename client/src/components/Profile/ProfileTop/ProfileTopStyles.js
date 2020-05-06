@@ -12,6 +12,8 @@ const coverImageContainer = css`
     height: 20rem;
     width: 100%;
     overflow: hidden;
+
+    ${({ isCurrentUser }) => isCurrentUser && css``}
 `;
 
 export const CoverImageContainer = styled.div`
@@ -67,8 +69,8 @@ export const AvatarContainer = styled.div`
 `;
 
 export const AvatarUploadContainer = styled.div`
-    position: absolute;
     ${avatarContainer}
+    position: absolute;
 `;
 
 export const Avatar = styled(Image)`

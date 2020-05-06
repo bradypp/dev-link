@@ -1,8 +1,6 @@
 import styled from 'styled-components/macro';
-import { Link } from 'react-router-dom';
+import { CustomLink } from 'shared/components';
 import { mixins } from 'shared/styles';
-
-// TODO: Made header specific buttons
 
 export const HeaderContainer = styled.header`
     ${mixins.flexCenter}
@@ -10,7 +8,7 @@ export const HeaderContainer = styled.header`
     padding: 0 ${({ theme }) => theme.layout.pagePadding};
     height: ${({ theme }) => theme.layout.headerHeight};
     width: 100%;
-    background: ${({ theme }) => theme.colors.background1};
+    background-color: #283e4a;
     z-index: ${({ theme }) => theme.zIndex.header};
 `;
 
@@ -37,13 +35,14 @@ export const LinksContainer = styled.div`
     }
 `;
 
-export const Logo = styled(Link)`
-    color: ${({ theme }) => theme.colors.primary};
-    font-size: 3.5rem;
-    padding: 0;
+export const Logo = styled(CustomLink)`
+    color: ${({ theme }) => theme.colors.white2};
+    font-size: 2.4rem;
     font-weight: 400;
+    border-radius: 0.3rem;
 `;
 
+// TODO: use only as a container that takes you the full header height for the links
 export const ClickableDiv = styled.div`
     ${mixins.flexCenter}
     ${mixins.clickable}
