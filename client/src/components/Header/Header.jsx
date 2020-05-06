@@ -3,9 +3,16 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { SignIn, SignUp } from 'components';
-import { Button, CustomLink, Tooltip } from 'shared/components';
+import { CustomLink, Tooltip } from 'shared/components';
 import { selectIsAuthenticated, signOut, selectUser } from 'redux/auth';
-import { RiCodeBoxLine } from 'react-icons/ri';
+import { BsPerson, BsPeople } from 'react-icons/bs';
+import {
+    RiCodeBoxLine,
+    RiDashboardLine,
+    RiLogoutCircleRLine,
+    RiLoginCircleLine,
+    RiOpenArmLine,
+} from 'react-icons/ri';
 import * as S from './HeaderStyles';
 
 const propTypes = {
@@ -24,10 +31,37 @@ const mapStateToProps = createStructuredSelector({
 const Header = ({ isAuthenticated, signOut, user }) => {
     const signedInMenu = (
         <>
-            <CustomLink to="/search">Developers</CustomLink>
-            <CustomLink to={`/profile/${user.username}`}>Profile</CustomLink>
-            <CustomLink to="/dashboard">Dashboard</CustomLink>
-            <CustomLink to="/" onClick={signOut}>
+            <CustomLink
+                iconSize="1.8rem"
+                icon={<BsPeople />}
+                variant="text-lighten"
+                color="white3"
+                to="/search">
+                Developers
+            </CustomLink>
+            <CustomLink
+                iconSize="1.8rem"
+                icon={<BsPerson />}
+                variant="text-lighten"
+                color="white3"
+                to={`/profile/${user.username}`}>
+                Profile
+            </CustomLink>
+            <CustomLink
+                iconSize="1.8rem"
+                icon={<RiDashboardLine />}
+                variant="text-lighten"
+                color="white3"
+                to="/dashboard">
+                Dashboard
+            </CustomLink>
+            <CustomLink
+                iconSize="1.8rem"
+                icon={<RiLogoutCircleRLine />}
+                variant="text-lighten"
+                color="white3"
+                to="/"
+                onClick={signOut}>
                 Sign Out
             </CustomLink>
         </>
@@ -41,13 +75,33 @@ const Header = ({ isAuthenticated, signOut, user }) => {
             <Tooltip
                 width="40rem"
                 placement="bottomLeft"
-                renderElement={props => <S.ClickableDiv {...props}>Sign In</S.ClickableDiv>}
+                renderElement={props => (
+                    <CustomLink
+                        as="div"
+                        iconSize="1.8rem"
+                        icon={<RiLoginCircleLine />}
+                        variant="text-lighten"
+                        color="white3"
+                        {...props}>
+                        Sign In
+                    </CustomLink>
+                )}
                 renderContent={props => <SignIn {...props} />}
             />
             <Tooltip
                 width="40rem"
                 placement="bottomLeft"
-                renderElement={props => <S.ClickableDiv {...props}>Join Now</S.ClickableDiv>}
+                renderElement={props => (
+                    <CustomLink
+                        as="div"
+                        iconSize="1.8rem"
+                        icon={<RiOpenArmLine />}
+                        variant="text-lighten"
+                        color="white3"
+                        {...props}>
+                        Join Now
+                    </CustomLink>
+                )}
                 renderContent={props => <SignUp {...props} />}
             />
         </>

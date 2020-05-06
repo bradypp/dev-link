@@ -12,7 +12,7 @@ export const HeaderContainer = styled.header`
     z-index: ${({ theme }) => theme.zIndex.header};
 `;
 
-export const NavContainer = styled.header`
+export const NavContainer = styled.nav`
     ${mixins.containAndCenter}
     ${mixins.flexCenterBetween}
     height:100%;
@@ -30,8 +30,20 @@ export const LinksContainer = styled.div`
     ${mixins.flexCenter}
     height: 100%;
 
-    & > *:not(:first-child) {
-        margin-left: 1.6rem;
+    & > * {
+        ${mixins.clickable}
+        border-radius: 0;
+        padding: 0 1.8rem;
+        font-weight: 500;
+        border-bottom: 2px solid transparent;
+        height: 100%;
+
+        &:hover {
+            border-bottom: 2px solid #fff;
+            & > * {
+                color: ${({ theme }) => theme.colors.white1};
+            }
+        }
     }
 `;
 
@@ -40,18 +52,6 @@ export const Logo = styled(CustomLink)`
     font-size: 2.4rem;
     font-weight: 400;
     border-radius: 0.3rem;
-`;
-
-// TODO: use only as a container that takes you the full header height for the links
-export const ClickableDiv = styled.div`
-    ${mixins.flexCenter}
-    ${mixins.clickable}
-    position: relative;
-    height: 100%;
-
-    &:hover > :first-child {
-        display: block;
-    }
 `;
 
 export const DropdownContent = styled.div`

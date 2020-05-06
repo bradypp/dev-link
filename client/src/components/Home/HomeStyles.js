@@ -4,7 +4,7 @@ import { Form } from 'shared/components';
 export const Heading = styled.h1`
     grid-column: 1 / 12;
     font-size: 5rem;
-    font-weight: 300;
+    font-weight: 500;
     color: ${({ theme }) => theme.colors.textColored1};
     margin: 3rem 0 5rem;
 `;

@@ -14,10 +14,9 @@ const ErrorFallback = ({ error, componentStack, resetErrorBoundary }) => (
 export default ({ children }) => (
     <ErrorBoundary
         FallbackComponent={ErrorFallback}
-        // onReset={() => {
-        //     // reset the state of your app so the error doesn't happen again
-        // }}
-    >
+        onReset={() => {
+            // reset the state of your app so the error doesn't happen again
+        }}>
         {children}
     </ErrorBoundary>
 );

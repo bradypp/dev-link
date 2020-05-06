@@ -17,6 +17,8 @@ const propTypes = {
         'primary-lighten',
         'bordered-fill',
         'bordered-inset',
+        'text-darken',
+        'text-lighten',
     ]),
     icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     iconAlign: PropTypes.oneOf(['left', 'right']),
