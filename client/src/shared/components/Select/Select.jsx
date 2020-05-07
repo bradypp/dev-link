@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useOnOutsideClick } from 'shared/hooks';
 import { keyCodes } from 'shared/constants';
@@ -98,6 +98,12 @@ const Select = ({
         setSearchValue('');
         $selectRef.current.focus();
     };
+
+    useEffect(() => {
+        if (propsOptions.length > 0) {
+            setOptions(propsOptions);
+        }
+    }, [propsOptions]);
 
     useOnOutsideClick($selectRef, isDropdownOpen, deactivateDropdown);
 

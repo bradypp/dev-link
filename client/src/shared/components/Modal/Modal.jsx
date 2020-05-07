@@ -18,6 +18,7 @@ const propTypes = {
     variant: PropTypes.oneOf(['center', 'aside']),
     width: PropTypes.string,
     withCloseButton: PropTypes.bool,
+    withDeleteButton: PropTypes.bool,
     backgroundColor: PropTypes.string,
     isOpen: PropTypes.bool,
     onClose: PropTypes.func,
@@ -32,6 +33,7 @@ const defaultProps = {
     variant: 'center',
     width: '80rem',
     withCloseButton: true,
+    withDeleteButton: false,
     backgroundColor: 'background1',
     isOpen: undefined,
     onClose: () => {},
@@ -51,6 +53,7 @@ const Modal = ({
     renderLink,
     renderContent,
     onDelete,
+    withDeleteButton,
 }) => {
     const [stateIsOpen, setStateOpen] = useState(false);
     const isControlled = typeof propsIsOpen === 'boolean';
@@ -95,7 +98,7 @@ const Modal = ({
                                 data-testid={testid}
                                 ref={$modalRef}>
                                 <ButtonsContainer>
-                                    {onDelete && (
+                                    {withDeleteButton && (
                                         <Form.DeleteButton
                                             onClick={onDelete}
                                             backgroundColor={backgroundColor}

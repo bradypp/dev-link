@@ -10,13 +10,13 @@ export const InputContainer = styled.div`
         position: absolute;
         font-size: ${({ height }) => `${height / 1.8}rem`};
         pointer-events: none;
-        ${({ iconAlign }) =>
-            (iconAlign === 'left' &&
+        ${({ iconLocation }) =>
+            (iconLocation === 'left' &&
                 css`
                     top: ${({ height }) => `${height / 4.2}rem`};
                     left: ${({ height }) => `${height / 4.2}rem`};
                 `) ||
-            (iconAlign === 'right' &&
+            (iconLocation === 'right' &&
                 css`
                     top: ${({ height }) => `${height / 4.2}rem`};
                     right: ${({ height }) => `${height / 4.2}rem`};
@@ -26,11 +26,11 @@ export const InputContainer = styled.div`
 
 export const InputElement = styled.input`
     height: 100%;
-    padding: ${({ hasIcon, iconAlign, height }) =>
+    padding: ${({ hasIcon, iconLocation, height }) =>
         hasIcon
             ? css`
-                  ${(iconAlign === 'left' && `0 0 0 ${height}rem`) ||
-                      (iconAlign === 'right' && `0 ${height}rem 0 0.6rem`)};
+                  ${(iconLocation === 'left' && `0 0 0 ${height}rem`) ||
+                      (iconLocation === 'right' && `0 ${height}rem 0 0.6rem`)};
               `
             : '0.6rem'};
     width: 100%;

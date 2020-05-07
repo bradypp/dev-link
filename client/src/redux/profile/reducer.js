@@ -19,6 +19,7 @@ export default (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 isLoading: true,
+                profile: initialState.profile,
             };
         case PROFILE_LOADED:
             return {
@@ -32,6 +33,7 @@ export default (state = initialState, { type, payload }) => {
                 ...state,
                 error: payload,
                 isLoading: initialState.isLoading,
+                profile: initialState.profile,
             };
         case SET_IS_CURRENT_USER:
             return {

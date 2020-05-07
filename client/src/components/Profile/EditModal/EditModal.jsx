@@ -18,6 +18,7 @@ const EditModal = ({ renderContent, onDelete, withAdd, ...props }) => (
     <Modal
         {...props}
         onDelete={onDelete}
+        withDeleteButton={onDelete && !withAdd}
         renderLink={({ open }) => (
             <ButtonsContainer>
                 {withAdd ? (

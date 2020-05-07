@@ -27,6 +27,7 @@ exports.updateProfile = handlers.updateOneByUserId(Profile);
 exports.getProfile = handlers.getOneByUserId(Profile, { errorMessage: notFoundErrorMessage });
 exports.deleteProfile = handlers.deleteOneByUserId(Profile, { errorMessage: notFoundErrorMessage });
 exports.getAllProfiles = handlers.getAll(Profile);
+exports.deleteProfile = handlers.deleteOneByUserId(Profile, { errorMessage: notFoundErrorMessage });
 
 exports.createProfile = catchAsync(async (req, res, next) => {
     if (await Profile.findOne({ user: req.params.userId })) {

@@ -76,6 +76,7 @@ const profileSchema = new Schema({
         {
             type: String,
             trim: true,
+            lowercase: true,
         },
     ],
 

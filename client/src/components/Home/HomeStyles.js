@@ -16,7 +16,7 @@ export const SearchContainer = styled.div`
 
 export const StyledInput = styled(Form.Field.Input).attrs({
     height: 5,
-    fontSize: '2.5rem',
+    fontSize: '2rem',
 })`
     margin-bottom: 1rem;
     input {

@@ -14,5 +14,7 @@ export { default as ProfilePortfolio } from './Profile/ProfilePortfolio/ProfileP
 export { default as ProfileEducation } from './Profile/ProfileEducation/ProfileEducation';
 export { default as ProfileCertifications } from './Profile/ProfileCertifications/ProfileCertifications';
 export { default as ProfileExperience } from './Profile/ProfileExperience/ProfileExperience';
-export { default as Profiles } from './Profiles/Profiles';
 export { default as EditModal } from './Profile/EditModal/EditModal';
+export { default as Profiles } from './Profiles/Profiles';
+export { default as ProfilesItem } from './Profiles/ProfilesItem/ProfilesItem';
+export { default as ProfilesForm } from './Profiles/ProfilesForm/ProfilesForm';

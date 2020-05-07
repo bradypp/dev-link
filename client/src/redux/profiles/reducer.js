@@ -3,10 +3,12 @@ import {
     CLEAR_PROFILES,
     PROFILES_LOADED,
     PROFILES_LOADING,
+    SKILLS_LOADED,
 } from 'redux/actionTypes';
 
 const initialState = {
     profiles: [],
+    skills: [],
     isLoading: false,
     error: {},
 };
@@ -35,6 +37,11 @@ export default (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 ...initialState,
+            };
+        case SKILLS_LOADED:
+            return {
+                ...state,
+                skills: payload,
             };
         default:
             return state;

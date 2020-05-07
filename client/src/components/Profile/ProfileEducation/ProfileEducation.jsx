@@ -21,62 +21,68 @@ const mapStateToProps = createStructuredSelector({
 
 // TODO: Sort array by from (on backend)?
 const ProfileEducation = ({ education, isCurrentUser }) => (
-    <ProfileCard
-        heading="Education"
-        buttons={() => <ProfileEducationForm withAdd education={education} />}>
-        {education.map((item, i) => {
-            const {
-                school,
-                school_type,
-                qualification_type,
-                subjects,
-                from,
-                to,
-                current,
-                description,
-            } = item;
+    <>
+        {(education.length > 0 || isCurrentUser) && (
+            <ProfileCard
+                heading="Education"
+                buttons={() =>
+                    isCurrentUser && <ProfileEducationForm withAdd education={education} />
+                }>
+                {education.map((item, i) => {
+                    const {
+                        school,
+                        school_type,
+                        qualification_type,
+                        subjects,
+                        from,
+                        to,
+                        current,
+                        description,
+                    } = item;
 
-            const details = school_type ? (
-                <>
-                    <span>{school_type}</span>
-                    {qualification_type && <span> &middot; {qualification_type} </span>}
-                    {subjects.length > 0 && <> &middot; </>}
-                    {subjects.length > 0 &&
-                        subjects.map((subject, i) => {
-                            const { title, grade } = subject;
-                            return (
-                                <span key={uuidv4()}>
-                                    {grade ? `${title}: ${grade}` : title}
-                                    {i !== subjects.length - 1 && ', '}
-                                </span>
-                            );
-                        })}
-                </>
-            ) : (
-                <>{qualification_type && <span>{qualification_type}</span>}</>
-            );
+                    const details = school_type ? (
+                        <>
+                            <span>{school_type}</span>
+                            {qualification_type && <span> &middot; {qualification_type} </span>}
+                            {subjects.length > 0 && <> &middot; </>}
+                            {subjects.length > 0 &&
+                                subjects.map((subject, i) => {
+                                    const { title, grade } = subject;
+                                    return (
+                                        <span key={uuidv4()}>
+                                            {grade ? `${title}: ${grade}` : title}
+                                            {i !== subjects.length - 1 && ', '}
+                                        </span>
+                                    );
+                                })}
+                        </>
+                    ) : (
+                        <>{qualification_type && <span>{qualification_type}</span>}</>
+                    );
 
-            return (
-                <ProfileCard.Item key={uuidv4()}>
-                    <div>
-                        <Flex justifyContent="space-between">
-                            <ProfileCard.Item.Heading>{school}</ProfileCard.Item.Heading>
-                            {isCurrentUser && (
-                                <ProfileEducationForm education={education} index={i} />
-                            )}
-                        </Flex>
-                        <ProfileCard.Item.Subtitle>{details}</ProfileCard.Item.Subtitle>
-                        <ProfileCard.Item.Subtitle>
-                            <time>{dateTime.formatDate(from)}</time>
-                            {' - '}
-                            {!current ? <time>{dateTime.formatDate(to)}</time> : 'now'}
-                        </ProfileCard.Item.Subtitle>
-                    </div>
-                    {description && <p>{description}</p>}
-                </ProfileCard.Item>
-            );
-        })}
-    </ProfileCard>
+                    return (
+                        <ProfileCard.Item key={uuidv4()}>
+                            <div>
+                                <Flex justifyContent="space-between">
+                                    <ProfileCard.Item.Heading>{school}</ProfileCard.Item.Heading>
+                                    {isCurrentUser && (
+                                        <ProfileEducationForm education={education} index={i} />
+                                    )}
+                                </Flex>
+                                <ProfileCard.Item.Subtitle>{details}</ProfileCard.Item.Subtitle>
+                                <ProfileCard.Item.Subtitle>
+                                    <time>{dateTime.formatDate(from)}</time>
+                                    {' - '}
+                                    {!current ? <time>{dateTime.formatDate(to)}</time> : 'now'}
+                                </ProfileCard.Item.Subtitle>
+                            </div>
+                            {description && <p>{description}</p>}
+                        </ProfileCard.Item>
+                    );
+                })}
+            </ProfileCard>
+        )}
+    </>
 );
 
 ProfileEducation.propTypes = propTypes;

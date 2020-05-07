@@ -10,6 +10,7 @@ import {
     selectIsProfileLoading,
     setIsCurrentUser,
     selectProfileUserId,
+    selectIsProfileEmpty,
 } from 'redux/profile';
 import { selectUserId } from 'redux/auth';
 import {
@@ -27,6 +28,7 @@ const propTypes = {
     getProfileByUsername: PropTypes.func.isRequired,
     setIsCurrentUser: PropTypes.func.isRequired,
     profileUserId: PropTypes.string.isRequired,
+    isProfileEmpty: PropTypes.bool.isRequired,
     currentUserId: PropTypes.string,
 };
 
@@ -38,6 +40,7 @@ const mapStateToProps = createStructuredSelector({
     profileIsLoading: selectIsProfileLoading,
     profileUserId: selectProfileUserId,
     currentUserId: selectUserId,
+    isProfileEmpty: selectIsProfileEmpty,
 });
 
 const mapDispatchToProps = {
@@ -51,6 +54,7 @@ const Profile = ({
     profileIsLoading,
     currentUserId,
     profileUserId,
+    isProfileEmpty,
 }) => {
     const isFirstRender = useIsFirstRender();
     const { username } = useParams();
@@ -67,13 +71,6 @@ const Profile = ({
         }
     }, [profileUserId, currentUserId, setIsCurrentUser]);
 
-    // TODO: Conditional appearance for different components/buttons (such as contact, social & education etc) based on if profile belongs to current authenticated user or not. If it is the currently authenticated users profile, have prompts to edit/add profile info, that's if they haven't already clicked to remove that from their profile?
-    // TODO: conditionally render components if viewed by other users & component is empty?
-    // TODO: add loaders/don't render components while loading
-    // TODO: save render instructions based on user input in mongodb and load them here?
-    // TODO: redirect if profile doesn't exist?
-    // TODO: put about, goals and interests in one component?
-    // TODO: put profile section into its own component away from the profile page (so it can be rendered anywhere without profile page specific stuff such as the sidebar), if you do this move any layout stuff from profile cards to overall profile component (ie the grid settings)
     return (
         <Main>
             <S.ProfileContainer>
@@ -81,12 +78,19 @@ const Profile = ({
                     <Spinner />
                 ) : (
                     <>
-                        <ProfileTop />
-                        <ProfileAbout />
-                        <ProfilePortfolio />
-                        <ProfileExperience />
-                        <ProfileEducation />
-                        <ProfileCertifications />
+                        {/* TODO: add not found page */}
+                        {isProfileEmpty ? (
+                            <div>profile not found</div>
+                        ) : (
+                            <>
+                                <ProfileTop />
+                                <ProfileAbout />
+                                <ProfilePortfolio />
+                                <ProfileExperience />
+                                <ProfileEducation />
+                                <ProfileCertifications />
+                            </>
+                        )}
                     </>
                 )}
             </S.ProfileContainer>

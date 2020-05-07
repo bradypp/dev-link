@@ -22,7 +22,7 @@ const propTypes = {
     color: PropTypes.string,
     icon: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
     iconSize: PropTypes.string,
-    iconAlign: PropTypes.oneOf[('left', 'right')],
+    iconLocation: PropTypes.oneOf[('left', 'right')],
     isWorking: PropTypes.bool,
     isActive: PropTypes.bool,
     disabled: PropTypes.bool,
@@ -38,7 +38,7 @@ const defaultProps = {
     color: 'textPrimary1',
     icon: undefined,
     iconSize: undefined,
-    iconAlign: 'left',
+    iconLocation: 'left',
     isWorking: false,
     isActive: false,
     disabled: false,
@@ -46,18 +46,18 @@ const defaultProps = {
 };
 
 const CustomLink = forwardRef(
-    ({ children, icon, iconSize, iconAlign, isWorking, disabled, color, ...props }, ref) => (
+    ({ children, icon, iconSize, iconLocation, isWorking, disabled, color, ...props }, ref) => (
         <StyledLink
             disabled={disabled || isWorking}
             ref={ref}
             color={color}
             iconSize={iconSize}
-            iconAlign={iconAlign}
+            iconLocation={iconLocation}
             {...props}>
             {isWorking && <ButtonSpinner />}
             {!isWorking && icon && typeof icon === 'string' ? <Icon type={icon} /> : icon}
             {!isWorking && children && (
-                <ButtonText withPadding={icon} iconAlign={iconAlign}>
+                <ButtonText withPadding={icon} iconLocation={iconLocation}>
                     {children}
                 </ButtonText>
             )}

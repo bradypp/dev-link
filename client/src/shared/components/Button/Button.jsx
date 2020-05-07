@@ -21,7 +21,7 @@ const propTypes = {
         'text-lighten',
     ]),
     icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-    iconAlign: PropTypes.oneOf(['left', 'right']),
+    iconLocation: PropTypes.oneOf(['left', 'right']),
     iconSize: PropTypes.string,
     disabled: PropTypes.bool,
     isWorking: PropTypes.bool,
@@ -37,7 +37,7 @@ const defaultProps = {
     color: 'textPrimary1',
     variant: 'primary-darken',
     icon: undefined,
-    iconAlign: 'left',
+    iconLocation: 'left',
     iconSize: '1.8rem',
     type: 'button',
     disabled: false,
@@ -47,7 +47,7 @@ const defaultProps = {
 };
 
 const Button = forwardRef(
-    ({ children, icon, iconAlign, iconSize, disabled, isWorking, color, ...props }, ref) => {
+    ({ children, icon, iconLocation, iconSize, disabled, isWorking, color, ...props }, ref) => {
         const renderedIcon = (
             <>
                 {!isWorking && icon && typeof icon === 'string' ? (
@@ -64,16 +64,16 @@ const Button = forwardRef(
                 ref={ref}
                 color={color}
                 iconSize={iconSize}
-                iconAlign={iconAlign}
+                iconLocation={iconLocation}
                 {...props}>
                 {isWorking && <ButtonSpinner />}
-                {iconAlign === 'left' && renderedIcon}
+                {iconLocation === 'left' && renderedIcon}
                 {!isWorking && children && (
-                    <ButtonText iconAlign={iconAlign} withPadding={icon}>
+                    <ButtonText iconLocation={iconLocation} withPadding={icon}>
                         {children}
                     </ButtonText>
                 )}
-                {iconAlign === 'right' && renderedIcon}
+                {iconLocation === 'right' && renderedIcon}
             </StyledButton>
         );
     },

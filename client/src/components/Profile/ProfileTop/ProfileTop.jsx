@@ -104,11 +104,9 @@ const ProfileTop = ({
     const starredByCurrentUser = stars.includes(currentUser._id);
     const watchedByCurrentUser = watchers.includes(currentUser._id);
 
-    // TODO: Add contact/socials popup & do button styling (add icon?) in separate sub-components
     // TODO: Watching/stars numbers hover effect and on click functionality
     // TODO: Add links to skills to profiles page filtered for that skill?
-    // TODO: Add message button?
-    // TODO: edit coverImage/avatar modals on click if current user
+    // TODO: image pop up
     return (
         <S.ProfileTopCard>
             <S.CoverImageContainer isCurrentUser={isCurrentUser}>
@@ -127,7 +125,7 @@ const ProfileTop = ({
             </S.CoverImageContainer>
             <S.ContentContainer>
                 <S.ContentLeftContainer>
-                    <S.AvatarContainer isCurrentUser={isCurrentUser}>
+                    <S.AvatarContainer>
                         {isCurrentUser && (
                             <S.AvatarUploadContainer>
                                 <AvatarForm />
@@ -144,14 +142,6 @@ const ProfileTop = ({
                     </S.AvatarContainer>
                     <h1>{name}</h1>
                     {headline && <h2>{headline}</h2>}
-                    {city ? (
-                        <h3>
-                            {city}
-                            {country && <>, {country}</>}
-                        </h3>
-                    ) : (
-                        <>{country && <h3>{country}</h3>}</>
-                    )}
                     {company ? (
                         <h3>
                             {company}
@@ -159,6 +149,14 @@ const ProfileTop = ({
                         </h3>
                     ) : (
                         <>{current_position && <h3>{current_position}</h3>}</>
+                    )}
+                    {city ? (
+                        <h3>
+                            {city}
+                            {country && <>, {country}</>}
+                        </h3>
+                    ) : (
+                        <>{country && <h3>{country}</h3>}</>
                     )}
                     {(!isEmpty(contact) || !isEmpty(socials)) && (
                         <S.InfoButtonsContainer>

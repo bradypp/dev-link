@@ -24,59 +24,65 @@ const mapStateToProps = createStructuredSelector({
 
 const ProfilePortfolio = ({ portfolio, isCurrentUser }) => {
     return (
-        <ProfileCard heading="Portfolio" buttons={() => <ProfilePortfolioForm withAdd />}>
-            {portfolio.map(item => {
-                const { title, description, repo, images, skills, demo } = item;
-                // TODO: lazy load carousel
-                return (
-                    <ProfileCard.Item key={uuidv4()}>
-                        <Flex justifyContent="space-between">
-                            <ProfileCard.Item.Heading>{title}</ProfileCard.Item.Heading>
-                            {isCurrentUser && <ProfilePortfolioForm formData={item} />}
-                        </Flex>
-                        <Flex>
-                            <S.ContentContainer>
-                                {description && <p>{description}</p>}
-                                <S.SkillsContainer>
-                                    {skills.length > 0 &&
-                                        skills.map(skill => (
-                                            <CustomLink to="#" key={uuidv4()}>
-                                                {skill}
-                                            </CustomLink>
-                                        ))}
-                                </S.SkillsContainer>
-                                <S.LinksContainer>
-                                    {repo && <OutboundLink href={repo}>Repo</OutboundLink>}
-                                    {demo && <OutboundLink href={demo}>Demo</OutboundLink>}
-                                </S.LinksContainer>
-                            </S.ContentContainer>
-                            <S.CarouselContainer>
-                                {images.length > 0 && (
-                                    <Carousel
-                                        infiniteLoop
-                                        useKeyboardArrows
-                                        autoPlay
-                                        stopOnHover
-                                        swipeable
-                                        emulateTouch
-                                        showStatus={false}
-                                        showThumbs={false}
-                                        interval={5000}>
-                                        {images.map((image, i) => (
-                                            <Image
-                                                src={`http://localhost:5000/img/profile/portfolio/${image.small}`}
-                                                alt={`Portfolio item - ${title} - ${i + 1}`}
-                                                key={uuidv4()}
-                                            />
-                                        ))}
-                                    </Carousel>
-                                )}
-                            </S.CarouselContainer>
-                        </Flex>
-                    </ProfileCard.Item>
-                );
-            })}
-        </ProfileCard>
+        <>
+            {(portfolio.length > 0 || isCurrentUser) && (
+                <ProfileCard
+                    heading="Portfolio"
+                    buttons={() => isCurrentUser && <ProfilePortfolioForm withAdd />}>
+                    {portfolio.map(item => {
+                        const { title, description, repo, images, skills, demo } = item;
+                        // TODO: lazy load carousel
+                        return (
+                            <ProfileCard.Item key={uuidv4()}>
+                                <Flex justifyContent="space-between">
+                                    <ProfileCard.Item.Heading>{title}</ProfileCard.Item.Heading>
+                                    {isCurrentUser && <ProfilePortfolioForm formData={item} />}
+                                </Flex>
+                                <Flex>
+                                    <S.ContentContainer>
+                                        {description && <p>{description}</p>}
+                                        <S.SkillsContainer>
+                                            {skills.length > 0 &&
+                                                skills.map(skill => (
+                                                    <CustomLink to="#" key={uuidv4()}>
+                                                        {skill}
+                                                    </CustomLink>
+                                                ))}
+                                        </S.SkillsContainer>
+                                        <S.LinksContainer>
+                                            {repo && <OutboundLink href={repo}>Repo</OutboundLink>}
+                                            {demo && <OutboundLink href={demo}>Demo</OutboundLink>}
+                                        </S.LinksContainer>
+                                    </S.ContentContainer>
+                                    <S.CarouselContainer>
+                                        {images.length > 0 && (
+                                            <Carousel
+                                                infiniteLoop
+                                                useKeyboardArrows
+                                                autoPlay
+                                                stopOnHover
+                                                swipeable
+                                                emulateTouch
+                                                showStatus={false}
+                                                showThumbs={false}
+                                                interval={5000}>
+                                                {images.map((image, i) => (
+                                                    <Image
+                                                        src={`http://localhost:5000/img/profile/portfolio/${image.medium}`}
+                                                        alt={`Portfolio item - ${title} - ${i + 1}`}
+                                                        key={uuidv4()}
+                                                    />
+                                                ))}
+                                            </Carousel>
+                                        )}
+                                    </S.CarouselContainer>
+                                </Flex>
+                            </ProfileCard.Item>
+                        );
+                    })}
+                </ProfileCard>
+            )}
+        </>
     );
 };
 

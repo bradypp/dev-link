@@ -22,42 +22,51 @@ const mapStateToProps = createStructuredSelector({
 // TODO: Sort array by from (on backend)?
 const ProfileExperience = ({ experience, isCurrentUser }) => {
     return (
-        <ProfileCard
-            heading="Experience"
-            buttons={() => <ProfileEducationForm withAdd experience={experience} />}>
-            {experience.map((item, i) => {
-                const { title, company, location, from, to, current, description } = item;
+        <>
+            {(experience.length > 0 || isCurrentUser) && (
+                <ProfileCard
+                    heading="Experience"
+                    buttons={() =>
+                        isCurrentUser && <ProfileEducationForm withAdd experience={experience} />
+                    }>
+                    {experience.map((item, i) => {
+                        const { title, company, location, from, to, current, description } = item;
 
-                const details = company ? (
-                    <>
-                        {company}
-                        {location && <span> &middot; {location} </span>}
-                    </>
-                ) : (
-                    <>{location && <>{location}</>}</>
-                );
+                        const details = company ? (
+                            <>
+                                {company}
+                                {location && <span> &middot; {location} </span>}
+                            </>
+                        ) : (
+                            <>{location && <>{location}</>}</>
+                        );
 
-                return (
-                    <ProfileCard.Item key={uuidv4()}>
-                        <div>
-                            <Flex justifyContent="space-between">
-                                <ProfileCard.Item.Heading>{title}</ProfileCard.Item.Heading>
-                                {isCurrentUser && (
-                                    <ProfileEducationForm experience={experience} index={i} />
-                                )}
-                            </Flex>
-                            <ProfileCard.Item.Subtitle>{details}</ProfileCard.Item.Subtitle>
-                            <ProfileCard.Item.Subtitle>
-                                <time>{dateTime.formatDate(from)}</time>
-                                {' - '}
-                                {!current ? <time>{dateTime.formatDate(to)}</time> : 'now'}
-                            </ProfileCard.Item.Subtitle>
-                        </div>
-                        {description && <p>{description}</p>}
-                    </ProfileCard.Item>
-                );
-            })}
-        </ProfileCard>
+                        return (
+                            <ProfileCard.Item key={uuidv4()}>
+                                <div>
+                                    <Flex justifyContent="space-between">
+                                        <ProfileCard.Item.Heading>{title}</ProfileCard.Item.Heading>
+                                        {isCurrentUser && (
+                                            <ProfileEducationForm
+                                                experience={experience}
+                                                index={i}
+                                            />
+                                        )}
+                                    </Flex>
+                                    <ProfileCard.Item.Subtitle>{details}</ProfileCard.Item.Subtitle>
+                                    <ProfileCard.Item.Subtitle>
+                                        <time>{dateTime.formatDate(from)}</time>
+                                        {' - '}
+                                        {!current ? <time>{dateTime.formatDate(to)}</time> : 'now'}
+                                    </ProfileCard.Item.Subtitle>
+                                </div>
+                                {description && <p>{description}</p>}
+                            </ProfileCard.Item>
+                        );
+                    })}
+                </ProfileCard>
+            )}
+        </>
     );
 };
 

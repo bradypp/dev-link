@@ -1,7 +1,6 @@
 import styled from 'styled-components/macro';
 import { mixins } from 'shared/styles';
 
-// TODO: move grid-column to a container for profile page (so it's separate )
 export const ProfileCardContainer = styled.section`
     ${mixins.card}
 

@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { isEmpty } from 'lodash';
 
 export const selectProfile = state => state.profile;
 
@@ -10,6 +11,10 @@ export const selectIsCurrentUser = createSelector(
 );
 
 export const selectCurrentProfile = createSelector([selectProfile], profile => profile.profile);
+
+export const selectIsProfileEmpty = createSelector([selectCurrentProfile], profile =>
+    isEmpty(profile),
+);
 
 export const selectProfileInfo = createSelector(
     [selectCurrentProfile],

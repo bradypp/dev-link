@@ -4,6 +4,7 @@ import { Divider, Button } from 'shared/components';
 import { mixins } from 'shared/styles';
 
 export const FormikForm = styled(Form)`
+    width: 100%;
     & > *:not(:last-child) {
         margin-bottom: 2rem;
     }

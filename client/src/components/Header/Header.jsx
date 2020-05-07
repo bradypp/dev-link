@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { SignIn, SignUp } from 'components';
-import { CustomLink, Tooltip } from 'shared/components';
+import { CustomLink, Tooltip, Button } from 'shared/components';
 import { selectIsAuthenticated, signOut, selectUser } from 'redux/auth';
 import { BsPerson, BsPeople } from 'react-icons/bs';
 import {
@@ -36,7 +36,7 @@ const Header = ({ isAuthenticated, signOut, user }) => {
                 icon={<BsPeople />}
                 variant="text-lighten"
                 color="white3"
-                to="/search">
+                to="/developers">
                 Developers
             </CustomLink>
             <CustomLink
@@ -55,7 +55,7 @@ const Header = ({ isAuthenticated, signOut, user }) => {
                 to="/dashboard">
                 Dashboard
             </CustomLink>
-            <CustomLink
+            <Button
                 iconSize="1.8rem"
                 icon={<RiLogoutCircleRLine />}
                 variant="text-lighten"
@@ -63,7 +63,7 @@ const Header = ({ isAuthenticated, signOut, user }) => {
                 to="/"
                 onClick={signOut}>
                 Sign Out
-            </CustomLink>
+            </Button>
         </>
     );
 
@@ -76,15 +76,14 @@ const Header = ({ isAuthenticated, signOut, user }) => {
                 width="40rem"
                 placement="bottomLeft"
                 renderElement={props => (
-                    <CustomLink
-                        as="div"
+                    <Button
                         iconSize="1.8rem"
                         icon={<RiLoginCircleLine />}
                         variant="text-lighten"
                         color="white3"
                         {...props}>
                         Sign In
-                    </CustomLink>
+                    </Button>
                 )}
                 renderContent={props => <SignIn {...props} />}
             />
@@ -92,15 +91,14 @@ const Header = ({ isAuthenticated, signOut, user }) => {
                 width="40rem"
                 placement="bottomLeft"
                 renderElement={props => (
-                    <CustomLink
-                        as="div"
+                    <Button
                         iconSize="1.8rem"
                         icon={<RiOpenArmLine />}
                         variant="text-lighten"
                         color="white3"
                         {...props}>
                         Join Now
-                    </CustomLink>
+                    </Button>
                 )}
                 renderContent={props => <SignUp {...props} />}
             />

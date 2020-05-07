@@ -68,13 +68,13 @@ export const AvatarContainer = styled.div`
     margin: -14rem 0 0.8rem;
 `;
 
+export const Avatar = styled(Image)`
+    ${avatarContainer}
+`;
+
 export const AvatarUploadContainer = styled.div`
     ${avatarContainer}
     position: absolute;
-`;
-
-export const Avatar = styled(Image)`
-    ${avatarContainer}
 `;
 
 /* TODO: link styles (make bolder & grey background on hover?), make global button variant? */

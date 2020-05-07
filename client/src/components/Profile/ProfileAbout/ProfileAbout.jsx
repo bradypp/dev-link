@@ -28,50 +28,58 @@ const ProfileAbout = ({ aboutMe, isCurrentUser }) => {
     const { bio, desired_roles, role_types, availability } = aboutMe;
 
     return (
-        <ProfileCard
-            heading="About Me"
-            buttons={() => isCurrentUser && <ProfileAboutForm formData={aboutMe} />}>
-            {!isEmpty(aboutMe) && (
-                <>
-                    {bio && (
-                        <ProfileCard.Item>
-                            <p>{bio}</p>
-                        </ProfileCard.Item>
-                    )}
-                    {desired_roles.length > 0 && role_types.length > 0 && availability && (
-                        <ProfileCard.Item>
-                            {desired_roles.length > 0 && (
-                                <p>
-                                    {desired_roles.length === 1
-                                        ? 'Desired role: '
-                                        : 'Desired desired_roles: '}
-                                    {desired_roles.map((role, i) => (
-                                        <span key={uuidv4()}>
-                                            <CustomLink to="#">{role}</CustomLink>
-                                            {i !== desired_roles.length - 1 && ', '}
-                                        </span>
-                                    ))}
-                                </p>
+        <>
+            {(bio ||
+                desired_roles.length > 0 ||
+                role_types.length > 0 ||
+                availability ||
+                isCurrentUser) && (
+                <ProfileCard
+                    heading="About Me"
+                    buttons={() => isCurrentUser && <ProfileAboutForm formData={aboutMe} />}>
+                    {!isEmpty(aboutMe) && (
+                        <>
+                            {bio && (
+                                <ProfileCard.Item>
+                                    <p>{bio}</p>
+                                </ProfileCard.Item>
                             )}
-                            {role_types.length > 0 && (
-                                <p>
-                                    {role_types.length === 1
-                                        ? 'Desired role type: '
-                                        : 'Desired role types: '}
-                                    {role_types.map((type, i) => (
-                                        <span key={uuidv4()}>
-                                            <CustomLink to="#">{type}</CustomLink>
-                                            {i !== role_types.length - 1 && ', '}
-                                        </span>
-                                    ))}
-                                </p>
+                            {desired_roles.length > 0 && role_types.length > 0 && availability && (
+                                <ProfileCard.Item>
+                                    {desired_roles.length > 0 && (
+                                        <p>
+                                            {desired_roles.length === 1
+                                                ? 'Desired role: '
+                                                : 'Desired desired_roles: '}
+                                            {desired_roles.map((role, i) => (
+                                                <span key={uuidv4()}>
+                                                    <CustomLink to="#">{role}</CustomLink>
+                                                    {i !== desired_roles.length - 1 && ', '}
+                                                </span>
+                                            ))}
+                                        </p>
+                                    )}
+                                    {role_types.length > 0 && (
+                                        <p>
+                                            {role_types.length === 1
+                                                ? 'Desired role type: '
+                                                : 'Desired role types: '}
+                                            {role_types.map((type, i) => (
+                                                <span key={uuidv4()}>
+                                                    <CustomLink to="#">{type}</CustomLink>
+                                                    {i !== role_types.length - 1 && ', '}
+                                                </span>
+                                            ))}
+                                        </p>
+                                    )}
+                                    {availability && <p>Available: {availability}</p>}
+                                </ProfileCard.Item>
                             )}
-                            {availability && <p>Available: {availability}</p>}
-                        </ProfileCard.Item>
+                        </>
                     )}
-                </>
+                </ProfileCard>
             )}
-        </ProfileCard>
+        </>
     );
 };
 
