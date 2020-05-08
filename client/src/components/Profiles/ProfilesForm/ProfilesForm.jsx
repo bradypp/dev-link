@@ -31,8 +31,7 @@ const mapDispatchToProps = {
     getProfiles,
     getSearchConstants,
 };
-// when form submits, push to new url with query string
-// initial state should take from query string object if there
+
 const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRoles }) => {
     const { queryStringToObject, objectToQueryString } = utils.url;
     const history = useHistory();
@@ -41,6 +40,9 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
 
     useEffect(() => {
         getProfiles({
+            [`name[regex]`]: queryStringObj.nm,
+            [`company[regex]`]: queryStringObj.cm,
+            [`current_position[regex]`]: queryStringObj.cp,
             [`availability[all]`]: queryStringObj.av,
             [`skills[all]`]: queryStringObj.sk,
             [`role_types[all]`]: queryStringObj.rt,
@@ -53,6 +55,9 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
         <S.ProfilesFormContainer>
             <Form
                 initialValues={{
+                    name: queryStringObj.nm || '',
+                    company: queryStringObj.cm || '',
+                    current_position: queryStringObj.cp || '',
                     availability: queryStringObj.av ? [queryStringObj.av].flat() : [],
                     skills: queryStringObj.sk ? [queryStringObj.sk].flat() : [],
                     role_types: queryStringObj.rt ? [queryStringObj.rt].flat() : [],
@@ -60,6 +65,9 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
                 }}
                 onSubmit={values => {
                     const newQueryObj = {
+                        nm: values.name,
+                        cm: values.company,
+                        cp: values.current_position,
                         av: values.availability,
                         sk: values.skills,
                         rt: values.role_types,
@@ -68,6 +76,9 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
 
                     history.push(`${pathname}?${objectToQueryString(newQueryObj)}`);
                     getProfiles({
+                        [`name[regex]`]: newQueryObj.nm,
+                        [`company[regex]`]: newQueryObj.cm,
+                        [`current_position[regex]`]: newQueryObj.cp,
                         [`availability[all]`]: newQueryObj.av,
                         [`skills[all]`]: newQueryObj.sk,
                         [`role_types[all]`]: newQueryObj.rt,
@@ -76,9 +87,13 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
                 }}>
                 <Form.Element>
                     <Form.Flex>
-                        {/* Input search (options for name, headline, job titles use regex to filter strings that include search term) */}
-                        <Form.Field.Input label="Name" name="name" />
-                        <Form.Field.Input label="Company" name="name" />
+                        <Form.Field.Input submitOnChange label="Name" name="name" />
+                        <Form.Field.Input submitOnChange label="Company" name="company" />
+                        <Form.Field.Input
+                            submitOnChange
+                            label="Current position"
+                            name="current_position"
+                        />
                     </Form.Flex>
                     <Form.Flex>
                         <Form.Field.Select
@@ -131,8 +146,6 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
                                     : []
                             }
                         />
-                        {/* Country */}
-                        {/* City */}
                     </Form.Flex>
                     <Form.Flex>
                         {/* Sort by stars */}

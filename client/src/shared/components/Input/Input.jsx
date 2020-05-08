@@ -12,6 +12,7 @@ const propTypes = {
     height: PropTypes.number,
     fontSize: PropTypes.string,
     invalid: PropTypes.bool,
+    debounced: PropTypes.bool,
     onChange: PropTypes.func,
 };
 
@@ -24,22 +25,25 @@ const defaultProps = {
     height: 3.2,
     fontSize: undefined,
     invalid: false,
+    debounced: false,
     onChange: () => {},
 };
 
-const Input = forwardRef(({ icon, iconLocation, className, onChange, height, ...props }, ref) => (
-    <InputContainer className={className} height={height} iconLocation={iconLocation}>
-        {icon && typeof icon === 'string' ? <Icon type={icon} /> : icon}
-        <InputElement
-            iconLocation={iconLocation}
-            hasIcon={!!icon}
-            onChange={event => onChange(event.target.value, event)}
-            height={height}
-            ref={ref}
-            {...props}
-        />
-    </InputContainer>
-));
+const Input = forwardRef(
+    ({ icon, iconLocation, className, onChange, height, debounced, ...props }, ref) => (
+        <InputContainer className={className} height={height} iconLocation={iconLocation}>
+            {icon && typeof icon === 'string' ? <Icon type={icon} /> : icon}
+            <InputElement
+                iconLocation={iconLocation}
+                hasIcon={!!icon}
+                onChange={event => onChange(event.target.value, event)}
+                height={height}
+                ref={ref}
+                {...props}
+            />
+        </InputContainer>
+    ),
+);
 
 Input.propTypes = propTypes;
 Input.defaultProps = defaultProps;

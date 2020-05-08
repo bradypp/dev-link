@@ -19,7 +19,7 @@ class QueryHandler {
         let queryStr = JSON.stringify(queryObj);
         // Allow filtering by gte|gt|lte|lt if they exist in queryParams by adding the mongodb $ operator
         // E.g. localhost:5000/api/user?age[gte]=18 (filter for age > 18)
-        queryStr = queryStr.replace(/\b(gte|gt|lte|lt|all|in)\b/g, match => `$${match}`);
+        queryStr = queryStr.replace(/\b(gte|gt|lte|lt|all|in|regex)\b/g, match => `$${match}`);
 
         // Turns any array queries into array value for the query
         // E.g. localhost:5000/api/profile?skills[in]=html,css becomes {skills: { $in : ['html', 'css']}} as required
@@ -28,7 +28,6 @@ class QueryHandler {
             match => `[${match.replace(',', '","')}]`,
         );
 
-        // Query the database and filter by JSON.parse(queryStr) (the new filter object)
         this.query = this.query.find(JSON.parse(queryStr));
 
         return this;
