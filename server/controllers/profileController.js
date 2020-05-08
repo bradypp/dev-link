@@ -400,6 +400,13 @@ exports.toggleStar = catchAsync(async (req, res, next) => {
     const profile = await Profile.findById(req.params.id);
     const user = await User.findById(req.params.userId);
 
+    if (!profile) {
+        return next(new AppError(notFoundErrorMessage, 404));
+    }
+    if (!user) {
+        return next(new AppError('User not found', 404));
+    }
+
     const userIsInProfileStarsArr = profile.stars.includes(req.params.userId);
     const profileIsInUserStarredArr = user.starred.includes(req.params.id);
 
@@ -421,6 +428,8 @@ exports.toggleStar = catchAsync(async (req, res, next) => {
         user.starred.push(req.params.id);
     }
 
+    profile.number_of_stars = profile.stars.length || 0;
+
     await profile.save();
     await user.save();
 
@@ -436,6 +445,13 @@ exports.toggleStar = catchAsync(async (req, res, next) => {
 exports.toggleWatch = catchAsync(async (req, res, next) => {
     const profile = await Profile.findById(req.params.id);
     const user = await User.findById(req.params.userId);
+
+    if (!profile) {
+        return next(new AppError(notFoundErrorMessage, 404));
+    }
+    if (!user) {
+        return next(new AppError('User not found', 404));
+    }
 
     const userIsInProfileWatchersArr = profile.watchers.includes(req.params.userId);
     const profileIsInUserWatchingArr = user.watching.includes(req.params.id);
@@ -459,6 +475,8 @@ exports.toggleWatch = catchAsync(async (req, res, next) => {
         // Add profile to the users watching array
         user.watching.push(req.params.id);
     }
+
+    profile.number_of_watching = profile.watching.length || 0;
 
     await profile.save();
     await user.save();

@@ -39,14 +39,6 @@ const ProfilesItem = ({ profile }) => {
             <div>
                 <h2>{name}</h2>
                 {headline && <h3>{headline}</h3>}
-                {city ? (
-                    <p>
-                        {city}
-                        {country && <>, {country}</>}
-                    </p>
-                ) : (
-                    <>{country && <p>{country}</p>}</>
-                )}
                 {company ? (
                     <p>
                         {company}
@@ -54,6 +46,14 @@ const ProfilesItem = ({ profile }) => {
                     </p>
                 ) : (
                     <>{current_position && <p>{current_position}</p>}</>
+                )}
+                {city ? (
+                    <p>
+                        {city}
+                        {country && <>, {country}</>}
+                    </p>
+                ) : (
+                    <>{country && <p>{country}</p>}</>
                 )}
                 {skills.map(skill => (
                     <CustomLink to="#" key={uuidv4()}>

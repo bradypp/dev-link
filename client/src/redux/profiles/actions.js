@@ -1,12 +1,11 @@
-import { api, apiErrorHandler } from 'shared/utils';
+import { api, apiErrorHandler, url } from 'shared/utils';
 import {
     PROFILES_LOADED,
     PROFILES_ERROR,
     CLEAR_PROFILES,
     PROFILES_LOADING,
-    SKILLS_LOADED,
+    SEARCH_CONSTANTS_LOADED,
 } from 'redux/actionTypes';
-import { url } from 'shared/utils';
 
 export const getProfiles = (queryParams = null) => async dispatch => {
     try {
@@ -15,7 +14,7 @@ export const getProfiles = (queryParams = null) => async dispatch => {
 
         if (queryParams) {
             const queryString = url.objectToQueryString(queryParams);
-            const res = await api.get(`/profile/all/?${queryString}`);
+            const res = await api.get(`/profile/all?${queryString}`);
             dispatch(profilesLoaded(res.data.data.profiles));
         } else {
             const res = await api.get(`/profile/all`);
@@ -27,15 +26,23 @@ export const getProfiles = (queryParams = null) => async dispatch => {
     }
 };
 
-export const getSkills = () => async dispatch => {
+export const getSearchConstants = () => async dispatch => {
     try {
-        const res = await api.get(`/profile/all?fields=skills`);
+        const res = await api.get(`/profile/all?fields=skills,desired_roles,-user`);
         const skills = new Set(res.data.data.profiles.map(profile => profile.skills).flat());
+        const desiredRoles = new Set(
+            res.data.data.profiles.map(profile => profile.desired_roles).flat(),
+        );
 
         dispatch(
-            skillsLoaded(
-                Array.from(skills).sort((a, b) => (a.toLowerCase() < b.toLowerCase() ? -1 : 1)),
-            ),
+            searchConstantsLoaded({
+                allSkills: Array.from(skills).sort((a, b) =>
+                    a.toLowerCase() < b.toLowerCase() ? -1 : 1,
+                ),
+                allDesiredRoles: Array.from(desiredRoles).sort((a, b) =>
+                    a.toLowerCase() < b.toLowerCase() ? -1 : 1,
+                ),
+            }),
         );
     } catch (err) {
         dispatch(apiErrorHandler(err));
@@ -60,7 +67,7 @@ export const profilesLoaded = payload => ({
     payload,
 });
 
-export const skillsLoaded = payload => ({
-    type: SKILLS_LOADED,
+export const searchConstantsLoaded = payload => ({
+    type: SEARCH_CONSTANTS_LOADED,
     payload,
 });

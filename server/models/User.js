@@ -105,15 +105,6 @@ userSchema.pre('save', function(next) {
     next();
 });
 
-// TODO: populate user with required profile information
-// userSchema.pre(/^find/, function(next) {
-//     this.populate({
-//         path: 'profile',
-//         select: 'avatar',
-//     });
-//     next();
-// });
-
 userSchema.statics.encryptPasswordResetToken = function(token) {
     return crypto
         .createHash('sha256')

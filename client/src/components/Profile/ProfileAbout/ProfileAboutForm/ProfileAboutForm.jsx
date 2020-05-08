@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Form } from 'shared/components';
 import { EditModal } from 'components';
 import { validators } from 'shared/utils';
+import { formConstants } from 'shared/constants';
 import * as Yup from 'yup';
 import { updateProfile } from 'redux/profile';
 
@@ -18,25 +19,6 @@ const mapDispatchToProps = {
 
 const ProfileAboutForm = ({ updateProfile, formData }) => {
     const { bio, desired_roles, role_types, availability } = formData;
-
-    const roleTypes = [
-        'Full-Time Permanent',
-        'Full-Time Temporary',
-        'Part-Time Permanent',
-        'Part-Time Temporary',
-        'Open Source',
-        'Freelance',
-        'Intern',
-    ];
-
-    const availabilityOptions = [
-        'Immediately',
-        'Less than 1 week',
-        '1 to 2 weeks',
-        '2 to 3 weeks',
-        '3 to 4 weeks',
-        'More than 4 weeks',
-    ];
 
     const aboutValidation = Yup.object().shape({
         bio: validators.required('Bio is required'),
@@ -56,7 +38,12 @@ const ProfileAboutForm = ({ updateProfile, formData }) => {
                         }}
                         validationSchema={aboutValidation}
                         onSubmit={values => {
-                            updateProfile({ about_me: values });
+                            updateProfile({
+                                bio: values.bio,
+                                desired_roles: values.desired_roles,
+                                role_types: values.role_types,
+                                availability: values.availability,
+                            });
                             close();
                         }}>
                         {({ values }) => (
@@ -90,7 +77,7 @@ const ProfileAboutForm = ({ updateProfile, formData }) => {
                                         inputPlaceholder="Search"
                                         name="role_types"
                                         variant="empty"
-                                        options={roleTypes.map(type => ({
+                                        options={formConstants.roleTypes.map(type => ({
                                             label: type,
                                             value: type,
                                         }))}
@@ -103,7 +90,7 @@ const ProfileAboutForm = ({ updateProfile, formData }) => {
                                     inputPlaceholder="Search"
                                     name="availability"
                                     width="50%"
-                                    options={availabilityOptions.map(type => ({
+                                    options={formConstants.availability.map(type => ({
                                         label: type,
                                         value: type,
                                     }))}

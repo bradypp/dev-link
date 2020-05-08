@@ -19,11 +19,6 @@ const mapStateToProps = createStructuredSelector({
     isCurrentUser: selectIsCurrentUser,
 });
 
-// TODO: Conditional appearance based on if profile belongs to current authenticated user
-// TODO: Add loader?
-// TODO: Add links to custom links
-// TODO: sanitize links to lower case on save
-// TODO: change lists below to buttons with margin between them?
 const ProfileAbout = ({ aboutMe, isCurrentUser }) => {
     const { bio, desired_roles, role_types, availability } = aboutMe;
 
@@ -44,7 +39,9 @@ const ProfileAbout = ({ aboutMe, isCurrentUser }) => {
                                     <p>{bio}</p>
                                 </ProfileCard.Item>
                             )}
-                            {desired_roles.length > 0 && role_types.length > 0 && availability && (
+                            {(desired_roles.length > 0 ||
+                                role_types.length > 0 ||
+                                availability) && (
                                 <ProfileCard.Item>
                                     {desired_roles.length > 0 && (
                                         <p>

@@ -43,7 +43,12 @@ export const selectProfileInfo = createSelector(
 
 export const selectProfileAboutMe = createSelector(
     [selectCurrentProfile],
-    profile => profile.about_me || {},
+    ({ bio, desired_roles, role_types, availability }) => ({
+        bio,
+        desired_roles,
+        role_types,
+        availability,
+    }),
 );
 
 export const selectProfileInterests = createSelector(

@@ -79,49 +79,46 @@ const profileSchema = new Schema({
             lowercase: true,
         },
     ],
-
-    hireable: {
-        type: Boolean,
-        default: true,
+    bio: {
+        type: String,
+        trim: true,
     },
-    about_me: {
-        bio: {
+    desired_roles: [
+        {
             type: String,
             trim: true,
+            lowercase: true,
         },
-        desired_roles: [
-            {
-                type: String,
-                trim: true,
-            },
-        ],
-        role_types: [
-            {
-                type: String,
-                trim: true,
-                enum: [
-                    'Full-Time Permanent',
-                    'Full-Time Temporary',
-                    'Part-Time Permanent',
-                    'Part-Time Temporary',
-                    'Open Source',
-                    'Freelance',
-                    'Intern',
-                ],
-            },
-        ],
-        availability: {
+    ],
+    role_types: [
+        {
             type: String,
             trim: true,
             enum: [
-                'Immediately',
-                'Less than 1 week',
-                '1 to 2 weeks',
-                '2 to 3 weeks',
-                '3 to 4 weeks',
-                'More than 4 weeks',
+                'full-time permanent',
+                'full-time temporary',
+                'part-time permanent',
+                'part-time temporary',
+                'open source',
+                'freelance',
+                'intern',
             ],
+            lowercase: true,
         },
+    ],
+    availability: {
+        type: String,
+        trim: true,
+        enum: [
+            'unavailable',
+            'immediately',
+            'less than 1 week',
+            'less than 2 weeks',
+            'less than 3 weeks',
+            'less than 4 weeks',
+            'more than 4 weeks',
+        ],
+        lowercase: true,
     },
     portfolio: [
         {
@@ -293,6 +290,8 @@ const profileSchema = new Schema({
             ref: 'User',
         },
     ],
+    number_of_stars: Number,
+    number_of_watching: Number,
     createdAt: {
         type: Date,
         default: Date.now,
