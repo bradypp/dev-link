@@ -69,7 +69,7 @@ const userSchema = new Schema(
                 ref: 'Profile',
             },
         ],
-        createdAt: {
+        created_at: {
             type: Date,
             default: Date.now,
         },

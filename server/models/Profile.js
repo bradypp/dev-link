@@ -292,7 +292,7 @@ const profileSchema = new Schema({
     ],
     number_of_stars: Number,
     number_of_watching: Number,
-    createdAt: {
+    created_at: {
         type: Date,
         default: Date.now,
     },

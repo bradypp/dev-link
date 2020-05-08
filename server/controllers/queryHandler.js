@@ -41,8 +41,8 @@ class QueryHandler {
             const sortBy = this.queryParams.sort.split(',').join(' ');
             this.query = this.query.sort(sortBy);
         } else {
-            // If there's no sort param, sort by createdAt date in descending order
-            this.query = this.query.sort('-createdAt');
+            // If there's no sort param, sort by created_at date in descending order
+            this.query = this.query.sort('-created_at');
         }
 
         return this;

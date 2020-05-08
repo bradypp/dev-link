@@ -1,7 +1,7 @@
 // TODO: update for required url parameters
 const hppConfig = {
     whitelist: [
-        'createdAt',
+        'created_at',
         'username',
         'experience',
         'education',
