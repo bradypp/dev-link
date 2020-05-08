@@ -47,7 +47,9 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
             [`skills[all]`]: queryStringObj.sk,
             [`role_types[all]`]: queryStringObj.rt,
             [`desired_roles[all]`]: queryStringObj.dr,
-            [`sort`]: queryStringObj.sort,
+            sort: queryStringObj.sort,
+            page: '1',
+            limit: 20,
         });
         getSearchConstants();
     }, []);
@@ -64,6 +66,7 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
                     role_types: queryStringObj.rt ? [queryStringObj.rt].flat() : [],
                     desired_roles: queryStringObj.rt ? [queryStringObj.rt].flat() : [],
                     sort: queryStringObj.sort || 'number_of_stars',
+                    page: 1,
                 }}
                 onSubmit={values => {
                     const newQueryObj = {
@@ -75,6 +78,7 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
                         rt: values.role_types,
                         dr: values.desired_roles,
                         sort: values.sort,
+                        page: values.page,
                     };
 
                     history.push(`${pathname}?${objectToQueryString(newQueryObj)}`);
@@ -87,6 +91,8 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
                         [`role_types[all]`]: newQueryObj.rt,
                         [`desired_roles[all]`]: newQueryObj.dr,
                         [`sort`]: queryStringObj.sort,
+                        page: values.page.toString(),
+                        limit: 20,
                     });
                 }}>
                 <Form.Element>
@@ -150,6 +156,8 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
                                     : []
                             }
                         />
+                    </Form.Flex>
+                    <Form.Flex>
                         <Form.Field.Select
                             label="Sort by"
                             submitOnChange
@@ -162,10 +170,6 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
                                 { label: 'Date joined', value: 'created_at' },
                             ]}
                         />
-                    </Form.Flex>
-                    <Form.Flex>
-                        {/* Sort by stars */}
-                        {/* Sort by watching */}
                     </Form.Flex>
                 </Form.Element>
             </Form>
