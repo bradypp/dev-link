@@ -5,9 +5,4 @@ export const ProfilesFormContainer = styled.section`
     ${mixins.flexCenterLeft}
     grid-column: 1 / -1;
     margin-bottom: 0.5rem 0;
-
-    h2 {
-        margin-bottom: 0.4rem;
-        font-size: 1.8rem;
-    }
 `;

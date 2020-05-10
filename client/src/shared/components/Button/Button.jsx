@@ -68,8 +68,8 @@ const Button = forwardRef(
                 {...props}>
                 {isWorking && <ButtonSpinner />}
                 {iconLocation === 'left' && renderedIcon}
-                {!isWorking && children && (
-                    <ButtonText iconLocation={iconLocation} withPadding={icon}>
+                {children && (
+                    <ButtonText iconLocation={iconLocation} withPadding={icon || isWorking}>
                         {children}
                     </ButtonText>
                 )}

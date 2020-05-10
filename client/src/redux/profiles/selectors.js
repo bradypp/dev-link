@@ -4,6 +4,11 @@ export const selectProfiles = state => state.profiles;
 
 export const selectAllProfiles = createSelector([selectProfiles], profiles => profiles.profiles);
 
+export const selectNumberOfProfiles = createSelector(
+    [selectAllProfiles],
+    profiles => profiles.length,
+);
+
 export const selectAllSkills = createSelector([selectProfiles], profiles => profiles.allSkills);
 
 export const selectAllDesiredRoles = createSelector(
@@ -13,5 +18,15 @@ export const selectAllDesiredRoles = createSelector(
 
 export const selectIsProfilesLoading = createSelector(
     [selectProfiles],
-    profiles => profiles.isLoading,
+    profiles => profiles.isProfilesLoading,
+);
+
+export const selectIsMoreProfilesLoading = createSelector(
+    [selectProfiles],
+    profiles => profiles.isMoreProfilesLoading,
+);
+
+export const selectIsNoMoreProfiles = createSelector(
+    [selectProfiles],
+    profiles => profiles.isNoMoreProfiles,
 );

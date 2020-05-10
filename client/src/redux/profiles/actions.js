@@ -5,21 +5,35 @@ import {
     CLEAR_PROFILES,
     PROFILES_LOADING,
     SEARCH_CONSTANTS_LOADED,
+    MORE_PROFILES_LOADING,
+    MORE_PROFILES_LOADED,
 } from 'redux/actionTypes';
 
-export const getProfiles = (queryParams = null) => async dispatch => {
+export const getProfiles = (queryObj = null) => async dispatch => {
     try {
         dispatch(clearProfiles());
         dispatch(profilesLoading());
 
-        if (queryParams) {
-            const queryString = url.objectToQueryString(queryParams);
+        if (queryObj) {
+            const queryString = url.objectToQueryString(queryObj);
             const res = await api.get(`/profile/all?${queryString}`);
             dispatch(profilesLoaded(res.data.data.profiles));
         } else {
             const res = await api.get(`/profile/all`);
             dispatch(profilesLoaded(res.data.data.profiles));
         }
+    } catch (err) {
+        dispatch(apiErrorHandler(err));
+        dispatch(profilesError(err));
+    }
+};
+
+export const getMoreProfiles = queryObj => async dispatch => {
+    try {
+        dispatch(moreProfilesLoading());
+        const queryString = url.objectToQueryString(queryObj);
+        const res = await api.get(`/profile/all?${queryString}`);
+        dispatch(moreProfilesLoaded(res.data.data.profiles));
     } catch (err) {
         dispatch(apiErrorHandler(err));
         dispatch(profilesError(err));
@@ -62,8 +76,17 @@ export const profilesLoading = () => ({
     type: PROFILES_LOADING,
 });
 
+export const moreProfilesLoading = () => ({
+    type: MORE_PROFILES_LOADING,
+});
+
 export const profilesLoaded = payload => ({
     type: PROFILES_LOADED,
+    payload,
+});
+
+export const moreProfilesLoaded = payload => ({
+    type: MORE_PROFILES_LOADED,
     payload,
 });
 

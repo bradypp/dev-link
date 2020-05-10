@@ -29,7 +29,12 @@ const ButtonWrapper = forwardRef(
         };
 
         return (
-            <button className={className} type={type} onClick={handleClick} ref={ref}>
+            <button
+                className={className}
+                type={type}
+                onClick={handleClick}
+                disabled={disabled}
+                ref={ref}>
                 {children}
             </button>
         );

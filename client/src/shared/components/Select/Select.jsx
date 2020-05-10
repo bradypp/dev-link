@@ -34,6 +34,7 @@ const propTypes = {
     withClearValue: PropTypes.bool,
     renderValue: PropTypes.func,
     renderOption: PropTypes.func,
+    removeSelected: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -54,6 +55,7 @@ const defaultProps = {
     withClearValue: true,
     renderValue: undefined,
     renderOption: undefined,
+    removeSelected: true,
 };
 
 const Select = ({
@@ -76,6 +78,7 @@ const Select = ({
     inputPlaceholder,
     renderValue: propsRenderValue,
     renderOption: propsRenderOption,
+    removeSelected,
 }) => {
     const [stateValue, setStateValue] = useState(defaultValue || (isMulti ? [] : null));
     const [options, setOptions] = useState(propsOptions);
@@ -223,6 +226,7 @@ const Select = ({
                     inputId={inputId}
                     withClearValue={withClearValue}
                     propsRenderOption={propsRenderOption}
+                    removeSelected={removeSelected}
                 />
             )}
         </S.SelectContainer>

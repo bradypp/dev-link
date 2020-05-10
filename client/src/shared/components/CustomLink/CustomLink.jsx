@@ -55,9 +55,9 @@ const CustomLink = forwardRef(
             iconLocation={iconLocation}
             {...props}>
             {isWorking && <ButtonSpinner />}
-            {!isWorking && icon && typeof icon === 'string' ? <Icon type={icon} /> : icon}
+            {icon && typeof icon === 'string' ? <Icon type={icon} /> : icon}
             {!isWorking && children && (
-                <ButtonText withPadding={icon} iconLocation={iconLocation}>
+                <ButtonText withPadding={isWorking || icon} iconLocation={iconLocation}>
                     {children}
                 </ButtonText>
             )}

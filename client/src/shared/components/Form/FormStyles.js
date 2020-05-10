@@ -87,7 +87,12 @@ export const FieldError = styled.div`
 `;
 
 export const ButtonsContainer = styled.div`
-    ${mixins.flexCenterLeft}
+    display: flex;
+    justify-content: ${({ align }) =>
+        (align === 'left' && 'flex-start') ||
+        (align === 'center' && 'center') ||
+        (align === 'right' && 'flex-end')};
+    align-items: center;
 
     & > *:not(:last-child) {
         margin-right: ${({ theme }) => theme.layout.buttonGap};

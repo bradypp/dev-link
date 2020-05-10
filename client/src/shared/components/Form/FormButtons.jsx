@@ -13,6 +13,7 @@ const propTypes = {
     submitText: PropTypes.string,
     resetText: PropTypes.string,
     cancelText: PropTypes.string,
+    align: PropTypes.string,
 };
 
 const defaultProps = {
@@ -25,6 +26,7 @@ const defaultProps = {
     submitText: 'Submit',
     resetText: 'Reset',
     cancelText: 'Cancel',
+    align: 'left',
 };
 
 const FormButtons = ({

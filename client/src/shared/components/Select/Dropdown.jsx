@@ -23,6 +23,7 @@ const propTypes = {
     isMulti: PropTypes.bool.isRequired,
     withClearValue: PropTypes.bool.isRequired,
     propsRenderOption: PropTypes.func,
+    removeSelected: PropTypes.bool.isRequired,
 };
 
 const defaultProps = {
@@ -51,6 +52,7 @@ const SelectDropdown = ({
     propsRenderOption,
     setOptions,
     withOptions,
+    removeSelected,
 }) => {
     const [isCreatingOption, setCreatingOption] = useState(false);
     const $optionsRef = useRef();
@@ -182,9 +184,11 @@ const SelectDropdown = ({
     const removeSelectedOptionsMulti = opts => opts.filter(option => !value.includes(option.value));
     const removeSelectedOptionsSingle = opts => opts.filter(option => value !== option.value);
 
-    const filteredOptions = isMulti
-        ? removeSelectedOptionsMulti(optionsFilteredBySearchValue)
-        : removeSelectedOptionsSingle(optionsFilteredBySearchValue);
+    const renderedOptions = removeSelected
+        ? isMulti
+            ? removeSelectedOptionsMulti(optionsFilteredBySearchValue)
+            : removeSelectedOptionsSingle(optionsFilteredBySearchValue)
+        : optionsFilteredBySearchValue;
 
     const isSearchValueInOptions = options.map(option => option.label).includes(searchValue);
     const isOptionCreatable = withCreate && searchValue && !isSearchValueInOptions;
@@ -205,7 +209,7 @@ const SelectDropdown = ({
             {!isValueEmpty && withClearValue && <S.ClearIcon onClick={clearOptionValues} />}
             <S.Options ref={$optionsRef}>
                 {withOptions &&
-                    filteredOptions.map(option => (
+                    renderedOptions.map(option => (
                         <S.Option
                             key={option.value}
                             data-select-option-value={option.value}
@@ -224,7 +228,7 @@ const SelectDropdown = ({
                     </S.Option>
                 )}
             </S.Options>
-            {withOptions && filteredOptions.length === 0 && (
+            {withOptions && renderedOptions.length === 0 && (
                 <S.OptionsNoResults>No options</S.OptionsNoResults>
             )}
         </S.Dropdown>

@@ -25,18 +25,19 @@ const Profiles = ({ profiles, profilesIsLoading }) => {
 
     return (
         <Main>
-            <ProfilesForm />
-            <S.ProfileItemsContainer>
-                {isFirstRender || profilesIsLoading ? (
-                    <Spinner />
-                ) : (
-                    <>
-                        {profiles.map(profile => (
-                            <ProfilesItem profile={profile} />
-                        ))}
-                    </>
-                )}
-            </S.ProfileItemsContainer>
+            <ProfilesForm isFirstRender={isFirstRender}>
+                <S.ProfileItemsContainer>
+                    {isFirstRender || profilesIsLoading ? (
+                        <Spinner />
+                    ) : (
+                        <>
+                            {profiles.map(profile => (
+                                <ProfilesItem profile={profile} />
+                            ))}
+                        </>
+                    )}
+                </S.ProfileItemsContainer>
+            </ProfilesForm>
         </Main>
     );
 };

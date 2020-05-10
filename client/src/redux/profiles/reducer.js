@@ -4,13 +4,17 @@ import {
     PROFILES_LOADED,
     PROFILES_LOADING,
     SEARCH_CONSTANTS_LOADED,
+    MORE_PROFILES_LOADING,
+    MORE_PROFILES_LOADED,
 } from 'redux/actionTypes';
 
 const initialState = {
     profiles: [],
     allSkills: [],
     allDesiredRoles: [],
-    isLoading: false,
+    isProfilesLoading: false,
+    isMoreProfilesLoading: false,
+    isNoMoreProfiles: false,
     error: {},
 };
 
@@ -19,19 +23,33 @@ export default (state = initialState, { type, payload }) => {
         case PROFILES_LOADING:
             return {
                 ...state,
-                isLoading: true,
+                isProfilesLoading: true,
+            };
+        case MORE_PROFILES_LOADING:
+            return {
+                ...state,
+                isMoreProfilesLoading: true,
             };
         case PROFILES_LOADED:
             return {
                 ...state,
-                isLoading: false,
+                isProfilesLoading: false,
                 profiles: payload,
+            };
+        case MORE_PROFILES_LOADED:
+            return {
+                ...state,
+                isMoreProfilesLoading: false,
+                profiles: [...state.profiles, ...payload],
+                isNoMoreProfiles: payload.length === 0,
             };
         case PROFILES_ERROR:
             return {
                 ...state,
                 profiles: initialState.profiles,
-                isLoading: initialState.isLoading,
+                isProfilesLoading: initialState.isProfilesLoading,
+                isMoreProfilesLoading: initialState.isMoreProfilesLoading,
+                isNoMoreProfiles: initialState.isNoMoreProfiles,
                 error: payload,
             };
         case CLEAR_PROFILES:

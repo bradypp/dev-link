@@ -103,22 +103,12 @@ const profileSchema = new Schema({
                 'freelance',
                 'intern',
             ],
-            lowercase: true,
         },
     ],
     availability: {
         type: String,
         trim: true,
-        enum: [
-            'unavailable',
-            'immediately',
-            'less than 1 week',
-            'less than 2 weeks',
-            'less than 3 weeks',
-            'less than 4 weeks',
-            'more than 4 weeks',
-        ],
-        lowercase: true,
+        enum: ['unavailable', '< 1 week', '1 - 2 weeks', '2 - 3 weeks', '3 - 4 weeks', '4 + weeks'],
     },
     portfolio: [
         {

@@ -14,13 +14,13 @@ export const ProfilesItemContainer = styled.div`
     }
 
     h2 {
-        font-size: 2.2rem;
-        font-weight: 400;
+        font-size: 1.8rem;
+        font-weight: 500;
     }
 
     h3 {
         font-weight: 400;
-        font-size: 1.8rem;
+        font-size: 1.6rem;
     }
 `;
 

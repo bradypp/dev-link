@@ -1,14 +1,10 @@
-import styled, { css } from 'styled-components/macro';
+import styled from 'styled-components/macro';
 import { mixins } from 'shared/styles';
 
 export const SpinnerOverlay = styled.div`
     ${mixins.flexCenter}
-    ${({ renderOverlay }) =>
-        renderOverlay &&
-        css`
-            height: 60vh;
-            width: 100%;
-        `}
+    height: ${({ containerHeight }) => containerHeight || 'auto'};
+    width: 100%;
 `;
 
 // TODO: change styling for light/dark color

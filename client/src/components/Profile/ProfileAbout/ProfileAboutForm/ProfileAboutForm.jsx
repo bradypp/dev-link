@@ -86,6 +86,7 @@ const ProfileAboutForm = ({ updateProfile, formData }) => {
                                 <Form.Field.Select
                                     label="Availability"
                                     tip="When are you available to start work?"
+                                    removeSelected={false}
                                     valuePlaceholder="Select"
                                     inputPlaceholder="Search"
                                     name="availability"

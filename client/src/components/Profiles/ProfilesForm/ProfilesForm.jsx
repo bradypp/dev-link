@@ -4,35 +4,64 @@ import { connect } from 'react-redux';
 import { useLocation, useHistory } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 // import { v4 as uuidv4 } from 'uuid';
-import { Form, InputDebounced } from 'shared/components';
+import { Form, InputDebounced, Button } from 'shared/components';
 import {
     getProfiles,
     getSearchConstants,
     selectAllSkills,
     selectAllDesiredRoles,
+    getMoreProfiles,
+    selectIsMoreProfilesLoading,
+    selectIsNoMoreProfiles,
+    selectNumberOfProfiles,
+    selectIsProfilesLoading,
 } from 'redux/profiles';
 import * as utils from 'shared/utils';
 import { formConstants } from 'shared/constants';
 import * as S from './ProfilesFormStyles';
 
 const propTypes = {
+    children: PropTypes.node.isRequired,
     getProfiles: PropTypes.func.isRequired,
+    getMoreProfiles: PropTypes.func.isRequired,
     getSearchConstants: PropTypes.func.isRequired,
     allSkills: PropTypes.array.isRequired,
     allDesiredRoles: PropTypes.array.isRequired,
+    isMoreProfilesLoading: PropTypes.bool.isRequired,
+    isNoMoreProfiles: PropTypes.bool.isRequired,
+    numberOfProfiles: PropTypes.number.isRequired,
+    isProfilesLoading: PropTypes.bool.isRequired,
+    isFirstRender: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
     allSkills: selectAllSkills,
     allDesiredRoles: selectAllDesiredRoles,
+    isMoreProfilesLoading: selectIsMoreProfilesLoading,
+    isNoMoreProfiles: selectIsNoMoreProfiles,
+    numberOfProfiles: selectNumberOfProfiles,
+    isProfilesLoading: selectIsProfilesLoading,
 });
 
 const mapDispatchToProps = {
     getProfiles,
+    getMoreProfiles,
     getSearchConstants,
 };
 
-const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRoles }) => {
+const ProfilesForm = ({
+    getProfiles,
+    getSearchConstants,
+    allSkills,
+    allDesiredRoles,
+    isMoreProfilesLoading,
+    getMoreProfiles,
+    children,
+    isNoMoreProfiles,
+    numberOfProfiles,
+    isProfilesLoading,
+    isFirstRender,
+}) => {
     const history = useHistory();
     const { search: queryString, pathname } = useLocation();
     const { queryStringToObject, objectToQueryString } = utils.url;
@@ -71,6 +100,23 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
                     sort: queryStringObj.s || '-total_stars',
                 }}
                 onSubmit={values => {
+                    const queryObj = {
+                        page: pageValue,
+                        [`name[regex]`]: nameValue,
+                        [`company[regex]`]: companyValue,
+                        [`current_position[regex]`]: currentPositionValue,
+                        [`availability[all]`]: values.availability,
+                        [`skills[all]`]: values.skills,
+                        [`role_types[all]`]: values.role_types,
+                        [`desired_roles[all]`]: values.desired_roles,
+                        [`sort`]: values.sort,
+                        limit: 20,
+                    };
+                    if (pageValue === 1) {
+                        getProfiles(queryObj);
+                    } else {
+                        getMoreProfiles(queryObj);
+                    }
                     history.push(
                         `${pathname}?${objectToQueryString({
                             pg: pageValue,
@@ -84,18 +130,6 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
                             s: values.sort,
                         })}`,
                     );
-                    getProfiles({
-                        page: pageValue,
-                        [`name[regex]`]: nameValue,
-                        [`company[regex]`]: companyValue,
-                        [`current_position[regex]`]: currentPositionValue,
-                        [`availability[all]`]: values.availability,
-                        [`skills[all]`]: values.skills,
-                        [`role_types[all]`]: values.role_types,
-                        [`desired_roles[all]`]: values.desired_roles,
-                        [`sort`]: values.sort,
-                        limit: 20,
-                    });
                 }}>
                 {form => (
                     <Form.Element>
@@ -104,6 +138,7 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
                                 <InputDebounced
                                     value={nameValue}
                                     onChange={value => {
+                                        setPageValue(1);
                                         setNameValue(value);
                                         form.submitForm();
                                     }}
@@ -113,6 +148,7 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
                                 <InputDebounced
                                     value={companyValue}
                                     onChange={value => {
+                                        setPageValue(1);
                                         setCompanyValue(value);
                                         form.submitForm();
                                     }}
@@ -122,6 +158,7 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
                                 <InputDebounced
                                     value={currentPositionValue}
                                     onChange={value => {
+                                        setPageValue(1);
                                         setCurrentPositionValue(value);
                                         form.submitForm();
                                     }}
@@ -136,6 +173,7 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
                                 name="availability"
                                 variant="empty"
                                 submitOnChange
+                                customOnChange={() => setPageValue(1)}
                                 options={formConstants.availability.map(type => ({
                                     label: type,
                                     value: type,
@@ -148,6 +186,7 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
                                 name="skills"
                                 variant="empty"
                                 isMulti
+                                customOnChange={() => setPageValue(1)}
                                 options={
                                     allSkills.length > 0
                                         ? allSkills.map(skill => ({ label: skill, value: skill }))
@@ -161,6 +200,7 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
                                 name="role_types"
                                 variant="empty"
                                 submitOnChange
+                                customOnChange={() => setPageValue(1)}
                                 options={formConstants.roleTypes.map(type => ({
                                     label: type,
                                     value: type,
@@ -173,6 +213,7 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
                                 name="desired_roles"
                                 variant="empty"
                                 isMulti
+                                customOnChange={() => setPageValue(1)}
                                 options={
                                     allDesiredRoles.length > 0
                                         ? allDesiredRoles.map(role => ({
@@ -185,9 +226,11 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
                         </Form.Flex>
                         <Form.Flex>
                             <Form.Field.Select
+                                removeSelected={false}
                                 label="Sort by"
                                 submitOnChange
                                 name="sort"
+                                customOnChange={() => setPageValue(1)}
                                 options={[
                                     { label: 'Name', value: '-name' },
                                     { label: 'Total stars', value: '-total_stars' },
@@ -196,6 +239,28 @@ const ProfilesForm = ({ getProfiles, getSearchConstants, allSkills, allDesiredRo
                                 ]}
                             />
                         </Form.Flex>
+                        {children}
+                        {!isFirstRender && !isProfilesLoading && (
+                            <Form.Buttons
+                                align="center"
+                                withSubmit={false}
+                                customButtons={
+                                    <Button
+                                        disabled={isNoMoreProfiles || numberOfProfiles === 0}
+                                        isWorking={isMoreProfilesLoading}
+                                        onClick={() => {
+                                            setPageValue(pageValue + 1);
+                                            form.submitForm();
+                                        }}>
+                                        {numberOfProfiles === 0
+                                            ? ' No profiles found'
+                                            : isNoMoreProfiles
+                                            ? 'No more profiles found'
+                                            : 'Load More'}
+                                    </Button>
+                                }
+                            />
+                        )}
                     </Form.Element>
                 )}
             </Form>
