@@ -28,7 +28,14 @@ class QueryHandler {
             match => `[${match.replace(',', '","')}]`,
         );
 
-        this.query = this.query.find(JSON.parse(queryStr));
+        const newQueryObj = JSON.parse(queryStr);
+        Object.keys(newQueryObj).forEach(el => {
+            if (newQueryObj[el].$regex) {
+                newQueryObj[el].$regex = new RegExp(newQueryObj[el].$regex, 'i');
+            }
+        });
+
+        this.query = this.query.find(newQueryObj);
 
         return this;
     }
@@ -39,6 +46,7 @@ class QueryHandler {
             // E.g. localhost:5000/api/user?sort=age,length (sort ascending by age then length)
             // For descending order, add a - before the field e.g. localhost:5000/api/user?sort=-age,-length
             const sortBy = this.queryParams.sort.split(',').join(' ');
+
             this.query = this.query.sort(sortBy);
         } else {
             // If there's no sort param, sort by created_at date in descending order

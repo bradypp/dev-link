@@ -290,11 +290,11 @@ const profileSchema = new Schema({
             ref: 'User',
         },
     ],
-    number_of_stars: Number,
-    number_of_watching: Number,
+    total_stars: Number,
+    total_watchers: Number,
     created_at: {
         type: Date,
-        default: Date.now,
+        default: Date.now(),
     },
 });
 

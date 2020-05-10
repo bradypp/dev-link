@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ProfilesItem, ProfilesForm } from 'components';
-import { Main, Spinner, InputDebounced } from 'shared/components';
+import { Main, Spinner } from 'shared/components';
 import { useIsFirstRender } from 'shared/hooks';
 import { selectAllProfiles, selectIsProfilesLoading } from 'redux/profiles';
 import * as S from './ProfilesStyles';

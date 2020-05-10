@@ -11,7 +11,6 @@ exports.getAll = (Model, errorMessage = 'No document found with that ID') =>
 
         // const doc = await handler.query.explain();
         const doc = await handler.query;
-
         if (!doc) {
             return next(new AppError(errorMessage, 404));
         }

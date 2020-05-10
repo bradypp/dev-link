@@ -428,7 +428,7 @@ exports.toggleStar = catchAsync(async (req, res, next) => {
         user.starred.push(req.params.id);
     }
 
-    profile.number_of_stars = profile.stars.length || 0;
+    profile.total_stars = profile.stars ? profile.stars.length : 0;
 
     await profile.save();
     await user.save();
@@ -476,7 +476,7 @@ exports.toggleWatch = catchAsync(async (req, res, next) => {
         user.watching.push(req.params.id);
     }
 
-    profile.number_of_watching = profile.watching.length || 0;
+    profile.total_watchers = profile.watchers ? profile.watchers.length : 0;
 
     await profile.save();
     await user.save();
