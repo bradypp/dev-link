@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components/macro';
-import { IoIosArrowDown } from 'react-icons/io';
-import { RiDeleteBack2Line } from 'react-icons/ri';
+import { IoIosArrowDown, IoIosClose } from 'react-icons/io';
 import { mixins } from 'shared/styles';
 
 export const SelectContainer = styled.div`
@@ -110,11 +109,11 @@ export const ArrowDownIcon = styled(IoIosArrowDown)`
     margin-left: auto;
 `;
 
-export const ClearIcon = styled(RiDeleteBack2Line)`
+export const ClearIcon = styled(IoIosClose)`
     position: absolute;
     top: 0.8rem;
     right: 0.8rem;
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     color: ${({ theme }) => theme.colors.textPrimary2};
     ${mixins.clickable}
 `;

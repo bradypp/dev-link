@@ -27,7 +27,7 @@ const LinkWrapper = forwardRef(({ children, to, className, disabled, isWorking, 
         }
     };
     return (
-        <Link className={className} to={to} onClick={handleClick} ref={ref}>
+        <Link className={className} to={to} onClick={handleClick} disabled={disabled} ref={ref}>
             {children}
         </Link>
     );

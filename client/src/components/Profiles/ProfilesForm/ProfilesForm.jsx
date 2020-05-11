@@ -72,7 +72,7 @@ const ProfilesForm = ({
     const [companyValue, setCompanyValue] = useState(queryStringObj.cm || '');
     const [currentPositionValue, setCurrentPositionValue] = useState(queryStringObj.cp || '');
 
-    useEffect(() => {
+    const getInitialProfiles = () =>
         getProfiles({
             page: pageValue,
             [`name[regex]`]: nameValue,
@@ -85,6 +85,9 @@ const ProfilesForm = ({
             sort: queryStringObj.s || '-total_stars',
             limit: 20,
         });
+
+    useEffect(() => {
+        getInitialProfiles();
         getSearchConstants();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -100,6 +103,19 @@ const ProfilesForm = ({
                     sort: queryStringObj.s || '-total_stars',
                 }}
                 onSubmit={values => {
+                    history.push(
+                        `${pathname}?${objectToQueryString({
+                            pg: pageValue,
+                            nm: nameValue,
+                            cm: companyValue,
+                            cp: currentPositionValue,
+                            av: values.availability,
+                            sk: values.skills,
+                            rt: values.role_types,
+                            dr: values.desired_roles,
+                            s: values.sort,
+                        })}`,
+                    );
                     const queryObj = {
                         page: pageValue,
                         [`name[regex]`]: nameValue,
@@ -117,19 +133,11 @@ const ProfilesForm = ({
                     } else {
                         getMoreProfiles(queryObj);
                     }
-                    history.push(
-                        `${pathname}?${objectToQueryString({
-                            pg: pageValue,
-                            nm: nameValue,
-                            cm: companyValue,
-                            cp: currentPositionValue,
-                            av: values.availability,
-                            sk: values.skills,
-                            rt: values.role_types,
-                            dr: values.desired_roles,
-                            s: values.sort,
-                        })}`,
-                    );
+                }}
+                onReset={() => {
+                    setPageValue(1);
+                    history.push(pathname);
+                    getInitialProfiles();
                 }}>
                 {form => (
                     <Form.Element>
@@ -224,12 +232,13 @@ const ProfilesForm = ({
                                 }
                             />
                         </Form.Flex>
+                        <S.SortByLabel>Sort By</S.SortByLabel>
                         <Form.Flex>
-                            <Form.Field.Select
+                            <S.SortBy
                                 removeSelected={false}
-                                label="Sort by"
                                 submitOnChange
                                 name="sort"
+                                withInput={false}
                                 customOnChange={() => setPageValue(1)}
                                 options={[
                                     { label: 'Name', value: '-name' },
@@ -238,6 +247,10 @@ const ProfilesForm = ({
                                     { label: 'Date joined', value: '-created_at' },
                                 ]}
                             />
+                            <S.SortByDivider />
+                            <Button type="reset" onClick={() => form.handleReset()}>
+                                Clear
+                            </Button>
                         </Form.Flex>
                         {children}
                         {!isFirstRender && !isProfilesLoading && (

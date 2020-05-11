@@ -31,7 +31,6 @@ const propTypes = {
     withInput: PropTypes.bool,
     withOptions: PropTypes.bool,
     isMulti: PropTypes.bool,
-    withClearValue: PropTypes.bool,
     renderValue: PropTypes.func,
     renderOption: PropTypes.func,
     removeSelected: PropTypes.bool,
@@ -52,7 +51,6 @@ const defaultProps = {
     withInput: true,
     withOptions: true,
     isMulti: false,
-    withClearValue: true,
     renderValue: undefined,
     renderOption: undefined,
     removeSelected: true,
@@ -74,7 +72,6 @@ const Select = ({
     withInput,
     withOptions,
     isMulti,
-    withClearValue,
     inputPlaceholder,
     renderValue: propsRenderValue,
     renderOption: propsRenderOption,
@@ -209,7 +206,6 @@ const Select = ({
                 <Dropdown
                     dropdownWidth={dropdownWidth}
                     value={value}
-                    isValueEmpty={isValueEmpty}
                     searchValue={searchValue}
                     setSearchValue={setSearchValue}
                     $selectRef={$selectRef}
@@ -224,7 +220,6 @@ const Select = ({
                     withOptions={withOptions}
                     isMulti={isMulti}
                     inputId={inputId}
-                    withClearValue={withClearValue}
                     propsRenderOption={propsRenderOption}
                     removeSelected={removeSelected}
                 />

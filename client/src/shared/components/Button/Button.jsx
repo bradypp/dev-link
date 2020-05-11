@@ -21,7 +21,7 @@ const propTypes = {
         'text-lighten',
     ]),
     icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-    iconLocation: PropTypes.oneOf(['left', 'right']),
+    iconLocation: PropTypes.string,
     iconSize: PropTypes.string,
     disabled: PropTypes.bool,
     isWorking: PropTypes.bool,

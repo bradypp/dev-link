@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { v4 as uuidv4 } from 'uuid';
 import { ProfilesItem, ProfilesForm } from 'components';
 import { Main, Spinner } from 'shared/components';
 import { useIsFirstRender } from 'shared/hooks';
@@ -32,7 +33,7 @@ const Profiles = ({ profiles, profilesIsLoading }) => {
                     ) : (
                         <>
                             {profiles.map(profile => (
-                                <ProfilesItem profile={profile} />
+                                <ProfilesItem profile={profile} key={uuidv4()} />
                             ))}
                         </>
                     )}

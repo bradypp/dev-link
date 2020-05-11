@@ -22,7 +22,7 @@ const propTypes = {
     color: PropTypes.string,
     icon: PropTypes.oneOfType([PropTypes.func, PropTypes.node]),
     iconSize: PropTypes.string,
-    iconLocation: PropTypes.oneOf[('left', 'right')],
+    iconLocation: PropTypes.string,
     isWorking: PropTypes.bool,
     isActive: PropTypes.bool,
     disabled: PropTypes.bool,
@@ -46,23 +46,35 @@ const defaultProps = {
 };
 
 const CustomLink = forwardRef(
-    ({ children, icon, iconSize, iconLocation, isWorking, disabled, color, ...props }, ref) => (
-        <StyledLink
-            disabled={disabled || isWorking}
-            ref={ref}
-            color={color}
-            iconSize={iconSize}
-            iconLocation={iconLocation}
-            {...props}>
-            {isWorking && <ButtonSpinner />}
-            {icon && typeof icon === 'string' ? <Icon type={icon} /> : icon}
-            {!isWorking && children && (
-                <ButtonText withPadding={isWorking || icon} iconLocation={iconLocation}>
-                    {children}
-                </ButtonText>
-            )}
-        </StyledLink>
-    ),
+    ({ children, icon, iconSize, iconLocation, isWorking, disabled, color, ...props }, ref) => {
+        const renderedIcon = (
+            <>
+                {!isWorking && icon && typeof icon === 'string' ? (
+                    <Icon size={iconSize} type={icon} />
+                ) : (
+                    icon
+                )}
+            </>
+        );
+        return (
+            <StyledLink
+                disabled={disabled || isWorking}
+                ref={ref}
+                color={color}
+                iconSize={iconSize}
+                iconLocation={iconLocation}
+                {...props}>
+                {isWorking && <ButtonSpinner />}
+                {iconLocation === 'left' && renderedIcon}
+                {children && (
+                    <ButtonText iconLocation={iconLocation} withPadding={icon || isWorking}>
+                        {children}
+                    </ButtonText>
+                )}
+                {iconLocation === 'right' && renderedIcon}
+            </StyledLink>
+        );
+    },
 );
 
 CustomLink.propTypes = propTypes;

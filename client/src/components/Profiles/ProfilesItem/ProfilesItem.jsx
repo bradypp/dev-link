@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
+import { useHistory } from 'react-router-dom';
 import { CustomLink } from 'shared/components';
 import * as S from './ProfilesItemStyles';
 
@@ -22,10 +23,15 @@ const ProfilesItem = ({ profile }) => {
         skills,
         stars,
         watchers,
-        username,
+        user,
     } = profile;
+    const history = useHistory();
+
     return (
-        <S.ProfilesItemContainer>
+        <S.ProfilesItemContainer
+            onClick={() => {
+                history.push(`/profile/${user.username}`);
+            }}>
             <S.AvatarContainer>
                 <S.Avatar
                     className="avatar"
@@ -55,12 +61,18 @@ const ProfilesItem = ({ profile }) => {
                 ) : (
                     <>{country && <p>{country}</p>}</>
                 )}
+            </div>
+            <div>
+                {/* TODO: customize skills tags */}
                 {skills.map(skill => (
                     <CustomLink to="#" key={uuidv4()}>
                         {skill}
                     </CustomLink>
                 ))}
             </div>
+            {/* TODO: add toggle buttons/counters */}
+            <div>stars</div>
+            <div>watchers</div>
         </S.ProfilesItemContainer>
     );
 };

@@ -7,7 +7,6 @@ import * as S from './SelectStyles';
 const propTypes = {
     dropdownWidth: PropTypes.string,
     value: PropTypes.any,
-    isValueEmpty: PropTypes.bool.isRequired,
     searchValue: PropTypes.string.isRequired,
     setSearchValue: PropTypes.func.isRequired,
     deactivateDropdown: PropTypes.func.isRequired,
@@ -21,7 +20,6 @@ const propTypes = {
     withInput: PropTypes.bool.isRequired,
     withOptions: PropTypes.bool.isRequired,
     isMulti: PropTypes.bool.isRequired,
-    withClearValue: PropTypes.bool.isRequired,
     propsRenderOption: PropTypes.func,
     removeSelected: PropTypes.bool.isRequired,
 };
@@ -36,7 +34,6 @@ const defaultProps = {
 const SelectDropdown = ({
     dropdownWidth,
     value,
-    isValueEmpty,
     searchValue,
     setSearchValue,
     deactivateDropdown,
@@ -48,7 +45,6 @@ const SelectDropdown = ({
     withInput,
     inputId,
     isMulti,
-    withClearValue,
     propsRenderOption,
     setOptions,
     withOptions,
@@ -206,7 +202,7 @@ const SelectDropdown = ({
                     onChange={event => setSearchValue(event.target.value)}
                 />
             )}
-            {!isValueEmpty && withClearValue && <S.ClearIcon onClick={clearOptionValues} />}
+            {searchValue && withInput && <S.ClearIcon onClick={clearOptionValues} />}
             <S.Options ref={$optionsRef}>
                 {withOptions &&
                     renderedOptions.map(option => (

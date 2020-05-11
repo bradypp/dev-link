@@ -2,33 +2,43 @@ import styled, { css } from 'styled-components/macro';
 import Image from 'react-image';
 import { mixins } from 'shared/styles';
 
-export const ProfilesItemContainer = styled.div`
-    ${mixins.card}
-    ${mixins.flexCenterLeft}
-    ${mixins.clickable}
-    margin: 0.5rem 0;
+export const RecommendedProfilesContainer = styled.section`
+    h2 {
+        font-size: 2rem;
+        font-weight: 400;
+        margin-bottom: 0.8rem;
+    }
+`;
 
-    h2,
+export const RecommendedProfileContainer = styled.div`
+    ${mixins.card}
+    ${mixins.clickable}
+display:flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 0 0 0.5rem 0;
+    padding: 1.2rem;
+
     h3,
     p {
         margin-bottom: 0.4rem;
     }
 
-    h2 {
-        font-size: 1.8rem;
+    h3 {
+        font-size: 1.6rem;
         font-weight: 500;
     }
 
-    h3 {
-        font-weight: 400;
-        font-size: 1.6rem;
+    p {
+        font-size: 1.4rem;
     }
 `;
 
 const avatarContainer = css`
-    height: 12rem;
-    width: 12rem;
+    height: 5rem;
+    width: 5rem;
     border-radius: 50%;
+    margin-right: 1rem;
 `;
 
 export const AvatarContainer = styled.div`

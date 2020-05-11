@@ -6,10 +6,13 @@ import {
     SEARCH_CONSTANTS_LOADED,
     MORE_PROFILES_LOADING,
     MORE_PROFILES_LOADED,
+    RECOMMENDED_PROFILES_LOADED,
+    CLEAR_RECOMMENDED_PROFILES,
 } from 'redux/actionTypes';
 
 const initialState = {
     profiles: [],
+    recommendedProfiles: [],
     allSkills: [],
     allDesiredRoles: [],
     isProfilesLoading: false,
@@ -36,6 +39,12 @@ export default (state = initialState, { type, payload }) => {
                 isProfilesLoading: false,
                 profiles: payload,
             };
+        case RECOMMENDED_PROFILES_LOADED:
+            return {
+                ...state,
+                isProfilesLoading: false,
+                recommendedProfiles: payload,
+            };
         case MORE_PROFILES_LOADED:
             return {
                 ...state,
@@ -55,7 +64,12 @@ export default (state = initialState, { type, payload }) => {
         case CLEAR_PROFILES:
             return {
                 ...state,
-                ...initialState,
+                profiles: [],
+            };
+        case CLEAR_RECOMMENDED_PROFILES:
+            return {
+                ...state,
+                recommendedProfiles: [],
             };
         case SEARCH_CONSTANTS_LOADED:
             return {

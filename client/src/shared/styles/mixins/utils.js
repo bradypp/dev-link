@@ -1,6 +1,13 @@
 import { css } from 'styled-components/macro';
 
 const utils = {
+    clearfix: css`
+        &:after {
+            content: '';
+            display: table;
+            clear: both;
+        }
+    `,
     engulf: css`
         position: absolute;
         top: 0;

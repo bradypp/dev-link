@@ -33,14 +33,6 @@ const Header = ({ isAuthenticated, signOut, user }) => {
         <>
             <CustomLink
                 iconSize="1.8rem"
-                icon={<BsPeople />}
-                variant="text-lighten"
-                color="white3"
-                to="/developers">
-                Developers
-            </CustomLink>
-            <CustomLink
-                iconSize="1.8rem"
                 icon={<BsPerson />}
                 variant="text-lighten"
                 color="white3"
@@ -112,7 +104,17 @@ const Header = ({ isAuthenticated, signOut, user }) => {
                 <S.Logo variant="no-styles" to="/" icon={<RiCodeBoxLine />}>
                     <strong>Dev</strong>Link
                 </S.Logo>
-                <S.LinksContainer>{isAuthenticated ? signedInMenu : guestMenu}</S.LinksContainer>
+                <S.LinksContainer>
+                    <CustomLink
+                        iconSize="1.8rem"
+                        icon={<BsPeople />}
+                        variant="text-lighten"
+                        color="white3"
+                        to="/developers">
+                        Developers
+                    </CustomLink>
+                    {isAuthenticated ? signedInMenu : guestMenu}
+                </S.LinksContainer>
             </S.NavContainer>
         </S.HeaderContainer>
     );

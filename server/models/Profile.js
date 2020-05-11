@@ -296,7 +296,7 @@ profileSchema.index({ skills: 1 });
 profileSchema.pre(/^find/, function(next) {
     this.populate({
         path: 'user',
-        select: 'name email',
+        select: 'name email username',
     });
     next();
 });

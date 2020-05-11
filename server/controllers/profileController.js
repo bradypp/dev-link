@@ -85,9 +85,9 @@ exports.prepareProfileImages = catchAsync(async (req, res, next) => {
 
         avatar.thumbnail = `${filename}-thumbnail.jpeg`;
         await sharp(req.files.avatar[0].buffer)
-            .resize(50, 50)
+            .resize(60, 60)
             .toFormat('jpeg')
-            .jpeg({ quality: 80 })
+            .jpeg({ quality: 90 })
             .toFile(`public/img/profile/avatar/${avatar.thumbnail}`);
 
         req.body.avatar = avatar;
@@ -157,7 +157,7 @@ exports.prepareProfileImages = catchAsync(async (req, res, next) => {
                 await sharp(file.buffer)
                     .resize(200, 200)
                     .toFormat('jpeg')
-                    .jpeg({ quality: 80 })
+                    .jpeg({ quality: 90 })
                     .toFile(`public/img/profile/portfolio/${image.thumbnail}`);
 
                 portfolio_images.push(image);

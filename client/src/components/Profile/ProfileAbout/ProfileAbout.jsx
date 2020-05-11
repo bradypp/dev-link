@@ -33,16 +33,12 @@ const ProfileAbout = ({ aboutMe, isCurrentUser }) => {
                     heading="About Me"
                     buttons={() => isCurrentUser && <ProfileAboutForm formData={aboutMe} />}>
                     {!isEmpty(aboutMe) && (
-                        <>
-                            {bio && (
-                                <ProfileCard.Item>
-                                    <p>{bio}</p>
-                                </ProfileCard.Item>
-                            )}
+                        <ProfileCard.Item>
+                            {bio && <p>{bio}</p>}
                             {(desired_roles.length > 0 ||
                                 role_types.length > 0 ||
                                 availability) && (
-                                <ProfileCard.Item>
+                                <>
                                     {desired_roles.length > 0 && (
                                         <p>
                                             {desired_roles.length === 1
@@ -70,9 +66,9 @@ const ProfileAbout = ({ aboutMe, isCurrentUser }) => {
                                         </p>
                                     )}
                                     {availability && <p>Available: {availability}</p>}
-                                </ProfileCard.Item>
+                                </>
                             )}
-                        </>
+                        </ProfileCard.Item>
                     )}
                 </ProfileCard>
             )}

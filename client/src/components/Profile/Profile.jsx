@@ -20,6 +20,7 @@ import {
     ProfileEducation,
     ProfileCertifications,
     ProfileExperience,
+    RecommendedProfiles,
 } from 'components';
 import * as S from './ProfileStyles';
 
@@ -73,14 +74,14 @@ const Profile = ({
 
     return (
         <Main>
-            <S.ProfileContainer>
-                {isFirstRender || profileIsLoading ? (
-                    <Spinner />
-                ) : (
-                    <>
-                        {/* TODO: add not found page */}
-                        {isProfileEmpty ? (
-                            <div>profile not found</div>
+            {/* TODO: add not found page */}
+            {isProfileEmpty && !isFirstRender && !profileIsLoading ? (
+                <div>profile not found</div>
+            ) : (
+                <>
+                    <S.ProfileContainer>
+                        {isFirstRender || profileIsLoading ? (
+                            <Spinner />
                         ) : (
                             <>
                                 <ProfileTop />
@@ -91,9 +92,12 @@ const Profile = ({
                                 <ProfileCertifications />
                             </>
                         )}
-                    </>
-                )}
-            </S.ProfileContainer>
+                    </S.ProfileContainer>
+                    <S.SidebarContainer>
+                        {!isFirstRender && !profileIsLoading && <RecommendedProfiles />}
+                    </S.SidebarContainer>
+                </>
+            )}
         </Main>
     );
 };

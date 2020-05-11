@@ -56,7 +56,7 @@ const ProfileAboutForm = ({ updateProfile, formData }) => {
                                 <Form.Flex>
                                     <Form.Field.Select
                                         label="Desired roles"
-                                        tip="Add any roles that you're interested in"
+                                        tip="What roles are you're interested in?"
                                         isMulti
                                         withOptions={false}
                                         valuePlaceholder="Add role"

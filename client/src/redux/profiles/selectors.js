@@ -4,6 +4,11 @@ export const selectProfiles = state => state.profiles;
 
 export const selectAllProfiles = createSelector([selectProfiles], profiles => profiles.profiles);
 
+export const selectRecommendedProfiles = createSelector(
+    [selectProfiles],
+    profiles => profiles.recommendedProfiles,
+);
+
 export const selectNumberOfProfiles = createSelector(
     [selectAllProfiles],
     profiles => profiles.length,
