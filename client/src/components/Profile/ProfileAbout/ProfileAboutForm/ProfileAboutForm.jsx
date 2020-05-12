@@ -43,7 +43,7 @@ const ProfileAboutForm = ({ updateProfile, formData }) => {
                         {({ values }) => (
                             <Form.Element>
                                 <Form.Field.TextArea
-                                    label="Bio *"
+                                    label="Bio"
                                     tip="Write a short paragraph about yourself"
                                     name="bio"
                                 />

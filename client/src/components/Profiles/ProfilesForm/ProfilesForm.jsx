@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { useLocation, useHistory } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { uniqueId } from 'lodash';
-import { Form, InputDebounced, Button, Flex } from 'shared/components';
+import { Form, InputDebounced, Button } from 'shared/components';
 import {
     getProfiles,
     getSearchConstants,
@@ -209,19 +209,6 @@ const ProfilesForm = ({
                                 />
                             </S.CheckboxContainer>
                             <Form.Field.Select
-                                label="Role types"
-                                isMulti
-                                valuePlaceholder="Add role type"
-                                name="role_types"
-                                variant="empty"
-                                submitOnChange
-                                customOnChange={() => setPageValue(1)}
-                                options={formConstants.roleTypes.map(type => ({
-                                    label: type,
-                                    value: type,
-                                }))}
-                            />
-                            <Form.Field.Select
                                 label="Availability"
                                 isMulti
                                 valuePlaceholder="Add availability"
@@ -230,6 +217,19 @@ const ProfilesForm = ({
                                 submitOnChange
                                 customOnChange={() => setPageValue(1)}
                                 options={formConstants.availability.map(type => ({
+                                    label: type,
+                                    value: type,
+                                }))}
+                            />
+                            <Form.Field.Select
+                                label="Role types"
+                                isMulti
+                                valuePlaceholder="Add role type"
+                                name="role_types"
+                                variant="empty"
+                                submitOnChange
+                                customOnChange={() => setPageValue(1)}
+                                options={formConstants.roleTypes.map(type => ({
                                     label: type,
                                     value: type,
                                 }))}
@@ -257,7 +257,7 @@ const ProfilesForm = ({
                                 withInput={false}
                                 customOnChange={() => setPageValue(1)}
                                 renderValuePlaceholder
-                                valuePlaceholder="Sort By:"
+                                valuePlaceholder="Sort By"
                                 options={[
                                     { label: 'Name', value: '-name' },
                                     { label: 'Total stars', value: '-total_stars' },

@@ -105,6 +105,12 @@ userSchema.pre('save', function(next) {
     next();
 });
 
+// Only find this user if active === true
+userSchema.pre(/^find/, function(next) {
+    this.find({ active: { $ne: false } });
+    next();
+});
+
 userSchema.statics.encryptPasswordResetToken = function(token) {
     return crypto
         .createHash('sha256')

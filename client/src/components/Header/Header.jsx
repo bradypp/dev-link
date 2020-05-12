@@ -26,32 +26,30 @@ const mapStateToProps = createStructuredSelector({
     isAuthenticated: selectIsAuthenticated,
 });
 
-// TODO: edit content of header in different states when finished (for now include what you need to build the app & test)
-// TODO: nav styling
 const Header = ({ isAuthenticated, signOut, user }) => {
     const signedInMenu = (
         <>
             <CustomLink
                 iconSize="1.8rem"
                 icon={<BsPerson />}
-                variant="text-lighten"
-                color="white3"
+                variant="text-color"
+                color="textPrimary1"
                 to={`/profile/${user.username}`}>
                 Profile
             </CustomLink>
             <CustomLink
                 iconSize="1.8rem"
                 icon={<RiDashboardLine />}
-                variant="text-lighten"
-                color="white3"
+                variant="text-color"
+                color="textPrimary1"
                 to="/dashboard">
                 Dashboard
             </CustomLink>
             <Button
                 iconSize="1.8rem"
                 icon={<RiLogoutCircleRLine />}
-                variant="text-lighten"
-                color="white3"
+                variant="text-color"
+                color="textPrimary1"
                 to="/"
                 onClick={signOut}>
                 Sign Out
@@ -59,9 +57,6 @@ const Header = ({ isAuthenticated, signOut, user }) => {
         </>
     );
 
-    // TODO: redo tooltip dropdown menus (make new component?), they should stay in place below the header
-    // TODO: change tooltip offsets depending on screen size? (use react media queries/useBreakpoint hook) or render different components on mobile (go to signin/signup pages on mobile)
-    // TODO: switch back to auth pages? Can make the styling better (like linked in sign in page)
     const guestMenu = (
         <>
             <Tooltip
@@ -71,8 +66,8 @@ const Header = ({ isAuthenticated, signOut, user }) => {
                     <Button
                         iconSize="1.8rem"
                         icon={<RiOpenArmLine />}
-                        variant="text-lighten"
-                        color="white3"
+                        variant="text-color"
+                        color="textPrimary1"
                         {...props}>
                         Join Now
                     </Button>
@@ -86,8 +81,8 @@ const Header = ({ isAuthenticated, signOut, user }) => {
                     <Button
                         iconSize="1.8rem"
                         icon={<RiLoginCircleLine />}
-                        variant="text-lighten"
-                        color="white3"
+                        variant="text-color"
+                        color="textPrimary1"
                         {...props}>
                         Sign In
                     </Button>
@@ -108,8 +103,8 @@ const Header = ({ isAuthenticated, signOut, user }) => {
                     <CustomLink
                         iconSize="1.8rem"
                         icon={<BsPeople />}
-                        variant="text-lighten"
-                        color="white3"
+                        variant="text-color"
+                        color="textPrimary1"
                         to="/developers">
                         Developers
                     </CustomLink>

@@ -56,6 +56,11 @@ const ProfilePortfolioForm = ({
         <EditModal
             {...otherProps}
             id={_id}
+            onOpen={() => setCleanupPreviews(false)}
+            onClose={() => {
+                setImageFiles([]);
+                setCleanupPreviews(true);
+            }}
             onDelete={() => deletePortfolioItem(_id)}
             renderContent={({ close }) => (
                 <>

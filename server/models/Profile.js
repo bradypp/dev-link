@@ -289,6 +289,10 @@ const profileSchema = new Schema({
     ],
     total_stars: Number,
     total_watchers: Number,
+    active: {
+        type: Boolean,
+        default: true,
+    },
     created_at: {
         type: Date,
         default: Date.now(),
@@ -305,6 +309,12 @@ profileSchema.pre(/^find/, function(next) {
         path: 'user',
         select: 'name email username',
     });
+    next();
+});
+
+// Only find this profile if active === true
+profileSchema.pre(/^find/, function(next) {
+    this.find({ active: { $ne: false } });
     next();
 });
 

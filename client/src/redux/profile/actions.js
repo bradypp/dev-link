@@ -55,7 +55,7 @@ export const createProfile = (data = {}) => async dispatch => {
                 'Content-Type': 'application/json',
             },
         };
-        console.log(data);
+
         const res = await api.post('/profile/me', data, config);
 
         dispatch(profileLoaded(res.data.data.profile));

@@ -21,6 +21,7 @@ const propTypes = {
     withDeleteButton: PropTypes.bool,
     backgroundColor: PropTypes.string,
     isOpen: PropTypes.bool,
+    onOpen: PropTypes.func,
     onClose: PropTypes.func,
     renderLink: PropTypes.func,
     renderContent: PropTypes.func.isRequired,
@@ -37,8 +38,9 @@ const defaultProps = {
     withDeleteButton: false,
     backgroundColor: 'background1',
     isOpen: undefined,
-    onClose: () => {},
-    renderLink: () => {},
+    onOpen: undefined,
+    onClose: undefined,
+    renderLink: undefined,
     onDelete: undefined,
     startOpen: false,
 };
@@ -51,7 +53,8 @@ const Modal = ({
     withCloseButton,
     backgroundColor,
     isOpen: propsIsOpen,
-    onClose: tellParentToClose,
+    onOpen,
+    onClose,
     renderLink,
     renderContent,
     onDelete,
@@ -68,10 +71,9 @@ const Modal = ({
     const closeModal = useCallback(() => {
         if (!isControlled) {
             setStateOpen(false);
-        } else {
-            tellParentToClose();
         }
-    }, [isControlled, tellParentToClose]);
+        if (onClose) onClose();
+    }, [isControlled, onClose]);
 
     useOnOutsideClick($modalRef, isOpen, closeModal, $clickableOverlayRef);
     useOnEscapeKeyDown(isOpen, closeModal);

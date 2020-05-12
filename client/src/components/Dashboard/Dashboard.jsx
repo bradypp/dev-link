@@ -8,7 +8,15 @@ const propTypes = {};
 const mapStateToProps = createStructuredSelector({});
 
 const Dashboard = () => {
-    return <div>dashboard</div>;
+    return <div>
+    {/* 
+        Update user details
+        Change password
+        Delete profile
+        Deactivate account
+        Delete account
+     */}
+    </div>;
 };
 
 Dashboard.propTypes = propTypes;

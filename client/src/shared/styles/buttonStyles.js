@@ -21,6 +21,11 @@ const textLighten = css`
     ${({ theme, color }) => mixins.lightenEffect(null, theme.colors[color], null, 0.15)}
 `;
 
+const textColor = css`
+    ${({ theme }) => mixins.hoverEffect(null, theme.colors.primaryDark)}
+    ${({ theme }) => mixins.activeEffect(null, theme.colors.primaryDark)}
+`;
+
 const borderedFill = css`
     ${({ theme, borderColor }) =>
         css`
@@ -71,6 +76,8 @@ const buttonStyles = css`
                 return textDarken;
             case 'text-lighten':
                 return textLighten;
+            case 'text-color':
+                return textColor;
             case 'bordered-fill':
                 return borderedFill;
             case 'bordered-inset':
