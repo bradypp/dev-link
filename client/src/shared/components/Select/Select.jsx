@@ -34,6 +34,8 @@ const propTypes = {
     renderValue: PropTypes.func,
     renderOption: PropTypes.func,
     removeSelected: PropTypes.bool,
+    id: PropTypes.string,
+    renderValuePlaceholder: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -54,6 +56,8 @@ const defaultProps = {
     renderValue: undefined,
     renderOption: undefined,
     removeSelected: true,
+    id: undefined,
+    renderValuePlaceholder: undefined,
 };
 
 const Select = ({
@@ -76,6 +80,8 @@ const Select = ({
     renderValue: propsRenderValue,
     renderOption: propsRenderOption,
     removeSelected,
+    id: propsId,
+    renderValuePlaceholder,
 }) => {
     const [stateValue, setStateValue] = useState(defaultValue || (isMulti ? [] : null));
     const [options, setOptions] = useState(propsOptions);
@@ -151,14 +157,16 @@ const Select = ({
     const getOptionLabel = optionValue => (getOption(optionValue) || { label: '' }).label;
 
     const isValueEmpty = isMulti ? !value.length : !getOption(value);
-    const inputId = uniqueId('select-input-');
+    const inputId = propsId || uniqueId('select-input-');
 
     const valuePlaceholderElement = isMulti ? (
         <S.AddMoreContainer variant={variant}>
             <AddMore htmlFor={inputId} placeholder={valuePlaceholder} />
         </S.AddMoreContainer>
     ) : (
-        <S.Placeholder>{valuePlaceholder}</S.Placeholder>
+        <S.Placeholder renderValuePlaceholder={renderValuePlaceholder}>
+            {valuePlaceholder}
+        </S.Placeholder>
     );
 
     return (
@@ -173,7 +181,7 @@ const Select = ({
                 variant={variant}
                 data-testid={name ? `select:${name}` : 'select'}
                 onClick={activateDropdown}>
-                {isValueEmpty && valuePlaceholderElement}
+                {(isValueEmpty || renderValuePlaceholder) && valuePlaceholderElement}
                 {!isValueEmpty && !isMulti && propsRenderValue
                     ? propsRenderValue({ value })
                     : getOptionLabel(value)}

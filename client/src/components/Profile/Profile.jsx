@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { Main, Spinner } from 'shared/components';
 import { useIsFirstRender } from 'shared/hooks';
@@ -9,10 +9,10 @@ import {
     getProfileByUsername,
     selectIsProfileLoading,
     setIsCurrentUser,
-    selectProfileUserId,
     selectIsProfileEmpty,
+    selectIsCurrentUser,
 } from 'redux/profile';
-import { selectUserId } from 'redux/auth';
+import { selectUserUsername } from 'redux/auth';
 import {
     ProfileTop,
     ProfileAbout,
@@ -22,26 +22,25 @@ import {
     ProfileExperience,
     RecommendedProfiles,
 } from 'components';
+import ProfileTopForm from './ProfileTop/ProfileTopForm/ProfileTopForm';
 import * as S from './ProfileStyles';
 
 const propTypes = {
     profileIsLoading: PropTypes.bool.isRequired,
     getProfileByUsername: PropTypes.func.isRequired,
     setIsCurrentUser: PropTypes.func.isRequired,
-    profileUserId: PropTypes.string.isRequired,
     isProfileEmpty: PropTypes.bool.isRequired,
-    currentUserId: PropTypes.string,
+    isCurrentUser: PropTypes.bool.isRequired,
+    currentUserUsername: PropTypes.string.isRequired,
 };
 
-const defaultProps = {
-    currentUserId: undefined,
-};
+const defaultProps = {};
 
 const mapStateToProps = createStructuredSelector({
     profileIsLoading: selectIsProfileLoading,
-    profileUserId: selectProfileUserId,
-    currentUserId: selectUserId,
     isProfileEmpty: selectIsProfileEmpty,
+    isCurrentUser: selectIsCurrentUser,
+    currentUserUsername: selectUserUsername,
 });
 
 const mapDispatchToProps = {
@@ -53,10 +52,11 @@ const Profile = ({
     getProfileByUsername,
     setIsCurrentUser,
     profileIsLoading,
-    currentUserId,
-    profileUserId,
     isProfileEmpty,
+    isCurrentUser,
+    currentUserUsername,
 }) => {
+    const history = useHistory();
     const isFirstRender = useIsFirstRender();
     const { username } = useParams();
 
@@ -65,18 +65,26 @@ const Profile = ({
     }, [getProfileByUsername, username]);
 
     useEffect(() => {
-        if (currentUserId === profileUserId) {
+        if (currentUserUsername === username) {
             setIsCurrentUser(true);
         } else {
             setIsCurrentUser(false);
         }
-    }, [profileUserId, currentUserId, setIsCurrentUser]);
+    }, [currentUserUsername, setIsCurrentUser, username]);
 
     return (
         <Main>
-            {/* TODO: add not found page */}
             {isProfileEmpty && !isFirstRender && !profileIsLoading ? (
-                <div>profile not found</div>
+                isCurrentUser ? (
+                    <ProfileTopForm
+                        isOpen
+                        renderLink={() => {}}
+                        onClose={() => history.push('/')}
+                        isEdit={false}
+                    />
+                ) : (
+                    <div>profile not found</div>
+                )
             ) : (
                 <>
                     <S.ProfileContainer>

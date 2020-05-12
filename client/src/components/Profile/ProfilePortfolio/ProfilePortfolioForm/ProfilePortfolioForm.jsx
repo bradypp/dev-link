@@ -52,7 +52,6 @@ const ProfilePortfolioForm = ({
         title: validators.required('Title is required'),
         description: validators.required('Description is required'),
     });
-
     return (
         <EditModal
             {...otherProps}
@@ -71,6 +70,7 @@ const ProfilePortfolioForm = ({
                         }}
                         validationSchema={portfolioValidation}
                         onSubmit={values => {
+                            setCleanupPreviews(true);
                             if (formData) {
                                 updatePortfolioItem({
                                     ...values,
@@ -85,7 +85,6 @@ const ProfilePortfolioForm = ({
                                     images: imagesFromApi,
                                 });
                             }
-                            setCleanupPreviews(true);
                             close();
                         }}>
                         {({ values }) => (

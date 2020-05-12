@@ -55,7 +55,7 @@ export const createProfile = (data = {}) => async dispatch => {
                 'Content-Type': 'application/json',
             },
         };
-
+        console.log(data);
         const res = await api.post('/profile/me', data, config);
 
         dispatch(profileLoaded(res.data.data.profile));
@@ -109,13 +109,28 @@ export const updateProfileImage = (image, name) => async dispatch => {
 
 export const addPortfolioItem = data => async dispatch => {
     try {
-        const config = {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        };
+        let res;
 
-        const res = await api.post('/profile/portfolio', data, config);
+        // Create item first without image files
+        const otherData = { ...data };
+        delete otherData.imageFiles;
+
+        if (!isEmpty(otherData)) {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            res = await api.post(`/profile/portfolio`, otherData, config);
+        }
+
+        const itemId = res.data.data.item_id;
+
+        // Images upload
+        if (data.imageFiles) {
+            const [formData, formConfig] = imagesFormData('portfolio_images', data.imageFiles);
+            res = await api.patch(`/profile/portfolio/${itemId}`, formData, formConfig);
+        }
 
         dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {

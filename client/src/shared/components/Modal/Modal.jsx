@@ -25,6 +25,7 @@ const propTypes = {
     renderLink: PropTypes.func,
     renderContent: PropTypes.func.isRequired,
     onDelete: PropTypes.func,
+    startOpen: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -39,6 +40,7 @@ const defaultProps = {
     onClose: () => {},
     renderLink: () => {},
     onDelete: undefined,
+    startOpen: false,
 };
 
 const Modal = ({
@@ -54,8 +56,9 @@ const Modal = ({
     renderContent,
     onDelete,
     withDeleteButton,
+    startOpen,
 }) => {
-    const [stateIsOpen, setStateOpen] = useState(false);
+    const [stateIsOpen, setStateOpen] = useState(startOpen || false);
     const isControlled = typeof propsIsOpen === 'boolean';
     const isOpen = isControlled ? propsIsOpen : stateIsOpen;
 

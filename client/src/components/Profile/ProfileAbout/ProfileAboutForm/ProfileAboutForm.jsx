@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Form } from 'shared/components';
 import { EditModal } from 'components';
-import { validators } from 'shared/utils';
 import { formConstants } from 'shared/constants';
-import * as Yup from 'yup';
 import { updateProfile } from 'redux/profile';
 
 const propTypes = {
@@ -20,12 +18,9 @@ const mapDispatchToProps = {
 const ProfileAboutForm = ({ updateProfile, formData }) => {
     const { bio, desired_roles, role_types, availability } = formData;
 
-    const aboutValidation = Yup.object().shape({
-        bio: validators.required('Bio is required'),
-    });
-
     return (
         <EditModal
+            withAdd={!bio && desired_roles.length === 0 && role_types.length === 0 && !availability}
             renderContent={({ close }) => (
                 <>
                     <h2>Edit About Me</h2>
@@ -36,7 +31,6 @@ const ProfileAboutForm = ({ updateProfile, formData }) => {
                             role_types,
                             availability,
                         }}
-                        validationSchema={aboutValidation}
                         onSubmit={values => {
                             updateProfile({
                                 bio: values.bio,

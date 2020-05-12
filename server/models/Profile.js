@@ -11,29 +11,29 @@ const profileSchema = new Schema({
     avatar: {
         medium: {
             type: String,
-            default: 'default-medium.jpg',
+            default: 'default-medium.jpeg',
         },
         small: {
             type: String,
-            default: 'default-small.jpg',
+            default: 'default-small.jpeg',
         },
         thumbnail: {
             type: String,
-            default: 'default-thumbnail.jpg',
+            default: 'default-thumbnail.jpeg',
         },
     },
     cover_image: {
         large: {
             type: String,
-            default: 'default-large.jpg',
+            default: 'default-large.jpeg',
         },
         medium: {
             type: String,
-            default: 'default-medium.jpg',
+            default: 'default-medium.jpeg',
         },
         small: {
             type: String,
-            default: 'default-small.jpg',
+            default: 'default-small.jpeg',
         },
     },
     name: {
@@ -87,7 +87,6 @@ const profileSchema = new Schema({
         {
             type: String,
             trim: true,
-            lowercase: true,
         },
     ],
     role_types: [
@@ -95,20 +94,28 @@ const profileSchema = new Schema({
             type: String,
             trim: true,
             enum: [
-                'full-time permanent',
-                'full-time temporary',
-                'part-time permanent',
-                'part-time temporary',
-                'open source',
-                'freelance',
-                'intern',
+                'Full-time permanent',
+                'Full-time temporary',
+                'Part-time permanent',
+                'Part-time temporary',
+                'Open source',
+                'Freelance',
+                'Intern',
             ],
         },
     ],
     availability: {
         type: String,
         trim: true,
-        enum: ['unavailable', '< 1 week', '1 - 2 weeks', '2 - 3 weeks', '3 - 4 weeks', '4 + weeks'],
+        enum: [
+            'Immediately',
+            'Less than 1 week',
+            '1 - 2 weeks',
+            '2 - 3 weeks',
+            '3 - 4 weeks',
+            'More than 4 weeks',
+            'Unavailable',
+        ],
     },
     portfolio: [
         {

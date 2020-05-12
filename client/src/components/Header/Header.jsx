@@ -70,21 +70,6 @@ const Header = ({ isAuthenticated, signOut, user }) => {
                 renderElement={props => (
                     <Button
                         iconSize="1.8rem"
-                        icon={<RiLoginCircleLine />}
-                        variant="text-lighten"
-                        color="white3"
-                        {...props}>
-                        Sign In
-                    </Button>
-                )}
-                renderContent={props => <SignIn {...props} />}
-            />
-            <Tooltip
-                width="40rem"
-                placement="bottomLeft"
-                renderElement={props => (
-                    <Button
-                        iconSize="1.8rem"
                         icon={<RiOpenArmLine />}
                         variant="text-lighten"
                         color="white3"
@@ -93,6 +78,21 @@ const Header = ({ isAuthenticated, signOut, user }) => {
                     </Button>
                 )}
                 renderContent={props => <SignUp {...props} />}
+            />
+            <Tooltip
+                width="40rem"
+                placement="bottomLeft"
+                renderElement={props => (
+                    <Button
+                        iconSize="1.8rem"
+                        icon={<RiLoginCircleLine />}
+                        variant="text-lighten"
+                        color="white3"
+                        {...props}>
+                        Sign In
+                    </Button>
+                )}
+                renderContent={props => <SignIn {...props} />}
             />
         </>
     );

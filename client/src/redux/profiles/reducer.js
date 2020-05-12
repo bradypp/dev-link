@@ -27,6 +27,7 @@ export default (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 isProfilesLoading: true,
+                isNoMoreProfiles: initialState.isNoMoreProfiles,
             };
         case MORE_PROFILES_LOADING:
             return {

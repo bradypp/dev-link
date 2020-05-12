@@ -34,7 +34,13 @@ export const ValueContainer = styled.div`
 `;
 
 export const Placeholder = styled.div`
-    color: ${({ theme }) => theme.colors.textPrimary4};
+    color: ${({ theme, renderValuePlaceholder }) =>
+        renderValuePlaceholder ? theme.colors.textPrimary1 : theme.colors.textPrimary4};
+    ${({ renderValuePlaceholder }) =>
+        renderValuePlaceholder &&
+        css`
+            margin-right: 0.8rem;
+        `};
 `;
 
 export const ValueMulti = styled.div`

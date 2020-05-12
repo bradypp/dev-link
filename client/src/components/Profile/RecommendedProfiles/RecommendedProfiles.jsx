@@ -30,6 +30,7 @@ const RecommendedProfiles = ({ recommendedProfiles, getRecommendedProfiles, skil
         getRecommendedProfiles({
             [`skills[in]`]: skills,
             sort: 'total_stars',
+            limit: 10,
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -51,7 +52,7 @@ const RecommendedProfiles = ({ recommendedProfiles, getRecommendedProfiles, skil
                                 className="avatar"
                                 src={[
                                     `http://localhost:5000/img/profile/avatar/${avatar.thumbnail}`,
-                                    `http://localhost:5000/img/profile/avatar/default-thumbnail.jpg`,
+                                    `http://localhost:3000/img/profile/avatar/default-thumbnail.jpeg`,
                                 ]}
                                 alt="Profile avatar"
                             />

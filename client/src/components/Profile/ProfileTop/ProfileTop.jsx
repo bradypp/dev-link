@@ -117,8 +117,8 @@ const ProfileTop = ({
                 )}
                 <Image
                     src={[
-                        `http://localhost:5000/img/profile/cover_image/${cover_image.medium}`,
-                        ` http://localhost:5000/img/profile/cover_image/default-medium.jpg`,
+                        `http://localhost:5000/img/profile/cover-image/${cover_image.medium}`,
+                        ` http://localhost:3000/img/profile/cover-image/default-medium.jpeg`,
                     ]}
                     alt="Profile cover"
                 />
@@ -135,7 +135,7 @@ const ProfileTop = ({
                             className="avatar"
                             src={[
                                 `http://localhost:5000/img/profile/avatar/${avatar.small}`,
-                                `http://localhost:5000/img/profile/avatar/default-small.jpg`,
+                                `http://localhost:3000/img/profile/avatar/default-small.jpeg`,
                             ]}
                             alt="Profile avatar"
                         />
@@ -183,7 +183,6 @@ const ProfileTop = ({
                         {/* TODO: add button margin-left */}
                         {isCurrentUser && (
                             <ProfileTopForm
-                                currentUser={currentUser}
                                 formData={{
                                     name,
                                     headline,

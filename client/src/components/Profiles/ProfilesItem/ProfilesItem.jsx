@@ -37,7 +37,7 @@ const ProfilesItem = ({ profile }) => {
                     className="avatar"
                     src={[
                         `http://localhost:5000/img/profile/avatar/${avatar.small}`,
-                        `http://localhost:5000/img/profile/avatar/default-small.jpg`,
+                        `http://localhost:3000/img/profile/avatar/default-small.jpeg`,
                     ]}
                     alt="Profile avatar"
                 />

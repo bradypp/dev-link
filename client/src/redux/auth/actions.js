@@ -38,7 +38,6 @@ export const signUp = ({ name, username, email, password, password2 }) => async 
 
         dispatch(signUpSuccess(res.data.data.token));
         dispatch(loadUser());
-        // TODO: redirect to profileTop form with name prefilled from loaded user
     } catch (err) {
         dispatch(apiErrorHandler(err));
         dispatch(authError(err));

@@ -8,12 +8,23 @@ export const ProfilesFormContainer = styled.div`
     margin-bottom: 0.5rem 0;
 `;
 
+export const CheckboxContainer = styled.div`
+    width: 100%;
+
+    & > *:first-child {
+        margin-bottom: 0.4rem;
+    }
+`;
+
 export const SortByLabel = styled(Form.FieldLabel)`
     margin: 0 !important;
 `;
 
 export const SortBy = styled(Form.Field.Select)`
-    width: 18rem;
+    width: 20rem;
+    * {
+        font-size: 1.3rem;
+    }
 `;
 
 export const SortByDivider = styled.div`

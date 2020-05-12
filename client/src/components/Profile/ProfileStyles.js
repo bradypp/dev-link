@@ -1,6 +1,9 @@
 import styled from 'styled-components/macro';
+import { mixins } from 'shared/styles';
 
 export const ProfileContainer = styled.div`
+    ${mixins.flexCenter};
+    flex-direction: column;
     grid-column: 1 / 12;
     min-height: 60vh;
     & > * {

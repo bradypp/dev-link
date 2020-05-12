@@ -1,20 +1,21 @@
 const roleTypes = [
-    'full-time permanent',
-    'full-time temporary',
-    'part-time permanent',
-    'part-time temporary',
-    'open source',
-    'freelance',
-    'intern',
+    'Full-time permanent',
+    'Full-time temporary',
+    'Part-time permanent',
+    'Part-time temporary',
+    'Open source',
+    'Freelance',
+    'Intern',
 ];
 
 const availability = [
-    'unavailable',
-    '< 1 week',
+    'Immediately',
+    'Less than 1 week',
     '1 - 2 weeks',
     '2 - 3 weeks',
     '3 - 4 weeks',
-    '4 + weeks',
+    'More than 4 weeks',
+    'Unavailable',
 ];
 
 export default {

@@ -13,6 +13,7 @@ const propTypes = {
     checked: PropTypes.bool,
     type: PropTypes.string,
     onChange: PropTypes.func,
+    id: PropTypes.string,
 };
 
 const defaultProps = {
@@ -23,28 +24,30 @@ const defaultProps = {
     checked: false,
     type: 'checkbox',
     onChange: () => {},
+    id: undefined,
 };
 
-const fieldId = uniqueId('form-field-');
-
-const Checkbox = forwardRef(({ className, checked, onChange, label, ...props }, ref) => {
-    return (
-        <CheckboxContainer className={className}>
-            <InputComponent
-                {...props}
-                id={fieldId}
-                onChange={event => onChange(!!event.target.value, event)}
-                ref={ref}
-            />
-            <StyledLabel htmlFor={fieldId}>
-                <StyledCheckbox checked={checked}>
-                    <FaCheck />
-                </StyledCheckbox>
-                {label && label}
-            </StyledLabel>
-        </CheckboxContainer>
-    );
-});
+const Checkbox = forwardRef(
+    ({ className, checked, onChange, label, id: propsId, ...props }, ref) => {
+        const fieldId = propsId || uniqueId('form-field-');
+        return (
+            <CheckboxContainer className={className}>
+                <InputComponent
+                    {...props}
+                    id={fieldId}
+                    onChange={event => onChange(!!event.target.value, event)}
+                    ref={ref}
+                />
+                <StyledLabel htmlFor={fieldId}>
+                    <StyledCheckbox checked={checked}>
+                        <FaCheck />
+                    </StyledCheckbox>
+                    {label && label}
+                </StyledLabel>
+            </CheckboxContainer>
+        );
+    },
+);
 
 Checkbox.propTypes = propTypes;
 Checkbox.defaultProps = defaultProps;

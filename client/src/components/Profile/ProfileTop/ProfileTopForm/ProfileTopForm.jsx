@@ -2,25 +2,43 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Form } from 'shared/components';
+import { createStructuredSelector } from 'reselect';
 import { EditModal } from 'components';
 import * as Yup from 'yup';
 import { validators } from 'shared/utils';
-import { updateProfile } from 'redux/profile';
+import { selectUser } from 'redux/auth';
+import { updateProfile, createProfile } from 'redux/profile';
 
 const propTypes = {
-    formData: PropTypes.object.isRequired,
     updateProfile: PropTypes.func.isRequired,
+    createProfile: PropTypes.func.isRequired,
     currentUser: PropTypes.object.isRequired,
+    isEdit: PropTypes.bool,
+    formData: PropTypes.object,
 };
+
+const defaultProps = {
+    isEdit: true,
+    formData: undefined,
+};
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectUser,
+});
 
 const mapDispatchToProps = {
     updateProfile,
+    createProfile,
 };
 
 // TODO: split name into first name and last name?
-const ProfileTopForm = ({ updateProfile, currentUser, formData }) => {
-    const { name, headline, city, country, company, current_position, skills } = formData;
-
+const ProfileTopForm = ({
+    updateProfile,
+    createProfile,
+    currentUser,
+    isEdit,
+    formData,
+    ...props
+}) => {
     const introValidation = Yup.object().shape({
         name: validators.required('Name is required'),
         headline: validators.required('Headline is required'),
@@ -28,23 +46,28 @@ const ProfileTopForm = ({ updateProfile, currentUser, formData }) => {
 
     return (
         <EditModal
+            {...props}
             renderContent={({ close }) => (
                 <>
-                    <h2>Edit Intro</h2>
+                    <h2>{isEdit ? 'Edit Intro' : 'Create Profile'}</h2>
                     <Form
                         initialValues={{
-                            name: name || currentUser.name,
-                            headline,
-                            city,
-                            country,
-                            company,
-                            current_position,
-                            skills,
+                            name: formData ? formData.name : currentUser.name || '',
+                            headline: formData ? formData.headline : '',
+                            city: formData ? formData.city : '',
+                            country: formData ? formData.country : '',
+                            company: formData ? formData.company : '',
+                            current_position: formData ? formData.current_position : '',
+                            skills: formData ? formData.skills : [],
                         }}
                         validationSchema={introValidation}
                         onSubmit={values => {
-                            updateProfile(values);
-                            close();
+                            if (isEdit) {
+                                updateProfile(values);
+                                close();
+                            } else {
+                                createProfile(values);
+                            }
                         }}>
                         {({ values }) => (
                             <Form.Element>
@@ -109,5 +132,6 @@ const ProfileTopForm = ({ updateProfile, currentUser, formData }) => {
 };
 
 ProfileTopForm.propTypes = propTypes;
+ProfileTopForm.defaultProps = defaultProps;
 
-export default connect(null, mapDispatchToProps)(ProfileTopForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileTopForm);
