@@ -21,7 +21,7 @@ display:flex;
 
     h3,
     p {
-        margin-bottom: 0.4rem;
+        margin-bottom: 0.3rem;
     }
 
     h3 {
@@ -38,7 +38,7 @@ const avatarContainer = css`
     height: 5rem;
     width: 5rem;
     border-radius: 50%;
-    margin-right: 1rem;
+    margin-right: 1.4rem;
 `;
 
 export const AvatarContainer = styled.div`

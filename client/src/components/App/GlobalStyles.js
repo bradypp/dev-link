@@ -20,9 +20,12 @@ const GlobalStyles = createGlobalStyle`
 
   html {
     box-sizing: border-box;
-    font-size: 62.5%; /* 1rem = 10 px */
+    font-size: 68.75%; /* 1rem = 11 px */
     touch-action: manipulation;
     
+    ${media.bp2400`
+        font-size: 62.5%; /* 1rem = 10 px */
+    `}
     ${media.bp1280`
         font-size: 56.25%; /* 1rem = 9 px */
     `}

@@ -8,13 +8,11 @@ import profileReducer from './profile/reducer';
 import profilesReducer from './profiles/reducer';
 
 // TODO: Decide on redux state to whitelist/blacklist
-// TODO: save recent searches in state and whitelist here?
-// TODO: Blacklist auth & figure out persistent login with cookies
 const persistConfig = {
     key: 'root',
     storage,
     stateReconciler: autoMergeLevel2,
-    // blacklist: 'auth',
+    blacklist: 'auth',
 };
 
 const rootReducer = combineReducers({

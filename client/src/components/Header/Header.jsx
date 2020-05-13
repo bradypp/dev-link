@@ -3,16 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { SignIn, SignUp } from 'components';
-import { CustomLink, Tooltip, Button } from 'shared/components';
+import { Tooltip } from 'shared/components';
 import { selectIsAuthenticated, signOut, selectUser } from 'redux/auth';
 import { BsPerson, BsPeople } from 'react-icons/bs';
-import {
-    RiCodeBoxLine,
-    RiLogoutCircleRLine,
-    RiLoginCircleLine,
-    RiOpenArmLine,
-    RiSettings4Line,
-} from 'react-icons/ri';
+import { RiCodeBoxLine, RiSettings4Line, RiLogoutCircleRLine } from 'react-icons/ri';
 import * as S from './HeaderStyles';
 
 const propTypes = {
@@ -29,39 +23,18 @@ const mapStateToProps = createStructuredSelector({
 const Header = ({ isAuthenticated, signOut, user }) => {
     const signedInMenu = (
         <>
-            <CustomLink
-                iconSize="1.8rem"
-                icon={<BsPeople />}
-                variant="text-color"
-                color="textPrimary1"
-                to="/developers">
+            <S.NavLink icon={<BsPeople />} to="/developers">
                 Developers
-            </CustomLink>
-            <CustomLink
-                iconSize="1.8rem"
-                icon={<BsPerson />}
-                variant="text-color"
-                color="textPrimary1"
-                to={`/profile/${user.username}`}>
+            </S.NavLink>
+            <S.NavLink icon={<BsPerson />} to={`/profile/${user.username}`}>
                 Profile
-            </CustomLink>
-            <CustomLink
-                iconSize="1.8rem"
-                icon={<RiSettings4Line />}
-                variant="text-color"
-                color="textPrimary1"
-                to="/account">
+            </S.NavLink>
+            <S.NavLink icon={<RiSettings4Line />} to="/account">
                 Account
-            </CustomLink>
-            <Button
-                iconSize="1.8rem"
-                icon={<RiLogoutCircleRLine />}
-                variant="text-color"
-                color="textPrimary1"
-                to="/"
-                onClick={signOut}>
+            </S.NavLink>
+            <S.NavLink icon={<RiLogoutCircleRLine />} to="/" onClick={signOut}>
                 Sign Out
-            </Button>
+            </S.NavLink>
         </>
     );
 
@@ -70,32 +43,29 @@ const Header = ({ isAuthenticated, signOut, user }) => {
             <Tooltip
                 width="40rem"
                 placement="bottomLeft"
+                offset={{ top: 8 }}
                 renderElement={props => (
-                    <Button
-                        iconSize="1.8rem"
-                        icon={<RiOpenArmLine />}
-                        variant="text-color"
-                        color="textPrimary1"
+                    <S.NavButton
+                        variant="bordered-inset"
+                        color="primary"
+                        backgroundColor="primary"
+                        borderColor="primary"
                         {...props}>
-                        Join Now
-                    </Button>
+                        Sign In
+                    </S.NavButton>
                 )}
-                renderContent={props => <SignUp {...props} />}
+                renderContent={props => <SignIn {...props} />}
             />
             <Tooltip
                 width="40rem"
                 placement="bottomLeft"
+                offset={{ top: 8 }}
                 renderElement={props => (
-                    <Button
-                        iconSize="1.8rem"
-                        icon={<RiLoginCircleLine />}
-                        variant="text-color"
-                        color="textPrimary1"
-                        {...props}>
-                        Sign In
-                    </Button>
+                    <S.NavButton backgroundColor="primary" color="white1" {...props}>
+                        Join Now
+                    </S.NavButton>
                 )}
-                renderContent={props => <SignIn {...props} />}
+                renderContent={props => <SignUp {...props} />}
             />
         </>
     );
@@ -104,7 +74,10 @@ const Header = ({ isAuthenticated, signOut, user }) => {
     return (
         <S.HeaderContainer>
             <S.NavContainer>
-                <S.Logo variant="no-styles" to="/" icon={<RiCodeBoxLine />}>
+                <S.Logo
+                    variant="no-styles"
+                    to={isAuthenticated ? '/developers' : '/'}
+                    icon={<RiCodeBoxLine />}>
                     <strong>Dev</strong>Link
                 </S.Logo>
                 <S.LinksContainer>{isAuthenticated ? signedInMenu : guestMenu}</S.LinksContainer>

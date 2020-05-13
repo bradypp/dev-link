@@ -22,12 +22,18 @@ export const StyledLabel = styled.label`
     font-size: 1.3rem;
     color: ${({ theme }) => theme.colors.textPrimary1};
     width: max-content;
+
+    ${({ disabled }) =>
+        disabled &&
+        css`
+            opacity: 0.7;
+        `}
 `;
 const backgroundColor = css`
     ${({ theme }) => theme.colors.background2}
 `;
 export const StyledCheckbox = styled.div`
-    ${mixins.clickable}
+    ${({ disabled }) => !disabled && mixins.clickable}
     position: absolute;
     display: block;
     margin: 0;

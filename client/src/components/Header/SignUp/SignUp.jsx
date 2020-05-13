@@ -46,14 +46,14 @@ const SignUp = ({ signUp }) => {
                     name="password"
                     type="password"
                     tip="Password must contain a mix of letters, numbers and symbols"
-                    tipLocation="bottom"
+                    tipLocation="below"
                 />
                 <Form.Field.Input
                     label="Confirm Password"
                     name="password2"
                     type="password"
                     tip="Please confirm your password"
-                    tipLocation="bottom"
+                    tipLocation="below"
                 />
                 <Form.Buttons submitText="Join" />
             </Form.Element>

@@ -14,24 +14,29 @@ const primaryLighten = css`
 `;
 
 const textDarken = css`
-    ${({ theme, color }) => mixins.darkenEffect(null, theme.colors[color], null, 0.15)}
+    ${({ theme, color }) => mixins.darkenEffect(null, theme.colors[color], null, 0.4)}
 `;
 
 const textLighten = css`
-    ${({ theme, color }) => mixins.lightenEffect(null, theme.colors[color], null, 0.15)}
+    ${({ theme, color }) => mixins.lightenEffect(null, theme.colors[color], null, 0.4)}
 `;
 
 const textColor = css`
-    ${({ theme }) => mixins.hoverEffect(null, theme.colors.primaryDark)}
-    ${({ theme }) => mixins.activeEffect(null, theme.colors.primaryDark)}
+    ${({ theme }) => mixins.hoverEffect(null, theme.colors.primary)}
 `;
 
 const borderedFill = css`
-    ${({ theme, borderColor }) =>
-        css`
-            color: ${theme.colors[borderColor]};
-            ${mixins.hoverEffect(theme.colors[borderColor], theme.colors.white1)}
-        `}
+    ${({ theme, borderColor, backgroundColor, color }) => {
+        const hoverColor = backgroundColor || borderColor;
+        return css`
+            color: ${theme.colors[color || borderColor]};
+            ${mixins.hoverEffect(
+                theme.colors[hoverColor],
+                theme.colors.white1,
+                theme.colors[hoverColor],
+            )}
+        `;
+    }}
 `;
 
 const borderedInset = css`
@@ -41,6 +46,7 @@ const borderedInset = css`
             color: ${theme.colors[color]};
             ${mixins.rgbaDarkenEffect(theme.colors[backgroundColor])};
             ${mixins.insetBorderEffect(theme.colors[borderColor])};
+            ${({ theme }) => mixins.hoverEffect(null, theme.colors.primaryDark)}
         `}
 `;
 

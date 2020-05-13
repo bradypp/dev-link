@@ -16,7 +16,6 @@ const propTypes = {
         'bordered-inset',
         'text-darken',
         'text-lighten',
-        'text-color',
     ]),
     backgroundColor: PropTypes.string,
     borderColor: PropTypes.string,

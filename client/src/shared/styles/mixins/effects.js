@@ -174,13 +174,15 @@ const effects = {
         &:not(:disabled) {
             &:hover,
             &:active {
-                box-shadow: inset 0 0 0 ${amount} ${borderColor};
+                color: ${helpers.darken(borderColor)};
+                box-shadow: inset 0 0 0 ${amount} ${helpers.darken(borderColor)};
             }
 
             ${({ isActive }) =>
                 isActive &&
                 css`
-                    box-shadow: inset 0 0 0 ${amount} ${borderColor} !important;
+                    color: ${helpers.darken(borderColor)};
+                    box-shadow: inset 0 0 0 ${amount} ${helpers.darken(borderColor)} !important;
                 `}
         }
     `,

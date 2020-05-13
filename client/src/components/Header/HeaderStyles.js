@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { CustomLink } from 'shared/components';
+import { CustomLink, Button } from 'shared/components';
 import { mixins } from 'shared/styles';
 
 export const HeaderContainer = styled.header`
@@ -27,29 +27,40 @@ export const NavContainer = styled.nav`
     }
 `;
 
+export const NavLink = styled(CustomLink).attrs({
+    iconSize: '1.8rem',
+    variant: 'text-color',
+})`
+    border-radius: 0;
+    padding: 0 0.5rem;
+    margin: 0 1rem;
+    height: 100%;
+    margin: 0 0.8rem;
+    font-weight: 500;
+    font-size: 1.4rem;
+`;
+
+export const NavButton = styled(Button).attrs({
+    iconSize: '1.8rem',
+})`
+    margin: 0 0.8rem;
+    font-weight: 500;
+    font-size: 1.5rem;
+`;
+
 export const LinksContainer = styled.div`
     ${mixins.flexCenter}
     height: 100%;
-
-    & > * {
-        ${mixins.clickable}
-        border-radius: 0;
-        padding: 0 0.8rem;
-        margin: 0 0.8rem;
-        font-weight: 500;
-        font-size: 1.4rem;
-        border-bottom: 2px solid transparent;
-        height: 100%;
-    }
 `;
 
 export const Logo = styled(CustomLink)`
-    color: ${({ theme }) => theme.colors.textPrimary1};
+    color: ${({ theme }) => theme.colors.primaryDarker};
     font-size: 2.4rem;
     font-weight: 400;
     border-radius: 0.3rem;
 
     svg {
-        color: ${({ theme }) => theme.colors.primary};
+        font-size:3rem;
+        /* color: ${({ theme }) => theme.colors.primary}; */
     }
 `;

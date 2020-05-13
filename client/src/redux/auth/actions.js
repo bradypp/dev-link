@@ -18,7 +18,6 @@ export const loadUser = () => async dispatch => {
 
         dispatch(userLoaded(res.data.data.user));
     } catch (err) {
-        dispatch(apiErrorHandler(err));
         dispatch(authError(err));
     }
 };

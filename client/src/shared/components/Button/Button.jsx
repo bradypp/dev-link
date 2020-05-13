@@ -19,7 +19,6 @@ const propTypes = {
         'bordered-inset',
         'text-darken',
         'text-lighten',
-        'text-color',
     ]),
     icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     iconLocation: PropTypes.string,

@@ -9,10 +9,11 @@ export const ProfilesFormContainer = styled.div`
 `;
 
 export const CheckboxContainer = styled.div`
+    ${mixins.flexCenterLeft}
     width: 100%;
 
     & > *:first-child {
-        margin-bottom: 0.4rem;
+        margin-right: 2.8rem;
     }
 `;
 

@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { GrUserSettings } from 'react-icons/gr';
-import { RiLockPasswordLine, RiDeleteBin6Line } from 'react-icons/ri';
+import { RiLockPasswordLine, RiDeleteBin6Line, RiEditBoxLine } from 'react-icons/ri';
 import { AiOutlineUserDelete, AiOutlinePoweroff } from 'react-icons/ai';
 import { UpdateUser, UpdatePassword } from 'components';
 import { Main, Modal, Button } from 'shared/components';
@@ -37,7 +36,7 @@ const Account = ({ deleteAccount, updateActiveStatus, deleteProfile, isUserActiv
                         renderLink={({ open }) => (
                             <S.Button onClick={open}>
                                 <S.ButtonIcon>
-                                    <GrUserSettings />
+                                    <RiEditBoxLine />
                                 </S.ButtonIcon>
                                 <S.ButtonText>
                                     <strong>Update account details</strong>

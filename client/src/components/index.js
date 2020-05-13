@@ -1,5 +1,5 @@
-export { default as SignIn } from './SignIn/SignIn';
-export { default as SignUp } from './SignUp/SignUp';
+export { default as SignIn } from './Header/SignIn/SignIn';
+export { default as SignUp } from './Header/SignUp/SignUp';
 export { default as Account } from './Account/Account';
 export { default as UpdateUser } from './Account/UpdateUser/UpdateUser';
 export { default as UpdatePassword } from './Account/UpdatePassword/UpdatePassword';

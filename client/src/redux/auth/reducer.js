@@ -1,3 +1,4 @@
+import { isEmpty } from 'lodash';
 import { setAuthToken } from 'shared/utils';
 import {
     SIGN_UP_SUCCESS,
@@ -29,7 +30,7 @@ export default (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 user: payload,
-                isAuthenticated: true,
+                isAuthenticated: !isEmpty(payload),
                 isLoading: initialState.isLoading,
             };
         case SIGN_UP_SUCCESS:

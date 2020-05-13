@@ -3,8 +3,9 @@ import { ThemeProvider as Theme } from 'styled-components/macro';
 
 const ThemeProvider = ({ children }) => {
     const baseColors = {
-        primary: '#2977c9',
+        primary: '#1470d2',
         primaryDark: '#105EB0',
+        primaryDarker: '#0e4a8b',
         primaryLight: '#4391E3',
         primaryLighter: '#d4e4f7',
         secondary: '#283e4a',
@@ -38,7 +39,6 @@ const ThemeProvider = ({ children }) => {
         textSecondary1: baseColors.white1,
         textSecondary2: baseColors.white2,
         textSecondary3: baseColors.white3,
-        textColored1: baseColors.primary,
     };
 
     const backgroundColors = {

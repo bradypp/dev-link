@@ -14,6 +14,7 @@ const propTypes = {
     type: PropTypes.string,
     onChange: PropTypes.func,
     id: PropTypes.string,
+    disabled: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -25,21 +26,23 @@ const defaultProps = {
     type: 'checkbox',
     onChange: () => {},
     id: undefined,
+    disabled: false,
 };
 
 const Checkbox = forwardRef(
-    ({ className, checked, onChange, label, id: propsId, ...props }, ref) => {
+    ({ className, checked, onChange, label, id: propsId, disabled, ...props }, ref) => {
         const fieldId = propsId || uniqueId('form-field-');
         return (
             <CheckboxContainer className={className}>
                 <InputComponent
                     {...props}
+                    disabled={disabled}
                     id={fieldId}
                     onChange={event => onChange(!!event.target.value, event)}
                     ref={ref}
                 />
-                <StyledLabel htmlFor={fieldId}>
-                    <StyledCheckbox checked={checked}>
+                <StyledLabel htmlFor={fieldId} disabled={disabled}>
+                    <StyledCheckbox checked={checked} disabled={disabled}>
                         <FaCheck />
                     </StyledCheckbox>
                     {label && label}

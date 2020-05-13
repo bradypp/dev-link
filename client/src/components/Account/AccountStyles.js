@@ -43,7 +43,7 @@ export const Button = styled.div`
 export const ButtonIcon = styled.div`
     text-align: center;
     svg {
-        font-size: 4rem;
+        font-size: 3.6rem;
     }
 `;
 

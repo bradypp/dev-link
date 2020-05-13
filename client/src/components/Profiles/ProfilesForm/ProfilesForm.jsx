@@ -15,7 +15,7 @@ import {
     selectNumberOfProfiles,
     selectIsProfilesLoading,
 } from 'redux/profiles';
-import { selectUserId } from 'redux/auth';
+import { selectUserId, selectIsAuthenticated } from 'redux/auth';
 import * as utils from 'shared/utils';
 import { formConstants } from 'shared/constants';
 import * as S from './ProfilesFormStyles';
@@ -32,6 +32,7 @@ const propTypes = {
     numberOfProfiles: PropTypes.number.isRequired,
     isProfilesLoading: PropTypes.bool.isRequired,
     isFirstRender: PropTypes.bool.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
 };
 
 const defaultProps = {
@@ -45,6 +46,7 @@ const mapStateToProps = createStructuredSelector({
     numberOfProfiles: selectNumberOfProfiles,
     isProfilesLoading: selectIsProfilesLoading,
     currentUserId: selectUserId,
+    isAuthenticated: selectIsAuthenticated,
 });
 
 const mapDispatchToProps = {
@@ -65,6 +67,7 @@ const ProfilesForm = ({
     isProfilesLoading,
     isFirstRender,
     currentUserId,
+    isAuthenticated,
 }) => {
     const history = useHistory();
     const { search: queryString, pathname } = useLocation();
@@ -200,20 +203,6 @@ const ProfilesForm = ({
                             </Form.FieldContainer>
                         </Form.Flex>
                         <Form.Flex>
-                            <S.CheckboxContainer>
-                                <Form.Field.Checkbox
-                                    submitOnChange
-                                    type="checkbox"
-                                    label="Starred by me"
-                                    name="starred_by_me"
-                                />
-                                <Form.Field.Checkbox
-                                    submitOnChange
-                                    type="checkbox"
-                                    label="Watched by me"
-                                    name="watched_by_me"
-                                />
-                            </S.CheckboxContainer>
                             <Form.Field.Select
                                 label="Availability"
                                 isMulti
@@ -255,6 +244,22 @@ const ProfilesForm = ({
                                 }
                             />
                         </Form.Flex>
+                        <S.CheckboxContainer>
+                            <Form.Field.Checkbox
+                                disabled={!isAuthenticated}
+                                submitOnChange
+                                type="checkbox"
+                                label="Starred by me"
+                                name="starred_by_me"
+                            />
+                            <Form.Field.Checkbox
+                                disabled={!isAuthenticated}
+                                submitOnChange
+                                type="checkbox"
+                                label="Watched by me"
+                                name="watched_by_me"
+                            />
+                        </S.CheckboxContainer>
                         <Form.Flex>
                             <S.SortBy
                                 removeSelected={false}
