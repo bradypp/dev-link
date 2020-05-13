@@ -13,6 +13,7 @@ const propTypes = {
     htmlFor: PropTypes.string,
     margin: PropTypes.string,
     tipLocation: PropTypes.oneOf(['above', 'below']),
+    isError: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -25,14 +26,24 @@ const defaultProps = {
     htmlFor: undefined,
     margin: undefined,
     tipLocation: 'above',
+    isError: false,
 };
 
-const FieldContainer = ({ children, label, tip, name, htmlFor, tipLocation, ...props }) => (
+const FieldContainer = ({
+    children,
+    label,
+    tip,
+    name,
+    htmlFor,
+    tipLocation,
+    isError,
+    ...props
+}) => (
     <S.FieldContainer data-testid={name ? `form-field:${name}` : 'form-field'} {...props}>
         {label && <S.FieldLabel htmlFor={htmlFor}>{label}</S.FieldLabel>}
         {tip && tipLocation === 'above' && <S.FieldTip tipLocation={tipLocation}>{tip}</S.FieldTip>}
         {children}
-        {tip && tipLocation === 'bottom' && (
+        {tip && tipLocation === 'below' && !isError && (
             <S.FieldTip tipLocation={tipLocation}>{tip}</S.FieldTip>
         )}
     </S.FieldContainer>

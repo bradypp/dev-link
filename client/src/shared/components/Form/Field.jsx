@@ -67,6 +67,7 @@ const generateField = FormComponent => {
                             tip={tip}
                             htmlFor={fieldId}
                             tipLocation={tipLocation}
+                            isError={touched && error}
                             type={type}>
                             <FormComponent
                                 {...field}

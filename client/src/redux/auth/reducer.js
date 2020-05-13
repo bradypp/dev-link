@@ -3,7 +3,7 @@ import { setAuthToken } from 'shared/utils';
 import {
     SIGN_UP_SUCCESS,
     SIGN_IN_SUCCESS,
-    SIGN_OUT_USER,
+    RESET_AUTH,
     USER_LOADED,
     USER_LOADING,
     AUTH_ERROR,
@@ -41,14 +41,10 @@ export default (state = initialState, { type, payload }) => {
                 token: payload,
                 isAuthenticated: true,
             };
-        case SIGN_OUT_USER:
+        case RESET_AUTH:
             setAuthToken('');
             return {
-                ...state,
-                token: '',
-                isAuthenticated: initialState.isAuthenticated,
-                isLoading: initialState.isLoading,
-                user: initialState.user,
+                ...initialState,
             };
         case AUTH_ERROR:
             setAuthToken('');

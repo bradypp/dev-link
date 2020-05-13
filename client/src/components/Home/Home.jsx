@@ -4,24 +4,31 @@ import { Redirect } from 'react-router-dom';
 import Image from 'react-image';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { selectIsAuthenticated } from 'redux/auth';
-import { Main, CustomLink } from 'shared/components';
+import { selectIsAuthenticated, selectUserUsername } from 'redux/auth';
+import { SignUp } from 'components';
+import { Main, Modal } from 'shared/components';
 import * as S from './HomeStyles';
 
 const propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
+    username: PropTypes.string,
 };
 
+const defaultProps = {
+    username: undefined,
+};
 const mapStateToProps = createStructuredSelector({
     isAuthenticated: selectIsAuthenticated,
+    username: selectUserUsername,
 });
 
-const Home = ({ isAuthenticated }) => {
-    // if (isAuthenticated) return <Redirect to="/developers" />;
+const Home = ({ isAuthenticated, username }) => {
+    if (isAuthenticated) return <Redirect to={username ? `/profile/${username}` : '/profile'} />;
+
     return (
         <Main>
             <S.LandingContent>
-                <h1>Welcome to your new developer community</h1>
+                <h1>Welcome to your developer community</h1>
                 <p>
                     DevLink is the perfect place to network with like-minded developers and take
                     your career in development to the next level
@@ -33,11 +40,24 @@ const Home = ({ isAuthenticated }) => {
                     color="white1">
                     Find Developers
                 </S.StyledLink>
+                <Modal
+                    renderLink={({ open }) => (
+                        <S.StyledLink
+                            onClick={open}
+                            variant="bordered-fill"
+                            color="primaryDarker"
+                            borderColor="primaryDarker"
+                            backgroundColor="primary">
+                            Create a profile
+                        </S.StyledLink>
+                    )}
+                    renderContent={({ close }) => <SignUp onSubmit={close} onCancel={close} />}
+                />
             </S.LandingContent>
             <S.LandingImageContainer>
                 <Image
                     src="http://localhost:3000/img/home/landing.jpg"
-                    alt="developers sit around a table"
+                    alt="developers sit around a table programming"
                 />
             </S.LandingImageContainer>
         </Main>
@@ -45,5 +65,6 @@ const Home = ({ isAuthenticated }) => {
 };
 
 Home.propTypes = propTypes;
+Home.defaultProps = defaultProps;
 
 export default connect(mapStateToProps)(Home);

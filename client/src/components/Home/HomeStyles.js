@@ -1,6 +1,5 @@
 import styled from 'styled-components/macro';
 import { CustomLink } from 'shared/components';
-import { mixins } from 'shared/styles';
 
 const marginTop = 10;
 
@@ -47,4 +46,9 @@ export const StyledLink = styled(CustomLink)`
     padding: 2rem;
     font-size: 1.6rem;
     font-weight: 500;
+    border-radius: 3rem;
+
+    &:first-of-type {
+        margin-right: 2.4rem;
+    }
 `;

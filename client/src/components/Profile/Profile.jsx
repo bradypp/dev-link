@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Redirect } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
-import { Main, Spinner } from 'shared/components';
+import { Main, Spinner, Button } from 'shared/components';
 import { useIsFirstRender } from 'shared/hooks';
 import {
     getProfileByUsername,
@@ -11,8 +11,10 @@ import {
     setIsCurrentUser,
     selectIsProfileEmpty,
     selectIsCurrentUser,
+    getCurrentUserProfile,
+    resetProfile,
 } from 'redux/profile';
-import { selectUserUsername, selectIsUserActive } from 'redux/auth';
+import { selectUserUsername, selectIsUserActive, selectIsAuthenticated } from 'redux/auth';
 import {
     ProfileTop,
     ProfileAbout,
@@ -27,11 +29,14 @@ import * as S from './ProfileStyles';
 
 const propTypes = {
     profileIsLoading: PropTypes.bool.isRequired,
+    getCurrentUserProfile: PropTypes.func.isRequired,
     getProfileByUsername: PropTypes.func.isRequired,
+    resetProfile: PropTypes.func.isRequired,
     setIsCurrentUser: PropTypes.func.isRequired,
     isProfileEmpty: PropTypes.bool.isRequired,
     isCurrentUser: PropTypes.bool.isRequired,
     currentUserUsername: PropTypes.string.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
 };
 
 const defaultProps = {};
@@ -42,11 +47,14 @@ const mapStateToProps = createStructuredSelector({
     isCurrentUser: selectIsCurrentUser,
     currentUserUsername: selectUserUsername,
     isUserActive: selectIsUserActive,
+    isAuthenticated: selectIsAuthenticated,
 });
 
 const mapDispatchToProps = {
     getProfileByUsername,
     setIsCurrentUser,
+    getCurrentUserProfile,
+    resetProfile,
 };
 
 const Profile = ({
@@ -56,31 +64,52 @@ const Profile = ({
     isProfileEmpty,
     isCurrentUser,
     currentUserUsername,
+    getCurrentUserProfile,
+    isAuthenticated,
+    resetProfile,
 }) => {
     const history = useHistory();
     const isFirstRender = useIsFirstRender();
     const { username } = useParams();
 
     useEffect(() => {
-        getProfileByUsername(username);
+        if (username) {
+            getProfileByUsername(username);
+        } else if (isAuthenticated) {
+            getCurrentUserProfile();
+        }
+
+        return () => {
+            if (username) {
+                resetProfile();
+            }
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [getProfileByUsername, username]);
 
     useEffect(() => {
-        if (currentUserUsername === username) {
+        if (!username || currentUserUsername === username) {
             setIsCurrentUser(true);
         } else {
             setIsCurrentUser(false);
         }
     }, [currentUserUsername, setIsCurrentUser, username]);
 
+    if (currentUserUsername && !username)
+        return <Redirect to={`/profile/${currentUserUsername}`} />;
+
     return (
-        <Main>
+        <Main gridGap="2.4rem">
             {isProfileEmpty && !isFirstRender && !profileIsLoading ? (
                 isCurrentUser ? (
                     <ProfileTopForm
                         isOpen
-                        renderLink={() => {}}
-                        onClose={() => history.push('/')}
+                        renderLink={({ open }) => (
+                            <Button backgroundColor="primary" onClick={open}>
+                                Create Profile
+                            </Button>
+                        )}
+                        onClose={() => history.push('/developers')}
                         isEdit={false}
                     />
                 ) : (

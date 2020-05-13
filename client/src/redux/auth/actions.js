@@ -1,13 +1,13 @@
 import { api, apiErrorHandler } from 'shared/utils';
 import { setAlert } from 'redux/alerts';
-import { deleteProfile } from 'redux/profile';
+import { deleteProfile, resetProfile } from 'redux/profile';
 import {
     SIGN_UP_SUCCESS,
     USER_LOADED,
     USER_LOADING,
     AUTH_ERROR,
     SIGN_IN_SUCCESS,
-    SIGN_OUT_USER,
+    RESET_AUTH,
 } from 'redux/actionTypes';
 
 export const loadUser = () => async dispatch => {
@@ -96,7 +96,7 @@ export const updateActiveStatus = ({ active }) => async dispatch => {
         if (active) {
             dispatch(userLoaded(res.data.data.user));
         } else {
-            dispatch(signOut());
+            dispatch(signOutUser());
             dispatch(setAlert('Your account has been deactivated'));
         }
     } catch (err) {
@@ -128,13 +128,27 @@ export const deleteAccount = () => async dispatch => {
     try {
         await api.delete('/user/me');
         dispatch(deleteProfile());
-        dispatch(signOut());
+        dispatch(signOutUser());
         dispatch(setAlert('Your account has been permanently deleted'));
     } catch (err) {
         dispatch(apiErrorHandler(err));
         dispatch(authError(err));
     }
 };
+
+export const signOutUser = () => async dispatch => {
+    try {
+        dispatch(resetProfile());
+        dispatch(resetAuth());
+    } catch (err) {
+        dispatch(apiErrorHandler(err));
+        dispatch(authError(err));
+    }
+};
+
+export const resetAuth = () => ({
+    type: RESET_AUTH,
+});
 
 export const authError = payload => ({
     type: AUTH_ERROR,
@@ -158,8 +172,4 @@ export const signUpSuccess = payload => ({
 export const signInSuccess = payload => ({
     type: SIGN_IN_SUCCESS,
     payload,
-});
-
-export const signOut = () => ({
-    type: SIGN_OUT_USER,
 });

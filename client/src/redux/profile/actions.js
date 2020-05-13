@@ -6,7 +6,7 @@ import {
     PROFILE_LOADING,
     PROFILE_LOADED,
     PROFILE_ERROR,
-    CLEAR_PROFILE,
+    RESET_PROFILE,
     SET_IS_CURRENT_USER,
 } from 'redux/actionTypes';
 
@@ -18,7 +18,6 @@ export const getProfileByUsername = username => async dispatch => {
 
         dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {
-        dispatch(apiErrorHandler(err));
         dispatch(profileError(err));
     }
 };
@@ -31,7 +30,6 @@ export const getProfileById = userId => async dispatch => {
 
         dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {
-        dispatch(apiErrorHandler(err));
         dispatch(profileError(err));
     }
 };
@@ -44,7 +42,6 @@ export const getCurrentUserProfile = () => async dispatch => {
 
         dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {
-        dispatch(apiErrorHandler(err));
         dispatch(profileError(err));
     }
 };
@@ -207,7 +204,7 @@ export const toggleWatch = profileId => async dispatch => {
 export const deleteProfile = () => async dispatch => {
     try {
         await api.delete('/profile/me');
-        dispatch(clearProfile());
+        dispatch(resetProfile());
         dispatch(setAlert('Profile deleted'));
     } catch (err) {
         dispatch(apiErrorHandler(err));
@@ -225,8 +222,8 @@ export const setIsCurrentUser = payload => ({
     payload,
 });
 
-export const clearProfile = () => ({
-    type: CLEAR_PROFILE,
+export const resetProfile = () => ({
+    type: RESET_PROFILE,
 });
 
 export const profileError = () => ({

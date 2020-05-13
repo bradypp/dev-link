@@ -5,6 +5,9 @@ const useIsFirstRender = () => {
 
     useEffect(() => {
         setIsFirstRender(false);
+        return () => {
+            setIsFirstRender(true);
+        };
     }, []);
 
     return isFirstRender;

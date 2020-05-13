@@ -98,8 +98,9 @@ const ThemeProvider = ({ children }) => {
             pagePaddingTablet: `3.2rem`,
             pagePaddingMobile: `1.6rem`,
             headerHeight: `5rem`,
+            footerHeight: `10rem`,
             cardPadding: `2.4rem`,
-            mainGridGap: `1.6rem`,
+            mainGridGap: `2.4rem`,
             itemGap: `1.6rem`,
             tagGap: `1.6rem`,
             buttonGap: `1.6rem`,
@@ -107,8 +108,8 @@ const ThemeProvider = ({ children }) => {
         },
         form: {
             fontSize: `1.4rem`,
-            fieldGap: `2rem`,
             fieldBorderRadius: `0.3rem`,
+            fieldGap: '2rem',
         },
         boxShadow: {
             medium: `0 0.5rem 1rem rgba(0, 0, 0, 0.1)`,

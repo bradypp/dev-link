@@ -13,24 +13,12 @@ const primaryLighten = css`
     ${({ theme, backgroundColor }) => mixins.lightenEffect(theme.colors[backgroundColor])}
 `;
 
-const textDarken = css`
-    ${({ theme, color }) => mixins.darkenEffect(null, theme.colors[color], null, 0.4)}
-`;
-
-const textLighten = css`
-    ${({ theme, color }) => mixins.lightenEffect(null, theme.colors[color], null, 0.4)}
-`;
-
-const textColor = css`
-    ${({ theme }) => mixins.hoverEffect(null, theme.colors.primary)}
-`;
-
 const borderedFill = css`
     ${({ theme, borderColor, backgroundColor, color }) => {
         const hoverColor = backgroundColor || borderColor;
         return css`
             color: ${theme.colors[color || borderColor]};
-            ${mixins.hoverEffect(
+            ${mixins.darkenEffect(
                 theme.colors[hoverColor],
                 theme.colors.white1,
                 theme.colors[hoverColor],
@@ -79,12 +67,6 @@ const buttonStyles = css`
                 return primaryDarken;
             case 'primary-lighten':
                 return primaryLighten;
-            case 'text-darken':
-                return textDarken;
-            case 'text-lighten':
-                return textLighten;
-            case 'text-color':
-                return textColor;
             case 'bordered-fill':
                 return borderedFill;
             case 'bordered-inset':

@@ -29,15 +29,26 @@ export const NavContainer = styled.nav`
 
 export const NavLink = styled(CustomLink).attrs({
     iconSize: '1.8rem',
-    variant: 'text-color',
+    variant: null,
 })`
     border-radius: 0;
-    padding: 0 0.5rem;
     margin: 0 1rem;
     height: 100%;
-    margin: 0 0.8rem;
     font-weight: 500;
     font-size: 1.4rem;
+    color: ${({ theme }) => theme.colors.primaryDarker};
+    padding: 0 0.5rem;
+    &:not(:last-of-type) {
+        margin: 0 0.8rem;
+    }
+
+    &:hover {
+        color: ${({ theme }) => mixins.lighten(theme.colors.primaryDarker, 0.4)};
+    }
+
+    svg {
+        margin-right: 0.2rem;
+    }
 `;
 
 export const NavButton = styled(Button).attrs({
@@ -46,6 +57,7 @@ export const NavButton = styled(Button).attrs({
     margin: 0 0.8rem;
     font-weight: 500;
     font-size: 1.5rem;
+    padding: 1.6rem 1.2rem;
 `;
 
 export const LinksContainer = styled.div`
@@ -54,13 +66,12 @@ export const LinksContainer = styled.div`
 `;
 
 export const Logo = styled(CustomLink)`
-    color: ${({ theme }) => theme.colors.primaryDarker};
-    font-size: 2.4rem;
+    color: ${({ theme }) => theme.colors.primaryDark};
+    font-size: 2.6rem;
     font-weight: 400;
     border-radius: 0.3rem;
 
     svg {
-        font-size:3rem;
-        /* color: ${({ theme }) => theme.colors.primary}; */
+        font-size: 3rem;
     }
 `;

@@ -1,7 +1,7 @@
 import {
     PROFILE_LOADED,
     PROFILE_ERROR,
-    CLEAR_PROFILE,
+    RESET_PROFILE,
     PROFILE_LOADING,
     SET_IS_CURRENT_USER,
 } from 'redux/actionTypes';
@@ -40,11 +40,9 @@ export default (state = initialState, { type, payload }) => {
                 ...state,
                 isCurrentUser: payload,
             };
-        case CLEAR_PROFILE:
+        case RESET_PROFILE:
             return {
-                ...state,
-                profile: initialState.profile,
-                isLoading: initialState.isLoading,
+                ...initialState,
             };
         default:
             return state;

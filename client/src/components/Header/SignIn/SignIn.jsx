@@ -29,7 +29,7 @@ const SignIn = ({ signIn }) => {
                 <h2>Welcome Back!</h2>
                 <Form.Field.Input autoFocus label="Email or username" name="login" />
                 <Form.Field.Input label="Password" name="password" type="password" />
-                <Form.Buttons />
+                <Form.Buttons submitText="Sign In" />
             </Form.Element>
         </Form>
     );

@@ -10,12 +10,19 @@ import * as Yup from 'yup';
 
 const propTypes = {
     signUp: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func,
+    onCancel: PropTypes.func,
+};
+
+const defaultProps = {
+    onSubmit: undefined,
+    onCancel: undefined,
 };
 
 // TODO: add location to sign up?
 // TODO: decide on redirect
 // TODO: edit styling (look at other websites)
-const SignUp = ({ signUp }) => {
+const SignUp = ({ signUp, onCancel, onSubmit }) => {
     const signUpValidation = Yup.object().shape({
         name: validators.name,
         username: validators.username,
@@ -34,7 +41,10 @@ const SignUp = ({ signUp }) => {
                 password2: '',
             }}
             validationSchema={signUpValidation}
-            onSubmit={signUp}>
+            onSubmit={values => {
+                signUp(values);
+                onSubmit();
+            }}>
             <Form.Element>
                 <h2>Join our community</h2>
                 <p>Make the most of your career as a developer.</p>
@@ -55,12 +65,13 @@ const SignUp = ({ signUp }) => {
                     tip="Please confirm your password"
                     tipLocation="below"
                 />
-                <Form.Buttons submitText="Join" />
+                <Form.Buttons submitText="Join" withCancel={onCancel} onCancel={onCancel} />
             </Form.Element>
         </Form>
     );
 };
 
 SignUp.propTypes = propTypes;
+SignUp.defaultProps = defaultProps;
 
 export default connect(null, { setAlert, signUp, clearAlerts })(SignUp);

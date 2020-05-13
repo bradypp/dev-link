@@ -6,7 +6,7 @@ import { mixins } from 'shared/styles';
 export const FormikForm = styled(Form)`
     width: 100%;
     & > *:not(:last-child) {
-        margin-bottom: 2rem;
+        margin-bottom: ${({ theme }) => theme.form.fieldGap};
     }
 
     && > h1,
@@ -76,7 +76,7 @@ const fieldSubtitle = css`
 
 export const FieldTip = styled.div`
   ${fieldSubtitle}
-  padding: ${({ tipLocation }) => (tipLocation === 'bottom' ? '0.6rem 0 0' : '0 0 1rem')};
+  padding: ${({ tipLocation }) => (tipLocation === 'below' ? '0.6rem 0 0' : '0 0 1rem')};
   color: ${({ theme }) => theme.colors.textPrimary2};
   `;
 

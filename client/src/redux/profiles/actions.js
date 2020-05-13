@@ -13,7 +13,7 @@ import {
 
 export const getProfiles = (queryObj = null) => async dispatch => {
     try {
-        dispatch(clearProfiles());
+        dispatch(resetProfiles());
         dispatch(profilesLoading());
 
         if (queryObj) {
@@ -73,7 +73,7 @@ export const getSearchConstants = () => async dispatch => {
     }
 };
 
-export const clearProfiles = () => ({
+export const resetProfiles = () => ({
     type: CLEAR_PROFILES,
 });
 
