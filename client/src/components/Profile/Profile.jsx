@@ -14,7 +14,13 @@ import {
     getCurrentUserProfile,
     resetProfile,
 } from 'redux/profile';
-import { selectUserUsername, selectIsUserActive, selectIsAuthenticated } from 'redux/auth';
+import {
+    selectUserUsername,
+    selectIsUserActive,
+    selectIsAuthenticated,
+    selectIsUserLoading,
+    loadUser,
+} from 'redux/auth';
 import {
     ProfileTop,
     ProfileAbout,
@@ -31,6 +37,8 @@ const propTypes = {
     profileIsLoading: PropTypes.bool.isRequired,
     getCurrentUserProfile: PropTypes.func.isRequired,
     getProfileByUsername: PropTypes.func.isRequired,
+    isUserLoading: PropTypes.func.isRequired,
+    loadUser: PropTypes.func.isRequired,
     resetProfile: PropTypes.func.isRequired,
     setIsCurrentUser: PropTypes.func.isRequired,
     isProfileEmpty: PropTypes.bool.isRequired,
@@ -48,6 +56,7 @@ const mapStateToProps = createStructuredSelector({
     currentUserUsername: selectUserUsername,
     isUserActive: selectIsUserActive,
     isAuthenticated: selectIsAuthenticated,
+    isUserLoading: selectIsUserLoading,
 });
 
 const mapDispatchToProps = {
@@ -55,6 +64,7 @@ const mapDispatchToProps = {
     setIsCurrentUser,
     getCurrentUserProfile,
     resetProfile,
+    loadUser,
 };
 
 const Profile = ({
@@ -67,6 +77,8 @@ const Profile = ({
     getCurrentUserProfile,
     isAuthenticated,
     resetProfile,
+    isUserLoading,
+    loadUser,
 }) => {
     const history = useHistory();
     const isFirstRender = useIsFirstRender();
@@ -95,11 +107,32 @@ const Profile = ({
         }
     }, [currentUserUsername, setIsCurrentUser, username]);
 
-    if (currentUserUsername && !username)
-        return <Redirect to={`/profile/${currentUserUsername}`} />;
+    useEffect(() => {
+        if (!isAuthenticated) {
+            loadUser();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // Handles for route /profile without a username
+    if (!username) {
+        return isAuthenticated || isUserLoading ? (
+            currentUserUsername ? (
+                <Redirect to={`/profile/${currentUserUsername}`} />
+            ) : (
+                <Main>
+                    <S.ProfileContainer>
+                        <Spinner />
+                    </S.ProfileContainer>
+                </Main>
+            )
+        ) : (
+            <Redirect to="developers" />
+        );
+    }
 
     return (
-        <Main gridGap="2.4rem">
+        <Main>
             {isProfileEmpty && !isFirstRender && !profileIsLoading ? (
                 isCurrentUser ? (
                     <ProfileTopForm

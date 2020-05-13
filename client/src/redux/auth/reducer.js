@@ -12,7 +12,7 @@ import {
 const initialState = {
     token: '',
     isAuthenticated: false,
-    isLoading: false,
+    isLoading: true,
     user: {},
     error: {},
 };
@@ -31,7 +31,7 @@ export default (state = initialState, { type, payload }) => {
                 ...state,
                 user: payload,
                 isAuthenticated: !isEmpty(payload),
-                isLoading: initialState.isLoading,
+                isLoading: false,
             };
         case SIGN_UP_SUCCESS:
         case SIGN_IN_SUCCESS:
@@ -53,7 +53,7 @@ export default (state = initialState, { type, payload }) => {
                 error: payload,
                 token: initialState.token,
                 isAuthenticated: initialState.isAuthenticated,
-                isLoading: initialState.isLoading,
+                isLoading: false,
                 user: initialState.user,
             };
         default:

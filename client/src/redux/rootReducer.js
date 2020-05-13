@@ -12,7 +12,7 @@ const persistConfig = {
     key: 'root',
     storage,
     stateReconciler: autoMergeLevel2,
-    blacklist: 'auth',
+    blacklist: ['auth', 'profile', 'profiles', 'alerts'],
 };
 
 const rootReducer = combineReducers({

@@ -8,7 +8,7 @@ import {
 
 const initialState = {
     profile: {},
-    isLoading: false,
+    isLoading: true,
     isCurrentUser: false,
     error: {},
 };
@@ -25,7 +25,7 @@ export default (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 profile: payload,
-                isLoading: initialState.isLoading,
+                isLoading: false,
             };
 
         case PROFILE_ERROR:
@@ -33,7 +33,7 @@ export default (state = initialState, { type, payload }) => {
                 ...state,
                 error: payload,
                 isLoading: initialState.isLoading,
-                profile: initialState.profile,
+                profile: false,
             };
         case SET_IS_CURRENT_USER:
             return {
