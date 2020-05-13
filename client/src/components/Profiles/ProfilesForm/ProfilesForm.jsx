@@ -90,7 +90,10 @@ const ProfilesForm = ({
             [`skills[all]`]: queryStringObj.sk,
             [`role_types[all]`]: queryStringObj.rt,
             sort: queryStringObj.s || '-total_stars',
+            [`stars[in]`]: queryStringObj.st === 'true' ? currentUserId : null,
+            [`watchers[in]`]: queryStringObj.wt === 'true' ? currentUserId : null,
             limit: 10,
+            active: true,
         });
 
     useEffect(() => {
@@ -108,8 +111,8 @@ const ProfilesForm = ({
                     role_types: queryStringObj.rt ? [queryStringObj.rt].flat() : [],
                     desired_roles: queryStringObj.dr ? [queryStringObj.dr].flat() : [],
                     sort: queryStringObj.s || '-total_stars',
-                    starred_by_me: false,
-                    watched_by_me: false,
+                    starred_by_me: queryStringObj.st === 'true',
+                    watched_by_me: queryStringObj.wt === 'true',
                 }}
                 onSubmit={values => {
                     history.push(
@@ -122,6 +125,8 @@ const ProfilesForm = ({
                             sk: values.skills,
                             rt: values.role_types,
                             dr: values.desired_roles,
+                            st: values.starred_by_me,
+                            wt: values.watched_by_me,
                             s: values.sort,
                         })}`,
                     );
@@ -137,6 +142,7 @@ const ProfilesForm = ({
                         [`sort`]: values.sort,
                         [`stars[in]`]: values.starred_by_me ? currentUserId : null,
                         [`watchers[in]`]: values.watched_by_me ? currentUserId : null,
+
                         limit: 10,
                     };
 

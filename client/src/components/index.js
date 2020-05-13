@@ -1,6 +1,8 @@
 export { default as SignIn } from './SignIn/SignIn';
 export { default as SignUp } from './SignUp/SignUp';
-export { default as Dashboard } from './Dashboard/Dashboard';
+export { default as Account } from './Account/Account';
+export { default as UpdateUser } from './Account/UpdateUser/UpdateUser';
+export { default as UpdatePassword } from './Account/UpdatePassword/UpdatePassword';
 export { default as Alert } from './Alert/Alert';
 export { default as Home } from './Home/Home';
 export { default as Header } from './Header/Header';

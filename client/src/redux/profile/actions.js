@@ -1,4 +1,5 @@
 import { api, apiErrorHandler } from 'shared/utils';
+import { setAlert } from 'redux/alerts';
 import { userLoaded } from 'redux/auth';
 import { isEmpty } from 'lodash';
 import {
@@ -207,6 +208,7 @@ export const deleteProfile = () => async dispatch => {
     try {
         await api.delete('/profile/me');
         dispatch(clearProfile());
+        dispatch(setAlert('Profile deleted'));
     } catch (err) {
         dispatch(apiErrorHandler(err));
         dispatch(profileError(err));

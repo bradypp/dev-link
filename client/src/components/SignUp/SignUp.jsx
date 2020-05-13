@@ -37,7 +37,7 @@ const SignUp = ({ signUp }) => {
             onSubmit={signUp}>
             <Form.Element>
                 <h2>Join our community</h2>
-                <p>Make the most of your career in development.</p>
+                <p>Make the most of your career as a developer.</p>
                 <Form.Field.Input autoFocus label="Name" name="name" />
                 <Form.Field.Input label="Username" name="username" />
                 <Form.Field.Input label="Email" name="email" type="email" />

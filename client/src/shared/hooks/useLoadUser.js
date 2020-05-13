@@ -16,7 +16,7 @@ const useLoadUser = () => {
     useClearAlerts();
 
     useEffect(() => {
-        if (isAuthenticated) dispatch(loadUser());
+        if (!isAuthenticated) dispatch(loadUser());
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 };

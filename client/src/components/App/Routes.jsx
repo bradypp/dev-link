@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Home, Dashboard, Profile, Profiles, Header, Alert, NotFound } from 'components';
+import { Home, Account, Profile, Profiles, Header, Alert, NotFound } from 'components';
 import { PrivateRoute } from 'shared/components';
 
 const Routes = () => {
@@ -12,7 +12,7 @@ const Routes = () => {
                 <Route exact path="/" component={Home} />
                 <Route path="/profile/:username" component={Profile} />
                 <Route path="/developers" component={Profiles} />
-                <PrivateRoute path="/dashboard" component={Dashboard} />
+                <PrivateRoute path="/account" component={Account} />
                 <Route component={NotFound} />
             </Switch>
         </Router>

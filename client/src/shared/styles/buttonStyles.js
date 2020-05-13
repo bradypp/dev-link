@@ -37,6 +37,7 @@ const borderedFill = css`
 const borderedInset = css`
     ${({ theme, backgroundColor, borderColor, color }) =>
         css`
+            transition: all 0.05s;
             color: ${theme.colors[color]};
             ${mixins.rgbaDarkenEffect(theme.colors[backgroundColor])};
             ${mixins.insetBorderEffect(theme.colors[borderColor])};

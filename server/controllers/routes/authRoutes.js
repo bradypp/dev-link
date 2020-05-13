@@ -15,6 +15,6 @@ router
 // All routes after this middleware are protected
 router.use(authController.protect);
 
-router.route('/update-password').put(validation.updatePassword, authController.updatePassword);
+router.route('/update-password').patch(validation.updatePassword, authController.updatePassword);
 
 module.exports = router;

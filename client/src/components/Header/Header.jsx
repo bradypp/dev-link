@@ -8,10 +8,10 @@ import { selectIsAuthenticated, signOut, selectUser } from 'redux/auth';
 import { BsPerson, BsPeople } from 'react-icons/bs';
 import {
     RiCodeBoxLine,
-    RiDashboardLine,
     RiLogoutCircleRLine,
     RiLoginCircleLine,
     RiOpenArmLine,
+    RiSettings4Line,
 } from 'react-icons/ri';
 import * as S from './HeaderStyles';
 
@@ -31,6 +31,14 @@ const Header = ({ isAuthenticated, signOut, user }) => {
         <>
             <CustomLink
                 iconSize="1.8rem"
+                icon={<BsPeople />}
+                variant="text-color"
+                color="textPrimary1"
+                to="/developers">
+                Developers
+            </CustomLink>
+            <CustomLink
+                iconSize="1.8rem"
                 icon={<BsPerson />}
                 variant="text-color"
                 color="textPrimary1"
@@ -39,11 +47,11 @@ const Header = ({ isAuthenticated, signOut, user }) => {
             </CustomLink>
             <CustomLink
                 iconSize="1.8rem"
-                icon={<RiDashboardLine />}
+                icon={<RiSettings4Line />}
                 variant="text-color"
                 color="textPrimary1"
-                to="/dashboard">
-                Dashboard
+                to="/account">
+                Account
             </CustomLink>
             <Button
                 iconSize="1.8rem"
@@ -99,17 +107,7 @@ const Header = ({ isAuthenticated, signOut, user }) => {
                 <S.Logo variant="no-styles" to="/" icon={<RiCodeBoxLine />}>
                     <strong>Dev</strong>Link
                 </S.Logo>
-                <S.LinksContainer>
-                    <CustomLink
-                        iconSize="1.8rem"
-                        icon={<BsPeople />}
-                        variant="text-color"
-                        color="textPrimary1"
-                        to="/developers">
-                        Developers
-                    </CustomLink>
-                    {isAuthenticated ? signedInMenu : guestMenu}
-                </S.LinksContainer>
+                <S.LinksContainer>{isAuthenticated ? signedInMenu : guestMenu}</S.LinksContainer>
             </S.NavContainer>
         </S.HeaderContainer>
     );

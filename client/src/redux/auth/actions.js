@@ -47,6 +47,7 @@ export const signUp = ({ name, username, email, password, password2 }) => async 
 export const signIn = ({ login, password }) => async dispatch => {
     try {
         dispatch(userLoading());
+
         const body = JSON.stringify({ login, password });
         const config = {
             headers: {
@@ -64,22 +65,75 @@ export const signIn = ({ login, password }) => async dispatch => {
     }
 };
 
-export const signOut = () => dispatch => {
-    dispatch(signOutUser());
+export const updateUser = ({ name, username, email }) => async dispatch => {
+    try {
+        const body = JSON.stringify({ name, username, email });
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        const res = await api.patch(`/user/me`, body, config);
+
+        dispatch(userLoaded(res.data.data.user));
+    } catch (err) {
+        dispatch(apiErrorHandler(err));
+        dispatch(authError(err));
+    }
 };
 
-// TODO: use confirm modal component which pop up, then on confirm send this action
-export const deleteAccount = () => async dispatch => {
-    if (window.confirm('Are you sure? This can NOT be undone!')) {
-        try {
-            await api.delete('/user');
-            dispatch(deleteProfile());
-            dispatch(signOutUser());
-            dispatch(setAlert('Your account has been permanently deleted'));
-        } catch (err) {
-            dispatch(apiErrorHandler(err));
-            dispatch(authError(err));
+export const updateActiveStatus = ({ active }) => async dispatch => {
+    try {
+        const body = JSON.stringify({ active });
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        const res = await api.patch(`/user/me`, body, config);
+
+        if (active) {
+            dispatch(userLoaded(res.data.data.user));
+        } else {
+            dispatch(signOut());
+            dispatch(setAlert('Your account has been deactivated'));
         }
+    } catch (err) {
+        dispatch(apiErrorHandler(err));
+        dispatch(authError(err));
+    }
+};
+
+export const updatePassword = ({ current_password, password, password2 }) => async dispatch => {
+    try {
+        const body = JSON.stringify({ current_password, password, password2 });
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        const res = await api.patch(`/auth/update-password`, body, config);
+
+        dispatch(signInSuccess(res.data.data.token));
+        dispatch(setAlert('Your password has been updated'));
+    } catch (err) {
+        dispatch(apiErrorHandler(err));
+        dispatch(authError(err));
+    }
+};
+
+export const deleteAccount = () => async dispatch => {
+    try {
+        await api.delete('/user/me');
+        dispatch(deleteProfile());
+        dispatch(signOut());
+        dispatch(setAlert('Your account has been permanently deleted'));
+    } catch (err) {
+        dispatch(apiErrorHandler(err));
+        dispatch(authError(err));
     }
 };
 
@@ -107,6 +161,6 @@ export const signInSuccess = payload => ({
     payload,
 });
 
-export const signOutUser = () => ({
+export const signOut = () => ({
     type: SIGN_OUT_USER,
 });

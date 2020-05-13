@@ -312,12 +312,6 @@ profileSchema.pre(/^find/, function(next) {
     next();
 });
 
-// Only find this profile if active === true
-profileSchema.pre(/^find/, function(next) {
-    this.find({ active: { $ne: false } });
-    next();
-});
-
 const Profile = model('Profile', profileSchema, 'profiles');
 
 module.exports = Profile;

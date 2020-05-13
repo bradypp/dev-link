@@ -55,7 +55,7 @@ exports.updateUserRules = [
         .if(body('name').exists())
         .notEmpty(),
     body('username', "Username can't be empty")
-        .if(body('name').exists())
+        .if(body('username').exists())
         .notEmpty(),
     body('email', "Email can't be empty")
         .if(body('email').exists())

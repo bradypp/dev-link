@@ -15,20 +15,18 @@ const defaultProps = {
     isAuthenticated: false,
 };
 
+const mapStateToProps = createStructuredSelector({
+    isAuthenticated: selectIsAuthenticated,
+});
+
 const PrivateRoute = ({ component: Component, isAuthenticated, ...props }) => {
     return (
         <Route
             {...props}
-            render={props =>
-                isAuthenticated ? <Component {...props} /> : <Redirect to="/sign-in" />
-            }
+            render={props => (isAuthenticated ? <Component {...props} /> : <Redirect to="/" />)}
         />
     );
 };
-
-const mapStateToProps = createStructuredSelector({
-    isAuthenticated: selectIsAuthenticated,
-});
 
 PrivateRoute.propTypes = propTypes;
 PrivateRoute.defaultProps = defaultProps;

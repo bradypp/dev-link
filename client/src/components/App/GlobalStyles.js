@@ -52,6 +52,7 @@ const GlobalStyles = createGlobalStyle`
     margin-top: 0;
     margin-bottom: 1.6rem;
     font-size: 2rem;
+    font-weight: 400;
   }
 
   h3, h4, h5, h6, p, li {

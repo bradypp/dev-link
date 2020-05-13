@@ -12,7 +12,7 @@ import {
     selectIsProfileEmpty,
     selectIsCurrentUser,
 } from 'redux/profile';
-import { selectUserUsername } from 'redux/auth';
+import { selectUserUsername, selectIsUserActive } from 'redux/auth';
 import {
     ProfileTop,
     ProfileAbout,
@@ -41,6 +41,7 @@ const mapStateToProps = createStructuredSelector({
     isProfileEmpty: selectIsProfileEmpty,
     isCurrentUser: selectIsCurrentUser,
     currentUserUsername: selectUserUsername,
+    isUserActive: selectIsUserActive,
 });
 
 const mapDispatchToProps = {

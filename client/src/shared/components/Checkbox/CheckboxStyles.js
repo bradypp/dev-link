@@ -27,6 +27,7 @@ const backgroundColor = css`
     ${({ theme }) => theme.colors.background2}
 `;
 export const StyledCheckbox = styled.div`
+    ${mixins.clickable}
     position: absolute;
     display: block;
     margin: 0;
