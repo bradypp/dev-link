@@ -21,18 +21,19 @@ class QueryHandler {
         // E.g. localhost:5000/api/user?age[gte]=18 (filter for age > 18)
         queryStr = queryStr.replace(/\b(gte|gt|lte|lt|all|in|regex)\b/g, match => `$${match}`);
 
-        // Turns any array queries into array value for the query
-        // E.g. localhost:5000/api/profile?skills[in]=html,css becomes {skills: { $in : ['html', 'css']}} as required
-        queryStr = queryStr.replace(
-            /("[^",]+),([^"]+")/,
-            match => `[${match.replace(',', '","')}]`,
-        );
-
         const newQueryObj = JSON.parse(queryStr);
-        Object.keys(newQueryObj).forEach(el => {
-            if (newQueryObj[el].$regex) {
-                newQueryObj[el].$regex = new RegExp(newQueryObj[el].$regex, 'i');
+        Object.keys(newQueryObj).forEach(a => {
+            if (newQueryObj[a].$regex) {
+                newQueryObj[a].$regex = new RegExp(newQueryObj[a].$regex, 'i');
             }
+
+            // Turns any $in or $all queries into an array of regular expressions
+            // E.g. localhost:5000/api/profile?skills[in]=html,css becomes {skills: { $all : [/html/i, /css/i]}} as required
+            Object.keys(newQueryObj[a]).forEach(b => {
+                if (b === '$in' || b === '$all') {
+                    newQueryObj[a][b] = newQueryObj[a][b].split(',').map(c => new RegExp(c, 'i'));
+                }
+            });
         });
 
         this.query = this.query.find(newQueryObj);

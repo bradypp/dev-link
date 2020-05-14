@@ -58,11 +58,25 @@ export const getMoreProfiles = queryObj => async dispatch => {
 export const getSearchConstants = () => async dispatch => {
     try {
         const res = await api.get(`/profile/all?fields=skills,desired_roles,-user`);
-        const skills = new Set(res.data.data.profiles.map(profile => profile.skills).flat());
+        const skills = new Set(
+            res.data.data.profiles
+                .map(profile => profile.skills)
+                .flat()
+                .map(skill => skill.toLowerCase()),
+        );
+        const desiredRoles = new Set(
+            res.data.data.profiles
+                .map(profile => profile.desired_roles)
+                .flat()
+                .map(role => role.toLowerCase()),
+        );
 
         dispatch(
             searchConstantsLoaded({
                 allSkills: Array.from(skills).sort((a, b) =>
+                    a.toLowerCase() < b.toLowerCase() ? -1 : 1,
+                ),
+                allDesiredRoles: Array.from(desiredRoles).sort((a, b) =>
                     a.toLowerCase() < b.toLowerCase() ? -1 : 1,
                 ),
             }),

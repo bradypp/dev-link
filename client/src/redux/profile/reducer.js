@@ -32,8 +32,8 @@ export default (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 error: payload,
-                isLoading: initialState.isLoading,
-                profile: false,
+                isLoading: false,
+                profile: initialState.profile,
             };
         case SET_IS_CURRENT_USER:
             return {

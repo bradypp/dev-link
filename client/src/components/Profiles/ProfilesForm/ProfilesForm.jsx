@@ -14,6 +14,7 @@ import {
     selectIsNoMoreProfiles,
     selectNumberOfProfiles,
     selectIsProfilesLoading,
+    selectAllDesiredRoles,
 } from 'redux/profiles';
 import { selectUserId, selectIsAuthenticated } from 'redux/auth';
 import * as utils from 'shared/utils';
@@ -27,6 +28,7 @@ const propTypes = {
     getMoreProfiles: PropTypes.func.isRequired,
     getSearchConstants: PropTypes.func.isRequired,
     allSkills: PropTypes.array.isRequired,
+    allDesiredRoles: PropTypes.array.isRequired,
     isMoreProfilesLoading: PropTypes.bool.isRequired,
     isNoMoreProfiles: PropTypes.bool.isRequired,
     numberOfProfiles: PropTypes.number.isRequired,
@@ -41,6 +43,7 @@ const defaultProps = {
 
 const mapStateToProps = createStructuredSelector({
     allSkills: selectAllSkills,
+    allDesiredRoles: selectAllDesiredRoles,
     isMoreProfilesLoading: selectIsMoreProfilesLoading,
     isNoMoreProfiles: selectIsNoMoreProfiles,
     numberOfProfiles: selectNumberOfProfiles,
@@ -68,6 +71,7 @@ const ProfilesForm = ({
     isFirstRender,
     currentUserId,
     isAuthenticated,
+    allDesiredRoles,
 }) => {
     const history = useHistory();
     const { search: queryString, pathname } = useLocation();
@@ -92,6 +96,7 @@ const ProfilesForm = ({
             [`availability[all]`]: queryStringObj.av,
             [`skills[all]`]: queryStringObj.sk,
             [`role_types[all]`]: queryStringObj.rt,
+            [`desired_roles[all]`]: queryStringObj.dr,
             sort: queryStringObj.s || '-total_stars',
             [`stars[in]`]: queryStringObj.st === 'true' ? currentUserId : null,
             [`watchers[in]`]: queryStringObj.wt === 'true' ? currentUserId : null,
@@ -112,7 +117,6 @@ const ProfilesForm = ({
                     availability: queryStringObj.av ? [queryStringObj.av].flat() : [],
                     skills: queryStringObj.sk ? [queryStringObj.sk].flat() : [],
                     role_types: queryStringObj.rt ? [queryStringObj.rt].flat() : [],
-                    desired_roles: queryStringObj.dr ? [queryStringObj.dr].flat() : [],
                     sort: queryStringObj.s || '-total_stars',
                     starred_by_me: queryStringObj.st === 'true',
                     watched_by_me: queryStringObj.wt === 'true',
@@ -145,7 +149,6 @@ const ProfilesForm = ({
                         [`sort`]: values.sort,
                         [`stars[in]`]: values.starred_by_me ? currentUserId : null,
                         [`watchers[in]`]: values.watched_by_me ? currentUserId : null,
-
                         limit: 10,
                     };
 
@@ -228,6 +231,23 @@ const ProfilesForm = ({
                                     label: type,
                                     value: type,
                                 }))}
+                            />
+                            <Form.Field.Select
+                                label="Desired roles"
+                                isMulti
+                                valuePlaceholder="Add desired role"
+                                name="desired_roles"
+                                variant="empty"
+                                submitOnChange
+                                customOnChange={() => setPageValue(1)}
+                                options={
+                                    allDesiredRoles.length > 0
+                                        ? allDesiredRoles.map(skill => ({
+                                              label: skill,
+                                              value: skill,
+                                          }))
+                                        : []
+                                }
                             />
                             <Form.Field.Select
                                 label="Skills"
