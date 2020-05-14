@@ -4,11 +4,12 @@ import {
     RESET_PROFILE,
     PROFILE_LOADING,
     SET_IS_CURRENT_USER,
+    SIGN_OUT,
 } from 'redux/actionTypes';
 
 const initialState = {
     profile: {},
-    isLoading: true,
+    isLoading: false,
     isCurrentUser: false,
     error: {},
 };
@@ -25,20 +26,26 @@ export default (state = initialState, { type, payload }) => {
             return {
                 ...state,
                 profile: payload,
-                isLoading: false,
+                isLoading: initialState.isLoading,
             };
 
         case PROFILE_ERROR:
             return {
                 ...state,
                 error: payload,
-                isLoading: false,
+                isLoading: initialState.isLoading,
                 profile: initialState.profile,
             };
         case SET_IS_CURRENT_USER:
             return {
                 ...state,
                 isCurrentUser: payload,
+            };
+        case SIGN_OUT:
+            return {
+                ...state,
+                isLoading: initialState.isLoading,
+                isCurrentUser: initialState.isCurrentUser,
             };
         case RESET_PROFILE:
             return {

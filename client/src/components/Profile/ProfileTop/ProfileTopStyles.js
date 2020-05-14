@@ -105,31 +105,43 @@ export const ContentRightContainer = styled.div`
     }
 `;
 
-// TODO: Have a round icon only button that changes color/background color on hover & click?
-// TODO: if keeping border, change outline color to match hover background color
 export const ToggleButtonsContainer = styled.div`
     ${mixins.flexCenterRight}
     margin-bottom:auto;
 
-    & > button :not(:first-child) {
-        margin-left: 1.4rem;
+    button {
+        margin-left: 1.6rem;
     }
 `;
 
 const sharedToggleButtonStyles = css`
     font-size: 1.3rem;
+    font-weight: 500;
     height: 3rem;
     padding: 0 0.8rem;
     border: 1px solid ${({ theme }) => theme.colors.border2};
 `;
 
-export const ToggleButton = styled(Button)`
+export const ToggleButton = styled(Button).attrs({ variant: 'no-styles' })`
     ${sharedToggleButtonStyles};
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
+    border-top-left-radius: 0.3rem;
+    border-bottom-left-radius: 0.3rem;
+    background-image: ${({ theme }) =>
+        `linear-gradient(-180deg, ${mixins.darken(theme.colors.white1, 0.01)}, ${mixins.darken(
+            theme.colors.white2,
+            0.02,
+            4,
+        )} 90%)`};
 
     &:hover {
-        border: 1px solid ${({ theme }) => mixins.darken(theme.colors.border2, 0.1)};
+        border: 1px solid ${({ theme }) => mixins.darken(theme.colors.border2, 0.02)};
+        background-image: ${({ theme }) =>
+            `linear-gradient(-180deg, ${mixins.darken(theme.colors.white1, 0.02)}, ${mixins.darken(
+                theme.colors.white2,
+                0.04,
+            )} 90%)`};
     }
 
     svg {
@@ -141,9 +153,12 @@ export const CountContainer = styled.div`
     ${mixins.inlineFlexCenter};
     ${sharedToggleButtonStyles};
     border-left: none;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
+
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
+    border-top-right-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
 `;
 
 export const SkillsContainer = styled.div`

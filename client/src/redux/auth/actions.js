@@ -1,13 +1,13 @@
 import { api, apiErrorHandler } from 'shared/utils';
 import { setAlert } from 'redux/alerts';
-import { deleteProfile, resetProfile } from 'redux/profile';
+import { deleteProfile } from 'redux/profile';
 import {
     SIGN_UP_SUCCESS,
     USER_LOADED,
     USER_LOADING,
     AUTH_ERROR,
     SIGN_IN_SUCCESS,
-    RESET_AUTH,
+    SIGN_OUT,
 } from 'redux/actionTypes';
 
 export const loadUser = () => async dispatch => {
@@ -138,16 +138,15 @@ export const deleteAccount = () => async dispatch => {
 
 export const signOutUser = () => async dispatch => {
     try {
-        dispatch(resetProfile());
-        dispatch(resetAuth());
+        dispatch(signOut());
     } catch (err) {
         dispatch(apiErrorHandler(err));
         dispatch(authError(err));
     }
 };
 
-export const resetAuth = () => ({
-    type: RESET_AUTH,
+export const signOut = () => ({
+    type: SIGN_OUT,
 });
 
 export const authError = payload => ({

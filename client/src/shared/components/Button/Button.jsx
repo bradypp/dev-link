@@ -45,7 +45,10 @@ const defaultProps = {
 };
 
 const Button = forwardRef(
-    ({ children, icon, iconLocation, iconSize, disabled, isWorking, color, ...props }, ref) => {
+    (
+        { children, icon, iconLocation, iconSize, disabled, isWorking, color, isActive, ...props },
+        ref,
+    ) => {
         const renderedIcon = (
             <>
                 {!isWorking && icon && typeof icon === 'string' ? (

@@ -14,7 +14,7 @@ export const USER_LOADING = 'USER_LOADING';
 export const AUTH_ERROR = 'AUTH_ERROR';
 export const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS';
 export const SIGN_IN_FAILURE = 'SIGN_IN_FAILURE';
-export const RESET_AUTH = 'RESET_AUTH';
+export const SIGN_OUT = 'SIGN_OUT';
 
 // PROFILE
 export const PROFILE_LOADED = 'PROFILE_LOADED';

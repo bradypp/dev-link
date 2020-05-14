@@ -37,7 +37,7 @@ const propTypes = {
     profileIsLoading: PropTypes.bool.isRequired,
     getCurrentUserProfile: PropTypes.func.isRequired,
     getProfileByUsername: PropTypes.func.isRequired,
-    isUserLoading: PropTypes.func.isRequired,
+    isUserLoading: PropTypes.bool.isRequired,
     loadUser: PropTypes.func.isRequired,
     resetProfile: PropTypes.func.isRequired,
     setIsCurrentUser: PropTypes.func.isRequired,

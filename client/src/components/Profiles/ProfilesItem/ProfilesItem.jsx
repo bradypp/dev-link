@@ -76,9 +76,10 @@ const ProfilesItem = ({ profile }) => {
                     </Tag>
                 ))}
             </S.SkillsContainer>
-            {/* TODO: add toggle buttons/counters */}
-            <div>stars</div>
-            <div>watchers</div>
+            <S.EndContainer>
+                <S.WatchersStarsContainer>Watchers: {watchers.length}</S.WatchersStarsContainer>
+                <S.WatchersStarsContainer>Stars: {stars.length}</S.WatchersStarsContainer>
+            </S.EndContainer>
         </S.ProfilesItemContainer>
     );
 };

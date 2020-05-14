@@ -21,8 +21,8 @@ import {
 } from 'redux/profile';
 import { selectUser, selectIsAuthenticated } from 'redux/auth';
 import { setAlert } from 'redux/alerts';
+import { ToggleButton } from 'shared/components';
 import { ContactModal } from 'components';
-import { Tag } from 'shared/components';
 import CoverImageForm from './CoverImageForm/CoverImageForm';
 import AvatarForm from './AvatarForm/AvatarForm';
 import ProfileTopForm from './ProfileTopForm/ProfileTopForm';
@@ -173,14 +173,18 @@ const ProfileTop = ({
                 </S.ContentLeftContainer>
                 <S.ContentRightContainer>
                     <S.ToggleButtonsContainer>
-                        <S.ToggleButton icon={<IoMdEye />} onClick={toggleWatchHandler}>
-                            {watchedByCurrentUser ? `Unwatch` : `Watch`}
-                        </S.ToggleButton>
-                        <S.CountContainer>{watchers.length}</S.CountContainer>
-                        <S.ToggleButton icon={<IoMdStarOutline />} onClick={toggleStarHandler}>
-                            {starredByCurrentUser ? `Unstar` : `Star`}
-                        </S.ToggleButton>
-                        <S.CountContainer>{stars.length}</S.CountContainer>
+                        <ToggleButton
+                            buttonText={watchedByCurrentUser ? `Unwatch` : `Watch`}
+                            icon={<IoMdEye />}
+                            onClick={toggleWatchHandler}
+                            count={watchers.length}
+                        />
+                        <ToggleButton
+                            buttonText={starredByCurrentUser ? `Unstar` : `Star`}
+                            icon={<IoMdStarOutline />}
+                            onClick={toggleStarHandler}
+                            count={stars.length}
+                        />
                         {isCurrentUser && (
                             <ProfileTopForm
                                 formData={{

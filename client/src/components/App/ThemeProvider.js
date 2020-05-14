@@ -25,7 +25,7 @@ const ThemeProvider = ({ children }) => {
         greyLight2: '#ddd',
         greyLight3: '#ccc',
         borderFocus: '#4c9aff',
-        textLink: '#0052cc',
+        textLink: '#105EB0',
         overlay: 'rgba(9, 30, 66, 0.54)',
         activeBackground: '#d2e5fe',
         successBackground: '#e4fcef',

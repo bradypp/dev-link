@@ -3,7 +3,7 @@ import { setAuthToken } from 'shared/utils';
 import {
     SIGN_UP_SUCCESS,
     SIGN_IN_SUCCESS,
-    RESET_AUTH,
+    SIGN_OUT,
     USER_LOADED,
     USER_LOADING,
     AUTH_ERROR,
@@ -12,7 +12,7 @@ import {
 const initialState = {
     token: '',
     isAuthenticated: false,
-    isLoading: true,
+    isLoading: false,
     user: {},
     error: {},
 };
@@ -31,7 +31,7 @@ export default (state = initialState, { type, payload }) => {
                 ...state,
                 user: payload,
                 isAuthenticated: !isEmpty(payload),
-                isLoading: false,
+                isLoading: initialState.isLoading,
             };
         case SIGN_UP_SUCCESS:
         case SIGN_IN_SUCCESS:
@@ -41,7 +41,7 @@ export default (state = initialState, { type, payload }) => {
                 token: payload,
                 isAuthenticated: true,
             };
-        case RESET_AUTH:
+        case SIGN_OUT:
             setAuthToken('');
             return {
                 ...initialState,

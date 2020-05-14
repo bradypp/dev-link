@@ -39,6 +39,13 @@ const components = {
             text-decoration: underline;
         }
     `,
+    tag: css`
+        font-size: 1.3rem;
+        font-weight: 500;
+        height: 2.4rem;
+        padding: 0 0.9rem;
+        border-radius: 2rem;
+    `,
 };
 
 export default components;

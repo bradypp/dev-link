@@ -7,7 +7,7 @@ export const ProfilesItemContainer = styled.div`
     ${mixins.card}
     ${mixins.flexCenterLeft}
     ${mixins.clickable}
-    margin: 0.5rem 0;
+    margin: 0.6rem 0 0.8rem 0;
 
     `;
 
@@ -18,7 +18,7 @@ const avatarContainer = css`
 `;
 
 export const ContentContainer = styled.div`
-    margin: 0 2rem;
+    margin: 0 2.4rem 0 2rem;
     h2,
     h3,
     p {
@@ -38,6 +38,7 @@ export const ContentContainer = styled.div`
 
 export const SkillsContainer = styled.div`
     flex: 1;
+    margin-right: 2.4rem;
     & > * {
         margin: ${({ theme }) => `0 ${theme.layout.tagGap} ${theme.layout.tagGap} 0`};
     }
@@ -52,4 +53,10 @@ export const AvatarContainer = styled.div`
 
 export const Avatar = styled(Image)`
     ${avatarContainer}
+`;
+
+export const EndContainer = styled.div``;
+
+export const WatchersStarsContainer = styled.div`
+    ${mixins.tag}
 `;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { SignIn, SignUp } from 'components';
 import { Tooltip } from 'shared/components';
@@ -22,20 +22,24 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const Header = ({ isAuthenticated, signOutUser, user }) => {
-    const history = useHistory();
+    const { pathname } = useLocation();
+
+    const developersLink = (
+        <S.NavLink icon={<BsPeople />} to="/developers">
+            Developers
+        </S.NavLink>
+    );
 
     const signedInMenu = (
         <>
-            <S.NavLink icon={<BsPeople />} to="/developers">
-                Developers
-            </S.NavLink>
+            {developersLink}
             <S.NavLink icon={<BsPerson />} to={`/profile/${user.username}`}>
                 Profile
             </S.NavLink>
             <S.NavLink icon={<RiSettings4Line />} to="/account">
                 Account
             </S.NavLink>
-            <S.NavLink icon={<RiLogoutCircleRLine />} to="/" onClick={signOutUser}>
+            <S.NavLink icon={<RiLogoutCircleRLine />} to="#" onClick={signOutUser}>
                 Sign Out
             </S.NavLink>
         </>
@@ -43,6 +47,7 @@ const Header = ({ isAuthenticated, signOutUser, user }) => {
 
     const guestMenu = (
         <>
+            {pathname.startsWith('/profile') && developersLink}
             <Tooltip
                 width="40rem"
                 placement="bottomLeft"
