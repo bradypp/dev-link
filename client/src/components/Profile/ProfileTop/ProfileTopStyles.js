@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components/macro';
 import Image from 'react-image';
-import { CustomLink, Button } from 'shared/components';
+import { Tag, Button } from 'shared/components';
 import { mixins } from 'shared/styles';
 
 export const ProfileTopCard = styled.section`
@@ -70,11 +70,13 @@ export const AvatarContainer = styled.div`
 
 export const Avatar = styled(Image)`
     position: absolute;
+    z-index: 1;
 `;
 
 export const AvatarUploadContainer = styled.div`
     ${avatarContainer}
     position: absolute;
+    z-index: 2;
 `;
 
 /* TODO: link styles (make bolder & grey background on hover?), make global button variant? */
@@ -150,8 +152,6 @@ export const SkillsContainer = styled.div`
     flex-wrap: wrap-reverse;
 `;
 
-export const SkillLink = styled(CustomLink)`
-    font-size: 1.3rem;
-    margin-top: 0.8rem;
-    margin-left: ${({ theme }) => theme.layout.tagGap};
+export const SkillLink = styled(Tag)`
+    margin: ${({ theme }) => `${theme.layout.tagGap} 0 0 ${theme.layout.tagGap}`};
 `;

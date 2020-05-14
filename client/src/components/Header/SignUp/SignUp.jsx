@@ -19,9 +19,6 @@ const defaultProps = {
     onCancel: undefined,
 };
 
-// TODO: add location to sign up?
-// TODO: decide on redirect
-// TODO: edit styling (look at other websites)
 const SignUp = ({ signUp, onCancel, onSubmit }) => {
     const signUpValidation = Yup.object().shape({
         name: validators.name,
@@ -48,18 +45,18 @@ const SignUp = ({ signUp, onCancel, onSubmit }) => {
             <Form.Element>
                 <h2>Join our community</h2>
                 <p>Make the most of your career as a developer.</p>
-                <Form.Field.Input autoFocus label="Name" name="name" />
-                <Form.Field.Input label="Username" name="username" />
-                <Form.Field.Input label="Email" name="email" type="email" />
+                <Form.Field.Input autoFocus label="Name *" name="name" />
+                <Form.Field.Input label="Username *" name="username" />
+                <Form.Field.Input label="Email *" name="email" type="email" />
                 <Form.Field.Input
-                    label="Password"
+                    label="Password *"
                     name="password"
                     type="password"
                     tip="Password must contain a mix of letters, numbers and symbols"
                     tipLocation="below"
                 />
                 <Form.Field.Input
-                    label="Confirm Password"
+                    label="Confirm Password *"
                     name="password2"
                     type="password"
                     tip="Please confirm your password"

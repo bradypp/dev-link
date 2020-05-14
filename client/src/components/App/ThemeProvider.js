@@ -102,7 +102,7 @@ const ThemeProvider = ({ children }) => {
             cardPadding: `2.4rem`,
             mainGridGap: `2.4rem`,
             itemGap: `1.6rem`,
-            tagGap: `1.6rem`,
+            tagGap: `1rem`,
             buttonGap: `1.6rem`,
             avatarWidth: `16rem`,
         },

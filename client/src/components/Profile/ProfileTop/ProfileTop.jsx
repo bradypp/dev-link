@@ -22,6 +22,7 @@ import {
 import { selectUser, selectIsAuthenticated } from 'redux/auth';
 import { setAlert } from 'redux/alerts';
 import { ContactModal } from 'components';
+import { Tag } from 'shared/components';
 import CoverImageForm from './CoverImageForm/CoverImageForm';
 import AvatarForm from './AvatarForm/AvatarForm';
 import ProfileTopForm from './ProfileTopForm/ProfileTopForm';
@@ -180,7 +181,6 @@ const ProfileTop = ({
                             {starredByCurrentUser ? `Unstar` : `Star`}
                         </S.ToggleButton>
                         <S.CountContainer>{stars.length}</S.CountContainer>
-                        {/* TODO: add button margin-left */}
                         {isCurrentUser && (
                             <ProfileTopForm
                                 formData={{

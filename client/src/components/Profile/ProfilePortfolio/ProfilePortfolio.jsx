@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ProfileCard } from 'components';
 import { selectProfilePortfolio, selectIsCurrentUser } from 'redux/profile';
-import { CustomLink, OutboundLink, Flex } from 'shared/components';
+import { Tag, OutboundLink, Flex } from 'shared/components';
 import ProfilePortfolioForm from './ProfilePortfolioForm/ProfilePortfolioForm';
 import * as S from './ProfilePortfolioStyles';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
@@ -44,9 +44,9 @@ const ProfilePortfolio = ({ portfolio, isCurrentUser }) => {
                                         <S.SkillsContainer>
                                             {skills.length > 0 &&
                                                 skills.map(skill => (
-                                                    <CustomLink to="#" key={uuidv4()}>
+                                                    <Tag to="#" key={uuidv4()}>
                                                         {skill}
-                                                    </CustomLink>
+                                                    </Tag>
                                                 ))}
                                         </S.SkillsContainer>
                                         <S.LinksContainer>

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { useHistory } from 'react-router-dom';
-import { CustomLink } from 'shared/components';
+import { CustomLink, Tag } from 'shared/components';
 import * as S from './ProfilesItemStyles';
 
 const propTypes = {
@@ -65,9 +65,9 @@ const ProfilesItem = ({ profile }) => {
             <div>
                 {/* TODO: customize skills tags */}
                 {skills.map(skill => (
-                    <CustomLink to="#" key={uuidv4()}>
+                    <Tag to="#" key={uuidv4()}>
                         {skill}
-                    </CustomLink>
+                    </Tag>
                 ))}
             </div>
             {/* TODO: add toggle buttons/counters */}

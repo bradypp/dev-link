@@ -57,7 +57,8 @@ export const NavButton = styled(Button).attrs({
     margin: 0 0.8rem;
     font-weight: 500;
     font-size: 1.5rem;
-    padding: 1.6rem 1.2rem;
+    height: 3.2rem;
+    padding: 0 1.2rem;
 `;
 
 export const LinksContainer = styled.div`
