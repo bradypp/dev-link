@@ -21,9 +21,9 @@ const defaultProps = {
 };
 
 const LinkWrapper = forwardRef(({ children, to, className, disabled, isWorking, onClick }, ref) => {
-    const handleClick = () => {
+    const handleClick = e => {
         if (!disabled && !isWorking && onClick) {
-            onClick();
+            onClick(e);
         }
     };
     return (

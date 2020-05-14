@@ -2,12 +2,14 @@ import { css } from 'styled-components/macro';
 import { mixins } from 'shared/styles';
 
 const primaryDarken = css`
+    font-weight: 500;
     background-color: ${({ theme, backgroundColor }) =>
         theme.colors[backgroundColor] || 'transparent'};
     ${({ theme, backgroundColor }) => mixins.darkenEffect(theme.colors[backgroundColor])}
 `;
 
 const primaryLighten = css`
+    font-weight: 500;
     background-color: ${({ theme, backgroundColor }) =>
         theme.colors[backgroundColor] || 'transparent'};
     ${({ theme, backgroundColor }) => mixins.lightenEffect(theme.colors[backgroundColor])}
@@ -17,6 +19,7 @@ const borderedFill = css`
     ${({ theme, borderColor, backgroundColor, color }) => {
         const hoverColor = backgroundColor || borderColor;
         return css`
+            font-weight: 500;
             color: ${theme.colors[color || borderColor]};
             ${mixins.darkenEffect(
                 theme.colors[hoverColor],
@@ -30,6 +33,7 @@ const borderedFill = css`
 const borderedInset = css`
     ${({ theme, backgroundColor, borderColor, color }) =>
         css`
+            font-weight: 500;
             transition: all 0.05s;
             color: ${theme.colors[color]};
             ${mixins.rgbaDarkenEffect(theme.colors[backgroundColor])};

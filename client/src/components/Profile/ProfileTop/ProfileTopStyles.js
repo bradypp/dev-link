@@ -52,6 +52,10 @@ export const ContentLeftContainer = styled.div`
         font-weight: 400;
         margin-bottom: 0.8rem;
     }
+
+    h3:last-of-type {
+        margin-bottom: 1.2rem;
+    }
 `;
 const avatarContainer = css`
     height: ${({ theme }) => theme.layout.avatarWidth};

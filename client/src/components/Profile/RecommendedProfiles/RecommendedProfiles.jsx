@@ -28,7 +28,7 @@ const RecommendedProfiles = ({ recommendedProfiles, getRecommendedProfiles, skil
 
     useEffect(() => {
         getRecommendedProfiles({
-            [`skills[in]`]: skills,
+            [`skills[inregex]`]: skills,
             sort: 'total_stars',
             limit: 10,
         });

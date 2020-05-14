@@ -1,8 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { useHistory, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { useHistory } from 'react-router-dom';
+import { IoMdEye, IoMdStarOutline } from 'react-icons/io';
 import { Tag } from 'shared/components';
+import { toggleStar, toggleWatch } from 'redux/profile';
+import { selectIsAuthenticated, selectUser } from 'redux/auth';
+import { setAlert } from 'redux/alerts';
 import * as S from './ProfilesItemStyles';
 
 const propTypes = {
@@ -11,7 +17,19 @@ const propTypes = {
 
 const defaultProps = {};
 
+const mapStateToProps = createStructuredSelector({
+    isAuthenticated: selectIsAuthenticated,
+    currentUser: selectUser,
+});
+
+const mapDispatchToProps = {
+    toggleWatch,
+    toggleStar,
+    setAlert,
+};
+
 const ProfilesItem = ({ profile }) => {
+    const history = useHistory();
     const {
         avatar,
         headline,
@@ -25,7 +43,6 @@ const ProfilesItem = ({ profile }) => {
         watchers,
         user,
     } = profile;
-    const history = useHistory();
 
     return (
         <S.ProfilesItemContainer
@@ -42,7 +59,7 @@ const ProfilesItem = ({ profile }) => {
                     alt="Profile avatar"
                 />
             </S.AvatarContainer>
-            <S.ContentContainer>
+            <S.ContentLeft>
                 <h2>{name}</h2>
                 {headline && <h3>{headline}</h3>}
                 {company ? (
@@ -61,25 +78,30 @@ const ProfilesItem = ({ profile }) => {
                 ) : (
                     <>{country && <p>{country}</p>}</>
                 )}
-            </S.ContentContainer>
-            <S.SkillsContainer>
-                {/* TODO: customize skills tags */}
-                {skills.map(skill => (
-                    <Tag
-                        as="button"
-                        onClick={e => {
-                            e.stopPropagation();
-                            history.push(`/developers?sk=${skill}`);
-                        }}
-                        key={uuidv4()}>
-                        {skill}
-                    </Tag>
-                ))}
-            </S.SkillsContainer>
-            <S.EndContainer>
-                <S.WatchersStarsContainer>Watchers: {watchers.length}</S.WatchersStarsContainer>
-                <S.WatchersStarsContainer>Stars: {stars.length}</S.WatchersStarsContainer>
-            </S.EndContainer>
+            </S.ContentLeft>
+            <S.ContentRight>
+                <S.WatchersStarsContainer>
+                    <S.WatchersStars>
+                        <IoMdEye /> {watchers.length}
+                    </S.WatchersStars>
+                    <S.WatchersStars>
+                        <IoMdStarOutline /> {stars.length}
+                    </S.WatchersStars>
+                </S.WatchersStarsContainer>
+                <S.SkillsContainer>
+                    {skills.map(skill => (
+                        <Tag
+                            as="button"
+                            onClick={e => {
+                                e.stopPropagation();
+                                history.push(`/profile/${user.username}`);
+                            }}
+                            key={uuidv4()}>
+                            {skill}
+                        </Tag>
+                    ))}
+                </S.SkillsContainer>
+            </S.ContentRight>
         </S.ProfilesItemContainer>
     );
 };
@@ -87,4 +109,4 @@ const ProfilesItem = ({ profile }) => {
 ProfilesItem.propTypes = propTypes;
 ProfilesItem.defaultProps = defaultProps;
 
-export default ProfilesItem;
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilesItem);

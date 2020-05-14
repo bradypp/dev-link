@@ -22,9 +22,9 @@ const defaultProps = {
 
 const ButtonWrapper = forwardRef(
     ({ children, className, type, disabled, isWorking, onClick }, ref) => {
-        const handleClick = () => {
+        const handleClick = e => {
             if (!disabled && !isWorking) {
-                onClick();
+                onClick(e);
             }
         };
 

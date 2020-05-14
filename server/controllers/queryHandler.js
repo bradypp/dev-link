@@ -19,7 +19,10 @@ class QueryHandler {
         let queryStr = JSON.stringify(queryObj);
         // Allow filtering by gte|gt|lte|lt if they exist in queryParams by adding the mongodb $ operator
         // E.g. localhost:5000/api/user?age[gte]=18 (filter for age > 18)
-        queryStr = queryStr.replace(/\b(gte|gt|lte|lt|all|in|regex)\b/g, match => `$${match}`);
+        queryStr = queryStr.replace(
+            /\b(gte|gt|lte|lt|all|in|regex|allregex|inregex)\b/g,
+            match => `$${match}`,
+        );
 
         const newQueryObj = JSON.parse(queryStr);
         Object.keys(newQueryObj).forEach(a => {
@@ -29,13 +32,18 @@ class QueryHandler {
 
             // Turns any $in or $all queries into an array of regular expressions
             // E.g. localhost:5000/api/profile?skills[in]=html,css becomes {skills: { $all : [/html/i, /css/i]}} as required
+            console.log(newQueryObj);
             Object.keys(newQueryObj[a]).forEach(b => {
-                if (b === '$in' || b === '$all') {
-                    newQueryObj[a][b] = newQueryObj[a][b].split(',').map(c => new RegExp(c, 'i'));
+                if (b === '$allregex') {
+                    newQueryObj[a].$all = newQueryObj[a][b].split(',').map(c => new RegExp(c, 'i'));
+                    delete newQueryObj[a][b];
+                }
+                if (b === '$inregex') {
+                    newQueryObj[a].$in = newQueryObj[a][b].split(',').map(c => new RegExp(c, 'i'));
+                    delete newQueryObj[a][b];
                 }
             });
         });
-
         this.query = this.query.find(newQueryObj);
 
         return this;

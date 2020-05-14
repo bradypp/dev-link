@@ -17,8 +17,8 @@ const avatarContainer = css`
     border-radius: 50%;
 `;
 
-export const ContentContainer = styled.div`
-    margin: 0 2.4rem 0 2rem;
+export const ContentLeft = styled.div`
+    margin: 0 auto 0 2rem;
     h2,
     h3,
     p {
@@ -36,27 +36,57 @@ export const ContentContainer = styled.div`
     }
 `;
 
-export const SkillsContainer = styled.div`
-    flex: 1;
-    margin-right: 2.4rem;
+export const ContentRight = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-self: stretch;
+
     & > * {
-        margin: ${({ theme }) => `0 ${theme.layout.tagGap} ${theme.layout.tagGap} 0`};
+        margin: ${({ theme }) => `0 0 ${theme.layout.tagGap} ${theme.layout.tagGap}`};
+    }
+`;
+
+export const SkillsContainer = styled.div`
+    ${mixins.flexCenterRight}
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap-reverse;
+    & > * {
+        margin: ${({ theme }) => `${theme.layout.tagGap} 0 0 ${theme.layout.tagGap}`};
     }
 `;
 
 export const AvatarContainer = styled.div`
-    ${avatarContainer}
+    height: 12rem;
+    width: 12rem;
+    min-width: 12rem;
+    border-radius: 50%;
     position: relative;
     overflow: hidden;
     box-shadow: ${({ theme }) => theme.boxShadow.primary};
 `;
 
 export const Avatar = styled(Image)`
-    ${avatarContainer}
+    position: absolute;
+    display: block;
+    object-fit: cover;
 `;
 
-export const EndContainer = styled.div``;
-
 export const WatchersStarsContainer = styled.div`
-    ${mixins.tag}
+    ${mixins.flexCenterRight}
+    flex-wrap: wrap;
+`;
+
+export const WatchersStars = styled.div`
+    ${mixins.flexCenter}
+    margin-left: ${({ theme }) => theme.layout.tagGap};
+    font-size: 1.3rem;
+
+    svg {
+        font-size: 2rem;
+        margin-right: 0.4rem;
+    }
 `;

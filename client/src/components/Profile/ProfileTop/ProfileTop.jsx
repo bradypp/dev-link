@@ -65,10 +65,6 @@ const mapDispatchToProps = {
     setAlert,
 };
 
-// TODO: add available for hire toggle?
-// TODO: have clickable placeholders/edit prompts for top section instead of nothing at all
-// TODO: add view profile as user button
-// TODO: save name from user to profile on sign up/after initial profile creation
 const ProfileTop = ({
     avatar,
     cover_image,
@@ -105,9 +101,6 @@ const ProfileTop = ({
     const starredByCurrentUser = stars.includes(currentUser._id);
     const watchedByCurrentUser = watchers.includes(currentUser._id);
 
-    // TODO: Watching/stars numbers hover effect and on click functionality
-    // TODO: Add links to skills to profiles page filtered for that skill?
-    // TODO: image pop up
     return (
         <S.ProfileTopCard>
             <S.CoverImageContainer isCurrentUser={isCurrentUser}>

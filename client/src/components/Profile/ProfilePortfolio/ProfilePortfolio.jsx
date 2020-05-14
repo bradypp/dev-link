@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { ProfileCard } from 'components';
 import { selectProfilePortfolio, selectIsCurrentUser } from 'redux/profile';
-import { Tag, OutboundLink, Flex } from 'shared/components';
+import { Tag, CustomLink, Flex } from 'shared/components';
 import ProfilePortfolioForm from './ProfilePortfolioForm/ProfilePortfolioForm';
 import * as S from './ProfilePortfolioStyles';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
@@ -50,8 +50,26 @@ const ProfilePortfolio = ({ portfolio, isCurrentUser }) => {
                                                 ))}
                                         </S.SkillsContainer>
                                         <S.LinksContainer>
-                                            {repo && <OutboundLink href={repo}>Repo</OutboundLink>}
-                                            {demo && <OutboundLink href={demo}>Demo</OutboundLink>}
+                                            {repo && (
+                                                <CustomLink
+                                                    as="a"
+                                                    variant="primary-darken"
+                                                    backgroundColor="primary"
+                                                    color="white1"
+                                                    href={repo}>
+                                                    Repo
+                                                </CustomLink>
+                                            )}
+                                            {demo && (
+                                                <CustomLink
+                                                    as="a"
+                                                    variant="primary-darken"
+                                                    backgroundColor="primary"
+                                                    color="white1"
+                                                    href={demo}>
+                                                    Demo
+                                                </CustomLink>
+                                            )}
                                         </S.LinksContainer>
                                     </S.ContentContainer>
                                     <S.CarouselContainer>

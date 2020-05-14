@@ -18,7 +18,11 @@ const ContactModal = ({ contact, socials, isCurrentUser, updateProfile }) => {
     return (
         <Modal
             width="60rem"
-            renderLink={({ open }) => <Button onClick={open}>Contact Info</Button>}
+            renderLink={({ open }) => (
+                <Button onClick={open} backgroundColor="primary" color="white1">
+                    Contact Info
+                </Button>
+            )}
             renderContent={({ close }) => (
                 <>
                     {!isEditing ? (
