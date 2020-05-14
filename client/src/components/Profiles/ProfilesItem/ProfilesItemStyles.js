@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components/macro';
+import { Tag } from 'shared/components';
 import Image from 'react-image';
 import { mixins } from 'shared/styles';
 
@@ -8,6 +9,16 @@ export const ProfilesItemContainer = styled.div`
     ${mixins.clickable}
     margin: 0.5rem 0;
 
+    `;
+
+const avatarContainer = css`
+    height: 12rem;
+    width: 12rem;
+    border-radius: 50%;
+`;
+
+export const ContentContainer = styled.div`
+    margin: 0 2rem;
     h2,
     h3,
     p {
@@ -25,10 +36,11 @@ export const ProfilesItemContainer = styled.div`
     }
 `;
 
-const avatarContainer = css`
-    height: 12rem;
-    width: 12rem;
-    border-radius: 50%;
+export const SkillsContainer = styled.div`
+    flex: 1;
+    & > * {
+        margin: ${({ theme }) => `0 ${theme.layout.tagGap} ${theme.layout.tagGap} 0`};
+    }
 `;
 
 export const AvatarContainer = styled.div`

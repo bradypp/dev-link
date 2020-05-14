@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { useHistory } from 'react-router-dom';
-import { CustomLink, Tag } from 'shared/components';
+import { useHistory, Redirect } from 'react-router-dom';
+import { Tag } from 'shared/components';
 import * as S from './ProfilesItemStyles';
 
 const propTypes = {
@@ -42,7 +42,7 @@ const ProfilesItem = ({ profile }) => {
                     alt="Profile avatar"
                 />
             </S.AvatarContainer>
-            <div>
+            <S.ContentContainer>
                 <h2>{name}</h2>
                 {headline && <h3>{headline}</h3>}
                 {company ? (
@@ -61,15 +61,21 @@ const ProfilesItem = ({ profile }) => {
                 ) : (
                     <>{country && <p>{country}</p>}</>
                 )}
-            </div>
-            <div>
+            </S.ContentContainer>
+            <S.SkillsContainer>
                 {/* TODO: customize skills tags */}
                 {skills.map(skill => (
-                    <Tag to="#" key={uuidv4()}>
+                    <Tag
+                        as="button"
+                        onClick={e => {
+                            e.stopPropagation();
+                            history.push(`/developers?sk=${skill}`);
+                        }}
+                        key={uuidv4()}>
                         {skill}
                     </Tag>
                 ))}
-            </div>
+            </S.SkillsContainer>
             {/* TODO: add toggle buttons/counters */}
             <div>stars</div>
             <div>watchers</div>
