@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 import { useOnOutsideClick } from 'shared/hooks';
 import { keyCodes } from 'shared/constants';
 import { uniqueId } from 'lodash';
@@ -195,7 +196,7 @@ const Select = ({
                                 })
                             ) : (
                                 <S.ValueMultiItem
-                                    key={optionValue}
+                                    key={uuidv4()}
                                     variant={variant}
                                     onClick={() => removeOptionValue(optionValue)}>
                                     {getOptionLabel(optionValue)}

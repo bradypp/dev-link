@@ -60,7 +60,7 @@ const SignUp = ({ signUp, onCancel, onSubmit }) => {
                     tip="Please confirm your password"
                     tipLocation="below"
                 />
-                <Form.Buttons submitText="Join" withCancel={onCancel} onCancel={onCancel} />
+                <Form.Buttons submitText="Join" withCancel onCancel={onCancel} />
             </Form.Element>
         </Form>
     );

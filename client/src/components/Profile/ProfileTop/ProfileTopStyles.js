@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components/macro';
 import Image from 'react-image';
 import { Tag, Button } from 'shared/components';
-import { mixins } from 'shared/styles';
+import { mixins, media } from 'shared/styles';
 
 export const ProfileTopCard = styled.section`
     ${mixins.card}
@@ -29,9 +29,23 @@ export const CoverImageUploadContainer = styled.div`
 export const ContentContainer = styled.div`
     display: flex;
     justify-content: space-between;
-    padding: ${({ theme }) => theme.layout.cardPadding};
+    padding: 0 ${({ theme }) => theme.layout.cardPadding} ${({ theme }) => theme.layout.cardPadding};
     line-height: 1.3;
     width: 100%;
+`;
+
+export const ContentTopContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin: -11rem 0 0.8rem;
+    padding: 0 ${({ theme }) => theme.layout.cardPadding};
+
+    ${media.bp600`
+            margin: -14.5rem 0 0.8rem;
+    `}
+    ${media.bp440`
+            margin: -18.5rem 0 0.8rem;
+    `}
 `;
 
 export const ContentLeftContainer = styled.div`
@@ -57,6 +71,7 @@ export const ContentLeftContainer = styled.div`
         margin-bottom: 1.2rem;
     }
 `;
+
 const avatarContainer = css`
     height: ${({ theme }) => theme.layout.avatarWidth};
     width: ${({ theme }) => theme.layout.avatarWidth};
@@ -69,7 +84,6 @@ export const AvatarContainer = styled.div`
     overflow: hidden;
     box-shadow: ${({ theme }) => theme.boxShadow.primary};
     border: 5px solid #fff;
-    margin: -14rem 0 0.8rem;
 `;
 
 export const Avatar = styled(Image)`
@@ -83,7 +97,6 @@ export const AvatarUploadContainer = styled.div`
     z-index: 2;
 `;
 
-/* TODO: link styles (make bolder & grey background on hover?), make global button variant? */
 export const InfoButtonsContainer = styled.div`
     display: flex;
     justify-content: flex-start;
@@ -100,18 +113,13 @@ export const InfoButtonsContainer = styled.div`
 
 export const ContentRightContainer = styled.div`
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;
     flex: 1;
-
-    & > * :not(:last-child) {
-        margin-bottom: 1rem;
-    }
 `;
 
 export const ToggleButtonsContainer = styled.div`
     ${mixins.flexCenterRight}
-    margin-bottom:auto;
+    align-self:flex-end;
 
     button {
         margin-left: 1.6rem;
@@ -158,7 +166,6 @@ export const CountContainer = styled.div`
     ${sharedToggleButtonStyles};
     border-left: none;
     font-size: 1.2rem;
-
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
     border-top-right-radius: 0.3rem;
@@ -169,6 +176,7 @@ export const SkillsContainer = styled.div`
     display: flex;
     justify-content: flex-end;
     flex-wrap: wrap-reverse;
+    margin-top: auto;
 `;
 
 export const SkillLink = styled(Tag)`

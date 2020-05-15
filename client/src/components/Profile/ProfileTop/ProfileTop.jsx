@@ -118,23 +118,54 @@ const ProfileTop = ({
                     alt="Profile cover"
                 />
             </S.CoverImageContainer>
+            <S.ContentTopContainer>
+                <S.AvatarContainer>
+                    {isCurrentUser && (
+                        <S.AvatarUploadContainer>
+                            <AvatarForm />
+                        </S.AvatarUploadContainer>
+                    )}
+                    <S.Avatar
+                        className="avatar"
+                        src={[
+                            `http://localhost:5000/img/profile/avatar/${avatar.small}`,
+                            `http://localhost:3000/img/profile/avatar/default-small.jpeg`,
+                        ]}
+                        alt="Profile avatar"
+                    />
+                </S.AvatarContainer>
+                <S.ToggleButtonsContainer>
+                    <ToggleButton
+                        buttonText={watchedByCurrentUser ? `Unwatch` : `Watch`}
+                        icon={<IoMdEye />}
+                        onClick={toggleWatchHandler}
+                        count={watchers.length}
+                    />
+                    <ToggleButton
+                        buttonText={starredByCurrentUser ? `Unstar` : `Star`}
+                        icon={<IoMdStarOutline />}
+                        onClick={toggleStarHandler}
+                        count={stars.length}
+                    />
+                    {isCurrentUser && (
+                        <ProfileTopForm
+                            formData={{
+                                name,
+                                headline,
+                                city,
+                                country,
+                                company,
+                                current_position,
+                                socials,
+                                contact,
+                                skills,
+                            }}
+                        />
+                    )}
+                </S.ToggleButtonsContainer>
+            </S.ContentTopContainer>
             <S.ContentContainer>
                 <S.ContentLeftContainer>
-                    <S.AvatarContainer>
-                        {isCurrentUser && (
-                            <S.AvatarUploadContainer>
-                                <AvatarForm />
-                            </S.AvatarUploadContainer>
-                        )}
-                        <S.Avatar
-                            className="avatar"
-                            src={[
-                                `http://localhost:5000/img/profile/avatar/${avatar.small}`,
-                                `http://localhost:3000/img/profile/avatar/default-small.jpeg`,
-                            ]}
-                            alt="Profile avatar"
-                        />
-                    </S.AvatarContainer>
                     <h1>{name}</h1>
                     {headline && <h2>{headline}</h2>}
                     {company ? (
@@ -166,35 +197,6 @@ const ProfileTop = ({
                     )}
                 </S.ContentLeftContainer>
                 <S.ContentRightContainer>
-                    <S.ToggleButtonsContainer>
-                        <ToggleButton
-                            buttonText={watchedByCurrentUser ? `Unwatch` : `Watch`}
-                            icon={<IoMdEye />}
-                            onClick={toggleWatchHandler}
-                            count={watchers.length}
-                        />
-                        <ToggleButton
-                            buttonText={starredByCurrentUser ? `Unstar` : `Star`}
-                            icon={<IoMdStarOutline />}
-                            onClick={toggleStarHandler}
-                            count={stars.length}
-                        />
-                        {isCurrentUser && (
-                            <ProfileTopForm
-                                formData={{
-                                    name,
-                                    headline,
-                                    city,
-                                    country,
-                                    company,
-                                    current_position,
-                                    socials,
-                                    contact,
-                                    skills,
-                                }}
-                            />
-                        )}
-                    </S.ToggleButtonsContainer>
                     <S.SkillsContainer>
                         {skills.map(skill => (
                             <S.SkillLink

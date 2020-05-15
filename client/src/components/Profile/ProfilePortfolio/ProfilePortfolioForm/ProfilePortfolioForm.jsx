@@ -128,7 +128,7 @@ const ProfilePortfolioForm = ({
                                     />
                                 </Form.Flex>
                                 <Form.FieldContainer label="Project images">
-                                    <Form.Flex>
+                                    <S.ImageUploadContainer>
                                         <S.StyledImageUpload
                                             description="Drop up to 6 images here, or click here to select image files"
                                             files={imageFiles}
@@ -167,7 +167,7 @@ const ProfilePortfolioForm = ({
                                                 </S.ImageContainer>
                                             ))}
                                         </S.ImagesContainer>
-                                    </Form.Flex>
+                                    </S.ImageUploadContainer>
                                 </Form.FieldContainer>
                                 <Form.Buttons withCancel onCancel={close} />
                             </Form.Element>

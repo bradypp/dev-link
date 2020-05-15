@@ -1,10 +1,12 @@
 import styled from 'styled-components/macro';
 import { CustomLink } from 'shared/components';
+import { media } from 'shared/styles';
 
 export const SkillsContainer = styled.div`
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
+    margin-top: 0.5rem;
 
     a {
         margin: ${({ theme }) => `${theme.layout.tagGap} ${theme.layout.tagGap} 0 0`};
@@ -35,6 +37,9 @@ export const ContentContainer = styled.div`
 export const CarouselContainer = styled.div`
     flex: 4;
     box-shadow: ${({ theme }) => theme.boxShadow.medium};
+    ${media.bp600`
+        margin-top:2rem;
+    `}
 `;
 
 export const StyledCustomLink = styled(CustomLink)`

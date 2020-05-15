@@ -42,14 +42,14 @@ const Home = ({ isAuthenticated, username }) => {
                 </S.StyledLink>
                 <Modal
                     renderLink={({ open }) => (
-                        <S.StyledLink
+                        <S.StyledButton
                             onClick={open}
                             variant="bordered-fill"
                             color="primaryDarker"
                             borderColor="primaryDarker"
                             backgroundColor="primary">
                             Create a profile
-                        </S.StyledLink>
+                        </S.StyledButton>
                     )}
                     renderContent={({ close }) => <SignUp onSubmit={close} onCancel={close} />}
                 />

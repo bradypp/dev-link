@@ -47,59 +47,67 @@ const ProfilesItem = ({ profile }) => {
             onClick={() => {
                 history.push(`/profile/${user.username}`);
             }}>
-            <S.AvatarContainer>
-                <S.Avatar
-                    className="avatar"
-                    src={[
-                        `http://localhost:5000/img/profile/avatar/${avatar.small}`,
-                        `http://localhost:3000/img/profile/avatar/default-small.jpeg`,
-                    ]}
-                    alt="Profile avatar"
-                />
-            </S.AvatarContainer>
-            <S.ContentLeft>
-                <h2>{name}</h2>
-                {headline && <h3>{headline}</h3>}
-                {company ? (
-                    <p>
-                        {company}
-                        {current_position && <> &middot; {current_position}</>}
-                    </p>
-                ) : (
-                    <>{current_position && <p>{current_position}</p>}</>
-                )}
-                {city ? (
-                    <p>
-                        {city}
-                        {country && <>, {country}</>}
-                    </p>
-                ) : (
-                    <>{country && <p>{country}</p>}</>
-                )}
-            </S.ContentLeft>
-            <S.ContentRight>
-                <S.WatchersStarsContainer>
-                    <S.WatchersStars>
-                        <IoMdEye /> {watchers.length}
-                    </S.WatchersStars>
-                    <S.WatchersStars>
-                        <IoMdStarOutline /> {stars.length}
-                    </S.WatchersStars>
-                </S.WatchersStarsContainer>
-                <S.SkillsContainer>
-                    {skills.map(skill => (
-                        <Tag
-                            as="button"
-                            onClick={e => {
-                                e.stopPropagation();
-                                history.push(`/profile/${user.username}`);
-                            }}
-                            key={uuidv4()}>
-                            {skill}
-                        </Tag>
-                    ))}
-                </S.SkillsContainer>
-            </S.ContentRight>
+            <S.ItemContainer>
+                <S.AvatarContainer>
+                    <S.Avatar
+                        className="avatar"
+                        src={[
+                            `http://localhost:5000/img/profile/avatar/${avatar.small}`,
+                            `http://localhost:3000/img/profile/avatar/default-small.jpeg`,
+                        ]}
+                        alt="Profile avatar"
+                    />
+                </S.AvatarContainer>
+                <S.ContentContainer>
+                    <S.NameRow>
+                        <h2>{name}</h2>
+                        <S.WatchersStarsContainer>
+                            <S.WatchersStars>
+                                <IoMdEye /> {watchers.length}
+                            </S.WatchersStars>
+                            <S.WatchersStars>
+                                <IoMdStarOutline /> {stars.length}
+                            </S.WatchersStars>
+                        </S.WatchersStarsContainer>
+                    </S.NameRow>
+                    <S.SubContentContainer>
+                        <S.ContentLeft>
+                            {headline && <h3>{headline}</h3>}
+                            {company ? (
+                                <p>
+                                    {company}
+                                    {current_position && <> &middot; {current_position}</>}
+                                </p>
+                            ) : (
+                                <>{current_position && <p>{current_position}</p>}</>
+                            )}
+                            {city ? (
+                                <p>
+                                    {city}
+                                    {country && <>, {country}</>}
+                                </p>
+                            ) : (
+                                <>{country && <p>{country}</p>}</>
+                            )}
+                        </S.ContentLeft>
+                        <S.ContentRight>
+                            <S.SkillsContainer>
+                                {skills.map(skill => (
+                                    <Tag
+                                        as="button"
+                                        onClick={e => {
+                                            e.stopPropagation();
+                                            history.push(`/profile/${user.username}`);
+                                        }}
+                                        key={uuidv4()}>
+                                        {skill}
+                                    </Tag>
+                                ))}
+                            </S.SkillsContainer>
+                        </S.ContentRight>
+                    </S.SubContentContainer>
+                </S.ContentContainer>
+            </S.ItemContainer>
         </S.ProfilesItemContainer>
     );
 };

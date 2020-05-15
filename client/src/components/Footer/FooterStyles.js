@@ -1,11 +1,18 @@
 import styled from 'styled-components/macro';
-import { mixins } from 'shared/styles';
+import { mixins, media } from 'shared/styles';
 
 export const FooterContainer = styled.footer`
     ${mixins.flexCenter}
     flex-wrap: wrap;
-    padding-top: 2rem;
+    padding: 2rem ${({ theme }) => theme.layout.pagePadding} 0;
     height: ${({ theme }) => theme.layout.footerHeight};
+
+    ${media.bp800`
+        padding: 2rem ${({ theme }) => theme.layout.pagePaddingTablet} 0;
+    `}
+    ${media.bp440`
+        padding: 2rem ${({ theme }) => theme.layout.pagePaddingMobile} 0;
+    `}
 `;
 
 export const Separator = styled.span`

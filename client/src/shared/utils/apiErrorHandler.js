@@ -9,10 +9,10 @@ const apiErrorHandler = (err, alertType = toastTypes.ERROR) => async dispatch =>
         const error = err.response.data;
         if (Array.isArray(error)) {
             error.forEach(el => {
-                dispatch(setAlert(el.message, toastTypes.ERROR));
+                dispatch(setAlert(el.message, alertType));
             });
         } else {
-            dispatch(setAlert(error.message, toastTypes.ERROR));
+            dispatch(setAlert(error.message, alertType));
         }
     }
 };

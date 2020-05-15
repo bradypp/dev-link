@@ -1,26 +1,31 @@
 import styled from 'styled-components/macro';
 import Image from 'react-image';
-import { mixins } from 'shared/styles';
+import { mixins, media } from 'shared/styles';
 
 export const ProfilesItemContainer = styled.li`
     ${mixins.card}
     ${mixins.flexCenterLeft}
     ${mixins.clickable}
     margin: 0.6rem 0 0.8rem 0;
-
+    
+    ${media.bp600`
+        ${mixins.flexCenter}
+        flex-wrap: wrap;
+    `}
     `;
 
-export const ContentLeft = styled.div`
-    margin: 0 auto 0 2rem;
-    h2,
+export const ItemContainer = styled.div`
+    ${mixins.flexCenterLeft}
+    width:100%;
+    ${media.bp600`
+        ${mixins.flexCenter}
+        margin:0;
+        width:100%;
+    `}
+
     h3,
     p {
         margin-bottom: 0.4rem;
-    }
-
-    h2 {
-        font-size: 1.8rem;
-        font-weight: 500;
     }
 
     h3 {
@@ -29,17 +34,48 @@ export const ContentLeft = styled.div`
     }
 `;
 
-export const ContentRight = styled.div`
+export const NameRow = styled.div`
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-    flex-direction: column;
-    flex-wrap: wrap;
-    align-self: stretch;
+    wisth: 100%;
+    h2 {
+        margin-bottom: 0.4rem;
+        font-size: 1.8rem;
+        font-weight: 500;
+    }
+`;
 
+export const ContentContainer = styled.div`
+    width: 100%;
+`;
+
+export const SubContentContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    ${media.bp600`
+        flex-direction:column;
+    `}
+`;
+
+export const ContentLeft = styled.div`
+    ${media.bp600`
+       align-self:flex-start;
+    `}
+`;
+
+export const ContentRight = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    align-self: stretch;
+    width: minmax(30%, 50%);
     & > * {
         margin: ${({ theme }) => `0 0 ${theme.layout.tagGap} ${theme.layout.tagGap}`};
     }
+    ${media.bp600`
+        align-self:flex-start;
+        margin-left: -1rem;
+    `}
 `;
 
 export const SkillsContainer = styled.div`
@@ -47,12 +83,22 @@ export const SkillsContainer = styled.div`
     display: flex;
     justify-content: flex-end;
     flex-wrap: wrap-reverse;
+
+    ${media.bp600`
+        ${mixins.flexCenterLeft}
+        flex-wrap: wrap;
+        margin:0;
+        width:100%;
+    `}
+
     & > * {
         margin: ${({ theme }) => `${theme.layout.tagGap} 0 0 ${theme.layout.tagGap}`};
     }
 `;
 
 export const AvatarContainer = styled.div`
+    display: inline-block;
+    margin-right: 2rem;
     height: 12rem;
     width: 12rem;
     min-width: 12rem;

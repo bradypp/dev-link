@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import { Form } from 'shared/components';
-import { mixins } from 'shared/styles';
+import { mixins, media } from 'shared/styles';
 
 export const AccountContainer = styled.div`
     ${mixins.card}
@@ -27,14 +27,17 @@ export const AccountContainer = styled.div`
 export const ButtonsContainer = styled.div`
     ${mixins.gridLayout(2, '1.6rem', '1fr')}
     width: 100%;
+    ${media.bp800`
+    ${mixins.gridLayout(1, '1.6rem', '1fr')}
+    `}
 `;
 
 export const Button = styled.div`
     ${mixins.flexCenterLeft}
     ${mixins.clickable}
     ${({ theme }) => mixins.darkenEffect(theme.colors.background1, null, theme.colors.border1)}
-    height: 10rem;
-    padding: 1.6rem;
+    height: auto;
+    padding: 2.4rem 1.6rem;
     width: 100%;
     text-align: left;
     white-space: normal;

@@ -1,16 +1,22 @@
 import styled from 'styled-components/macro';
 import { CustomLink, Button } from 'shared/components';
-import { mixins } from 'shared/styles';
+import { mixins, media } from 'shared/styles';
 
 export const HeaderContainer = styled.header`
     ${mixins.flexCenter}
-    /* box-shadow: ${({ theme }) => theme.boxShadow.header}; */
     border-bottom: 1px solid ${({ theme }) => theme.colors.border2};
     padding: 0 ${({ theme }) => theme.layout.pagePadding};
     height: ${({ theme }) => theme.layout.headerHeight};
     width: 100%;
     background-color: ${({ theme }) => theme.colors.white1};
     z-index: ${({ theme }) => theme.zIndex.header};
+
+    ${media.bp800`
+        padding: 0 ${({ theme }) => theme.layout.pagePaddingTablet};
+    `}
+    ${media.bp440`
+        padding: 0 ${({ theme }) => theme.layout.pagePaddingMobile};
+    `}
 `;
 
 export const NavContainer = styled.nav`
