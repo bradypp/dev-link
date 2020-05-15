@@ -1,8 +1,5 @@
 const { Schema, model } = require('mongoose');
 
-// TODO: make repos model and save featured repos into it with link to user/profile & populate on get
-// TODO: mongoose validators
-// TODO: edit default image sizes & optimize them
 const profileSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
@@ -298,10 +295,8 @@ const profileSchema = new Schema({
     },
 });
 
-// TODO: update indexes
 // Indexes allow for more efficient queries
 profileSchema.index({ user: 1 });
-profileSchema.index({ skills: 1 });
 
 profileSchema.pre(/^find/, function(next) {
     this.populate({

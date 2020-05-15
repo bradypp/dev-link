@@ -7,7 +7,6 @@ const options = {
     toObject: { virtuals: true },
 };
 
-// TODO: Add city & country to user on sign up, allow updating in update route & populate to profile along with the other user fields
 const userSchema = new Schema(
     {
         name: {
@@ -77,8 +76,6 @@ const userSchema = new Schema(
     options,
 );
 
-// TODO: update indexes
-// Indexes allow for more efficient queries
 userSchema.index({ name: 1, username: 1, email: 1 });
 
 // A virtual is a property that isn't stored in the database

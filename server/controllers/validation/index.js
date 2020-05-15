@@ -2,8 +2,6 @@ const userRules = require('./userRules');
 const profileRules = require('./profileRules');
 const validate = require('./validate');
 
-// TODO: Check every inputted field has the required validators/sanitizers either here, on schema or on form
-
 const validation = validationRules => [validationRules, validate];
 
 exports.signUp = validation(userRules.signUpRules);

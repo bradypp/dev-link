@@ -10,7 +10,6 @@ const propTypes = {
     signIn: PropTypes.func.isRequired,
 };
 
-// TODO: edit styling (look at other websites)
 const SignIn = ({ signIn }) => {
     const signInValidation = Yup.object().shape({
         login: validators.required('Login is required'),

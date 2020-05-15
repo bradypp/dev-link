@@ -20,10 +20,6 @@ const mapStateToProps = createStructuredSelector({
     isCurrentUser: selectIsCurrentUser,
 });
 
-// TODO: Conditional appearance based on if profile belongs to current authenticated user
-// TODO: Add loader?
-// TODO: Sort array by from (on backend)?
-// TODO: Edit date formatting using util functions
 const ProfileCertifications = ({ certifications, isCurrentUser }) => (
     <>
         {(certifications.length > 0 || isCurrentUser) && (

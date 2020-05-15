@@ -19,7 +19,6 @@ const defaultProps = {
     top: 0,
 };
 
-// TODO: covert icons over to this
 // Icon library
 const types = {};
 

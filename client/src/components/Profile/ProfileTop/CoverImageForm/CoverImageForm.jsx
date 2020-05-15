@@ -14,7 +14,6 @@ const mapDispatchToProps = {
     updateProfileImage,
 };
 
-// TODO: try to combine with avatar upload into a reusable upload component
 const CoverImageForm = ({ updateProfileImage }) => {
     const [image, setImage] = useState([]);
     const [isOpen, setIsOpen] = useState(false);

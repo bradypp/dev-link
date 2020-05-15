@@ -19,7 +19,6 @@ const mapStateToProps = createStructuredSelector({
     isCurrentUser: selectIsCurrentUser,
 });
 
-// TODO: Sort array by from (on backend)?
 const ProfileExperience = ({ experience, isCurrentUser }) => {
     return (
         <>

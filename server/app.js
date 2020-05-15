@@ -38,7 +38,7 @@ if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 
-// Serving static files
+// Serving static
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Rate limiting middlewares

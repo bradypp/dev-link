@@ -72,7 +72,6 @@ const calcPosition = (offset, placement, $tooltipRef, $linkRef, margin) => {
     };
 };
 
-// TODO: add the option to render tooltip on mouse when hovering over renderElement
 const Tooltip = ({
     className,
     placement,

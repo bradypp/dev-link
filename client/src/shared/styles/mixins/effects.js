@@ -1,7 +1,6 @@
 import { css } from 'styled-components/macro';
 import helpers from './helpers';
 
-// TODO: test the effects helpers
 const effects = {
     hoverEffect: (backgroundColor = null, color = null, borderColor = null) => css`
         &:not(:disabled) {

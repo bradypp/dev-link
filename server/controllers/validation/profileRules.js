@@ -2,7 +2,6 @@ const { body } = require('express-validator');
 const normalize = require('normalize-url');
 const { normalizeUrls } = require('./utils');
 
-// TODO: Server-side validation and sanitization (portfolio links)
 exports.updateProfileRules = [
     body('socials')
         .if(body('socials').exists())

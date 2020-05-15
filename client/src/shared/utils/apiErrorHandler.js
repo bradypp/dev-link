@@ -1,7 +1,6 @@
 import { setAlert } from 'redux/alerts';
 import { toastTypes } from 'shared/constants';
 
-// TODO
 const apiErrorHandler = (err, alertType = toastTypes.ERROR) => async dispatch => {
     if (process.env.NODE_ENV === 'development') console.error(err.response || err);
 

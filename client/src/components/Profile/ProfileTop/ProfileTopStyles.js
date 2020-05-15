@@ -41,10 +41,10 @@ export const ContentTopContainer = styled.div`
     padding: 0 ${({ theme }) => theme.layout.cardPadding};
 
     ${media.bp600`
-            margin: -14.5rem 0 0.8rem;
+            margin: -12rem 0 0.8rem;
     `}
     ${media.bp440`
-            margin: -18.5rem 0 0.8rem;
+            margin: -16rem 0 0.8rem;
     `}
 `;
 
@@ -76,6 +76,21 @@ const avatarContainer = css`
     height: ${({ theme }) => theme.layout.avatarWidth};
     width: ${({ theme }) => theme.layout.avatarWidth};
     border-radius: 50%;
+
+    ${media.bp600`
+        height:14rem;
+        width: 14rem;
+    `}
+    ${media.bp440`
+        height:13rem;
+        width: 13rem;
+        min-width: 13rem;
+    `}
+    ${media.bp384`
+        height:12rem;
+        width: 12rem;
+        min-width: 12rem;
+    `}
 `;
 
 export const AvatarContainer = styled.div`
@@ -123,6 +138,15 @@ export const ToggleButtonsContainer = styled.div`
 
     button {
         margin-left: 1.6rem;
+
+        ${media.bp440`
+            margin-left: 1.2rem;
+            padding:0 0.5rem;
+        `}
+        ${media.bp384`
+            margin-left: 0.8rem;
+            padding:0 0.3rem;
+        `}
     }
 `;
 

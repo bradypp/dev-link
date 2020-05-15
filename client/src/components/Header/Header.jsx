@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
+import Media from 'react-media';
 import { SignIn, SignUp } from 'components';
 import { Tooltip } from 'shared/components';
 import { selectIsAuthenticated, signOut, selectUser } from 'redux/auth';
@@ -25,23 +26,67 @@ const Header = ({ isAuthenticated, signOut, user }) => {
     const { pathname } = useLocation();
 
     const developersLink = (
-        <S.NavLink icon={<BsPeople />} to="/developers">
-            Developers
-        </S.NavLink>
+        <>
+            <Media
+                query="(min-width: 601px)"
+                render={() => (
+                    <S.NavLink iconSize="1.8rem" icon={<BsPeople />} to="/developers">
+                        Developers
+                    </S.NavLink>
+                )}
+            />
+            <Media
+                query="(max-width: 600px)"
+                render={() => <S.NavLink iconSize="2.4rem" icon={<BsPeople />} to="/developers" />}
+            />
+        </>
     );
 
     const signedInMenu = (
         <>
             {developersLink}
-            <S.NavLink icon={<BsPerson />} to={`/profile/${user.username}`}>
-                Profile
-            </S.NavLink>
-            <S.NavLink icon={<RiSettings4Line />} to="/account">
-                Account
-            </S.NavLink>
-            <S.NavLink icon={<RiLogoutCircleRLine />} to="#" onClick={signOut}>
-                Sign Out
-            </S.NavLink>
+            <Media
+                query="(min-width: 601px)"
+                render={() => (
+                    <>
+                        <S.NavLink
+                            iconSize="1.8rem"
+                            icon={<BsPerson />}
+                            to={`/profile/${user.username}`}>
+                            Profile
+                        </S.NavLink>
+                        <S.NavLink iconSize="1.8rem" icon={<RiSettings4Line />} to="/account">
+                            Account
+                        </S.NavLink>
+                        <S.NavLink
+                            iconSize="1.8rem"
+                            icon={<RiLogoutCircleRLine />}
+                            to="#"
+                            onClick={signOut}>
+                            Sign Out
+                        </S.NavLink>
+                    </>
+                )}
+            />
+            <Media
+                query="(max-width: 600px)"
+                render={() => (
+                    <>
+                        <S.NavLink
+                            iconSize="2.4rem"
+                            icon={<BsPerson />}
+                            to={`/profile/${user.username}`}
+                        />
+                        <S.NavLink iconSize="2.4rem" icon={<RiSettings4Line />} to="/account" />
+                        <S.NavLink
+                            iconSize="2.4rem"
+                            icon={<RiLogoutCircleRLine />}
+                            to="#"
+                            onClick={signOut}
+                        />
+                    </>
+                )}
+            />
         </>
     );
 
@@ -78,7 +123,6 @@ const Header = ({ isAuthenticated, signOut, user }) => {
         </>
     );
 
-    // TODO: Add search bar with location
     return (
         <S.HeaderContainer>
             <S.NavContainer>

@@ -30,7 +30,6 @@ const mapDispatchToProps = {
     createProfile,
 };
 
-// TODO: split name into first name and last name?
 const ProfileTopForm = ({
     updateProfile,
     createProfile,

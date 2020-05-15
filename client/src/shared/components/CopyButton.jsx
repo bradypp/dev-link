@@ -7,7 +7,6 @@ const propTypes = {
     textToCopy: PropTypes.string.isRequired,
 };
 
-// TODO: button styling (use icon instead of text?)
 const CopyButton = ({ textToCopy, ...props }) => {
     const [isCopied, handleCopy] = useCopyText(textToCopy);
 

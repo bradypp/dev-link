@@ -11,8 +11,6 @@ const mapDispatchToProps = {
     updateProfile,
 };
 
-// TODO: styling button as a link
-// TODO: conditional appearance based on if profile belongs to current authenticated user (for editing)
 const ContactModal = ({ contact, socials, isCurrentUser, updateProfile }) => {
     const [isEditing, setIsEditing] = useState(false);
     return (

@@ -34,8 +34,7 @@ export const NavContainer = styled.nav`
 `;
 
 export const NavLink = styled(CustomLink).attrs({
-    iconSize: '1.8rem',
-    variant: null,
+    variant: 'no-styles',
 })`
     border-radius: 0;
     margin: 0 1rem;
@@ -55,6 +54,10 @@ export const NavLink = styled(CustomLink).attrs({
     svg {
         margin-right: 0.2rem;
     }
+
+    ${media.bp440`
+        padding: 0 0.8rem;
+    `}
 `;
 
 export const NavButton = styled(Button).attrs({
