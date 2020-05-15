@@ -9,8 +9,8 @@ toast.configure();
 const useToast = () => {
     const alerts = useSelector(selectAlerts);
     useEffect(() => {
-        alerts.forEach(alert => {
-            console.log(alert);
+        if (alerts && alerts.length > 0) {
+            const alert = alerts[alerts.length - 1];
             const toastType = toast[alert.type];
             toastType(alert.message, {
                 position: 'top-right',
@@ -19,7 +19,7 @@ const useToast = () => {
                 closeOnClick: true,
                 progress: undefined,
             });
-        });
+        }
     }, [alerts]);
 };
 

@@ -4,13 +4,11 @@ import { toastTypes } from 'shared/constants';
 
 export const setAlert = (message, type = toastTypes.ERROR, timeout = 3000) => dispatch => {
     const id = uuidv4();
-
     dispatch({
         type: SET_ALERT,
         payload: { id, message, type, timeout },
     });
-
-    setTimeout(() => dispatch(removeAlert(id)), timeout);
+    // setTimeout(() => dispatch(removeAlert(id)), timeout);
 };
 
 export const clearAlerts = () => ({
