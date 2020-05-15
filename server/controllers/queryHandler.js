@@ -32,7 +32,6 @@ class QueryHandler {
 
             // Turns any $in or $all queries into an array of regular expressions
             // E.g. localhost:5000/api/profile?skills[in]=html,css becomes {skills: { $all : [/html/i, /css/i]}} as required
-            console.log(newQueryObj);
             Object.keys(newQueryObj[a]).forEach(b => {
                 if (b === '$allregex') {
                     newQueryObj[a].$all = newQueryObj[a][b].split(',').map(c => new RegExp(c, 'i'));

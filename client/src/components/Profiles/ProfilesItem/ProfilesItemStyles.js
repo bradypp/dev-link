@@ -1,21 +1,14 @@
-import styled, { css } from 'styled-components/macro';
-import { Tag } from 'shared/components';
+import styled from 'styled-components/macro';
 import Image from 'react-image';
 import { mixins } from 'shared/styles';
 
-export const ProfilesItemContainer = styled.div`
+export const ProfilesItemContainer = styled.li`
     ${mixins.card}
     ${mixins.flexCenterLeft}
     ${mixins.clickable}
     margin: 0.6rem 0 0.8rem 0;
 
     `;
-
-const avatarContainer = css`
-    height: 12rem;
-    width: 12rem;
-    border-radius: 50%;
-`;
 
 export const ContentLeft = styled.div`
     margin: 0 auto 0 2rem;

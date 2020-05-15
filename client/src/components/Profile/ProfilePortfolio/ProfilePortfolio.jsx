@@ -44,31 +44,33 @@ const ProfilePortfolio = ({ portfolio, isCurrentUser }) => {
                                         <S.SkillsContainer>
                                             {skills.length > 0 &&
                                                 skills.map(skill => (
-                                                    <Tag to="#" key={uuidv4()}>
+                                                    <Tag
+                                                        to={`/developers?sk=${skill.toLowerCase()}`}
+                                                        key={uuidv4()}>
                                                         {skill}
                                                     </Tag>
                                                 ))}
                                         </S.SkillsContainer>
                                         <S.LinksContainer>
                                             {repo && (
-                                                <CustomLink
-                                                    as="a"
-                                                    variant="primary-darken"
+                                                <S.StyledCustomLink
+                                                    variant="bordered-inset"
                                                     backgroundColor="primary"
-                                                    color="white1"
+                                                    borderColor="primary"
+                                                    color="primary"
                                                     href={repo}>
                                                     Repo
-                                                </CustomLink>
+                                                </S.StyledCustomLink>
                                             )}
                                             {demo && (
-                                                <CustomLink
-                                                    as="a"
-                                                    variant="primary-darken"
+                                                <S.StyledCustomLink
+                                                    variant="bordered-inset"
                                                     backgroundColor="primary"
-                                                    color="white1"
+                                                    borderColor="primary"
+                                                    color="primary"
                                                     href={demo}>
                                                     Demo
-                                                </CustomLink>
+                                                </S.StyledCustomLink>
                                             )}
                                         </S.LinksContainer>
                                     </S.ContentContainer>

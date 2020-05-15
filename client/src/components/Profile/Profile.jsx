@@ -43,11 +43,13 @@ const propTypes = {
     setIsCurrentUser: PropTypes.func.isRequired,
     isProfileEmpty: PropTypes.bool.isRequired,
     isCurrentUser: PropTypes.bool.isRequired,
-    currentUserUsername: PropTypes.string.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
+    currentUserUsername: PropTypes.string,
 };
 
-const defaultProps = {};
+const defaultProps = {
+    currentUserUsername: undefined,
+};
 
 const mapStateToProps = createStructuredSelector({
     profileIsLoading: selectIsProfileLoading,
@@ -146,7 +148,7 @@ const Profile = ({
                         isEdit={false}
                     />
                 ) : (
-                    <div>profile not found</div>
+                    <Redirect to="/developers" />
                 )
             ) : (
                 <>

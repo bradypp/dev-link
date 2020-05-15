@@ -9,6 +9,7 @@ import {
     RESET_PROFILE,
     SET_IS_CURRENT_USER,
 } from 'redux/actionTypes';
+import { toastTypes } from 'shared/constants';
 
 export const getProfileByUsername = username => async dispatch => {
     try {
@@ -205,7 +206,7 @@ export const deleteProfile = () => async dispatch => {
     try {
         await api.delete('/profile/me');
         dispatch(resetProfile());
-        dispatch(setAlert('Profile deleted'));
+        dispatch(setAlert('Your profile has successfully been deleted', toastTypes.SUCCESS));
     } catch (err) {
         dispatch(apiErrorHandler(err));
         dispatch(profileError(err));

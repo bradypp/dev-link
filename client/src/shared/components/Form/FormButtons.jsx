@@ -42,14 +42,33 @@ const FormButtons = ({
 }) => {
     return (
         <ButtonsContainer {...props}>
-            {withSubmit && <Button type="submit">{submitText}</Button>}
-            {withReset && <Button type="reset">{resetText}</Button>}
-            {withCancel && (
-                <Button type="button" onClick={onCancel}>
-                    {cancelText}
+            {withSubmit && (
+                <Button type="submit" backgroundColor="primary" color="white1">
+                    {submitText}
+                </Button>
+            )}
+            {withReset && (
+                <Button
+                    type="reset"
+                    variant="bordered-inset"
+                    borderColor="primary"
+                    backgroundColor="primary"
+                    color="primary">
+                    {resetText}
                 </Button>
             )}
             {customButtons && customButtons}
+            {withCancel && (
+                <Button
+                    type="button"
+                    variant="bordered-inset"
+                    onClick={onCancel}
+                    borderColor="primary"
+                    backgroundColor="primary"
+                    color="primary">
+                    {cancelText}
+                </Button>
+            )}
         </ButtonsContainer>
     );
 };

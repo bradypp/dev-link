@@ -78,7 +78,7 @@ const ProfilesForm = ({
     const { queryStringToObject, objectToQueryString } = utils.url;
     const queryStringObj = queryStringToObject(queryString);
 
-    const [pageValue, setPageValue] = useState(queryStringObj.pg * 1 || 1);
+    const [pageValue, setPageValue] = useState(1);
     const [nameValue, setNameValue] = useState(queryStringObj.nm || '');
     const [companyValue, setCompanyValue] = useState(queryStringObj.cm || '');
     const [currentPositionValue, setCurrentPositionValue] = useState(queryStringObj.cp || '');
@@ -106,7 +106,7 @@ const ProfilesForm = ({
 
     useEffect(() => {
         getInitialProfiles();
-        getSearchConstants();
+        if (allSkills.length === 0 || allDesiredRoles.length === 0) getSearchConstants();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -124,7 +124,6 @@ const ProfilesForm = ({
                 onSubmit={values => {
                     history.push(
                         `${pathname}?${objectToQueryString({
-                            pg: pageValue,
                             nm: nameValue,
                             cm: companyValue,
                             cp: currentPositionValue,

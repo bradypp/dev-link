@@ -74,16 +74,22 @@ const Account = ({ deleteAccount, updateActiveStatus, deleteProfile, isUserActiv
                             <>
                                 <h2>Are you sure?</h2>
                                 <p>Are you sure you want to permanently delete your profile?</p>
-                                <S.FlexContainer>
-                                    <Button
-                                        onClick={() => {
-                                            deleteProfile({ active: false });
-                                            close();
-                                        }}>
-                                        Delete Profile
-                                    </Button>
-                                    <Button onClick={close}>Cancel</Button>
-                                </S.FlexContainer>
+                                <S.StyledFormButtons
+                                    withSubmit={false}
+                                    withCancel
+                                    onCancel={close}
+                                    customButtons={
+                                        <Button
+                                            backgroundColor="danger"
+                                            color="white1"
+                                            onClick={() => {
+                                                deleteProfile();
+                                                close();
+                                            }}>
+                                            Delete Profile
+                                        </Button>
+                                    }
+                                />
                             </>
                         )}
                     />
@@ -115,16 +121,22 @@ const Account = ({ deleteAccount, updateActiveStatus, deleteProfile, isUserActiv
                                     Are you sure you want to deactivate your account and hide your
                                     profile?
                                 </p>
-                                <S.FlexContainer>
-                                    <Button
-                                        onClick={() => {
-                                            updateActiveStatus({ active: false });
-                                            close();
-                                        }}>
-                                        Deactivate Account
-                                    </Button>
-                                    <Button onClick={close}>Cancel</Button>
-                                </S.FlexContainer>
+                                <S.StyledFormButtons
+                                    withSubmit={false}
+                                    withCancel
+                                    onCancel={close}
+                                    customButtons={
+                                        <Button
+                                            backgroundColor="danger"
+                                            color="white1"
+                                            onClick={() => {
+                                                updateActiveStatus({ active: false });
+                                                close();
+                                            }}>
+                                            Deactivate Account
+                                        </Button>
+                                    }
+                                />
                             </>
                         )}
                     />
@@ -144,16 +156,22 @@ const Account = ({ deleteAccount, updateActiveStatus, deleteProfile, isUserActiv
                             <>
                                 <h2>Are you sure?</h2>
                                 <p>Are you sure you want to permanently delete your account?</p>
-                                <S.FlexContainer>
-                                    <Button
-                                        onClick={() => {
-                                            deleteAccount();
-                                            close();
-                                        }}>
-                                        Delete Account
-                                    </Button>
-                                    <Button onClick={close}>Cancel</Button>
-                                </S.FlexContainer>
+                                <S.StyledFormButtons
+                                    withSubmit={false}
+                                    withCancel
+                                    onCancel={close}
+                                    customButtons={
+                                        <Button
+                                            backgroundColor="danger"
+                                            color="white1"
+                                            onClick={() => {
+                                                deleteAccount();
+                                                close();
+                                            }}>
+                                            Delete Account
+                                        </Button>
+                                    }
+                                />
                             </>
                         )}
                     />

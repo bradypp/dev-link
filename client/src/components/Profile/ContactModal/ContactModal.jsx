@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Button, Modal, Divider } from 'shared/components';
 import { updateProfile } from 'redux/profile';
 import { ContactForm } from './ContactForm/ContactForm';
-import { StyledOutboundLink, ItemContainer } from './ContactModalStyles';
+import { StyledCustomLink, ItemContainer, ContentContainer } from './ContactModalStyles';
 
 const mapDispatchToProps = {
     updateProfile,
@@ -26,7 +26,7 @@ const ContactModal = ({ contact, socials, isCurrentUser, updateProfile }) => {
             renderContent={({ close }) => (
                 <>
                     {!isEditing ? (
-                        <>
+                        <ContentContainer>
                             {!isEmpty(contact) && (
                                 <ItemContainer>
                                     <h2>Contact Info</h2>
@@ -47,19 +47,31 @@ const ContactModal = ({ contact, socials, isCurrentUser, updateProfile }) => {
                                         {socials.map(({ name, value }) => (
                                             <li key={uuidv4()}>
                                                 {name}:{' '}
-                                                <StyledOutboundLink href={value}>
+                                                <StyledCustomLink href={value}>
                                                     {value}
-                                                </StyledOutboundLink>
+                                                </StyledCustomLink>
                                             </li>
                                         ))}
                                     </ul>
                                 </ItemContainer>
                             )}
                             {isCurrentUser && (
-                                <Button onClick={() => setIsEditing(true)}>Edit</Button>
+                                <Button
+                                    onClick={() => setIsEditing(true)}
+                                    backgroundColor="primary"
+                                    color="white1">
+                                    Edit
+                                </Button>
                             )}
-                            <Button onClick={close}>Close</Button>
-                        </>
+                            <Button
+                                onClick={close}
+                                variant="bordered-inset"
+                                borderColor="primary"
+                                backgroundColor="primary"
+                                color="primary">
+                                Close
+                            </Button>
+                        </ContentContainer>
                     ) : (
                         <ContactForm
                             formData={{ contact, socials }}

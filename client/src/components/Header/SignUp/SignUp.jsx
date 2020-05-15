@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { setAlert, clearAlerts } from 'redux/alerts';
 import { signUp } from 'redux/auth';
 import { Form } from 'shared/components';
 import { validators } from 'shared/utils';
 import * as Yup from 'yup';
-// import * as S from './SignUpStyles';
 
 const propTypes = {
     signUp: PropTypes.func.isRequired,
@@ -71,4 +69,4 @@ const SignUp = ({ signUp, onCancel, onSubmit }) => {
 SignUp.propTypes = propTypes;
 SignUp.defaultProps = defaultProps;
 
-export default connect(null, { setAlert, signUp, clearAlerts })(SignUp);
+export default connect(null, { signUp })(SignUp);

@@ -1,5 +1,6 @@
 import { api, apiErrorHandler } from 'shared/utils';
 import { setAlert } from 'redux/alerts';
+import { toastTypes } from 'shared/constants';
 import { deleteProfile } from 'redux/profile';
 import {
     SIGN_UP_SUCCESS,
@@ -76,6 +77,7 @@ export const updateUser = ({ name, username, email }) => async dispatch => {
         const res = await api.patch(`/user/me`, body, config);
 
         dispatch(userLoaded(res.data.data.user));
+        dispatch(setAlert('Your account has been successfully updated', toastTypes.SUCCESS));
     } catch (err) {
         dispatch(apiErrorHandler(err));
         dispatch(authError(err));
@@ -97,7 +99,9 @@ export const updateActiveStatus = ({ active }) => async dispatch => {
             dispatch(userLoaded(res.data.data.user));
         } else {
             dispatch(signOutUser());
-            dispatch(setAlert('Your account has been deactivated'));
+            dispatch(
+                setAlert('Your account has successfully been deactivated', toastTypes.SUCCESS),
+            );
         }
     } catch (err) {
         dispatch(apiErrorHandler(err));
@@ -117,7 +121,7 @@ export const updatePassword = ({ current_password, password, password2 }) => asy
         const res = await api.patch(`/auth/update-password`, body, config);
 
         dispatch(signInSuccess(res.data.data.token));
-        dispatch(setAlert('Your password has been updated'));
+        dispatch(setAlert('Your password has successfully been updated', toastTypes.SUCCESS));
     } catch (err) {
         dispatch(apiErrorHandler(err));
         dispatch(authError(err));
@@ -129,7 +133,7 @@ export const deleteAccount = () => async dispatch => {
         await api.delete('/user/me');
         dispatch(deleteProfile());
         dispatch(signOutUser());
-        dispatch(setAlert('Your account has been permanently deleted'));
+        dispatch(setAlert('Your account has been permanently deleted', toastTypes.SUCCESS));
     } catch (err) {
         dispatch(apiErrorHandler(err));
         dispatch(authError(err));

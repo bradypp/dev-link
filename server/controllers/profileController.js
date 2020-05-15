@@ -181,19 +181,19 @@ exports.deleteReplacedProfileImages = catchAsync(async (req, res, next) => {
     if (req.body.avatar) {
         if (
             req.body.avatar.medium !== profile.avatar.medium &&
-            profile.avatar.medium !== 'default-medium.jpg'
+            profile.avatar.medium !== 'default-medium.jpeg'
         ) {
             fs.unlink(`public/img/profile/avatar/${profile.avatar.medium}`, logErrorToConsole);
         }
         if (
             req.body.avatar.small !== profile.avatar.small &&
-            profile.avatar.small !== 'default-small.jpg'
+            profile.avatar.small !== 'default-small.jpeg'
         ) {
             fs.unlink(`public/img/profile/avatar/${profile.avatar.small}`, logErrorToConsole);
         }
         if (
             req.body.avatar.thumbnail !== profile.avatar.thumbnail &&
-            profile.avatar.thumbnail !== 'default-thumbnail.jpg'
+            profile.avatar.thumbnail !== 'default-thumbnail.jpeg'
         ) {
             fs.unlink(`public/img/profile/avatar/${profile.avatar.thumbnail}`, logErrorToConsole);
         }
@@ -202,7 +202,7 @@ exports.deleteReplacedProfileImages = catchAsync(async (req, res, next) => {
     if (req.body.cover_image) {
         if (
             req.body.cover_image.large !== profile.cover_image.large &&
-            profile.cover_image.large !== 'default-large.jpg'
+            profile.cover_image.large !== 'default-large.jpeg'
         ) {
             fs.unlink(
                 `public/img/profile/cover-image/${profile.cover_image.large}`,
@@ -211,7 +211,7 @@ exports.deleteReplacedProfileImages = catchAsync(async (req, res, next) => {
         }
         if (
             req.body.cover_image.medium !== profile.cover_image.medium &&
-            profile.cover_image.medium !== 'default-medium.jpg'
+            profile.cover_image.medium !== 'default-medium.jpeg'
         ) {
             fs.unlink(
                 `public/img/profile/cover-image/${profile.cover_image.medium}`,
@@ -220,7 +220,7 @@ exports.deleteReplacedProfileImages = catchAsync(async (req, res, next) => {
         }
         if (
             req.body.cover_image.small !== profile.cover_image.small &&
-            profile.cover_image.small !== 'default-small.jpg'
+            profile.cover_image.small !== 'default-small.jpeg'
         ) {
             fs.unlink(
                 `public/img/profile/cover-image/${profile.cover_image.small}`,
@@ -239,25 +239,25 @@ exports.deleteAllProfileImages = catchAsync(async (req, res, next) => {
         return next(new AppError(notFoundErrorMessage, 404));
     }
 
-    if (profile.avatar.medium !== 'default-medium.jpg') {
+    if (profile.avatar.medium !== 'default-medium.jpeg') {
         fs.unlink(`public/img/profile/avatar/${profile.avatar.medium}`, logErrorToConsole);
     }
-    if (profile.avatar.small !== 'default-small.jpg') {
+    if (profile.avatar.small !== 'default-small.jpeg') {
         fs.unlink(`public/img/profile/avatar/${profile.avatar.small}`, logErrorToConsole);
     }
-    if (profile.avatar.thumbnail !== 'default-thumbnail.jpg') {
+    if (profile.avatar.thumbnail !== 'default-thumbnail.jpeg') {
         fs.unlink(`public/img/profile/avatar/${profile.avatar.thumbnail}`, logErrorToConsole);
     }
-    if (profile.cover_image.large !== 'default-large.jpg') {
+    if (profile.cover_image.large !== 'default-large.jpeg') {
         fs.unlink(`public/img/profile/cover-image/${profile.cover_image.large}`, logErrorToConsole);
     }
-    if (profile.cover_image.medium !== 'default-medium.jpg') {
+    if (profile.cover_image.medium !== 'default-medium.jpeg') {
         fs.unlink(
             `public/img/profile/cover-image/${profile.cover_image.medium}`,
             logErrorToConsole,
         );
     }
-    if (profile.cover_image.small !== 'default-small.jpg') {
+    if (profile.cover_image.small !== 'default-small.jpeg') {
         fs.unlink(`public/img/profile/cover-image/${profile.cover_image.small}`, logErrorToConsole);
     }
 

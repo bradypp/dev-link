@@ -1,5 +1,11 @@
 import styled from 'styled-components/macro';
-import { OutboundLink } from 'shared/components';
+import { CustomLink } from 'shared/components';
+
+export const ContentContainer = styled.div`
+    button {
+        margin-right: ${({ theme }) => theme.layout.buttonGap};
+    }
+`;
 
 export const ItemContainer = styled.div`
     margin-bottom: ${({ theme }) => theme.layout.itemGap};
@@ -9,6 +15,6 @@ export const ItemContainer = styled.div`
     }
 `;
 
-export const StyledOutboundLink = styled(OutboundLink)`
+export const StyledCustomLink = styled(CustomLink)`
     display: inline-block;
 `;

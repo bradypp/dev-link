@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+import { CustomLink } from 'shared/components';
 
 export const SkillsContainer = styled.div`
     display: flex;
@@ -16,7 +17,7 @@ export const LinksContainer = styled.div`
     justify-content: flex-start;
     flex-wrap: wrap;
     a {
-        margin: ${({ theme }) => `${theme.layout.buttonGap} ${theme.layout.buttonGap} 0 0`};
+        margin: ${({ theme }) => `2rem ${theme.layout.buttonGap} 0 0`};
     }
 `;
 
@@ -34,4 +35,9 @@ export const ContentContainer = styled.div`
 export const CarouselContainer = styled.div`
     flex: 4;
     box-shadow: ${({ theme }) => theme.boxShadow.medium};
+`;
+
+export const StyledCustomLink = styled(CustomLink)`
+    height: 2.8rem;
+    padding: 0 0.8rem;
 `;

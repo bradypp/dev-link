@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const propTypes = {
-    to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
     children: PropTypes.node,
     className: PropTypes.string,
     disabled: PropTypes.bool,
@@ -12,7 +12,6 @@ const propTypes = {
 };
 
 const defaultProps = {
-    to: undefined,
     className: undefined,
     children: undefined,
     disabled: false,

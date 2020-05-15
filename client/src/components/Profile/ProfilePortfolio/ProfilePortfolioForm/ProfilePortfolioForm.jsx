@@ -7,7 +7,7 @@ import { Form } from 'shared/components';
 import { EditModal } from 'components';
 import { validators } from 'shared/utils';
 import * as Yup from 'yup';
-import * as S from './ProfilePortfolioStyles';
+import * as S from './ProfilePortfolioFormStyles';
 
 const propTypes = {
     updatePortfolioItem: PropTypes.func.isRequired,

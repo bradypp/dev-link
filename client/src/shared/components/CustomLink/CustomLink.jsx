@@ -1,10 +1,10 @@
 import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { Icon, ButtonText, ButtonSpinner } from 'shared/components';
-import { StyledLink } from './CustomLinkStyles';
+import { StyledLink, StyledOutboundLink } from './CustomLinkStyles';
 
 const propTypes = {
-    to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
+    to: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
     children: PropTypes.node,
     className: PropTypes.string,
     variant: PropTypes.oneOf([
@@ -25,9 +25,11 @@ const propTypes = {
     isActive: PropTypes.bool,
     disabled: PropTypes.bool,
     onClick: PropTypes.func,
+    href: PropTypes.string,
 };
 
 const defaultProps = {
+    to: undefined,
     className: undefined,
     children: undefined,
     variant: 'link',
@@ -41,10 +43,14 @@ const defaultProps = {
     isActive: false,
     disabled: false,
     onClick: undefined,
+    href: undefined,
 };
 
 const CustomLink = forwardRef(
-    ({ children, icon, iconSize, iconLocation, isWorking, disabled, color, ...props }, ref) => {
+    (
+        { children, icon, iconSize, iconLocation, isWorking, disabled, color, href, ...props },
+        ref,
+    ) => {
         const renderedIcon = (
             <>
                 {!isWorking && icon && typeof icon === 'string' ? (
@@ -54,13 +60,17 @@ const CustomLink = forwardRef(
                 )}
             </>
         );
+
+        const RenderedLink = href ? StyledOutboundLink : StyledLink;
+
         return (
-            <StyledLink
+            <RenderedLink
                 disabled={disabled || isWorking}
                 ref={ref}
                 color={color}
                 iconSize={iconSize}
                 iconLocation={iconLocation}
+                href={href}
                 {...props}>
                 {isWorking && <ButtonSpinner />}
                 {iconLocation === 'left' && renderedIcon}
@@ -70,7 +80,7 @@ const CustomLink = forwardRef(
                     </ButtonText>
                 )}
                 {iconLocation === 'right' && renderedIcon}
-            </StyledLink>
+            </RenderedLink>
         );
     },
 );

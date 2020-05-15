@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+import { Form } from 'shared/components';
 import { mixins } from 'shared/styles';
 
 export const AccountContainer = styled.div`
@@ -61,11 +62,6 @@ export const ButtonText = styled.span`
     }
 `;
 
-export const FlexContainer = styled.div`
-    display: flex;
-    padding-top: 0.8rem;
-
-    & > :first-child {
-        margin-right: 1.6rem;
-    }
+export const StyledFormButtons = styled(Form.Buttons)`
+    padding-top: 1.6rem;
 `;

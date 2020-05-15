@@ -17,6 +17,7 @@ const propTypes = {
         'primary-lighten',
         'bordered-fill',
         'bordered-inset',
+        'link',
     ]),
     icon: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
     iconLocation: PropTypes.string,

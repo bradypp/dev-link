@@ -13,7 +13,6 @@ export { default as AddMore } from './AddMore/AddMore';
 export { default as Tooltip } from './Tooltip/Tooltip';
 export { default as Main } from './Main/Main';
 export { default as Modal } from './Modal/Modal';
-export { default as OutboundLink } from './OutboundLink/OutboundLink';
 export { default as TextArea } from './TextArea/TextArea';
 export { default as TextEditedContent } from './TextEditedContent/TextEditedContent';
 export { default as TextEditor } from './TextEditor/TextEditor';

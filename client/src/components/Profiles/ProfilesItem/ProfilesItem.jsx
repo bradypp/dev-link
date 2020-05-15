@@ -8,7 +8,6 @@ import { IoMdEye, IoMdStarOutline } from 'react-icons/io';
 import { Tag } from 'shared/components';
 import { toggleStar, toggleWatch } from 'redux/profile';
 import { selectIsAuthenticated, selectUser } from 'redux/auth';
-import { setAlert } from 'redux/alerts';
 import * as S from './ProfilesItemStyles';
 
 const propTypes = {
@@ -25,7 +24,6 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = {
     toggleWatch,
     toggleStar,
-    setAlert,
 };
 
 const ProfilesItem = ({ profile }) => {

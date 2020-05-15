@@ -23,6 +23,7 @@ import { selectUser, selectIsAuthenticated } from 'redux/auth';
 import { setAlert } from 'redux/alerts';
 import { ToggleButton } from 'shared/components';
 import { ContactModal } from 'components';
+import { toastTypes } from 'shared/constants';
 import CoverImageForm from './CoverImageForm/CoverImageForm';
 import AvatarForm from './AvatarForm/AvatarForm';
 import ProfileTopForm from './ProfileTopForm/ProfileTopForm';
@@ -87,14 +88,14 @@ const ProfileTop = ({
         if (isAuthenticated) {
             toggleWatch(profileInfo._id);
         } else {
-            setAlert('You must be signed in to watch a profile!');
+            setAlert('You must be signed in to watch a profile!', toastTypes.INFO);
         }
     };
     const toggleStarHandler = () => {
         if (isAuthenticated) {
             toggleStar(profileInfo._id);
         } else {
-            setAlert('You must be signed in to star a profile!');
+            setAlert('You must be signed in to star a profile!', toastTypes.INFO);
         }
     };
 
@@ -196,7 +197,9 @@ const ProfileTop = ({
                     </S.ToggleButtonsContainer>
                     <S.SkillsContainer>
                         {skills.map(skill => (
-                            <S.SkillLink to={`/developers?sk=${skill}`} key={uuidv4()}>
+                            <S.SkillLink
+                                to={`/developers?sk=${skill.toLowerCase()}`}
+                                key={uuidv4()}>
                                 {skill}
                             </S.SkillLink>
                         ))}

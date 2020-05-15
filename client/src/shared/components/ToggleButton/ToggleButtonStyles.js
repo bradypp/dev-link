@@ -33,11 +33,11 @@ export const ToggleButton = styled(Button).attrs({ variant: 'no-styles' })`
         )} 90%)`};
 
     &:hover {
-        border: 1px solid ${({ theme }) => mixins.darken(theme.colors.border2, 0.02)};
+        border: 1px solid ${({ theme }) => mixins.darken(theme.colors.border2, 0.03)};
         background-image: ${({ theme }) =>
-            `linear-gradient(-180deg, ${mixins.darken(theme.colors.white1, 0.02)}, ${mixins.darken(
+            `linear-gradient(-180deg, ${mixins.darken(theme.colors.white1, 0.03)}, ${mixins.darken(
                 theme.colors.white2,
-                0.04,
+                0.05,
             )} 90%)`};
     }
 

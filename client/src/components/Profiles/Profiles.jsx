@@ -31,11 +31,11 @@ const Profiles = ({ profiles, profilesIsLoading }) => {
                     {isFirstRender || profilesIsLoading ? (
                         <Spinner />
                     ) : (
-                        <>
+                        <ul>
                             {profiles.map(profile => (
                                 <ProfilesItem profile={profile} key={uuidv4()} />
                             ))}
-                        </>
+                        </ul>
                     )}
                 </S.ProfileItemsContainer>
             </ProfilesForm>
