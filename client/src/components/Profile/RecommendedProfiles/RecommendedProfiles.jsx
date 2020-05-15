@@ -29,7 +29,7 @@ const RecommendedProfiles = ({ recommendedProfiles, getRecommendedProfiles, skil
     useEffect(() => {
         getRecommendedProfiles({
             [`skills[inregex]`]: skills,
-            sort: 'total_stars',
+            sort: '-total_stars',
             limit: 10,
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
