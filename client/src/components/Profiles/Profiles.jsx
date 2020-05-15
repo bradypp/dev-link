@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { v4 as uuidv4 } from 'uuid';
 import { ProfilesItem, ProfilesForm } from 'components';
@@ -25,21 +26,26 @@ const Profiles = ({ profiles, profilesIsLoading }) => {
     const isFirstRender = useIsFirstRender();
 
     return (
-        <Main>
-            <ProfilesForm isFirstRender={isFirstRender}>
-                <S.ProfileItemsContainer>
-                    {isFirstRender || profilesIsLoading ? (
-                        <Spinner />
-                    ) : (
-                        <ul>
-                            {profiles.map(profile => (
-                                <ProfilesItem profile={profile} key={uuidv4()} />
-                            ))}
-                        </ul>
-                    )}
-                </S.ProfileItemsContainer>
-            </ProfilesForm>
-        </Main>
+        <>
+            <Helmet>
+                <title>DevLink | Developers</title>
+            </Helmet>
+            <Main>
+                <ProfilesForm isFirstRender={isFirstRender}>
+                    <S.ProfileItemsContainer>
+                        {isFirstRender || profilesIsLoading ? (
+                            <Spinner />
+                        ) : (
+                            <ul>
+                                {profiles.map(profile => (
+                                    <ProfilesItem profile={profile} key={uuidv4()} />
+                                ))}
+                            </ul>
+                        )}
+                    </S.ProfileItemsContainer>
+                </ProfilesForm>
+            </Main>
+        </>
     );
 };
 

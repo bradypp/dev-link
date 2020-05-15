@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import Image from 'react-image';
+import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { selectIsAuthenticated, selectUserUsername } from 'redux/auth';
@@ -26,41 +27,46 @@ const Home = ({ isAuthenticated, username }) => {
     if (isAuthenticated) return <Redirect to={username ? `/profile/${username}` : '/profile'} />;
 
     return (
-        <Main>
-            <S.LandingContent>
-                <h1>Welcome to your developer community</h1>
-                <p>
-                    DevLink is the perfect place to network with like-minded developers and take
-                    your career in development to the next level
-                </p>
-                <S.StyledLink
-                    to="/developers"
-                    variant="primary-darken"
-                    backgroundColor="primary"
-                    color="white1">
-                    Find Developers
-                </S.StyledLink>
-                <Modal
-                    renderLink={({ open }) => (
-                        <S.StyledButton
-                            onClick={open}
-                            variant="bordered-fill"
-                            color="primaryDarker"
-                            borderColor="primaryDarker"
-                            backgroundColor="primary">
-                            Create a profile
-                        </S.StyledButton>
-                    )}
-                    renderContent={({ close }) => <SignUp onSubmit={close} onCancel={close} />}
-                />
-            </S.LandingContent>
-            <S.LandingImageContainer>
-                <Image
-                    src="http://localhost:3000/img/home/landing.jpg"
-                    alt="developers sit around a table programming"
-                />
-            </S.LandingImageContainer>
-        </Main>
+        <>
+            <Helmet>
+                <title>Welcome to DevLink</title>
+            </Helmet>
+            <Main>
+                <S.LandingContent>
+                    <h1>Welcome to your developer community</h1>
+                    <p>
+                        DevLink is the perfect place to network with like-minded developers and take
+                        your career in development to the next level
+                    </p>
+                    <S.StyledLink
+                        to="/developers"
+                        variant="primary-darken"
+                        backgroundColor="primary"
+                        color="white1">
+                        Find Developers
+                    </S.StyledLink>
+                    <Modal
+                        renderLink={({ open }) => (
+                            <S.StyledButton
+                                onClick={open}
+                                variant="bordered-fill"
+                                color="primaryDarker"
+                                borderColor="primaryDarker"
+                                backgroundColor="primary">
+                                Create a profile
+                            </S.StyledButton>
+                        )}
+                        renderContent={({ close }) => <SignUp onSubmit={close} onCancel={close} />}
+                    />
+                </S.LandingContent>
+                <S.LandingImageContainer>
+                    <Image
+                        src="http://localhost:3000/img/home/landing.jpg"
+                        alt="developers sit around a table programming"
+                    />
+                </S.LandingImageContainer>
+            </Main>
+        </>
     );
 };
 

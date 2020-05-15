@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 import { useParams, useHistory, Redirect } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { Main, Spinner, Button } from 'shared/components';
@@ -134,44 +135,49 @@ const Profile = ({
     }
 
     return (
-        <Main>
-            {isProfileEmpty && !isFirstRender && !profileIsLoading ? (
-                isCurrentUser ? (
-                    <ProfileTopForm
-                        isOpen
-                        renderLink={({ open }) => (
-                            <Button backgroundColor="primary" onClick={open}>
-                                Create Profile
-                            </Button>
-                        )}
-                        onClose={() => history.push('/developers')}
-                        isEdit={false}
-                    />
+        <>
+            <Helmet>
+                <title>{`Profile${username && ` | ${username}`}`}</title>
+            </Helmet>
+            <Main>
+                {isProfileEmpty && !isFirstRender && !profileIsLoading ? (
+                    isCurrentUser ? (
+                        <ProfileTopForm
+                            isOpen
+                            renderLink={({ open }) => (
+                                <Button backgroundColor="primary" onClick={open}>
+                                    Create Profile
+                                </Button>
+                            )}
+                            onClose={() => history.push('/developers')}
+                            isEdit={false}
+                        />
+                    ) : (
+                        <Redirect to="/developers" />
+                    )
                 ) : (
-                    <Redirect to="/developers" />
-                )
-            ) : (
-                <>
-                    <S.ProfileContainer>
-                        {isFirstRender || profileIsLoading ? (
-                            <Spinner />
-                        ) : (
-                            <>
-                                <ProfileTop />
-                                <ProfileAbout />
-                                <ProfilePortfolio />
-                                <ProfileExperience />
-                                <ProfileEducation />
-                                <ProfileCertifications />
-                            </>
-                        )}
-                    </S.ProfileContainer>
-                    <S.SidebarContainer>
-                        {!isFirstRender && !profileIsLoading && <RecommendedProfiles />}
-                    </S.SidebarContainer>
-                </>
-            )}
-        </Main>
+                    <>
+                        <S.ProfileContainer>
+                            {isFirstRender || profileIsLoading ? (
+                                <Spinner />
+                            ) : (
+                                <>
+                                    <ProfileTop />
+                                    <ProfileAbout />
+                                    <ProfilePortfolio />
+                                    <ProfileExperience />
+                                    <ProfileEducation />
+                                    <ProfileCertifications />
+                                </>
+                            )}
+                        </S.ProfileContainer>
+                        <S.SidebarContainer>
+                            {!isFirstRender && !profileIsLoading && <RecommendedProfiles />}
+                        </S.SidebarContainer>
+                    </>
+                )}
+            </Main>
+        </>
     );
 };
 

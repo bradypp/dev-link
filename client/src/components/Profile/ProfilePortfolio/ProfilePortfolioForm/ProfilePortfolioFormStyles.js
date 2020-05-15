@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import { ImageUpload, Form } from 'shared/components';
-import { mixins, media } from 'shared/styles';
+import { media } from 'shared/styles';
 
 export const ImageUploadContainer = styled(Form.Flex)`
     ${media.bp600`

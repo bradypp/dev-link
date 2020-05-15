@@ -2,10 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Home, Account, Profile, Profiles, Header, Footer } from 'components';
 import { PrivateRoute } from 'shared/components';
+import Helmet from './Helmet';
 
 const Routes = () => {
     return (
         <Router>
+            <Helmet />
             <Header />
             <Switch>
                 <Route exact path="/" component={Home} />
