@@ -5,13 +5,13 @@ import { useLocation } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { SignIn, SignUp } from 'components';
 import { Tooltip } from 'shared/components';
-import { selectIsAuthenticated, signOutUser, selectUser } from 'redux/auth';
+import { selectIsAuthenticated, signOut, selectUser } from 'redux/auth';
 import { BsPerson, BsPeople } from 'react-icons/bs';
 import { RiCodeBoxLine, RiSettings4Line, RiLogoutCircleRLine } from 'react-icons/ri';
 import * as S from './HeaderStyles';
 
 const propTypes = {
-    signOutUser: PropTypes.func.isRequired,
+    signOut: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
     user: PropTypes.object.isRequired,
 };
@@ -21,7 +21,7 @@ const mapStateToProps = createStructuredSelector({
     isAuthenticated: selectIsAuthenticated,
 });
 
-const Header = ({ isAuthenticated, signOutUser, user }) => {
+const Header = ({ isAuthenticated, signOut, user }) => {
     const { pathname } = useLocation();
 
     const developersLink = (
@@ -39,7 +39,7 @@ const Header = ({ isAuthenticated, signOutUser, user }) => {
             <S.NavLink icon={<RiSettings4Line />} to="/account">
                 Account
             </S.NavLink>
-            <S.NavLink icon={<RiLogoutCircleRLine />} to="#" onClick={signOutUser}>
+            <S.NavLink icon={<RiLogoutCircleRLine />} to="#" onClick={signOut}>
                 Sign Out
             </S.NavLink>
         </>
@@ -96,4 +96,4 @@ const Header = ({ isAuthenticated, signOutUser, user }) => {
 
 Header.propTypes = propTypes;
 
-export default connect(mapStateToProps, { signOutUser })(Header);
+export default connect(mapStateToProps, { signOut })(Header);

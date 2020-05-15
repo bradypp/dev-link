@@ -98,7 +98,7 @@ export const updateActiveStatus = ({ active }) => async dispatch => {
         if (active) {
             dispatch(userLoaded(res.data.data.user));
         } else {
-            dispatch(signOutUser());
+            dispatch(signOut());
             dispatch(
                 setAlert('Your account has successfully been deactivated', toastTypes.SUCCESS),
             );
@@ -132,7 +132,7 @@ export const deleteAccount = () => async dispatch => {
     try {
         await api.delete('/user/me');
         dispatch(deleteProfile());
-        dispatch(signOutUser());
+        dispatch(signOut());
         dispatch(setAlert('Your account has been permanently deleted', toastTypes.SUCCESS));
     } catch (err) {
         dispatch(apiErrorHandler(err));
@@ -140,18 +140,17 @@ export const deleteAccount = () => async dispatch => {
     }
 };
 
-export const signOutUser = () => async dispatch => {
+export const signOut = () => async dispatch => {
     try {
-        dispatch(signOut());
+        await api.post('/auth/sign-out');
+        dispatch({
+            type: SIGN_OUT,
+        });
     } catch (err) {
         dispatch(apiErrorHandler(err));
         dispatch(authError(err));
     }
 };
-
-export const signOut = () => ({
-    type: SIGN_OUT,
-});
 
 export const authError = payload => ({
     type: AUTH_ERROR,
