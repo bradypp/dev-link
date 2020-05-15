@@ -38,9 +38,6 @@ if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
 
-// Serving static
-app.use(express.static(path.join(__dirname, 'public')));
-
 // Rate limiting middlewares
 if (process.env.NODE_ENV === 'production') {
     app.use('/api', rateLimiter({ maxAttempts: 200, windowMinutes: 15 }));
@@ -71,6 +68,17 @@ app.use(xss());
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/profile', profileRouter);
 app.use('/api/v1/user', userRouter);
+
+// Serve static assets from server
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Serve static assets in production
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
 
 // Unhandled route handler
 app.all('*', (req, res, next) =>

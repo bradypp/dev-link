@@ -9,7 +9,8 @@
     "start:server": "cd ./server && yarn server",
     "install:all": "yarn && npm-run-all --parallel install:client install:server",
     "install:client": "cd ./client && yarn install",
-    "install:server": "cd ./server && yarn install"
+    "install:server": "cd ./server && yarn install",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "repository": {
     "type": "git",
