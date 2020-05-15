@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { v4 as uuidv4 } from 'uuid';
 import { useHistory } from 'react-router-dom';
-import { urls } from 'shared/constants';
 import { selectProfileSkills } from 'redux/profile';
 import { selectRecommendedProfiles, getRecommendedProfiles } from 'redux/profiles';
+import defaultAvatar from 'assets/img/profile/avatar/default-thumbnail.jpeg';
 import * as S from './RecommendedProfilesStyles';
 
 const propTypes = {
@@ -52,8 +52,8 @@ const RecommendedProfiles = ({ recommendedProfiles, getRecommendedProfiles, skil
                             <S.Avatar
                                 className="avatar"
                                 src={[
-                                    `${urls.server}/img/profile/avatar/${avatar.thumbnail}`,
-                                    `${urls.client}/img/profile/avatar/default-thumbnail.jpeg`,
+                                    `http://localhost:5000/img/profile/avatar/${avatar.thumbnail}`,
+                                    defaultAvatar,
                                 ]}
                                 alt="Profile avatar"
                             />

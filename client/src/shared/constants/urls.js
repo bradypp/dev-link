@@ -1,8 +1,5 @@
 const urls = {
-    client:
-        process.env.NODE_ENV === 'development'
-            ? 'http://localhost:3000'
-            : 'https://boiling-atoll-38153.herokuapp.com/',
+    client: 'http://localhost:3000',
     server: 'http://localhost:5000',
 };
 

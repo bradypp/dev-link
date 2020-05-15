@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import Image from 'react-image';
 import { Helmet } from 'react-helmet';
-import { urls } from 'shared/constants';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { selectIsAuthenticated, selectUserUsername } from 'redux/auth';
 import { SignUp } from 'components';
 import { Main, Modal } from 'shared/components';
+import logo from 'assets/img/home/landing.jpg';
 import * as S from './HomeStyles';
 
 const propTypes = {
@@ -61,10 +61,7 @@ const Home = ({ isAuthenticated, username }) => {
                     />
                 </S.LandingContent>
                 <S.LandingImageContainer>
-                    <Image
-                        src={`${urls.client}/img/home/landing.jpg`}
-                        alt="developers sit around a table programming"
-                    />
+                    <Image src={logo} alt="developers sit around a table programming" />
                 </S.LandingImageContainer>
             </Main>
         </>

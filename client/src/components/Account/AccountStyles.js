@@ -36,7 +36,7 @@ export const Button = styled.div`
     ${mixins.flexCenterLeft}
     ${mixins.clickable}
     ${({ theme }) => mixins.darkenEffect(theme.colors.background1, null, theme.colors.border1)}
-    height: auto;
+    min-height: 12rem;
     padding: 2.4rem 1.6rem;
     width: 100%;
     text-align: left;
