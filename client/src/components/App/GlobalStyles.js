@@ -21,34 +21,17 @@ const GlobalStyles = createGlobalStyle`
   html {
     box-sizing: border-box;
     touch-action: manipulation;
-    font-size: 81.25%;
-    
-    ${media.bp2400`
-        font-size: 75%;
-    `}
-    ${media.bp1280`
-        font-size: 68.75%;
-    `}
-    ${media.bp800`
-        font-size: 62.5%;
-    `}
-
-    ${
-        ''
-        /*
     font-size: 68.75%;
     
     ${media.bp2400`
-        font-size: 62.5%; 
+        font-size: 62.5%;
     `}
     ${media.bp1280`
-        font-size: 56.25%; 
+        font-size: 56.25%;
     `}
     ${media.bp800`
         font-size: 50%;
-    `} 
-    */
-    }
+    `}
   }
 
   body {
