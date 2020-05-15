@@ -6,8 +6,9 @@ import { Carousel } from 'react-responsive-carousel';
 import { connect } from 'react-redux';
 import Media from 'react-media';
 import { createStructuredSelector } from 'reselect';
-import { ProfileCard } from 'components';
 import { selectProfilePortfolio, selectIsCurrentUser } from 'redux/profile';
+import { urls } from 'shared/constants';
+import { ProfileCard } from 'components';
 import { Tag, Flex } from 'shared/components';
 import ProfilePortfolioForm from './ProfilePortfolioForm/ProfilePortfolioForm';
 import * as S from './ProfilePortfolioStyles';
@@ -68,7 +69,7 @@ const ProfilePortfolio = ({ portfolio, isCurrentUser }) => {
                                                             interval={5000}>
                                                             {images.map((image, i) => (
                                                                 <Image
-                                                                    src={`http://localhost:5000/img/profile/portfolio/${image.medium}`}
+                                                                    src={`${urls.server}/img/profile/portfolio/${image.medium}`}
                                                                     alt={`Portfolio item - ${title} - ${i +
                                                                         1}`}
                                                                     key={uuidv4()}
@@ -119,7 +120,7 @@ const ProfilePortfolio = ({ portfolio, isCurrentUser }) => {
                                                         interval={5000}>
                                                         {images.map((image, i) => (
                                                             <Image
-                                                                src={`http://localhost:5000/img/profile/portfolio/${image.medium}`}
+                                                                src={`${urls.server}/img/profile/portfolio/${image.medium}`}
                                                                 alt={`Portfolio item - ${title} - ${i +
                                                                     1}`}
                                                                 key={uuidv4()}

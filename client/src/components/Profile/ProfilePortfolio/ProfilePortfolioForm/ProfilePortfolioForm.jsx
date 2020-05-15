@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { updatePortfolioItem, deletePortfolioItem, addPortfolioItem } from 'redux/profile';
+import { urls } from 'shared/constants';
 import { Form } from 'shared/components';
 import { EditModal } from 'components';
 import { validators } from 'shared/utils';
@@ -140,7 +141,7 @@ const ProfilePortfolioForm = ({
                                             {imagesFromApi.map((image, i) => (
                                                 <S.ImageContainer
                                                     key={uuidv4()}
-                                                    url={`http://localhost:5000/img/profile/portfolio/${image.small}`}>
+                                                    url={`${urls.server}/img/profile/portfolio/${image.small}`}>
                                                     <S.DeleteButton
                                                         onClick={() => {
                                                             const newImages = [...imagesFromApi];
@@ -155,7 +156,7 @@ const ProfilePortfolioForm = ({
                                                     key={uuidv4()}
                                                     url={
                                                         image.preview ||
-                                                        `http://localhost:5000/img/profile/portfolio/${image.small}`
+                                                        `${urls.server}/img/profile/portfolio/${image.small}`
                                                     }>
                                                     <S.DeleteButton
                                                         onClick={() => {

@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { useHistory } from 'react-router-dom';
 import { IoMdEye, IoMdStarOutline } from 'react-icons/io';
 import { Tag } from 'shared/components';
+import { urls } from 'shared/constants';
 import { toggleStar, toggleWatch } from 'redux/profile';
 import { selectIsAuthenticated, selectUser } from 'redux/auth';
 import * as S from './ProfilesItemStyles';
@@ -52,8 +53,8 @@ const ProfilesItem = ({ profile }) => {
                     <S.Avatar
                         className="avatar"
                         src={[
-                            `http://localhost:5000/img/profile/avatar/${avatar.small}`,
-                            `http://localhost:3000/img/profile/avatar/default-small.jpeg`,
+                            `${urls.server}/img/profile/avatar/${avatar.small}`,
+                            `${urls.client}/img/profile/avatar/default-small.jpeg`,
                         ]}
                         alt="Profile avatar"
                     />

@@ -23,7 +23,7 @@ import { selectUser, selectIsAuthenticated } from 'redux/auth';
 import { setAlert } from 'redux/alerts';
 import { ToggleButton } from 'shared/components';
 import { ContactModal } from 'components';
-import { toastTypes } from 'shared/constants';
+import { toastTypes, urls } from 'shared/constants';
 import CoverImageForm from './CoverImageForm/CoverImageForm';
 import AvatarForm from './AvatarForm/AvatarForm';
 import ProfileTopForm from './ProfileTopForm/ProfileTopForm';
@@ -112,8 +112,8 @@ const ProfileTop = ({
                 )}
                 <Image
                     src={[
-                        `http://localhost:5000/img/profile/cover-image/${cover_image.medium}`,
-                        ` http://localhost:3000/img/profile/cover-image/default-medium.jpeg`,
+                        `${urls.server}/img/profile/cover-image/${cover_image.medium}`,
+                        `${urls.client}/img/profile/cover-image/default-medium.jpeg`,
                     ]}
                     alt="Profile cover"
                 />
@@ -128,8 +128,8 @@ const ProfileTop = ({
                     <S.Avatar
                         className="avatar"
                         src={[
-                            `http://localhost:5000/img/profile/avatar/${avatar.small}`,
-                            `http://localhost:3000/img/profile/avatar/default-small.jpeg`,
+                            `${urls.server}/img/profile/avatar/${avatar.small}`,
+                            `${urls.client}/img/profile/avatar/default-small.jpeg`,
                         ]}
                         alt="Profile avatar"
                     />
