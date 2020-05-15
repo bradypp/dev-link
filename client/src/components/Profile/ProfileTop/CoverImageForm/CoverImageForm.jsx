@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Image from 'react-image';
+import { Button } from 'shared/components';
 import { updateProfileImage } from 'redux/profile';
 import * as S from './CoverImageFormStyles';
 
@@ -41,7 +42,19 @@ const CoverImageForm = ({ updateProfileImage }) => {
                         setImage([]);
                     }}>
                     <Image src={image[0].preview} alt="Uploaded cover image preview" />
-                    <S.ButtonsContainer withCancel onCancel={onClose} />
+                    <S.ButtonsContainer
+                        customButtons={
+                            <>
+                                <Button
+                                    type="button"
+                                    backgroundColor="primary"
+                                    color="white1"
+                                    onClick={onClose}>
+                                    Cancel
+                                </Button>
+                            </>
+                        }
+                    />
                 </form>
             )}
         />

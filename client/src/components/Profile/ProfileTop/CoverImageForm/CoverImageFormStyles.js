@@ -9,12 +9,8 @@ export const CoverImageUpload = styled(ImageUpload)`
 export const ButtonsContainer = styled(Form.Buttons)`
     position: absolute;
     left: 50%;
-    bottom: 0.8rem;
+    bottom: 1.6rem;
     transform: translateX(-50%);
-
-    & > * {
-        color: #fff;
-    }
 `;
 
 export const CoverImageModal = styled(Modal)`
