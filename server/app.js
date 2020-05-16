@@ -75,7 +75,7 @@ app.use('/api/v1/user', userRouter);
 // Serve static assets from server
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve client static assets in production
+// Serve client in production
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/build')));
     app.get('*', (req, res) => {
