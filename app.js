@@ -26,7 +26,7 @@ app.use(helmet());
 // Implement CORS
 app.use(
     cors({
-        origin: 'https://boiling-atoll-38153.herokuapp.com',
+        origin: 'http://localhost:3000',
         optionsSuccessStatus: 200,
         credentials: true,
     }),
