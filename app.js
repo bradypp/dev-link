@@ -69,9 +69,6 @@ app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/profile', profileRouter);
 app.use('/api/v1/user', userRouter);
 
-// Serve static assets from server
-app.use(express.static(path.join(__dirname, 'public')));
-
 // Serve client in production
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, 'client/build')));
