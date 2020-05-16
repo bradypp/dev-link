@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import Image from 'react-image';
+import Media from 'react-media';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -39,30 +40,54 @@ const Home = ({ isAuthenticated, username }) => {
                         DevLink is the perfect place to network with like-minded developers and take
                         your career in development to the next level
                     </p>
-                    <S.StyledLink
-                        to="/developers"
-                        variant="primary-darken"
-                        backgroundColor="primary"
-                        color="white1">
-                        Find Developers
-                    </S.StyledLink>
-                    <Modal
-                        renderLink={({ open }) => (
-                            <S.StyledButton
-                                onClick={open}
-                                variant="bordered-fill"
-                                color="primaryDarker"
-                                borderColor="primaryDarker"
-                                backgroundColor="primary">
-                                Create a profile
-                            </S.StyledButton>
+                    <Media
+                        query="(max-width: 800px)"
+                        render={() => (
+                            <>
+                                <S.LandingImageContainer>
+                                    <Image
+                                        src={logo}
+                                        alt="developers sit around a table programming"
+                                    />
+                                </S.LandingImageContainer>
+                            </>
                         )}
-                        renderContent={({ close }) => <SignUp onSubmit={close} onCancel={close} />}
                     />
+                    <S.ButtonsContainer>
+                        <S.StyledLink
+                            to="/developers"
+                            variant="primary-darken"
+                            backgroundColor="primary"
+                            color="white1">
+                            Find Developers
+                        </S.StyledLink>
+                        <Modal
+                            renderLink={({ open }) => (
+                                <S.StyledButton
+                                    onClick={open}
+                                    variant="bordered-fill"
+                                    color="primaryDarker"
+                                    borderColor="primaryDarker"
+                                    backgroundColor="primary">
+                                    Create a profile
+                                </S.StyledButton>
+                            )}
+                            renderContent={({ close }) => (
+                                <SignUp onSubmit={close} onCancel={close} />
+                            )}
+                        />
+                    </S.ButtonsContainer>
                 </S.LandingContent>
-                <S.LandingImageContainer>
-                    <Image src={logo} alt="developers sit around a table programming" />
-                </S.LandingImageContainer>
+                <Media
+                    query="(min-width: 801px)"
+                    render={() => (
+                        <>
+                            <S.LandingImageContainer>
+                                <Image src={logo} alt="developers sit around a table programming" />
+                            </S.LandingImageContainer>
+                        </>
+                    )}
+                />
             </Main>
         </>
     );

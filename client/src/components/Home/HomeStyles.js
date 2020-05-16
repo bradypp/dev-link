@@ -1,13 +1,13 @@
 import styled, { css } from 'styled-components/macro';
 import { CustomLink, Button } from 'shared/components';
-import { media } from 'shared/styles';
-
-const marginTop = 10;
+import { mixins, media } from 'shared/styles';
 
 export const LandingContent = styled.div`
     grid-column: 1 / 10;
     padding-right: 5rem;
-    margin-top: ${marginTop}rem;
+    margin-top: 10rem;
+    display: flex;
+    flex-direction: column;
 
     h1 {
         font-size: 6rem;
@@ -33,22 +33,34 @@ export const LandingContent = styled.div`
 
 export const LandingImageContainer = styled.div`
     grid-column: 10 / -1;
-    margin-top: ${marginTop - 2}rem;
+    margin-top: 8rem;
     border-radius: 50%;
     overflow: hidden;
     position: relative;
     width: 50rem;
     height: 50rem;
 
+    ${media.bp1040`
+        margin-top: 15rem;
+        width: 38rem;
+        height: 38rem;
+    `}
+
     ${media.bp800`
-        display:none;
+        align-self:center;
+        margin: 0 0 4rem 0;
+        width: 50rem;
+        height: 50rem;
+    `}
+
+    ${media.bp440`
+        width: 40rem;
+        height: 40rem;
     `}
 
     img {
         position: absolute;
         display: block;
-        width: 50rem;
-        height: 50rem;
         object-fit: cover;
     }
 `;
@@ -70,4 +82,10 @@ export const StyledLink = styled(CustomLink)`
 
 export const StyledButton = styled(Button)`
     ${buttonStyles}
+`;
+
+export const ButtonsContainer = styled.div`
+    ${media.bp800`
+        ${mixins.flexCenter}
+    `}
 `;
