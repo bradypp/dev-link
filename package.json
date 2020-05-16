@@ -4,8 +4,8 @@
   "description": "Link up with like-minded developers",
   "main": "index.js",
   "scripts": {
-    "start": "cd ./server && node server.js",
-    "startdev": "npm-run-all --parallel start:client start:server",
+    "start": "cd ./server && yarn start",
+    "start:all": "npm-run-all --parallel start:client start:server",
     "start:client": "cd ./client && yarn start",
     "start:server": "cd ./server && yarn server",
     "install:all": "yarn && npm-run-all --parallel install:client install:server",
