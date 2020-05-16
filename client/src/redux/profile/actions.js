@@ -15,7 +15,7 @@ export const getProfileByUsername = username => async dispatch => {
     try {
         dispatch(profileLoading());
 
-        const res = await api.get(`/profile/?username=${username}`);
+        const res = await api.get(`/api/v1/profile/?username=${username}`);
 
         dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {
@@ -27,7 +27,7 @@ export const getProfileById = userId => async dispatch => {
     try {
         dispatch(profileLoading());
 
-        const res = await api.get(`/user/${userId}/profile`);
+        const res = await api.get(`/api/v1/user/${userId}/profile`);
 
         dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {
@@ -39,7 +39,7 @@ export const getCurrentUserProfile = () => async dispatch => {
     try {
         dispatch(profileLoading());
 
-        const res = await api.get(`/profile/me`);
+        const res = await api.get(`/api/v1/profile/me`);
 
         dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {
@@ -55,7 +55,7 @@ export const createProfile = (data = {}) => async dispatch => {
             },
         };
 
-        const res = await api.post('/profile/me', data, config);
+        const res = await api.post('/api/v1/profile/me', data, config);
 
         dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {
@@ -72,7 +72,7 @@ export const updateProfile = data => async dispatch => {
             },
         };
 
-        const res = await api.patch('/profile/me', data, config);
+        const res = await api.patch('/api/v1/profile/me', data, config);
 
         dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {
@@ -97,7 +97,7 @@ export const updateProfileImage = (image, name) => async dispatch => {
     try {
         const [formData, config] = imagesFormData(name, [image]);
 
-        const res = await api.patch('/profile/me', formData, config);
+        const res = await api.patch('/api/v1/profile/me', formData, config);
 
         dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {
@@ -120,7 +120,7 @@ export const addPortfolioItem = data => async dispatch => {
                     'Content-Type': 'application/json',
                 },
             };
-            res = await api.post(`/profile/portfolio`, otherData, config);
+            res = await api.post(`/api/v1/profile/portfolio`, otherData, config);
         }
 
         const itemId = res.data.data.item_id;
@@ -128,7 +128,7 @@ export const addPortfolioItem = data => async dispatch => {
         // Images upload
         if (data.imageFiles) {
             const [formData, formConfig] = imagesFormData('portfolio_images', data.imageFiles);
-            res = await api.patch(`/profile/portfolio/${itemId}`, formData, formConfig);
+            res = await api.patch(`/api/v1/profile/portfolio/${itemId}`, formData, formConfig);
         }
 
         dispatch(profileLoaded(res.data.data.profile));
@@ -152,13 +152,13 @@ export const updatePortfolioItem = data => async dispatch => {
                     'Content-Type': 'application/json',
                 },
             };
-            res = await api.patch(`/profile/portfolio/${data._id}`, otherData, config);
+            res = await api.patch(`/api/v1/profile/portfolio/${data._id}`, otherData, config);
         }
 
         // Images upload
         if (data.imageFiles) {
             const [formData, formConfig] = imagesFormData('portfolio_images', data.imageFiles);
-            res = await api.patch(`/profile/portfolio/${data._id}`, formData, formConfig);
+            res = await api.patch(`/api/v1/profile/portfolio/${data._id}`, formData, formConfig);
         }
 
         dispatch(profileLoaded(res.data.data.profile));
@@ -170,7 +170,7 @@ export const updatePortfolioItem = data => async dispatch => {
 
 export const deletePortfolioItem = _id => async dispatch => {
     try {
-        const res = await api.delete(`/profile/portfolio/${_id}`);
+        const res = await api.delete(`/api/v1/profile/portfolio/${_id}`);
         dispatch(profileLoaded(res.data.data.profile));
     } catch (err) {
         dispatch(apiErrorHandler(err));
@@ -180,7 +180,7 @@ export const deletePortfolioItem = _id => async dispatch => {
 
 export const toggleStar = profileId => async dispatch => {
     try {
-        const res = await api.patch(`/profile/${profileId}/star`);
+        const res = await api.patch(`/api/v1/profile/${profileId}/star`);
 
         dispatch(profileLoaded(res.data.data.profile));
         dispatch(userLoaded(res.data.data.user));
@@ -192,7 +192,7 @@ export const toggleStar = profileId => async dispatch => {
 
 export const toggleWatch = profileId => async dispatch => {
     try {
-        const res = await api.patch(`/profile/${profileId}/watch`);
+        const res = await api.patch(`/api/v1/profile/${profileId}/watch`);
 
         dispatch(profileLoaded(res.data.data.profile));
         dispatch(userLoaded(res.data.data.user));
@@ -204,7 +204,7 @@ export const toggleWatch = profileId => async dispatch => {
 
 export const deleteProfile = () => async dispatch => {
     try {
-        await api.delete('/profile/me');
+        await api.delete('/api/v1/profile/me');
         dispatch(resetProfile());
         dispatch(setAlert('Your profile has successfully been deleted', toastTypes.SUCCESS));
     } catch (err) {

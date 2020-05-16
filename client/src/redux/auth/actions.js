@@ -15,7 +15,7 @@ export const loadUser = () => async dispatch => {
     try {
         dispatch(userLoading());
 
-        const res = await api.get('/user/me');
+        const res = await api.get('/api/v1/user/me');
 
         dispatch(userLoaded(res.data.data.user));
     } catch (err) {
@@ -34,7 +34,7 @@ export const signUp = ({ name, username, email, password, password2 }) => async 
             },
         };
 
-        const res = await api.post('/auth/sign-up', body, config);
+        const res = await api.post('/api/v1/auth/sign-up', body, config);
 
         dispatch(signUpSuccess(res.data.data.token));
         dispatch(loadUser());
@@ -55,7 +55,7 @@ export const signIn = ({ login, password }) => async dispatch => {
             },
         };
 
-        const res = await api.post('/auth/sign-in', body, config);
+        const res = await api.post('/api/v1/auth/sign-in', body, config);
 
         dispatch(signInSuccess(res.data.data.token));
         dispatch(loadUser());
@@ -74,7 +74,7 @@ export const updateUser = ({ name, username, email }) => async dispatch => {
             },
         };
 
-        const res = await api.patch(`/user/me`, body, config);
+        const res = await api.patch(`/api/v1/user/me`, body, config);
 
         dispatch(userLoaded(res.data.data.user));
         dispatch(setAlert('Your account has been successfully updated', toastTypes.SUCCESS));
@@ -93,7 +93,7 @@ export const updateActiveStatus = ({ active }) => async dispatch => {
             },
         };
 
-        const res = await api.patch(`/user/me`, body, config);
+        const res = await api.patch(`/api/v1/user/me`, body, config);
 
         if (active) {
             dispatch(userLoaded(res.data.data.user));
@@ -118,7 +118,7 @@ export const updatePassword = ({ current_password, password, password2 }) => asy
             },
         };
 
-        const res = await api.patch(`/auth/update-password`, body, config);
+        const res = await api.patch(`/api/v1/auth/update-password`, body, config);
 
         dispatch(signInSuccess(res.data.data.token));
         dispatch(setAlert('Your password has successfully been updated', toastTypes.SUCCESS));
@@ -130,7 +130,7 @@ export const updatePassword = ({ current_password, password, password2 }) => asy
 
 export const deleteAccount = () => async dispatch => {
     try {
-        await api.delete('/user/me');
+        await api.delete('/api/v1/user/me');
         dispatch(deleteProfile());
         dispatch(signOut());
         dispatch(setAlert('Your account has been permanently deleted', toastTypes.SUCCESS));
@@ -142,7 +142,7 @@ export const deleteAccount = () => async dispatch => {
 
 export const signOut = () => async dispatch => {
     try {
-        await api.post('/auth/sign-out');
+        await api.post('/api/v1/auth/sign-out');
         dispatch({
             type: SIGN_OUT,
         });

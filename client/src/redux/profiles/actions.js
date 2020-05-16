@@ -18,10 +18,10 @@ export const getProfiles = (queryObj = null) => async dispatch => {
 
         if (queryObj) {
             const queryString = url.objectToQueryString(queryObj);
-            const res = await api.get(`/profile/all?${queryString}`);
+            const res = await api.get(`/api/v1/profile/all?${queryString}`);
             dispatch(profilesLoaded(res.data.data.profiles));
         } else {
-            const res = await api.get(`/profile/all`);
+            const res = await api.get(`/api/v1/profile/all`);
             dispatch(profilesLoaded(res.data.data.profiles));
         }
     } catch (err) {
@@ -35,7 +35,7 @@ export const getRecommendedProfiles = queryObj => async dispatch => {
         dispatch(clearRecommendedProfiles());
         dispatch(profilesLoading());
         const queryString = url.objectToQueryString(queryObj);
-        const res = await api.get(`/profile/all?${queryString}`);
+        const res = await api.get(`/api/v1/profile/all?${queryString}`);
         dispatch(recommendedProfilesLoaded(res.data.data.profiles));
     } catch (err) {
         dispatch(apiErrorHandler(err));
@@ -47,7 +47,7 @@ export const getMoreProfiles = queryObj => async dispatch => {
     try {
         dispatch(moreProfilesLoading());
         const queryString = url.objectToQueryString(queryObj);
-        const res = await api.get(`/profile/all?${queryString}`);
+        const res = await api.get(`/api/v1/profile/all?${queryString}`);
         dispatch(moreProfilesLoaded(res.data.data.profiles));
     } catch (err) {
         dispatch(apiErrorHandler(err));
@@ -57,7 +57,7 @@ export const getMoreProfiles = queryObj => async dispatch => {
 
 export const getSearchConstants = () => async dispatch => {
     try {
-        const res = await api.get(`/profile/all?fields=skills,desired_roles,-user`);
+        const res = await api.get(`/api/v1/profile/all?fields=skills,desired_roles,-user`);
         const skills = new Set(
             res.data.data.profiles
                 .map(profile => profile.skills)
