@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-process-exit */
 const dotenv = require('dotenv');
+
 dotenv.config({ path: './.env.local' });
 
 // Handle any uncaught ex
