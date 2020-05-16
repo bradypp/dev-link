@@ -26,9 +26,10 @@ app.use(helmet());
 // Implement CORS
 app.use(
     cors({
-        origin: `process.env.NODE_ENV === 'development'`
-            ? 'http://localhost:3000'
-            : 'https://boiling-atoll-38153.herokuapp.com/',
+        origin:
+            process.env.NODE_ENV === 'development'
+                ? 'http://localhost:3000'
+                : 'https://boiling-atoll-38153.herokuapp.com/',
         optionsSuccessStatus: 200,
         credentials: true,
     }),
@@ -74,11 +75,11 @@ app.use('/api/v1/user', userRouter);
 // Serve static assets from server
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Serve static assets in production
+// Serve client static assets in production
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, 'client/build')));
+    app.use(express.static(path.join(__dirname, '../client/build')));
     app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, 'client/build/index.html'));
+        res.sendFile(path.join(__dirname, '../client/build/index.html'));
     });
 }
 
