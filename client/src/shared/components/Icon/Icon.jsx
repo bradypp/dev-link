@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { styleIcon } from './IconStyles';
 
 const propTypes = {
-    type: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
     className: PropTypes.string,
     size: PropTypes.string,
     color: PropTypes.string,
@@ -20,11 +20,11 @@ const defaultProps = {
 };
 
 // Icon library
-const types = {};
+const icons = {};
 
-const Icon = ({ type, ...props }) => {
-    const StyledIcon = styleIcon(types[type]);
-    return <StyledIcon data-testid={`icon:${type}`} {...props} />;
+const Icon = ({ name, ...props }) => {
+    const StyledIcon = styleIcon(icons[name]);
+    return <StyledIcon data-testid={`icon:${name}`} {...props} />;
 };
 
 Icon.propTypes = propTypes;

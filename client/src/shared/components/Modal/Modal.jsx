@@ -15,7 +15,7 @@ import {
 const propTypes = {
     className: PropTypes.string,
     testid: PropTypes.string,
-    variant: PropTypes.oneOf(['center', 'aside']),
+    variant: PropTypes.string,
     width: PropTypes.string,
     withCloseButton: PropTypes.bool,
     withDeleteButton: PropTypes.bool,

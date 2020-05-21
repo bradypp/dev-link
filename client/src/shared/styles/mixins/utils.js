@@ -28,11 +28,6 @@ const utils = {
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
     `,
-    truncateText: css`
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    `,
     clickable: css`
         cursor: pointer;
         user-select: none;
