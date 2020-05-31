@@ -1,5 +1,5 @@
 import React from 'react';
-import { CustomLink, Tooltip, Button } from 'shared/components';
+import { CustomLink, Tooltip } from 'shared/components';
 import { FooterContainer, Separator } from './FooterStyles';
 
 const Footer = () => (

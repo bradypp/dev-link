@@ -83,8 +83,9 @@ export const updateProfile = data => async dispatch => {
 
 const imagesFormData = (name, images) => {
     const formData = new FormData();
+    const imagesArr = [images].flat();
 
-    images.forEach(image => formData.append(name, image));
+    imagesArr.forEach(image => formData.append(name, image));
     const config = {
         headers: {
             'Content-Type': 'multipart/form-data',
@@ -93,80 +94,9 @@ const imagesFormData = (name, images) => {
     return [formData, config];
 };
 
-//     await sharp(req.files.avatar[0].buffer)
-//     .resize(400, 400)
-//     .toFormat('jpeg')
-//     .jpeg({ quality: 90 });
-
-// avatar.small = `${filename}-small.jpeg`;
-// await sharp(req.files.avatar[0].buffer)
-//     .resize(200, 200)
-//     .toFormat('jpeg')
-//     .jpeg({ quality: 90 });
-
-// avatar.thumbnail = `${filename}-thumbnail.jpeg`;
-// await sharp(req.files.avatar[0].buffer)
-//     .resize(60, 60)
-//     .toFormat('jpeg')
-//     .jpeg({ quality: 90 });
-
-// const cover_image = {};
-// const filename = `profile-cover_image-${req.user.id}-${Date.now()}`;
-
-// cover_image.large = `${filename}-large.jpeg`;
-// await sharp(req.files.cover_image[0].buffer)
-//     .resize(1010, 253)
-//     .toFormat('jpeg')
-//     .jpeg({ quality: 90 });
-
-// cover_image.medium = `${filename}-medium.jpeg`;
-// await sharp(req.files.cover_image[0].buffer)
-//     .resize(713, 178)
-//     .toFormat('jpeg')
-//     .jpeg({ quality: 90 });
-
-// cover_image.small = `${filename}-small.jpeg`;
-// await sharp(req.files.cover_image[0].buffer)
-//     .resize(451, 113)
-//     .toFormat('jpeg')
-//     .jpeg({ quality: 90 });
-// Create an array of promises to name/resize the images then fulfill them all at once using Promise.all
-// await Promise.all(
-//     req.files.portfolio_images.map(async (file, i) => {
-//         const image = {};
-//         const filename = `profile-portfolio-${i + 1}-${req.user.id}-${Date.now()}`;
-
-//         image.large = `${filename}-large.jpeg`;
-//         await sharp(file.buffer)
-//             .resize(1152, 777)
-//             .toFormat('jpeg')
-//             .jpeg({ quality: 90 });
-
-//         image.medium = `${filename}-medium.jpeg`;
-//         await sharp(file.buffer)
-//             .resize(768, 518)
-//             .toFormat('jpeg')
-//             .jpeg({ quality: 90 });
-
-//         image.small = `${filename}-small.jpeg`;
-//         await sharp(file.buffer)
-//             .resize(480, 324)
-//             .toFormat('jpeg')
-//             .jpeg({ quality: 90 });
-
-//         image.thumbnail = `${filename}-thumbnail.jpeg`;
-//         await sharp(file.buffer)
-//             .resize(200, 200)
-//             .toFormat('jpeg')
-//             .jpeg({ quality: 90 });
-
-//         portfolio_images.push(image);
-//     }),
-// );
-
 export const updateProfileImage = (image, name) => async dispatch => {
     try {
-        const [formData, config] = imagesFormData(name, [image]);
+        const [formData, config] = imagesFormData(name, image);
 
         const res = await api.patch('/api/v1/profile/me', formData, config);
 
