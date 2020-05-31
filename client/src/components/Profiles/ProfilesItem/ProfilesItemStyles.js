@@ -109,6 +109,10 @@ export const AvatarContainer = styled.div`
 `;
 
 export const Avatar = styled(Image)`
+    height: 12rem;
+    width: 12rem;
+    min-width: 12rem;
+    border-radius: 50%;
     position: absolute;
     display: block;
     object-fit: cover;

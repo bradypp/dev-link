@@ -102,6 +102,7 @@ export const AvatarContainer = styled.div`
 `;
 
 export const Avatar = styled(Image)`
+    ${avatarContainer}
     position: absolute;
     z-index: 1;
 `;
