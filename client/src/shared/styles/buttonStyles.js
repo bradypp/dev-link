@@ -42,7 +42,7 @@ const borderedInset = css`
         `}
 `;
 
-const iconOnlyHeightWidth = '3rem';
+const iconOnlyHeightWidth = '3.2rem';
 
 const buttonStyles = css`
     ${mixins.inlineFlexCenter}
@@ -57,8 +57,10 @@ const buttonStyles = css`
         variant !== 'link' &&
         css`
             font-size: 1.4rem;
-            height: ${({ iconOnly }) => (iconOnly ? iconOnlyHeightWidth : '3rem')};
+            height: ${({ iconOnly }) => (iconOnly ? iconOnlyHeightWidth : '3.2rem')};
             width: ${({ iconOnly }) => (iconOnly ? iconOnlyHeightWidth : 'auto')};
+            min-height: 3.2rem;
+            min-width: 6rem;
             padding: 0 ${({ iconOnly }) => (iconOnly ? '0' : '1rem')};
             border-radius: ${({ iconOnly }) => (iconOnly ? '50%' : '0.3rem')};
             color: ${({ theme, color }) => theme.colors[color] || 'inherit'};

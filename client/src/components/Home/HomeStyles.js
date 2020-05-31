@@ -33,7 +33,7 @@ export const LandingContent = styled.div`
 
 export const LandingImageContainer = styled.div`
     grid-column: 10 / -1;
-    margin-top: 8rem;
+    margin-top: 6rem;
     border-radius: 50%;
     overflow: hidden;
     position: relative;
@@ -66,8 +66,8 @@ export const LandingImageContainer = styled.div`
 `;
 
 const buttonStyles = css`
-    padding: 0 2rem;
-    height: 4.2rem;
+    padding: 0 2.4rem;
+    height: 4.6rem;
     font-size: 1.6rem;
     font-weight: 500;
     border-radius: 3rem;

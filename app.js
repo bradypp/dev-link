@@ -26,7 +26,7 @@ app.use(helmet());
 // Implement CORS
 app.use(
     cors({
-        origin: 'https://boiling-atoll-38153.herokuapp.com/',
+        origin: 'https://d-link.herokuapp.com/',
         optionsSuccessStatus: 200,
         credentials: true,
     }),

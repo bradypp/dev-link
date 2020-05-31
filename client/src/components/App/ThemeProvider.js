@@ -97,7 +97,7 @@ const ThemeProvider = ({ children }) => {
             pagePadding: `4.8rem`,
             pagePaddingTablet: `3.2rem`,
             pagePaddingMobile: `1.6rem`,
-            headerHeight: `5rem`,
+            headerHeight: `5.4rem`,
             footerHeight: `10rem`,
             cardPadding: `2.4rem`,
             mainGridGap: `2.4rem`,
