@@ -60,7 +60,7 @@ const buttonStyles = css`
             height: ${({ iconOnly }) => (iconOnly ? iconOnlyHeightWidth : '3.2rem')};
             width: ${({ iconOnly }) => (iconOnly ? iconOnlyHeightWidth : 'auto')};
             min-height: 3.2rem;
-            min-width: 6rem;
+            min-width: ${({ iconOnly }) => (iconOnly ? iconOnlyHeightWidth : '6rem')};
             padding: 0 ${({ iconOnly }) => (iconOnly ? '0' : '1rem')};
             border-radius: ${({ iconOnly }) => (iconOnly ? '50%' : '0.3rem')};
             color: ${({ theme, color }) => theme.colors[color] || 'inherit'};

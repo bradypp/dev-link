@@ -1,7 +1,7 @@
 const AppError = require('./appError');
 const catchAsync = require('./catchAsync');
 const filterObject = require('./filterObject');
-const multerImageUpload = require('./multerImageUpload');
+const multerUpload = require('./multerUpload');
 const Email = require('./email');
 const omitKeyValuePairs = require('./omitKeyValuePairs');
 
@@ -9,7 +9,7 @@ module.exports = {
     AppError,
     catchAsync,
     filterObject,
-    multerImageUpload,
+    multerUpload,
     Email,
     omitKeyValuePairs,
 };

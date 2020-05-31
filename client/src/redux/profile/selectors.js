@@ -85,12 +85,12 @@ export const selectProfileContact = createSelector(
 
 export const selectProfileAvatar = createSelector(
     [selectCurrentProfile],
-    profile => profile.avatar || {},
+    profile => profile.avatar || '',
 );
 
 export const selectProfileCoverImage = createSelector(
     [selectCurrentProfile],
-    profile => profile.cover_image || {},
+    profile => profile.cover_image || '',
 );
 
 export const selectProfilePortfolio = createSelector(

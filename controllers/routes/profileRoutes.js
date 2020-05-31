@@ -22,14 +22,9 @@ router
         profileController.getMe,
         profileController.uploadProfileImages,
         profileController.prepareProfileImages,
-        profileController.deleteReplacedProfileImages,
         profileController.updateProfile,
     )
-    .delete(
-        profileController.getMe,
-        profileController.deleteAllProfileImages,
-        profileController.deleteProfile,
-    );
+    .delete(profileController.getMe, profileController.deleteProfile);
 
 router
     .route('/portfolio')
@@ -53,7 +48,6 @@ router
     .delete(profileController.getMe, profileController.removePortfolioItem);
 
 router.route('/:id/star').patch(profileController.getMe, profileController.toggleStar);
-
 router.route('/:id/watch').patch(profileController.getMe, profileController.toggleWatch);
 
 // Restrict the following routes to admin users only

@@ -52,10 +52,7 @@ const ProfilesItem = ({ profile }) => {
                 <S.AvatarContainer>
                     <S.Avatar
                         className="avatar"
-                        src={[
-                            `http://localhost:5000/img/profile/avatar/${avatar.small}`,
-                            defaultAvatar,
-                        ]}
+                        src={[avatar, defaultAvatar]}
                         alt="Profile avatar"
                     />
                 </S.AvatarContainer>

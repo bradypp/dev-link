@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
+import Image from 'react-image';
 import { updatePortfolioItem, deletePortfolioItem, addPortfolioItem } from 'redux/profile';
 import { Form } from 'shared/components';
 import { EditModal } from 'components';
@@ -138,9 +139,8 @@ const ProfilePortfolioForm = ({
                                         />
                                         <S.ImagesContainer>
                                             {imagesFromApi.map((image, i) => (
-                                                <S.ImageContainer
-                                                    key={uuidv4()}
-                                                    url={`http://localhost:5000/img/profile/portfolio/${image.small}`}>
+                                                <S.ImageContainer key={uuidv4()}>
+                                                    <Image src={image} />
                                                     <S.DeleteButton
                                                         onClick={() => {
                                                             const newImages = [...imagesFromApi];
@@ -151,12 +151,8 @@ const ProfilePortfolioForm = ({
                                                 </S.ImageContainer>
                                             ))}
                                             {imageFiles.map((image, i) => (
-                                                <S.ImageContainer
-                                                    key={uuidv4()}
-                                                    url={
-                                                        image.preview ||
-                                                        `http://localhost:5000/img/profile/portfolio/${image.small}`
-                                                    }>
+                                                <S.ImageContainer key={uuidv4()}>
+                                                    <Image src={image.preview} />
                                                     <S.DeleteButton
                                                         onClick={() => {
                                                             const newImages = [...imageFiles];

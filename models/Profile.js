@@ -5,20 +5,7 @@ const profileSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User',
     },
-    avatar: {
-        medium: {
-            type: String,
-            default: 'default-medium.jpeg',
-        },
-        small: {
-            type: String,
-            default: 'default-small.jpeg',
-        },
-        thumbnail: {
-            type: String,
-            default: 'default-thumbnail.jpeg',
-        },
-    },
+    avatar: String,
     cover_image: {
         large: {
             type: String,
@@ -138,22 +125,7 @@ const profileSchema = new Schema({
                 type: String,
                 trim: true,
             },
-            images: [
-                {
-                    large: {
-                        type: String,
-                    },
-                    medium: {
-                        type: String,
-                    },
-                    small: {
-                        type: String,
-                    },
-                    thumbnail: {
-                        type: String,
-                    },
-                },
-            ],
+            images: [String],
         },
     ],
     experience: [

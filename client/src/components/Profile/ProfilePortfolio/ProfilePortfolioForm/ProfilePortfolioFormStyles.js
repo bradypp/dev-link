@@ -29,19 +29,17 @@ export const ImagesContainer = styled(Form.Grid)`
 
 export const ImageContainer = styled.div`
     position: relative;
-    background-image: ${({ url }) => `url(${url})`};
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
     height: 16rem;
     width: 100%;
 `;
 
-export const DeleteButton = styled(Form.DeleteButton).attrs({
-    variant: 'no-styles',
-    color: 'white1',
-})`
+export const DeleteButton = styled(Form.DeleteButton)`
     position: absolute;
     top: 5px;
     right: 5px;
+    padding: 0;
+    width: 2.8rem;
+    height: 2.8rem;
+    min-height: 2.4rem;
+    min-width: 2.4rem;
 `;

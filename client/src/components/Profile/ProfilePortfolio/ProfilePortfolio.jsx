@@ -68,7 +68,7 @@ const ProfilePortfolio = ({ portfolio, isCurrentUser }) => {
                                                             interval={5000}>
                                                             {images.map((image, i) => (
                                                                 <Image
-                                                                    src={`http://localhost:5000/img/profile/portfolio/${image.medium}`}
+                                                                    src={image}
                                                                     alt={`Portfolio item - ${title} - ${i +
                                                                         1}`}
                                                                     key={uuidv4()}
@@ -119,7 +119,7 @@ const ProfilePortfolio = ({ portfolio, isCurrentUser }) => {
                                                         interval={5000}>
                                                         {images.map((image, i) => (
                                                             <Image
-                                                                src={`http://localhost:5000/img/profile/portfolio/${image.medium}`}
+                                                                src={image}
                                                                 alt={`Portfolio item - ${title} - ${i +
                                                                     1}`}
                                                                 key={uuidv4()}
