@@ -26,67 +26,23 @@ const Header = ({ isAuthenticated, signOut, user }) => {
     const { pathname } = useLocation();
 
     const developersLink = (
-        <>
-            <Media
-                query="(min-width: 601px)"
-                render={() => (
-                    <S.NavLink iconSize="1.8rem" icon={<BsPeople />} to="/developers">
-                        Developers
-                    </S.NavLink>
-                )}
-            />
-            <Media
-                query="(max-width: 600px)"
-                render={() => <S.NavLink iconSize="2.4rem" icon={<BsPeople />} to="/developers" />}
-            />
-        </>
+        <S.NavLink iconSize="1.8rem" icon={<BsPeople />} to="/developers">
+            Developers
+        </S.NavLink>
     );
 
     const signedInMenu = (
         <>
             {developersLink}
-            <Media
-                query="(min-width: 601px)"
-                render={() => (
-                    <>
-                        <S.NavLink
-                            iconSize="1.8rem"
-                            icon={<BsPerson />}
-                            to={`/profile/${user.username}`}>
-                            Profile
-                        </S.NavLink>
-                        <S.NavLink iconSize="1.8rem" icon={<RiSettings4Line />} to="/account">
-                            Account
-                        </S.NavLink>
-                        <S.NavLink
-                            iconSize="1.8rem"
-                            icon={<RiLogoutCircleRLine />}
-                            to="#"
-                            onClick={signOut}>
-                            Sign Out
-                        </S.NavLink>
-                    </>
-                )}
-            />
-            <Media
-                query="(max-width: 600px)"
-                render={() => (
-                    <>
-                        <S.NavLink
-                            iconSize="2.4rem"
-                            icon={<BsPerson />}
-                            to={`/profile/${user.username}`}
-                        />
-                        <S.NavLink iconSize="2.4rem" icon={<RiSettings4Line />} to="/account" />
-                        <S.NavLink
-                            iconSize="2.4rem"
-                            icon={<RiLogoutCircleRLine />}
-                            to="#"
-                            onClick={signOut}
-                        />
-                    </>
-                )}
-            />
+            <S.NavLink iconSize="1.8rem" icon={<BsPerson />} to={`/profile/${user.username}`}>
+                Profile
+            </S.NavLink>
+            <S.NavLink iconSize="1.8rem" icon={<RiSettings4Line />} to="/account">
+                Account
+            </S.NavLink>
+            <S.NavLink iconSize="1.8rem" icon={<RiLogoutCircleRLine />} to="#" onClick={signOut}>
+                Sign Out
+            </S.NavLink>
         </>
     );
 

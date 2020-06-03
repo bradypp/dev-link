@@ -55,8 +55,16 @@ export const NavLink = styled(CustomLink).attrs({
         margin-right: 0.2rem;
     }
 
-    ${media.bp440`
+    ${media.bp600`
         padding: 0 0.8rem;
+
+        span {
+            display:none;
+        }
+
+        svg {
+            font-size: 2.4rem;
+        }
     `}
 `;
 
