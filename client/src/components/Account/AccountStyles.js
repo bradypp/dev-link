@@ -42,6 +42,7 @@ export const Button = styled.div`
     text-align: left;
     white-space: normal;
     border: 1px solid ${({ theme }) => theme.colors.border1};
+    transition: all 0.25s ease;
 `;
 
 export const ButtonIcon = styled.div`
