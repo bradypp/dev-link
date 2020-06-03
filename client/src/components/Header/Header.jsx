@@ -48,6 +48,7 @@ const Header = ({ isAuthenticated, signOut, user }) => {
 
     const guestMenu = (
         <>
+            {pathname.startsWith('/profile') && developersLink}
             <Media
                 query="(min-width: 441px)"
                 render={() => (
@@ -116,7 +117,6 @@ const Header = ({ isAuthenticated, signOut, user }) => {
                     </>
                 )}
             />
-            {pathname.startsWith('/profile') && developersLink}
         </>
     );
 

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { v4 as uuidv4 } from 'uuid';
 import { useHistory } from 'react-router-dom';
-import { selectProfileSkills } from 'redux/profile';
+import { selectProfileSkills, selectProfilePortfolio } from 'redux/profile';
 import { selectRecommendedProfiles, getRecommendedProfiles } from 'redux/profiles';
 import defaultAvatar from 'assets/img/profile/avatar/default-thumbnail.jpeg';
 import * as S from './RecommendedProfilesStyles';
@@ -13,23 +13,32 @@ const propTypes = {
     getRecommendedProfiles: PropTypes.func.isRequired,
     recommendedProfiles: PropTypes.array.isRequired,
     skills: PropTypes.array.isRequired,
+    portfolio: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
     recommendedProfiles: selectRecommendedProfiles,
     skills: selectProfileSkills,
+    portfolio: selectProfilePortfolio,
 });
 
 const mapDispatchToProps = {
     getRecommendedProfiles,
 };
 
-const RecommendedProfiles = ({ recommendedProfiles, getRecommendedProfiles, skills }) => {
+const RecommendedProfiles = ({
+    recommendedProfiles,
+    getRecommendedProfiles,
+    skills,
+    portfolio,
+}) => {
     const history = useHistory();
+
+    const portfolioSkills = new Set(portfolio.map(item => item.skills).flat());
 
     useEffect(() => {
         getRecommendedProfiles({
-            [`skills[inregex]`]: skills,
+            [`skills[inregex]`]: [...skills, ...Array.from(portfolioSkills)],
             sort: '-total_stars',
             limit: 10,
         });

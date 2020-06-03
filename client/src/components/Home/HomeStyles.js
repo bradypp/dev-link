@@ -12,7 +12,7 @@ export const LandingContent = styled.div`
     h1 {
         font-size: 6rem;
         font-weight: 300;
-        margin: 0 0 3rem 0;
+        margin: 0 0 4rem 0;
         color: ${({ theme }) => theme.colors.primaryDarker};
 
         ${media.bp800`
@@ -25,19 +25,20 @@ export const LandingContent = styled.div`
         color: ${({ theme }) => theme.colors.primaryDarker};
         opacity: 0.9;
         font-weight: 300;
-        margin-bottom: 4rem;
+        margin-bottom: 5rem;
     }
 
     ${media.bp800`
         grid-column: 1 / -1;
-        padding:0;
-        margin:0;
+        padding: 0;
+        margin: 0;
     `}
 `;
 
 export const LandingImageContainer = styled.div`
+    justify-self: end;
     grid-column: 10 / -1;
-    margin-top: 6rem;
+    margin-top: 7rem;
     border-radius: 50%;
     overflow: hidden;
     position: relative;
