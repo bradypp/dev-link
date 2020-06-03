@@ -58,6 +58,7 @@ exports.uploadProfileImages = multerUpload.fields([
 
 exports.prepareProfileImages = catchAsync(async (req, res, next) => {
     if (!req.files) return next();
+
     if (req.files.avatar) req.body.avatar = req.files.avatar[0].location;
     if (req.files.cover_image) req.body.cover_image = req.files.cover_image[0].location;
     if (req.files.portfolio_images)
@@ -66,19 +67,27 @@ exports.prepareProfileImages = catchAsync(async (req, res, next) => {
 });
 
 exports.addPortfolioItem = catchAsync(async (req, res, next) => {
-    const profile = await Profile.findOne({ user: req.params.userId });
+    const { title, description, skills, repo, demo } = req.body;
+
+    const profile = await Profile.findOneAndUpdate(
+        { user: req.params.userId },
+        {
+            $push: {
+                portfolio: {
+                    title,
+                    description,
+                    skills,
+                    repo,
+                    demo,
+                    images: req.body.portfolio_images || [],
+                },
+            },
+        },
+    );
 
     if (!profile) {
         return next(new AppError(notFoundErrorMessage, 404));
     }
-
-    const images = req.body.portfolio_images || [];
-
-    profile.portfolio.push({
-        ...req.body,
-        images,
-    });
-    await profile.save();
 
     res.status(200).json({
         status: 'success',
