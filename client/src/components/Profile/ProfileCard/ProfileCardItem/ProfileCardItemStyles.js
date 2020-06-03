@@ -2,7 +2,7 @@ import styled from 'styled-components/macro';
 
 export const ProfileCardItemContainer = styled.div`
     & > *:not(:last-child) {
-        margin-bottom: 0.8rem;
+        margin-bottom: 1.6rem;
     }
 `;
 
