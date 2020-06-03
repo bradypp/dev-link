@@ -27,6 +27,7 @@ export const ContentContainer = styled.div`
     display: flex;
     flex-direction: column;
     flex: 5;
+    margin-right: 1.6rem;
     align-self: stretch;
 
     p {

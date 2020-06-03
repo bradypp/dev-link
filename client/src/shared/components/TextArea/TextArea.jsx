@@ -14,7 +14,7 @@ const propTypes = {
 const defaultProps = {
     className: undefined,
     invalid: false,
-    height: 4.8,
+    height: 10,
     value: undefined,
     onChange: () => {},
 };

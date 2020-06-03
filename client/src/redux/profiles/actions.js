@@ -57,12 +57,19 @@ export const getMoreProfiles = queryObj => async dispatch => {
 
 export const getSearchConstants = () => async dispatch => {
     try {
-        const res = await api.get(`/api/v1/profile/all?fields=skills,desired_roles,-user`);
-        const skills = new Set(
-            res.data.data.profiles
-                .map(profile => profile.skills)
-                .flat()
-                .map(skill => skill.toLowerCase()),
+        const res = await api.get(
+            `/api/v1/profile/all?fields=skills,desired_roles,portfolio,-user`,
+        );
+        const profileSkillsArr = res.data.data.profiles
+            .map(profile => profile.skills)
+            .flat()
+            .map(skill => skill.toLowerCase());
+        const portfolioSkillsArr = res.data.data.profiles
+            .map(profile => profile.portfolio.map(item => item.skills).flat())
+            .flat()
+            .map(skill => skill.toLowerCase());
+        const skillsSet = new Set(
+            [profileSkillsArr, portfolioSkillsArr].flat().map(skill => skill.toLowerCase()),
         );
         const desiredRoles = new Set(
             res.data.data.profiles
@@ -73,7 +80,7 @@ export const getSearchConstants = () => async dispatch => {
 
         dispatch(
             searchConstantsLoaded({
-                allSkills: Array.from(skills).sort((a, b) =>
+                allSkills: Array.from(skillsSet).sort((a, b) =>
                     a.toLowerCase() < b.toLowerCase() ? -1 : 1,
                 ),
                 allDesiredRoles: Array.from(desiredRoles).sort((a, b) =>
