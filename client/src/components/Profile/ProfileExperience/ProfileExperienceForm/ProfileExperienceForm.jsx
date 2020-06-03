@@ -63,7 +63,8 @@ const ProfileExperienceForm = ({ updateProfile, experience, index, ...otherProps
                         validationSchema={experienceValidation}
                         onSubmit={values => {
                             const newArray = [...experience];
-                            if (index) {
+                            console.log(newArray);
+                            if (typeof index === 'number') {
                                 newArray[index] = values;
                             } else {
                                 newArray.push(values);

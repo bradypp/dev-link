@@ -57,7 +57,7 @@ const ProfileCertificationsForm = ({ updateProfile, certifications, index, ...ot
                         validationSchema={experienceValidation}
                         onSubmit={values => {
                             const newArray = [...certifications];
-                            if (index) {
+                            if (typeof index === 'number') {
                                 newArray[index] = values;
                             } else {
                                 newArray.push(values);

@@ -72,7 +72,7 @@ const ProfileEducationForm = ({ updateProfile, education, index, ...otherProps }
                         validationSchema={educationValidation}
                         onSubmit={values => {
                             const newArray = [...education];
-                            if (index) {
+                            if (typeof index === 'number') {
                                 newArray[index] = values;
                             } else {
                                 newArray.push(values);
