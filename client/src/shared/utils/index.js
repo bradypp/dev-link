@@ -6,5 +6,5 @@ export { default as apiErrorHandler } from './apiErrorHandler';
 export { default as validators } from './validators';
 export { default as browser } from './browser';
 export { default as dateTime } from './dateTime';
-export { default as javascript } from './javascript';
+export { default as js } from './js';
 export { default as url } from './url';
