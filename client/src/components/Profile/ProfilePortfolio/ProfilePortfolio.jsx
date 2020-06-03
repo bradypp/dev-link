@@ -115,7 +115,7 @@ const ProfilePortfolio = ({ portfolio, isCurrentUser }) => {
                                                         emulateTouch
                                                         showStatus={false}
                                                         showThumbs={false}
-                                                        interval={5000}>
+                                                        interval={8000}>
                                                         {images.map((image, i) => (
                                                             <S.StyledImage
                                                                 src={image}
