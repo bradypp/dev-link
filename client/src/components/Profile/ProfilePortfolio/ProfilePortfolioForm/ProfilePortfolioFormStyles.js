@@ -33,13 +33,13 @@ export const ImageContainer = styled.div`
     width: 100%;
 `;
 
-export const DeleteButton = styled(Form.DeleteButton)`
+export const DeleteButton = styled(Form.DeleteButton).attrs({ backgroundColor: 'whiteTrans' })`
     position: absolute;
     top: 5px;
     right: 5px;
     padding: 0;
-    width: 2.8rem;
-    height: 2.8rem;
-    min-height: 2.4rem;
-    min-width: 2.4rem;
+    width: 2.4rem;
+    height: 2.4rem;
+    min-height: 2.2rem;
+    min-width: 2.2rem;
 `;

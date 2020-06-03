@@ -17,6 +17,7 @@ const ThemeProvider = ({ children }) => {
         white3: '#e2e4e9',
         white4: '#d3d7df',
         white5: '#c4c9d4',
+        whiteTrans: 'rgba(244, 245, 247, 0.6)',
         greyDark1: '#333',
         greyDark2: '#555',
         greyDark3: '#777',
