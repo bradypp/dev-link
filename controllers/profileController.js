@@ -78,7 +78,6 @@ exports.addPortfolioItem = catchAsync(async (req, res, next) => {
         ...req.body,
         images,
     });
-
     await profile.save();
 
     res.status(200).json({

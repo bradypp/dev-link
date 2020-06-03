@@ -167,7 +167,7 @@ const ProfilesForm = ({
                 }}>
                 {form => (
                     <Form.Element>
-                        <Form.Flex>
+                        <S.FormFieldContainer>
                             <Form.FieldContainer htmlFor={nameId} label="Name">
                                 <InputDebounced
                                     id={nameId}
@@ -203,8 +203,8 @@ const ProfilesForm = ({
                                     }}
                                 />
                             </Form.FieldContainer>
-                        </Form.Flex>
-                        <Form.Flex>
+                        </S.FormFieldContainer>
+                        <S.FormFieldContainer>
                             <Form.Field.Select
                                 label="Availability"
                                 isMulti
@@ -262,7 +262,7 @@ const ProfilesForm = ({
                                         : []
                                 }
                             />
-                        </Form.Flex>
+                        </S.FormFieldContainer>
                         <S.CheckboxContainer>
                             <Form.Field.Checkbox
                                 disabled={!isAuthenticated}

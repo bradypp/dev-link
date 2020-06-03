@@ -60,7 +60,7 @@ const GlobalStyles = createGlobalStyle`
 
   h3, h4, h5, h6, p, li {
     margin-top: 0;
-    margin-bottom: 0.8rem;
+    margin-bottom: 1rem;
   }
 
   h3, h4, h5, h6 {

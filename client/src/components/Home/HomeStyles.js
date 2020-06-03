@@ -14,6 +14,10 @@ export const LandingContent = styled.div`
         font-weight: 300;
         margin: 0 0 3rem 0;
         color: ${({ theme }) => theme.colors.primaryDarker};
+
+        ${media.bp800`
+            font-size: 5rem;
+        `}
     }
 
     p {

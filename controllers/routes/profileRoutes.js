@@ -26,15 +26,15 @@ router
     )
     .delete(profileController.getMe, profileController.deleteProfile);
 
-router
-    .route('/portfolio')
-    .post(
-        validation.updatePortfolio,
-        profileController.getMe,
-        profileController.uploadProfileImages,
-        profileController.prepareProfileImages,
-        profileController.addPortfolioItem,
-    );
+// router
+//     .route('/portfolio')
+//     .post(
+//         validation.updatePortfolio,
+//         profileController.getMe,
+//         profileController.uploadProfileImages,
+//         profileController.prepareProfileImages,
+//         profileController.addPortfolioItem,
+//     );
 
 router
     .route('/portfolio/:portId')

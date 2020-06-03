@@ -92,34 +92,75 @@ const Header = ({ isAuthenticated, signOut, user }) => {
 
     const guestMenu = (
         <>
+            <Media
+                query="(min-width: 441px)"
+                render={() => (
+                    <>
+                        <Tooltip
+                            width="40rem"
+                            placement="bottomLeft"
+                            offset={{ top: 8 }}
+                            renderElement={props => (
+                                <S.NavButton
+                                    variant="bordered-inset"
+                                    color="primary"
+                                    backgroundColor="primary"
+                                    borderColor="primary"
+                                    {...props}>
+                                    Sign In
+                                </S.NavButton>
+                            )}
+                            renderContent={props => <SignIn {...props} />}
+                        />
+                        <Tooltip
+                            width="40rem"
+                            placement="bottomLeft"
+                            offset={{ top: 8 }}
+                            renderElement={props => (
+                                <S.NavButton backgroundColor="primary" color="white1" {...props}>
+                                    Join Now
+                                </S.NavButton>
+                            )}
+                            renderContent={props => <SignUp {...props} />}
+                        />
+                    </>
+                )}
+            />
+            <Media
+                query="(max-width: 440px)"
+                render={() => (
+                    <>
+                        <Tooltip
+                            width="40rem"
+                            placement="bottom"
+                            offset={{ top: 8, left: -45 }}
+                            renderElement={props => (
+                                <S.NavButton
+                                    variant="bordered-inset"
+                                    color="primary"
+                                    backgroundColor="primary"
+                                    borderColor="primary"
+                                    {...props}>
+                                    Sign In
+                                </S.NavButton>
+                            )}
+                            renderContent={props => <SignIn {...props} />}
+                        />
+                        <Tooltip
+                            width="40rem"
+                            placement="bottom"
+                            offset={{ top: 8, left: -124 }}
+                            renderElement={props => (
+                                <S.NavButton backgroundColor="primary" color="white1" {...props}>
+                                    Join Now
+                                </S.NavButton>
+                            )}
+                            renderContent={props => <SignUp {...props} />}
+                        />
+                    </>
+                )}
+            />
             {pathname.startsWith('/profile') && developersLink}
-            <Tooltip
-                width="40rem"
-                placement="bottomLeft"
-                offset={{ top: 8 }}
-                renderElement={props => (
-                    <S.NavButton
-                        variant="bordered-inset"
-                        color="primary"
-                        backgroundColor="primary"
-                        borderColor="primary"
-                        {...props}>
-                        Sign In
-                    </S.NavButton>
-                )}
-                renderContent={props => <SignIn {...props} />}
-            />
-            <Tooltip
-                width="40rem"
-                placement="bottomLeft"
-                offset={{ top: 8 }}
-                renderElement={props => (
-                    <S.NavButton backgroundColor="primary" color="white1" {...props}>
-                        Join Now
-                    </S.NavButton>
-                )}
-                renderContent={props => <SignUp {...props} />}
-            />
         </>
     );
 

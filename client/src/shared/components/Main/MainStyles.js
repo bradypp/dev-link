@@ -5,7 +5,7 @@ export const MainContainer = styled.main`
     padding: ${({ theme }) => `${theme.layout.mainGridGap} ${theme.layout.pagePadding}`};
     background: ${({ theme, backgroundColor }) => theme.colors[backgroundColor]};
     width: 100%;
-    min-height: calc(100vh - 15rem);
+    min-height: calc(100vh - 17rem);
 
     ${media.bp800`
         padding: 1.6rem ${({ theme }) => theme.layout.pagePaddingTablet};

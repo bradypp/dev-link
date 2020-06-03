@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
@@ -53,6 +53,7 @@ const ProfilePortfolioForm = ({
         title: validators.required('Title is required'),
         description: validators.required('Description is required'),
     });
+
     return (
         <EditModal
             {...otherProps}

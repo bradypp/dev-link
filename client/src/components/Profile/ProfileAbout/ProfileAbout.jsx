@@ -38,7 +38,7 @@ const ProfileAbout = ({ aboutMe, isCurrentUser }) => {
                                 <p>
                                     {desired_roles.length === 1
                                         ? 'Desired role: '
-                                        : 'Desired desired_roles: '}
+                                        : 'Desired roles: '}
                                     {desired_roles.map((role, i) => (
                                         <span key={uuidv4()}>
                                             {role.toLowerCase()}

@@ -1,6 +1,6 @@
 import styled from 'styled-components/macro';
 import { Form } from 'shared/components';
-import { mixins } from 'shared/styles';
+import { mixins, media } from 'shared/styles';
 
 export const ProfilesFormContainer = styled.div`
     ${mixins.flexCenterLeft}
@@ -15,6 +15,15 @@ export const CheckboxContainer = styled.div`
     & > *:first-child {
         margin-right: 2.8rem;
     }
+`;
+
+export const FormFieldContainer = styled(Form.Flex)`
+    ${media.bp600`
+        flex-direction: column;
+        && > * {
+            margin:0;
+        }
+    `}
 `;
 
 export const SortByLabel = styled(Form.FieldLabel)`
