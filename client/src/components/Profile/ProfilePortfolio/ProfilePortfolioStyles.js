@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+import Image from 'react-image';
 import { CustomLink } from 'shared/components';
 import { media } from 'shared/styles';
 
@@ -27,12 +28,16 @@ export const ContentContainer = styled.div`
     display: flex;
     flex-direction: column;
     flex: 5;
-    margin-right: 1.6rem;
+    margin-right: 3.2rem;
     align-self: stretch;
 
     p {
         margin-bottom: auto;
     }
+`;
+
+export const StyledImage = styled(Image)`
+    height: 100%;
 `;
 
 export const CarouselContainer = styled.div`

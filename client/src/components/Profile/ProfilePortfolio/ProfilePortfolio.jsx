@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import Image from 'react-image';
 import { Carousel } from 'react-responsive-carousel';
 import { connect } from 'react-redux';
 import Media from 'react-media';
@@ -67,7 +66,7 @@ const ProfilePortfolio = ({ portfolio, isCurrentUser }) => {
                                                             showThumbs={false}
                                                             interval={5000}>
                                                             {images.map((image, i) => (
-                                                                <Image
+                                                                <S.StyledImage
                                                                     src={image}
                                                                     alt={`Portfolio item - ${title} - ${i +
                                                                         1}`}
@@ -118,7 +117,7 @@ const ProfilePortfolio = ({ portfolio, isCurrentUser }) => {
                                                         showThumbs={false}
                                                         interval={5000}>
                                                         {images.map((image, i) => (
-                                                            <Image
+                                                            <S.StyledImage
                                                                 src={image}
                                                                 alt={`Portfolio item - ${title} - ${i +
                                                                     1}`}
