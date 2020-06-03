@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { isEmpty } from 'lodash';
+import { js } from 'shared/utils';
 
 export const selectProfile = state => state.profile;
 
@@ -108,17 +109,17 @@ export const selectProfileWatchers = createSelector(
     profile => profile.watchers || [],
 );
 
-export const selectProfileEducation = createSelector(
-    [selectCurrentProfile],
-    profile => profile.education || [],
-);
+export const selectProfileEducation = createSelector([selectCurrentProfile], profile => {
+    const sortedEducation = js.sortByNewest(profile.education, 'to');
+    return sortedEducation || [];
+});
 
 export const selectProfileCertifications = createSelector(
     [selectCurrentProfile],
     profile => profile.certifications || [],
 );
 
-export const selectProfileExperience = createSelector(
-    [selectCurrentProfile],
-    profile => profile.experience || [],
-);
+export const selectProfileExperience = createSelector([selectCurrentProfile], profile => {
+    const sortedExperience = js.sortByNewest(profile.experience, 'to');
+    return sortedExperience || [];
+});
