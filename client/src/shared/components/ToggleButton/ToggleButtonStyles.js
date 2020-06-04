@@ -12,7 +12,7 @@ export const ToggleButtonsContainer = styled.div`
 `;
 
 const sharedToggleButtonStyles = css`
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 500;
     height: 3rem;
     padding: 0 0.8rem;
