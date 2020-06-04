@@ -8,7 +8,7 @@
   Found at <a href="https://d-link.herokuapp.com/" target="_blank">d-link.herokuapp.com</a>, built using the <a href="https://medium.com/@digimktg/what-is-mern-stack-9c867dbad302" target="_blank">MERN</a> stack and hosted with <a href="https://www.heroku.com/" target="_blank">Heroku</a>
 </p>
 <a href="https://d-link.herokuapp.com/" target="_blank">
-  <img src="https://raw.githubusercontent.com/bradypp/personal-website/master/client/src/assets/img/demo.png" alt="repo demo">
+  <img src="https://raw.githubusercontent.com/bradypp/dev-link/master/client/src/assets/img/demo.png" alt="repo demo">
 </a>
 
 ## 🛠 Try For Yourself
