@@ -58,12 +58,14 @@ export const SubContentContainer = styled.div`
 `;
 
 export const ContentLeft = styled.div`
+    flex: 2;
     ${media.bp600`
        align-self:flex-start;
     `}
 `;
 
 export const ContentRight = styled.div`
+    flex: 3;
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
