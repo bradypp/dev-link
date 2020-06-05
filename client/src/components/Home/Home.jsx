@@ -35,13 +35,49 @@ const Home = ({ isAuthenticated, username }) => {
             </Helmet>
             <Main>
                 <S.LandingContent>
-                    <h1>Welcome to our developer community</h1>
-                    <p>
-                        DevLink is the perfect place to network with like-minded developers and take
-                        your career in development to the next level
-                    </p>
+                    <S.ContentLeft>
+                        <h1>Welcome to our developer community</h1>
+                        <p>
+                            DevLink is the perfect place to network with like-minded developers and
+                            take your career in development to the next level
+                        </p>
+                        <Media
+                            query="(max-width: 800px)"
+                            render={() => (
+                                <>
+                                    <S.LandingImageContainer>
+                                        <Image src={logo} alt="developers" />
+                                    </S.LandingImageContainer>
+                                </>
+                            )}
+                        />
+                        <S.ButtonsContainer>
+                            <S.StyledLink
+                                to="/developers"
+                                variant="primary-darken"
+                                backgroundColor="primary"
+                                color="white1">
+                                Find Developers
+                            </S.StyledLink>
+                            <Modal
+                                renderLink={({ open }) => (
+                                    <S.StyledButton
+                                        onClick={open}
+                                        variant="bordered-fill"
+                                        color="primaryDarker"
+                                        borderColor="primaryDarker"
+                                        backgroundColor="primary">
+                                        Create a profile
+                                    </S.StyledButton>
+                                )}
+                                renderContent={({ close }) => (
+                                    <SignUp onSubmit={close} onCancel={close} />
+                                )}
+                            />
+                        </S.ButtonsContainer>
+                    </S.ContentLeft>
                     <Media
-                        query="(max-width: 800px)"
+                        query="(min-width: 801px)"
                         render={() => (
                             <>
                                 <S.LandingImageContainer>
@@ -50,41 +86,7 @@ const Home = ({ isAuthenticated, username }) => {
                             </>
                         )}
                     />
-                    <S.ButtonsContainer>
-                        <S.StyledLink
-                            to="/developers"
-                            variant="primary-darken"
-                            backgroundColor="primary"
-                            color="white1">
-                            Find Developers
-                        </S.StyledLink>
-                        <Modal
-                            renderLink={({ open }) => (
-                                <S.StyledButton
-                                    onClick={open}
-                                    variant="bordered-fill"
-                                    color="primaryDarker"
-                                    borderColor="primaryDarker"
-                                    backgroundColor="primary">
-                                    Create a profile
-                                </S.StyledButton>
-                            )}
-                            renderContent={({ close }) => (
-                                <SignUp onSubmit={close} onCancel={close} />
-                            )}
-                        />
-                    </S.ButtonsContainer>
                 </S.LandingContent>
-                <Media
-                    query="(min-width: 801px)"
-                    render={() => (
-                        <>
-                            <S.LandingImageContainer>
-                                <Image src={logo} alt="developers" />
-                            </S.LandingImageContainer>
-                        </>
-                    )}
-                />
             </Main>
         </>
     );
