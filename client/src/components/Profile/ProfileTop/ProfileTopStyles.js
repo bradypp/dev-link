@@ -78,16 +78,16 @@ const avatarContainer = css`
     border-radius: 50%;
 
     ${media.bp600`
-        height:14rem;
+        height: 14rem;
         width: 14rem;
     `}
     ${media.bp440`
-        height:13rem;
+        height: 13rem;
         width: 13rem;
         min-width: 13rem;
     `}
     ${media.bp384`
-        height:12rem;
+        height: 12rem;
         width: 12rem;
         min-width: 12rem;
     `}
@@ -98,13 +98,18 @@ export const AvatarContainer = styled.div`
     position: relative;
     overflow: hidden;
     box-shadow: ${({ theme }) => theme.boxShadow.primary};
-    border: 5px solid #fff;
 `;
 
 export const Avatar = styled(Image)`
-    ${avatarContainer}
+    border: 5px solid #fff;
+    min-height: 100%;
+    min-width: 100%;
+    border-radius: 50%;
     position: absolute;
     z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 `;
 
 export const AvatarUploadContainer = styled.div`
