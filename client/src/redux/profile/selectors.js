@@ -69,6 +69,8 @@ export const selectProfileUser = createSelector(
 
 export const selectProfileUserId = createSelector([selectProfileUser], user => user._id || '');
 
+export const selectProfileId = createSelector([selectCurrentProfile], profile => profile._id || '');
+
 export const selectProfileSkills = createSelector(
     [selectCurrentProfile],
     profile => profile.skills || [],

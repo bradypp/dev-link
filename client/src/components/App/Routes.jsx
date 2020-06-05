@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { Home, Account, Profile, Profiles, Header, Footer } from 'components';
 import { PrivateRoute } from 'shared/components';
 import Helmet from './Helmet';
@@ -15,7 +15,7 @@ const Routes = () => {
                 <Route path="/profile" component={Profile} />
                 <Route path="/developers" component={Profiles} />
                 <PrivateRoute path="/account" component={Account} />
-                <Route component="/" />
+                <Route component={() => <Redirect to="/" />} />
             </Switch>
             <Footer />
         </Router>

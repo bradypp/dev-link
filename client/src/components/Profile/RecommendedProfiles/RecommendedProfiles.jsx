@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { v4 as uuidv4 } from 'uuid';
 import { useHistory } from 'react-router-dom';
-import { selectProfileSkills, selectProfilePortfolio } from 'redux/profile';
+import { selectProfileSkills, selectProfilePortfolio, selectProfileId } from 'redux/profile';
 import { selectRecommendedProfiles, getRecommendedProfiles } from 'redux/profiles';
 import defaultAvatar from 'assets/img/profile/avatar/default-thumbnail.jpeg';
 import * as S from './RecommendedProfilesStyles';
@@ -14,12 +14,14 @@ const propTypes = {
     recommendedProfiles: PropTypes.array.isRequired,
     skills: PropTypes.array.isRequired,
     portfolio: PropTypes.array.isRequired,
+    profileId: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
     recommendedProfiles: selectRecommendedProfiles,
     skills: selectProfileSkills,
     portfolio: selectProfilePortfolio,
+    profileId: selectProfileId,
 });
 
 const mapDispatchToProps = {
@@ -31,10 +33,12 @@ const RecommendedProfiles = ({
     getRecommendedProfiles,
     skills,
     portfolio,
+    profileId,
 }) => {
     const history = useHistory();
 
     const portfolioSkills = new Set(portfolio.map(item => item.skills).flat());
+    const filteredProfiles = recommendedProfiles.filter(el => el._id !== profileId);
 
     useEffect(() => {
         getRecommendedProfiles({
@@ -42,36 +46,39 @@ const RecommendedProfiles = ({
             sort: '-total_stars',
             limit: 10,
         });
+        console.log(profileId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
-        <S.RecommendedProfilesContainer>
-            <h2>Recommended Profiles</h2>
-            {recommendedProfiles.map(profile => {
-                const { avatar, headline, name, user } = profile;
+        filteredProfiles.length > 0 && (
+            <S.RecommendedProfilesContainer>
+                <h2>Recommended Profiles</h2>
+                {filteredProfiles.map(profile => {
+                    const { avatar, headline, name, user } = profile;
 
-                return (
-                    <S.RecommendedProfileContainer
-                        key={uuidv4()}
-                        onClick={() => {
-                            history.push(`/profile/${user.username}`);
-                        }}>
-                        <S.AvatarContainer>
-                            <S.Avatar
-                                className="avatar"
-                                src={[avatar, defaultAvatar]}
-                                alt="Profile avatar"
-                            />
-                        </S.AvatarContainer>
-                        <div>
-                            <h3>{name}</h3>
-                            {headline && <p>{headline}</p>}
-                        </div>
-                    </S.RecommendedProfileContainer>
-                );
-            })}
-        </S.RecommendedProfilesContainer>
+                    return (
+                        <S.RecommendedProfileContainer
+                            key={uuidv4()}
+                            onClick={() => {
+                                history.push(`/profile/${user.username}`);
+                            }}>
+                            <S.AvatarContainer>
+                                <S.Avatar
+                                    className="avatar"
+                                    src={[avatar, defaultAvatar]}
+                                    alt="Profile avatar"
+                                />
+                            </S.AvatarContainer>
+                            <div>
+                                <h3>{name}</h3>
+                                {headline && <p>{headline}</p>}
+                            </div>
+                        </S.RecommendedProfileContainer>
+                    );
+                })}
+            </S.RecommendedProfilesContainer>
+        )
     );
 };
 

@@ -52,7 +52,7 @@ const Home = ({ isAuthenticated, username }) => {
                     />
                     <S.ButtonsContainer>
                         <S.StyledLink
-                            to="/d"
+                            to="/developers"
                             variant="primary-darken"
                             backgroundColor="primary"
                             color="white1">
