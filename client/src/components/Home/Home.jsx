@@ -35,7 +35,7 @@ const Home = ({ isAuthenticated, username }) => {
             </Helmet>
             <Main>
                 <S.LandingContent>
-                    <h1>Welcome to your developer community</h1>
+                    <h1>Welcome to our developer community</h1>
                     <p>
                         DevLink is the perfect place to network with like-minded developers and take
                         your career in development to the next level
@@ -45,17 +45,14 @@ const Home = ({ isAuthenticated, username }) => {
                         render={() => (
                             <>
                                 <S.LandingImageContainer>
-                                    <Image
-                                        src={logo}
-                                        alt="developers sit around a table programming"
-                                    />
+                                    <Image src={logo} alt="developers" />
                                 </S.LandingImageContainer>
                             </>
                         )}
                     />
                     <S.ButtonsContainer>
                         <S.StyledLink
-                            to="/developers"
+                            to="/d"
                             variant="primary-darken"
                             backgroundColor="primary"
                             color="white1">
@@ -83,7 +80,7 @@ const Home = ({ isAuthenticated, username }) => {
                     render={() => (
                         <>
                             <S.LandingImageContainer>
-                                <Image src={logo} alt="developers sit around a table programming" />
+                                <Image src={logo} alt="developers" />
                             </S.LandingImageContainer>
                         </>
                     )}

@@ -5,7 +5,7 @@ import { mixins, media } from 'shared/styles';
 export const LandingContent = styled.div`
     grid-column: 1 / 10;
     padding-right: 5rem;
-    margin-top: 10rem;
+    margin-top: 10vh;
     display: flex;
     flex-direction: column;
 
@@ -38,7 +38,7 @@ export const LandingContent = styled.div`
 export const LandingImageContainer = styled.div`
     justify-self: end;
     grid-column: 10 / -1;
-    margin-top: 7rem;
+    margin-top: 7vh;
     border-radius: 50%;
     overflow: hidden;
     position: relative;
