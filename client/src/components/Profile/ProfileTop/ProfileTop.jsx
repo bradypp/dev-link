@@ -177,15 +177,13 @@ const ProfileTop = ({
                     ) : (
                         <>{country && <h3>{country}</h3>}</>
                     )}
-                    {(!isEmpty(contact) || !isEmpty(socials)) && (
+                    {(isCurrentUser || !isEmpty(contact) || !isEmpty(socials)) && (
                         <S.InfoButtonsContainer>
-                            {(!isEmpty(contact) || !isEmpty(socials)) && (
-                                <ContactModal
-                                    contact={contact}
-                                    socials={socials}
-                                    isCurrentUser={isCurrentUser}
-                                />
-                            )}
+                            <ContactModal
+                                contact={contact}
+                                socials={socials}
+                                isCurrentUser={isCurrentUser}
+                            />
                         </S.InfoButtonsContainer>
                     )}
                 </S.ContentLeftContainer>

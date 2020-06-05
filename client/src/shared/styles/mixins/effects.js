@@ -225,6 +225,12 @@ const effects = {
                 }
             `};
     `,
+    cardHover: css`
+        &:hover {
+            background-color: ${({ theme }) => theme.colors.background2};
+            border: 1px solid ${({ theme }) => theme.colors.border1};
+        }
+    `,
 };
 
 export default effects;

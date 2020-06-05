@@ -34,7 +34,9 @@ const Profiles = ({ profiles, profilesIsLoading }) => {
                 <ProfilesForm isFirstRender={isFirstRender}>
                     <S.ProfileItemsContainer>
                         {isFirstRender || profilesIsLoading ? (
-                            <Spinner />
+                            <S.SpinnerContainer>
+                                <Spinner />
+                            </S.SpinnerContainer>
                         ) : (
                             <ul>
                                 {profiles.map(profile => (

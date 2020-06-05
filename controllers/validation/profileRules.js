@@ -5,14 +5,15 @@ const { normalizeUrls } = require('./utils');
 exports.updateProfileRules = [
     body('socials')
         .if(body('socials').exists())
-        .customSanitizer(
-            value =>
-                value.length > 0 &&
-                value.map(el => ({
+        .customSanitizer(value => {
+            if (value.length > 0) {
+                return value.map(el => ({
                     name: el.name,
                     value: normalize(el.value, { forceHttps: true }),
-                })),
-        ),
+                }));
+            }
+            return [];
+        }),
 ];
 
 exports.updatePortfolioRules = [normalizeUrls(['repo', 'demo'])];

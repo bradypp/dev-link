@@ -42,6 +42,7 @@ export const ContactForm = ({ updateProfile, formData, setIsEditing }) => {
                 validationSchema={contactValidation}
                 onSubmit={values => {
                     setIsEditing(false);
+                    console.log(values);
                     updateProfile(values);
                 }}>
                 {({ values }) => (

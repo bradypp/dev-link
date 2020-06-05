@@ -42,7 +42,7 @@ const ContactModal = ({ contact, socials, isCurrentUser, updateProfile }) => {
                                     </ul>
                                 </ItemContainer>
                             )}
-                            <Divider />
+                            {!isEmpty(socials) && !isEmpty(contact) && <Divider />}
                             {!isEmpty(socials) && (
                                 <ItemContainer>
                                     <h2>Socials</h2>

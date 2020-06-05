@@ -13,11 +13,13 @@ export const RecommendedProfilesContainer = styled.section`
 export const RecommendedProfileContainer = styled.div`
     ${mixins.card}
     ${mixins.clickable}
+    ${mixins.cardHover}
     display:flex;
     justify-content: flex-start;
     align-items: flex-start;
     margin: 0 0 0.5rem 0;
     padding: 1.2rem;
+    border: 1px solid transparent;
 
     h3,
     p {

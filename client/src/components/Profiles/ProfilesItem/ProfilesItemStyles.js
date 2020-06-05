@@ -6,13 +6,16 @@ export const ProfilesItemContainer = styled.li`
     ${mixins.card}
     ${mixins.flexCenterLeft}
     ${mixins.clickable}
+    ${mixins.cardHover}
+    border: 1px solid transparent;
     margin: 0.6rem 0 0.8rem 0;
     
     ${media.bp600`
         ${mixins.flexCenter}
         flex-wrap: wrap;
     `}
-    `;
+
+`;
 
 export const ItemContainer = styled.div`
     ${mixins.flexCenterLeft}
