@@ -46,7 +46,7 @@ export const LandingImageContainer = styled.div`
     height: 50rem;
 
     ${media.bp1040`
-        margin-top: 15rem;
+        margin-top: 15vh;
         width: 38rem;
         height: 38rem;
     `}
