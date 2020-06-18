@@ -1,7 +1,7 @@
 import React from 'react';
 import Media from 'react-media';
 import { CustomLink, Tooltip } from 'shared/components';
-import { FooterContainer, Separator } from './FooterStyles';
+import { FooterContainer, Separator, Text } from './FooterStyles';
 
 const Footer = () => {
     const aboutContent = props => (
@@ -65,7 +65,7 @@ const Footer = () => {
             <Separator>&middot;</Separator>
             <CustomLink href="https://www.github.com/bradypp/dev-link">GitHub Repo</CustomLink>
             <Separator>&middot;</Separator>
-            <span>Built with</span>
+            <Text>Built with</Text>
             <Separator />
             <CustomLink href="https://reactjs.org/">ReactJS</CustomLink>
             <Separator>&middot;</Separator>
@@ -77,7 +77,7 @@ const Footer = () => {
             <Separator>&middot;</Separator>
             <CustomLink href="https://www.mongodb.com/">MongoDB</CustomLink>
             <Separator />
-            <span>and more!</span>
+            <Text>and more!</Text>
         </FooterContainer>
     );
 };

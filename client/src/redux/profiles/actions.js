@@ -60,22 +60,13 @@ export const getSearchConstants = () => async dispatch => {
         const res = await api.get(
             `/api/v1/profile/all?fields=skills,desired_roles,portfolio,-user`,
         );
-        const profileSkillsArr = res.data.data.profiles
-            .map(profile => profile.skills)
-            .flat()
-            .map(skill => skill.toLowerCase());
+        const profileSkillsArr = res.data.data.profiles.map(profile => profile.skills).flat();
         const portfolioSkillsArr = res.data.data.profiles
             .map(profile => profile.portfolio.map(item => item.skills).flat())
-            .flat()
-            .map(skill => skill.toLowerCase());
-        const skillsSet = new Set(
-            [profileSkillsArr, portfolioSkillsArr].flat().map(skill => skill.toLowerCase()),
-        );
+            .flat();
+        const skillsSet = new Set([profileSkillsArr, portfolioSkillsArr].flat());
         const desiredRoles = new Set(
-            res.data.data.profiles
-                .map(profile => profile.desired_roles)
-                .flat()
-                .map(role => role.toLowerCase()),
+            res.data.data.profiles.map(profile => profile.desired_roles).flat(),
         );
 
         dispatch(

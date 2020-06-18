@@ -19,3 +19,5 @@ export const FooterContainer = styled.footer`
 export const Separator = styled.span`
     margin: 0 0.6rem;
 `;
+
+export const Text = styled.span``;

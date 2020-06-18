@@ -251,6 +251,7 @@ const ProfilesForm = ({
                             <Form.Field.Select
                                 label="Skills"
                                 valuePlaceholder="Add skill"
+                                allowNonExistentOptions
                                 submitOnChange
                                 name="skills"
                                 variant="empty"

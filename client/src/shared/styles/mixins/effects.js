@@ -226,6 +226,7 @@ const effects = {
             `};
     `,
     cardHover: css`
+        transition: ${({ theme }) => theme.animation.basicTransition};
         &:hover {
             background-color: ${({ theme }) => theme.colors.background2};
             border: 1px solid ${({ theme }) => theme.colors.border1};

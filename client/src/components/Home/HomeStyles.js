@@ -1,11 +1,12 @@
 import styled, { css } from 'styled-components/macro';
-import { CustomLink, Button } from 'shared/components';
+import { CustomLink, Button, Tag } from 'shared/components';
 import { mixins, media } from 'shared/styles';
 
 export const LandingContent = styled.div`
-    grid-column: 1 / -1;
     ${mixins.flexCenter}
-    margin-top: 4rem;
+    grid-column: 1 / -1;
+    padding: 2rem 0 10rem;
+    height: 100%;
 
     ${media.bp800`
         margin-top: 2rem;
@@ -54,20 +55,22 @@ export const LandingImageContainer = styled.div`
 
 export const ContentLeft = styled.div`
     height: 100%;
+    align-self: stretch;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: flex-start;
     flex-direction: column;
     margin-right: 5rem;
 
     ${media.bp800`
         align-items: center;
+        margin-right: 0;
     `}
 
     h1 {
         font-size: 6rem;
         font-weight: 300;
-        margin-bottom: 2rem;
+        margin-bottom: 6rem;
         color: ${({ theme }) => theme.colors.primaryDarker};
 
         ${media.bp800`
@@ -80,7 +83,7 @@ export const ContentLeft = styled.div`
         color: ${({ theme }) => theme.colors.primaryDarker};
         opacity: 0.9;
         font-weight: 300;
-        margin-bottom: 2rem;
+        margin-bottom: 6rem;
     }
 `;
 
@@ -111,4 +114,21 @@ export const ButtonsContainer = styled.div`
     ${media.bp800`
         ${mixins.flexCenter}
     `}
+`;
+
+export const PopularSearchesContainer = styled.div`
+    grid-column: 1 / -1;
+
+    h2 {
+        font-weight: 400;
+        margin-bottom: 2rem;
+        color: ${({ theme }) => theme.colors.primaryDarker};
+    }
+`;
+
+export const PopularSearchesTag = styled(Tag)`
+    height: 3rem;
+    padding: 0 1.2rem;
+    font-size: 1.5rem;
+    margin: 0 1.2rem 1.2rem 0;
 `;

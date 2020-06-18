@@ -34,6 +34,10 @@ export const ContentContainer = styled.div`
     p {
         margin-bottom: auto;
     }
+
+    ${media.bp600`
+        margin-right: 0;
+    `}
 `;
 
 export const StyledImage = styled(Image)`

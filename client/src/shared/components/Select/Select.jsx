@@ -37,6 +37,7 @@ const propTypes = {
     removeSelected: PropTypes.bool,
     id: PropTypes.string,
     renderValuePlaceholder: PropTypes.bool,
+    allowNonExistentOptions: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -59,6 +60,7 @@ const defaultProps = {
     removeSelected: true,
     id: undefined,
     renderValuePlaceholder: undefined,
+    allowNonExistentOptions: false,
 };
 
 const Select = ({
@@ -83,6 +85,7 @@ const Select = ({
     removeSelected,
     id: propsId,
     renderValuePlaceholder,
+    allowNonExistentOptions,
 }) => {
     const [stateValue, setStateValue] = useState(defaultValue || (isMulti ? [] : null));
     const [options, setOptions] = useState(propsOptions);
@@ -111,7 +114,6 @@ const Select = ({
             setOptions(propsOptions);
         }
     }, [propsOptions]);
-
     useOnOutsideClick($selectRef, isDropdownOpen, deactivateDropdown);
 
     const preserveValueType = newValue => {
@@ -199,7 +201,9 @@ const Select = ({
                                     key={uuidv4()}
                                     variant={variant}
                                     onClick={() => removeOptionValue(optionValue)}>
-                                    {getOptionLabel(optionValue)}
+                                    {!allowNonExistentOptions
+                                        ? getOptionLabel(optionValue)
+                                        : optionValue}
                                     <IoIosClose />
                                 </S.ValueMultiItem>
                             ),

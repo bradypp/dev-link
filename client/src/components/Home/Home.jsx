@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import Image from 'react-image';
 import Media from 'react-media';
 import { Helmet } from 'react-helmet';
@@ -27,6 +28,23 @@ const mapStateToProps = createStructuredSelector({
 
 const Home = ({ isAuthenticated, username }) => {
     if (isAuthenticated) return <Redirect to={username ? `/profile/${username}` : '/profile'} />;
+
+    const popularSearches = [
+        'JavaScript',
+        'CSS',
+        'React',
+        'Node.js',
+        'SQL',
+        'MongoDB',
+        'Bootstrap',
+        'C#',
+        'PHP',
+        'WordPress',
+        'Docker',
+        'Git',
+        'Python',
+        'Laravel',
+    ];
 
     return (
         <>
@@ -87,6 +105,14 @@ const Home = ({ isAuthenticated, username }) => {
                         )}
                     />
                 </S.LandingContent>
+                <S.PopularSearchesContainer>
+                    <h2>Popular Searches</h2>
+                    {popularSearches.map(skill => (
+                        <S.PopularSearchesTag to={`/developers?sk=${skill}`} key={uuidv4()}>
+                            {skill}
+                        </S.PopularSearchesTag>
+                    ))}
+                </S.PopularSearchesContainer>
             </Main>
         </>
     );

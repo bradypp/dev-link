@@ -41,10 +41,7 @@ export const ContentTopContainer = styled.div`
     padding: 0 ${({ theme }) => theme.layout.cardPadding};
 
     ${media.bp600`
-            margin: -9.5rem 0 0.8rem;
-    `}
-    ${media.bp440`
-            margin: -8rem 0 0.8rem;
+            margin: -10rem 0 0.8rem;
     `}
 `;
 

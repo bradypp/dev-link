@@ -190,9 +190,7 @@ const ProfileTop = ({
                 <S.ContentRightContainer>
                     <S.SkillsContainer>
                         {skills.map(skill => (
-                            <S.SkillLink
-                                to={`/developers?sk=${skill.toLowerCase()}`}
-                                key={uuidv4()}>
+                            <S.SkillLink to={`/developers?sk=${skill}`} key={uuidv4()}>
                                 {skill}
                             </S.SkillLink>
                         ))}
