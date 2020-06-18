@@ -16,7 +16,7 @@
     "start:all": "npm-run-all --parallel start:client start:server",
     "start:client": "cd ./client && yarn start",
     "start:server": "nodemon server.js",
-    "install:all": "npm-run-all --parallel install:server install:client",
+    "install:all": "yarn install && yarn install:client",
     "install:client": "cd ./client && yarn install",
     "install:server": "yarn install",
     "heroku-postbuild": "cd ./client && yarn install && yarn run build"

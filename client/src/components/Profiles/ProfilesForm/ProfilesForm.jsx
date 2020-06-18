@@ -87,7 +87,7 @@ const ProfilesForm = ({
     const companyId = uniqueId('form-field-');
     const currentPositionId = uniqueId('form-field-');
 
-    const getInitialProfiles = () =>
+    const getInitialProfiles = () => {
         getProfiles({
             page: pageValue,
             [`name[regex]`]: nameValue,
@@ -103,6 +103,7 @@ const ProfilesForm = ({
             limit: 10,
             active: true,
         });
+    };
 
     useEffect(() => {
         getInitialProfiles();
@@ -163,7 +164,12 @@ const ProfilesForm = ({
                     setCompanyValue('');
                     setCurrentPositionValue('');
                     history.push(pathname);
-                    getInitialProfiles();
+                    getProfiles({
+                        page: pageValue,
+                        sort: '-total_stars',
+                        limit: 10,
+                        active: true,
+                    });
                 }}>
                 {form => (
                     <Form.Element>

@@ -46,7 +46,6 @@ const RecommendedProfiles = ({
             sort: '-total_stars',
             limit: 10,
         });
-        console.log(profileId);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
