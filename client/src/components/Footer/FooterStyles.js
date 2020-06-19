@@ -9,10 +9,10 @@ export const FooterContainer = styled.footer`
     background-color: ${({ theme }) => theme.colors.background2};
 
     ${media.bp800`
-        padding: 2rem ${({ theme }) => theme.layout.pagePaddingTablet} 0;
+        padding: 2rem ${({ theme }) => theme.layout.pagePaddingTablet};
     `}
     ${media.bp440`
-        padding: 2rem ${({ theme }) => theme.layout.pagePaddingMobile} 0;
+        padding: 2rem ${({ theme }) => theme.layout.pagePaddingMobile};
     `};
 `;
 

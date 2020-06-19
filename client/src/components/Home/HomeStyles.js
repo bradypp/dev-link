@@ -9,8 +9,11 @@ export const LandingContent = styled.div`
     height: 100%;
 
     ${media.bp800`
-        margin-top: 2rem;
         flex-direction: column;
+    `}
+
+    ${media.bp440`
+        padding: 0 0 4rem;
     `}
 `;
 
@@ -35,11 +38,18 @@ export const LandingImageContainer = styled.div`
         height: 50rem;
         min-width: 50rem;
         min-height: 50rem;
-        margin-bottom: 2rem;
+        margin-bottom: 4rem;
         align-items: center;
     `}
 
     ${media.bp440`
+        width: 45rem;
+        height: 45rem;
+        min-width: 45rem;
+        min-height: 45rem;
+    `}
+
+    ${media.bp384`
         width: 40rem;
         height: 40rem;
         min-width: 40rem;
@@ -76,6 +86,10 @@ export const ContentLeft = styled.div`
         ${media.bp800`
             font-size: 5rem;
         `}
+
+        ${media.bp440`
+            margin-bottom: 2.4rem;
+        `}
     }
 
     p {
@@ -84,6 +98,10 @@ export const ContentLeft = styled.div`
         opacity: 0.9;
         font-weight: 300;
         margin-bottom: 6rem;
+
+        ${media.bp440`
+            margin-bottom: 2.4rem;
+        `}
     }
 `;
 
@@ -97,6 +115,16 @@ const buttonStyles = css`
     span {
         width: max-content;
     }
+
+    ${media.bp800`
+        height: 5rem;
+        padding: 0 4rem;
+    `}
+
+    ${media.bp384`
+        height: 4.6rem;
+        padding: 0 3rem;
+    `}
 `;
 
 export const StyledLink = styled(CustomLink)`
