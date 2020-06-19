@@ -99,8 +99,8 @@ export const ContentLeft = styled.div`
         font-weight: 300;
         margin-bottom: 6rem;
 
-        ${media.bp440`
-            margin-bottom: 2.4rem;
+        ${media.bp800`
+            margin-bottom: 3.6rem;
         `}
     }
 `;
