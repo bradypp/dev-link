@@ -296,7 +296,7 @@ const ProfilesForm = ({
                                 renderValuePlaceholder
                                 valuePlaceholder="Sort By"
                                 options={[
-                                    { label: 'Name', value: '-name' },
+                                    { label: 'Name', value: 'name' },
                                     { label: 'Total stars', value: '-total_stars' },
                                     { label: 'Total watchers', value: '-total_watchers' },
                                     { label: 'Date joined', value: '-created_at' },
