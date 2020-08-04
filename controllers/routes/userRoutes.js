@@ -15,8 +15,17 @@ router.use(authController.protect);
 router
     .route('/me')
     .get(userController.getIdFromCurrentUser, userController.getUser)
-    .patch(userController.getIdFromCurrentUser, validation.updateUser, userController.updateUser)
-    .delete(userController.getIdFromCurrentUser, userController.deleteUser);
+    .patch(
+        authController.restrictTo('admin', 'user'),
+        userController.getIdFromCurrentUser,
+        validation.updateUser,
+        userController.updateUser,
+    )
+    .delete(
+        authController.restrictTo('admin', 'user'),
+        userController.getIdFromCurrentUser,
+        userController.deleteUser,
+    );
 
 router.route('/watching').get(userController.getIdFromCurrentUser, userController.getWatching);
 router.route('/likes').get(userController.getIdFromCurrentUser, userController.getLikes);

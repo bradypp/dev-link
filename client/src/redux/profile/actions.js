@@ -71,7 +71,6 @@ export const updateProfile = data => async dispatch => {
                 'Content-Type': 'application/json',
             },
         };
-        console.log(data);
         const res = await api.patch('/api/v1/profile/me', data, config);
 
         dispatch(profileLoaded(res.data.data.profile));

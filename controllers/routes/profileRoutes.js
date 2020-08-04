@@ -16,19 +16,29 @@ router.use(authController.protect);
 router
     .route('/me')
     .get(profileController.getMe, profileController.getProfile)
-    .post(profileController.getMe, profileController.createProfile)
+    .post(
+        authController.restrictTo('admin', 'user'),
+        profileController.getMe,
+        profileController.createProfile,
+    )
     .patch(
+        authController.restrictTo('admin', 'user'),
         validation.updateProfile,
         profileController.getMe,
         profileController.uploadProfileImages,
         profileController.prepareProfileImages,
         profileController.updateProfile,
     )
-    .delete(profileController.getMe, profileController.deleteProfile);
+    .delete(
+        authController.restrictTo('admin', 'user'),
+        profileController.getMe,
+        profileController.deleteProfile,
+    );
 
 router
     .route('/portfolio')
     .post(
+        authController.restrictTo('admin', 'user'),
         validation.updatePortfolio,
         profileController.getMe,
         profileController.uploadProfileImages,
@@ -39,16 +49,33 @@ router
 router
     .route('/portfolio/:portId')
     .patch(
+        authController.restrictTo('admin', 'user'),
         validation.updatePortfolio,
         profileController.getMe,
         profileController.uploadProfileImages,
         profileController.prepareProfileImages,
         profileController.updatePortfolioItem,
     )
-    .delete(profileController.getMe, profileController.removePortfolioItem);
+    .delete(
+        authController.restrictTo('admin', 'user'),
+        profileController.getMe,
+        profileController.removePortfolioItem,
+    );
 
-router.route('/:id/star').patch(profileController.getMe, profileController.toggleStar);
-router.route('/:id/watch').patch(profileController.getMe, profileController.toggleWatch);
+router
+    .route('/:id/star')
+    .patch(
+        authController.restrictTo('admin', 'user'),
+        profileController.getMe,
+        profileController.toggleStar,
+    );
+router
+    .route('/:id/watch')
+    .patch(
+        authController.restrictTo('admin', 'user'),
+        profileController.getMe,
+        profileController.toggleWatch,
+    );
 
 // Restrict the following routes to admin users only
 router.use(authController.restrictTo('admin'));
