@@ -1,20 +1,25 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { signIn } from 'redux/auth';
 import Image from 'react-image';
 import Media from 'react-media';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { selectIsAuthenticated, selectUserUsername } from 'redux/auth';
-import { SignUp } from 'components';
+import { setAlert } from 'redux/alerts';
+import { SignUp, Header, Footer } from 'components';
 import { Main, Modal } from 'shared/components';
-import logo from 'assets/img/home/landing.jpg';
+import { toastTypes } from 'shared/constants';
+import landing from 'assets/img/home/landing.jpg';
 import * as S from './HomeStyles';
 
 const propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
+    signIn: PropTypes.func.isRequired,
+    setAlert: PropTypes.func.isRequired,
     username: PropTypes.string,
 };
 
@@ -26,7 +31,13 @@ const mapStateToProps = createStructuredSelector({
     username: selectUserUsername,
 });
 
-const Home = ({ isAuthenticated, username }) => {
+const Home = ({ isAuthenticated, username, signIn, setAlert }) => {
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setTimeout(setIsMounted(true), 500);
+    }, []);
+
     if (isAuthenticated) return <Redirect to={username ? `/profile/${username}` : '/profile'} />;
 
     const popularSearches = [
@@ -51,61 +62,50 @@ const Home = ({ isAuthenticated, username }) => {
             <Helmet>
                 <title>Welcome to DevLink</title>
             </Helmet>
+            <S.BackgroundImageContainer>
+                <S.BackgroundImage />
+            </S.BackgroundImageContainer>
             <Main>
                 <S.LandingContent>
-                    <S.ContentLeft>
+                    <S.ContentLeft isMounted={isMounted}>
                         <h1>Welcome to our developer community</h1>
                         <p>
                             DevLink is the perfect place to network with like-minded developers and
                             take your career in development to the next level
                         </p>
-                        <Media
-                            query="(max-width: 800px)"
-                            render={() => (
-                                <>
-                                    <S.LandingImageContainer>
-                                        <Image src={logo} alt="developers" />
-                                    </S.LandingImageContainer>
-                                </>
-                            )}
-                        />
                         <S.ButtonsContainer>
                             <S.StyledLink
                                 to="/developers"
                                 variant="primary-darken"
-                                backgroundColor="primary"
+                                backgroundColor="cyan"
                                 color="white1">
                                 Find Developers
                             </S.StyledLink>
-                            <Modal
-                                renderLink={({ open }) => (
-                                    <S.StyledButton
-                                        onClick={open}
-                                        variant="bordered-fill"
-                                        color="primaryDarker"
-                                        borderColor="primaryDarker"
-                                        backgroundColor="primary">
-                                        Create a profile
-                                    </S.StyledButton>
-                                )}
-                                renderContent={({ close }) => (
-                                    <SignUp onSubmit={close} onCancel={close} />
-                                )}
-                            />
+                            <S.StyledButton
+                                onClick={() => {
+                                    signIn({
+                                        login: 'guest',
+                                        password: 'password123/',
+                                    });
+                                    setAlert(
+                                        'You are now signed in as a guest. You are free to browse but are unable to edit this profile or account',
+                                        toastTypes.INFO,
+                                        8000,
+                                    );
+                                }}
+                                variant="bordered-inset"
+                                color="white1"
+                                borderColor="white1"
+                                backgroundColor="white1">
+                                Sign In As A Guest
+                            </S.StyledButton>
                         </S.ButtonsContainer>
                     </S.ContentLeft>
-                    <Media
-                        query="(min-width: 801px)"
-                        render={() => (
-                            <>
-                                <S.LandingImageContainer>
-                                    <Image src={logo} alt="developers" />
-                                </S.LandingImageContainer>
-                            </>
-                        )}
-                    />
+                    <S.LandingImageContainer isMounted={isMounted}>
+                        <Image src={landing} alt="developers" />
+                    </S.LandingImageContainer>
                 </S.LandingContent>
-                <S.PopularSearchesContainer>
+                <S.PopularSearchesContainer isMounted={isMounted}>
                     <h2>Popular Searches</h2>
                     {popularSearches.map(skill => (
                         <S.PopularSearchesTag to={`/developers?sk=${skill}`} key={uuidv4()}>
@@ -121,4 +121,4 @@ const Home = ({ isAuthenticated, username }) => {
 Home.propTypes = propTypes;
 Home.defaultProps = defaultProps;
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, { signIn, setAlert })(Home);

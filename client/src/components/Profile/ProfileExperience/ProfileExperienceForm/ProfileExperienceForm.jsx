@@ -63,11 +63,16 @@ const ProfileExperienceForm = ({ updateProfile, experience, index, ...otherProps
                         validationSchema={experienceValidation}
                         onSubmit={values => {
                             const newArray = [...experience];
-                            console.log(newArray);
+                            const newValues = {
+                                ...values,
+                                from: dateTime.formatDateTimeForAPI(values.from),
+                                to: dateTime.formatDateTimeForAPI(values.to),
+                            };
+
                             if (typeof index === 'number') {
-                                newArray[index] = values;
+                                newArray[index] = newValues;
                             } else {
-                                newArray.push(values);
+                                newArray.push(newValues);
                             }
                             updateProfile({ experience: newArray });
                             close();
@@ -101,14 +106,14 @@ const ProfileExperienceForm = ({ updateProfile, experience, index, ...otherProps
                                         label="From *"
                                         tip="When did you start?"
                                         name="from"
-                                        placeholder="DD/MM/YYYY"
+                                        placeholder="MM/DD/YYYY"
                                     />
                                     {!values.current && (
                                         <Form.Field.Input
                                             label="To *"
                                             tip="When did you finish?"
                                             name="to"
-                                            placeholder="DD/MM/YYYY"
+                                            placeholder="MM/DD/YYYY"
                                         />
                                     )}
                                     <S.FormCheckbox

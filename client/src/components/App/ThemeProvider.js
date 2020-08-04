@@ -30,6 +30,7 @@ const ThemeProvider = ({ children }) => {
         overlay: 'rgba(9, 30, 66, 0.54)',
         activeBackground: '#d2e5fe',
         successBackground: '#e4fcef',
+        cyan: '#29B6F6',
     };
 
     const textColors = {

@@ -38,7 +38,7 @@ const borderedInset = css`
             color: ${theme.colors[color]};
             ${mixins.rgbaDarkenEffect(theme.colors[backgroundColor])};
             ${mixins.insetBorderEffect(theme.colors[borderColor])};
-            ${({ theme }) => mixins.hoverEffect(null, theme.colors.primaryDark)}
+            ${({ theme }) => mixins.hoverEffect(null, theme.colors[borderColor])}
         `}
 `;
 

@@ -7,7 +7,6 @@ import { ProfileCard } from 'components';
 import { selectProfileCertifications, selectIsCurrentUser } from 'redux/profile';
 import { dateTime } from 'shared/utils';
 import { Flex } from 'shared/components';
-// import * as S from './ProfileCertificationsStyles';
 import ProfileCertificationsForm from './ProfileCertificationsForm/ProfileCertificationsForm';
 
 const propTypes = {

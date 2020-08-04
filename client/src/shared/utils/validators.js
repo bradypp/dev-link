@@ -8,8 +8,8 @@ const validators = {
     date: (errorMessage = 'Field is required') =>
         Yup.string()
             .matches(
-                /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/,
-                'Must be in the format of DD/MM/YYYY',
+                /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/,
+                'Must be in the format of MM/DD/YYYY',
             )
             .required(errorMessage),
     name: Yup.string()

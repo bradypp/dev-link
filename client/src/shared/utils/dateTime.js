@@ -1,8 +1,8 @@
 import moment from 'moment';
 
-const formatDate = (date, format = 'DD/MM/YYYY') => (date ? moment(date).format(format) : date);
+const formatDate = (date, format = 'MM/DD/YYYY') => (date ? moment(date).format(format) : date);
 
-const formatDateTime = (date, format = 'DD/MM/YYYY, h:mm A') =>
+const formatDateTime = (date, format = 'MM/DD/YYYY, h:mm A') =>
     date ? moment(date).format(format) : date;
 
 const formatDateTimeForAPI = date => {

@@ -24,7 +24,6 @@
   "author": "Paul Brady",
   "license": "ISC",
   "dependencies": {
-    "all-the-cities": "^3.1.0",
     "aws-sdk": "^2.686.0",
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",

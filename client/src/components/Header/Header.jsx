@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
@@ -24,6 +24,16 @@ const mapStateToProps = createStructuredSelector({
 
 const Header = ({ isAuthenticated, signOut, user }) => {
     const { pathname } = useLocation();
+    const [isHome, setIsHome] = useState(pathname === '/');
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setTimeout(setIsMounted(true), 300);
+    }, []);
+
+    useEffect(() => {
+        setIsHome(pathname === '/');
+    }, [pathname]);
 
     const developersLink = (
         <S.NavLink iconSize="1.8rem" icon={<BsPeople />} to="/developers">
@@ -60,9 +70,9 @@ const Header = ({ isAuthenticated, signOut, user }) => {
                             renderElement={props => (
                                 <S.NavButton
                                     variant="bordered-inset"
-                                    color="primary"
-                                    backgroundColor="primary"
-                                    borderColor="primary"
+                                    color={isHome ? 'white1' : 'primary'}
+                                    backgroundColor={isHome ? 'white1' : 'primary'}
+                                    borderColor={isHome ? 'white1' : 'primary'}
                                     {...props}>
                                     Sign In
                                 </S.NavButton>
@@ -74,7 +84,10 @@ const Header = ({ isAuthenticated, signOut, user }) => {
                             placement="bottomLeft"
                             offset={{ top: 8 }}
                             renderElement={props => (
-                                <S.NavButton backgroundColor="primary" color="white1" {...props}>
+                                <S.NavButton
+                                    backgroundColor={isHome ? 'cyan' : 'primary'}
+                                    color="white1"
+                                    {...props}>
                                     Join Now
                                 </S.NavButton>
                             )}
@@ -93,10 +106,11 @@ const Header = ({ isAuthenticated, signOut, user }) => {
                             offset={{ top: 8, left: -45 }}
                             renderElement={props => (
                                 <S.NavButton
+                                    isHome={isHome}
                                     variant="bordered-inset"
-                                    color="primary"
-                                    backgroundColor="primary"
-                                    borderColor="primary"
+                                    color={isHome ? 'white1' : 'primary'}
+                                    backgroundColor={isHome ? 'white1' : 'primary'}
+                                    borderColor={isHome ? 'white1' : 'primary'}
                                     {...props}>
                                     Sign In
                                 </S.NavButton>
@@ -121,9 +135,10 @@ const Header = ({ isAuthenticated, signOut, user }) => {
     );
 
     return (
-        <S.HeaderContainer>
+        <S.HeaderContainer isHome={isHome} isMounted={isMounted}>
             <S.NavContainer>
                 <S.Logo
+                    isHome={isHome}
                     variant="no-styles"
                     to={isAuthenticated ? '/developers' : '/'}
                     icon={<RiCodeBoxLine />}>

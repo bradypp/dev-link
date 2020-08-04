@@ -8,14 +8,16 @@ const Footer = () => {
         <div {...props}>
             <h3>About</h3>
             <p>
-                This site was built with the MERN stack with the intention of providing a good
-                example of a medium sized full-stack web-app.
+                This site was built with the MERN stack and is a good example of a medium sized
+                full-stack web-app.
             </p>
             <p>
                 Please feel free to have a look through the{' '}
                 <CustomLink href="https://www.github.com/bradypp/dev-link">repo</CustomLink> or get
-                in touch via <CustomLink href="https://www.paulbrady.dev">my website</CustomLink> or{' '}
-                <CustomLink href="https://www.twitter.com">twitter</CustomLink>
+                in touch via{' '}
+                <CustomLink href="https://linkedin.com/in/bradypp">LinkedIn</CustomLink>,{' '}
+                <CustomLink href="https://paulbrady.dev">my website</CustomLink> or{' '}
+                <CustomLink href="https://www.twitter.com/bradypp">Twitter</CustomLink>.
             </p>
         </div>
     );

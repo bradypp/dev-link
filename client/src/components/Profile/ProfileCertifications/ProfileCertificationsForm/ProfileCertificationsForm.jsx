@@ -56,11 +56,15 @@ const ProfileCertificationsForm = ({ updateProfile, certifications, index, ...ot
                         }}
                         validationSchema={experienceValidation}
                         onSubmit={values => {
+                            const newValues = {
+                                ...values,
+                                date: dateTime.formatDateTimeForAPI(values.date),
+                            };
                             const newArray = [...certifications];
                             if (typeof index === 'number') {
-                                newArray[index] = values;
+                                newArray[index] = newValues;
                             } else {
-                                newArray.push(values);
+                                newArray.push(newValues);
                             }
                             updateProfile({ certifications: newArray });
                             close();
@@ -78,7 +82,7 @@ const ProfileCertificationsForm = ({ updateProfile, certifications, index, ...ot
                                         label="Date *"
                                         tip="When did you receive your certification?"
                                         name="date"
-                                        placeholder="DD/MM/YYYY"
+                                        placeholder="MM/DD/YYYY"
                                     />
                                 </Form.Flex>
                                 <Form.Field.TextArea

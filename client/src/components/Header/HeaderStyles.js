@@ -4,12 +4,15 @@ import { mixins, media } from 'shared/styles';
 
 export const HeaderContainer = styled.header`
     ${mixins.flexCenter}
-    border-bottom: 1px solid ${({ theme }) => theme.colors.border2};
+    border-bottom: 1px solid ${({ theme, isHome }) =>
+        isHome ? 'transparent' : theme.colors.border2};
     padding: 0 ${({ theme }) => theme.layout.pagePadding};
     height: ${({ theme }) => theme.layout.headerHeight};
     width: 100%;
-    background-color: ${({ theme }) => theme.colors.white1};
+    background-color: ${({ theme, isHome }) => (isHome ? 'transparent' : theme.colors.white1)};
     z-index: ${({ theme }) => theme.zIndex.header};
+    transition: opacity 0.8s ease;
+    opacity: ${({ isHome, isMounted }) => (isHome ? (isMounted ? 1 : 0) : 1)};
 
     ${media.bp800`
         padding: 0 ${({ theme }) => theme.layout.pagePaddingTablet};
@@ -84,7 +87,7 @@ export const LinksContainer = styled.div`
 `;
 
 export const Logo = styled(CustomLink)`
-    color: ${({ theme }) => theme.colors.primaryDark};
+    color: ${({ theme, isHome }) => (isHome ? theme.colors.white1 : theme.colors.primaryDark)};
     font-size: 2.6rem;
     font-weight: 400;
     border-radius: 0.3rem;

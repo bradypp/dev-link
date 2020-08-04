@@ -7,7 +7,6 @@ const updateOne = async (req, res, next, Model, config, conditions) => {
     const fieldsToOmit = config.fieldsToOmit || [];
     const data = omitKeyValuePairs({ ...req.body }, fieldsToOmit);
 
-    console.log(data);
     const doc = await Model.findOneAndUpdate(conditions, data, {
         new: true,
         runValidators: true,
