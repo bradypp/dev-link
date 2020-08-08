@@ -2,19 +2,19 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const ScrollToTop = ({ children }) => {
-    const location = useLocation();
-    const [prevLocation, setPrevLocation] = useState(location);
+    const { pathname } = useLocation();
+    const [prevPathname, setPrevPathname] = useState(pathname);
 
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
 
     useEffect(() => {
-        if (location !== prevLocation) {
+        if (pathname !== prevPathname) {
             window.scrollTo(0, 0);
-            setPrevLocation(location);
+            setPrevPathname(pathname);
         }
-    }, [location, prevLocation]);
+    }, [pathname, prevPathname]);
 
     return children;
 };
