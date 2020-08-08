@@ -4,14 +4,12 @@ import { Redirect } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { signIn } from 'redux/auth';
 import Image from 'react-image';
-import Media from 'react-media';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { selectIsAuthenticated, selectUserUsername } from 'redux/auth';
 import { setAlert } from 'redux/alerts';
-import { SignUp, Header, Footer } from 'components';
-import { Main, Modal } from 'shared/components';
+import { Main } from 'shared/components';
 import { toastTypes } from 'shared/constants';
 import landing from 'assets/img/home/landing.jpg';
 import * as S from './HomeStyles';
@@ -71,7 +69,7 @@ const Home = ({ isAuthenticated, username, signIn, setAlert }) => {
                         <h1>Welcome to our developer community</h1>
                         <p>
                             DevLink is the perfect place to network with like-minded developers and
-                            take your career in development to the next level
+                            take your career in development to the next level.
                         </p>
                         <S.ButtonsContainer>
                             <S.StyledLink
@@ -88,7 +86,7 @@ const Home = ({ isAuthenticated, username, signIn, setAlert }) => {
                                         password: 'password123/',
                                     });
                                     setAlert(
-                                        'You are now signed in as a guest. You are free to browse but are unable to edit this profile or account',
+                                        'You are now signed in as a guest. You are are unable to edit this profile or account.',
                                         toastTypes.INFO,
                                         8000,
                                     );

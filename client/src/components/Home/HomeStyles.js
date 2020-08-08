@@ -1,4 +1,3 @@
-import Image from 'react-image';
 import styled, { css } from 'styled-components/macro';
 import { CustomLink, Button, Tag } from 'shared/components';
 import { mixins, media } from 'shared/styles';
@@ -10,15 +9,19 @@ export const LandingContent = styled.div`
     height: 100%;
 
     ${media.bp1040`
+        padding: 4rem 0 10rem;
+    `}
+
+    ${media.bp1040`
         padding: 4rem 0 14rem;
     `}
 
     ${media.bp600`
-        padding: 4rem 0 15rem;
+        padding: 3rem 0 15rem;
     `}
 
     ${media.bp440`
-        padding: 4rem 0 10rem;
+        padding: 3rem 0 10rem;
     `}
 `;
 export const BackgroundImageContainer = styled.div`
@@ -123,10 +126,6 @@ export const ContentLeft = styled.div`
         ${media.bp800`
             font-size: 4.8rem;
         `}
-
-        ${media.bp440`
-            margin-bottom: 2.4rem;
-        `}
     }
 
     p {
@@ -136,10 +135,6 @@ export const ContentLeft = styled.div`
         font-weight: 300;
         margin-bottom: 6rem;
         line-height: 1.5;
-
-        ${media.bp600`
-            margin-bottom: 4.2rem;
-        `}
     }
 `;
 

@@ -20,8 +20,9 @@ export const CheckboxContainer = styled.div`
 export const FormFieldContainer = styled(Form.Flex)`
     ${media.bp600`
         flex-direction: column;
+        margin:0 !important;
         && > * {
-            margin:0;
+            margin:0 0 1.6rem;
         }
     `}
 `;

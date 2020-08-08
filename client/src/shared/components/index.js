@@ -26,5 +26,6 @@ export { default as CopyButton } from './CopyButton';
 export { default as InputDebounced } from './InputDebounced';
 export { default as ErrorBoundary } from './ErrorBoundary';
 export { default as PrivateRoute } from './PrivateRoute';
+export { default as ScrollToTop } from './ScrollToTop';
 export { default as Tag } from './Tag';
 export { default as ToggleButton } from './ToggleButton/ToggleButton';

@@ -100,7 +100,7 @@ const ProfilesForm = ({
             sort: queryStringObj.s || '-total_stars',
             [`stars[in]`]: queryStringObj.st === 'true' ? currentUserId : null,
             [`watchers[in]`]: queryStringObj.wt === 'true' ? currentUserId : null,
-            limit: 10,
+            limit: 8,
             active: true,
         });
     };
@@ -149,7 +149,7 @@ const ProfilesForm = ({
                         [`sort`]: values.sort,
                         [`stars[in]`]: values.starred_by_me ? currentUserId : null,
                         [`watchers[in]`]: values.watched_by_me ? currentUserId : null,
-                        limit: 10,
+                        limit: 8,
                     };
 
                     if (pageValue === 1) {
@@ -167,7 +167,7 @@ const ProfilesForm = ({
                     getProfiles({
                         page: pageValue,
                         sort: '-total_stars',
-                        limit: 10,
+                        limit: 8,
                         active: true,
                     });
                 }}>
@@ -327,7 +327,7 @@ const ProfilesForm = ({
                                         {numberOfProfiles === 0
                                             ? ' No profiles found'
                                             : isNoMoreProfiles
-                                            ? 'No more profiles found'
+                                            ? 'No more profiles'
                                             : 'Load More'}
                                     </Button>
                                 }
