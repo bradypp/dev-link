@@ -86,7 +86,7 @@ const Home = ({ isAuthenticated, username, signIn, setAlert }) => {
                                         password: 'password123/',
                                     });
                                     setAlert(
-                                        'You are now signed in as a guest. You are are unable to edit this profile or account.',
+                                        'You are now signed in as a guest. You are currently unable to edit this profile or account.',
                                         toastTypes.INFO,
                                         8000,
                                     );
