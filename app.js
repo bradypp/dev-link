@@ -26,7 +26,7 @@ app.use(helmet());
 // Implement CORS
 app.use(
     cors({
-        origin: 'https://d-link.herokuapp.com/',
+        origin: 'https://dev-link-7f7h.onrender.com',
         optionsSuccessStatus: 200,
         credentials: true,
     }),
