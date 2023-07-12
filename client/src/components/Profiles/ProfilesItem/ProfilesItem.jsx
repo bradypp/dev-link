@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import { useFormikContext } from 'formik';
 import { IoMdEye, IoMdStarOutline } from 'react-icons/io';
 import { Tag } from 'shared/components';
+import * as utils from 'shared/utils';
 import { toggleStar, toggleWatch } from 'redux/profile';
 import { selectIsAuthenticated, selectUser } from 'redux/auth';
 import defaultAvatar from 'assets/img/profile/avatar/default-thumbnail.jpeg';
@@ -29,6 +31,10 @@ const mapDispatchToProps = {
 
 const ProfilesItem = ({ profile }) => {
     const history = useHistory();
+    const { search: queryString, pathname } = useLocation();
+    const { queryStringToObject, objectToQueryString } = utils.url;
+    const queryStringObj = queryStringToObject(queryString);
+    const { setFieldValue, submitForm } = useFormikContext();
     const {
         avatar,
         headline,
@@ -95,7 +101,21 @@ const ProfilesItem = ({ profile }) => {
                                         as="button"
                                         onClick={e => {
                                             e.stopPropagation();
-                                            history.push(`/profile/${user.username}`);
+                                            const skills = queryStringObj.skills
+                                                ? [
+                                                      ...new Set(
+                                                          [queryStringObj.skills, skill].flat(),
+                                                      ),
+                                                  ]
+                                                : [skill];
+                                            history.push(
+                                                `${pathname}?${objectToQueryString({
+                                                    ...queryStringObj,
+                                                    skills: skills,
+                                                })}`,
+                                            );
+                                            setFieldValue('skills', skills);
+                                            submitForm();
                                         }}
                                         key={uuidv4()}>
                                         {skill}

@@ -79,9 +79,11 @@ const ProfilesForm = ({
     const queryStringObj = queryStringToObject(queryString);
 
     const [pageValue, setPageValue] = useState(1);
-    const [nameValue, setNameValue] = useState(queryStringObj.nm || '');
-    const [companyValue, setCompanyValue] = useState(queryStringObj.cm || '');
-    const [currentPositionValue, setCurrentPositionValue] = useState(queryStringObj.cp || '');
+    const [nameValue, setNameValue] = useState(queryStringObj.name || '');
+    const [companyValue, setCompanyValue] = useState(queryStringObj.company || '');
+    const [currentPositionValue, setCurrentPositionValue] = useState(
+        queryStringObj.current_position || '',
+    );
 
     const nameId = uniqueId('form-field-');
     const companyId = uniqueId('form-field-');
@@ -93,14 +95,14 @@ const ProfilesForm = ({
             [`name[regex]`]: nameValue,
             [`company[regex]`]: companyValue,
             [`current_position[regex]`]: currentPositionValue,
-            [`availability[allregex]`]: queryStringObj.av,
-            [`skills[allregex]`]: queryStringObj.sk,
-            [`role_types[allregex]`]: queryStringObj.rt,
-            [`desired_roles[allregex]`]: queryStringObj.dr,
-            sort: queryStringObj.s || '-total_stars',
-            [`stars[in]`]: queryStringObj.st === 'true' ? currentUserId : null,
-            [`watchers[in]`]: queryStringObj.wt === 'true' ? currentUserId : null,
-            limit: 8,
+            [`availability[allregex]`]: queryStringObj.availability,
+            [`skills[allregex]`]: queryStringObj.skills,
+            [`role_types[allregex]`]: queryStringObj.role_types,
+            [`desired_roles[allregex]`]: queryStringObj.desired_roles,
+            sort: queryStringObj.sort || '-total_stars',
+            [`stars[in]`]: queryStringObj.starred_by_me === 'true' ? currentUserId : null,
+            [`watchers[in]`]: queryStringObj.watched_by_me === 'true' ? currentUserId : null,
+            limit: 6,
             active: true,
         });
     };
@@ -115,26 +117,34 @@ const ProfilesForm = ({
         <S.ProfilesFormContainer>
             <Form
                 initialValues={{
-                    availability: queryStringObj.av ? [queryStringObj.av].flat() : [],
-                    skills: queryStringObj.sk ? [queryStringObj.sk].flat() : [],
-                    role_types: queryStringObj.rt ? [queryStringObj.rt].flat() : [],
-                    sort: queryStringObj.s || '-total_stars',
-                    starred_by_me: queryStringObj.st === 'true',
-                    watched_by_me: queryStringObj.wt === 'true',
+                    name: nameValue,
+                    company: companyValue,
+                    current_position: currentPositionValue,
+                    availability: queryStringObj.availability
+                        ? [queryStringObj.availability].flat()
+                        : [],
+                    skills: queryStringObj.skills ? [queryStringObj.skills].flat() : [],
+                    role_types: queryStringObj.role_types ? [queryStringObj.role_types].flat() : [],
+                    desired_roles: queryStringObj.desired_roles
+                        ? [queryStringObj.desired_roles].flat()
+                        : [],
+                    sort: queryStringObj.sort || '-total_stars',
+                    starred_by_me: queryStringObj.starred_by_me === 'true',
+                    watched_by_me: queryStringObj.watched_by_me === 'true',
                 }}
                 onSubmit={values => {
                     history.push(
                         `${pathname}?${objectToQueryString({
-                            nm: nameValue,
-                            cm: companyValue,
-                            cp: currentPositionValue,
-                            av: values.availability,
-                            sk: values.skills,
-                            rt: values.role_types,
-                            dr: values.desired_roles,
-                            st: values.starred_by_me,
-                            wt: values.watched_by_me,
-                            s: values.sort,
+                            name: nameValue,
+                            company: companyValue,
+                            current_position: currentPositionValue,
+                            availability: values.availability,
+                            skills: values.skills,
+                            role_types: values.role_types,
+                            desired_roles: values.desired_roles,
+                            starred_by_me: values.starred_by_me,
+                            watched_by_me: values.watched_by_me,
+                            sort: values.sort,
                         })}`,
                     );
                     const queryObj = {
@@ -149,7 +159,7 @@ const ProfilesForm = ({
                         [`sort`]: values.sort,
                         [`stars[in]`]: values.starred_by_me ? currentUserId : null,
                         [`watchers[in]`]: values.watched_by_me ? currentUserId : null,
-                        limit: 8,
+                        limit: 6,
                     };
 
                     if (pageValue === 1) {
@@ -167,7 +177,7 @@ const ProfilesForm = ({
                     getProfiles({
                         page: pageValue,
                         sort: '-total_stars',
-                        limit: 8,
+                        limit: 6,
                         active: true,
                     });
                 }}>

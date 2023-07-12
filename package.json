@@ -18,8 +18,7 @@
     "start:server": "nodemon server.js",
     "install:all": "yarn install && yarn install:client",
     "install:client": "cd ./client && yarn install",
-    "install:server": "yarn install",
-    "heroku-postbuild": "cd ./client && yarn install && yarn run build"
+    "install:server": "yarn install"
   },
   "author": "Paul Brady",
   "license": "ISC",
