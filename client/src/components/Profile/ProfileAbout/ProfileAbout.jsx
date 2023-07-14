@@ -41,7 +41,9 @@ const ProfileAbout = ({ aboutMe, isCurrentUser }) => {
                                         : 'Desired roles: '}
                                     {desired_roles.map((role, i) => (
                                         <span key={uuidv4()}>
-                                            {role.toLowerCase()}
+                                            <CustomLink to={`/developers?desired_roles=${role}`}>
+                                                {role.toLowerCase()}
+                                            </CustomLink>
                                             {i !== desired_roles.length - 1 && ', '}
                                         </span>
                                     ))}
@@ -54,7 +56,7 @@ const ProfileAbout = ({ aboutMe, isCurrentUser }) => {
                                         : 'Desired role types: '}
                                     {role_types.map((type, i) => (
                                         <span key={uuidv4()}>
-                                            <CustomLink to={`/developers?rt=${type}`}>
+                                            <CustomLink to={`/developers?role_types=${type}`}>
                                                 {type.toLowerCase()}
                                             </CustomLink>
                                             {i !== role_types.length - 1 && ', '}
@@ -65,7 +67,7 @@ const ProfileAbout = ({ aboutMe, isCurrentUser }) => {
                             {availability && (
                                 <span>
                                     Available:{' '}
-                                    <CustomLink to={`/developers?av=${availability}`}>
+                                    <CustomLink to={`/developers?availability=${availability}`}>
                                         {availability.toLowerCase()}
                                     </CustomLink>
                                 </span>

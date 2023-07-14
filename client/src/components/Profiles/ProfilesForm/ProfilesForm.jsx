@@ -321,7 +321,7 @@ const ProfilesForm = ({
                                         },
                                     });
                                     getProfiles({
-                                        page: pageValue,
+                                        page: 1,
                                         sort: '-total_stars',
                                         limit: limit,
                                         active: true,
