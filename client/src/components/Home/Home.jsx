@@ -106,7 +106,7 @@ const Home = ({ isAuthenticated, username, signIn, setAlert }) => {
                 <S.PopularSearchesContainer isMounted={isMounted}>
                     <h2>Popular Searches</h2>
                     {popularSearches.map(skill => (
-                        <S.PopularSearchesTag to={`/developers?sk=${skill}`} key={uuidv4()}>
+                        <S.PopularSearchesTag to={`/developers?skills=${skill}`} key={uuidv4()}>
                             {skill}
                         </S.PopularSearchesTag>
                     ))}

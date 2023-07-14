@@ -173,7 +173,6 @@ const ProfilesForm = ({
                     setNameValue('');
                     setCompanyValue('');
                     setCurrentPositionValue('');
-                    history.push(pathname);
                     getProfiles({
                         page: pageValue,
                         sort: '-total_stars',
@@ -316,7 +315,10 @@ const ProfilesForm = ({
                             <Button
                                 backgroundColor="background2"
                                 type="reset"
-                                onClick={() => form.handleReset()}>
+                                onClick={() => {
+                                    history.push(pathname);
+                                    form.handleReset();
+                                }}>
                                 Clear
                             </Button>
                         </Form.Flex>
