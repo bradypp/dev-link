@@ -85,6 +85,7 @@ const ProfilesForm = ({
         queryStringObj.current_position || '',
     );
 
+    const limit = 6;
     const nameId = uniqueId('form-field-');
     const companyId = uniqueId('form-field-');
     const currentPositionId = uniqueId('form-field-');
@@ -102,7 +103,7 @@ const ProfilesForm = ({
             sort: queryStringObj.sort || '-total_stars',
             [`stars[in]`]: queryStringObj.starred_by_me === 'true' ? currentUserId : null,
             [`watchers[in]`]: queryStringObj.watched_by_me === 'true' ? currentUserId : null,
-            limit: 6,
+            limit: limit,
             active: true,
         });
     };
@@ -113,25 +114,23 @@ const ProfilesForm = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const initialValues = {
+        name: nameValue,
+        company: companyValue,
+        current_position: currentPositionValue,
+        availability: queryStringObj.availability ? [queryStringObj.availability].flat() : [],
+        skills: queryStringObj.skills ? [queryStringObj.skills].flat() : [],
+        role_types: queryStringObj.role_types ? [queryStringObj.role_types].flat() : [],
+        desired_roles: queryStringObj.desired_roles ? [queryStringObj.desired_roles].flat() : [],
+        sort: queryStringObj.sort || '-total_stars',
+        starred_by_me: queryStringObj.starred_by_me === 'true',
+        watched_by_me: queryStringObj.watched_by_me === 'true',
+    };
+
     return (
         <S.ProfilesFormContainer>
             <Form
-                initialValues={{
-                    name: nameValue,
-                    company: companyValue,
-                    current_position: currentPositionValue,
-                    availability: queryStringObj.availability
-                        ? [queryStringObj.availability].flat()
-                        : [],
-                    skills: queryStringObj.skills ? [queryStringObj.skills].flat() : [],
-                    role_types: queryStringObj.role_types ? [queryStringObj.role_types].flat() : [],
-                    desired_roles: queryStringObj.desired_roles
-                        ? [queryStringObj.desired_roles].flat()
-                        : [],
-                    sort: queryStringObj.sort || '-total_stars',
-                    starred_by_me: queryStringObj.starred_by_me === 'true',
-                    watched_by_me: queryStringObj.watched_by_me === 'true',
-                }}
+                initialValues={initialValues}
                 onSubmit={values => {
                     history.push(
                         `${pathname}?${objectToQueryString({
@@ -159,7 +158,7 @@ const ProfilesForm = ({
                         [`sort`]: values.sort,
                         [`stars[in]`]: values.starred_by_me ? currentUserId : null,
                         [`watchers[in]`]: values.watched_by_me ? currentUserId : null,
-                        limit: 6,
+                        limit: limit,
                     };
 
                     if (pageValue === 1) {
@@ -167,18 +166,6 @@ const ProfilesForm = ({
                     } else {
                         getMoreProfiles(queryObj);
                     }
-                }}
-                onReset={() => {
-                    setPageValue(1);
-                    setNameValue('');
-                    setCompanyValue('');
-                    setCurrentPositionValue('');
-                    getProfiles({
-                        page: pageValue,
-                        sort: '-total_stars',
-                        limit: 6,
-                        active: true,
-                    });
                 }}>
                 {form => (
                     <Form.Element>
@@ -314,10 +301,31 @@ const ProfilesForm = ({
                             <S.SortByDivider />
                             <Button
                                 backgroundColor="background2"
-                                type="reset"
+                                type="button"
                                 onClick={() => {
                                     history.push(pathname);
-                                    form.handleReset();
+                                    setPageValue(1);
+                                    setNameValue('');
+                                    setCompanyValue('');
+                                    setCurrentPositionValue('');
+                                    form.resetForm({
+                                        values: {
+                                            ...initialValues,
+                                            skills: [],
+                                            availability: [],
+                                            role_types: [],
+                                            desired_roles: [],
+                                            sort: '-total_stars',
+                                            starred_by_me: false,
+                                            watched_by_me: false,
+                                        },
+                                    });
+                                    getProfiles({
+                                        page: pageValue,
+                                        sort: '-total_stars',
+                                        limit: limit,
+                                        active: true,
+                                    });
                                 }}>
                                 Clear
                             </Button>

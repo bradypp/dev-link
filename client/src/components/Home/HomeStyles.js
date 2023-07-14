@@ -12,16 +12,16 @@ export const LandingContent = styled.div`
         padding: 4rem 0 10rem;
     `}
 
-    ${media.bp1040`
-        padding: 4rem 0 14rem;
-    `}
-
     ${media.bp600`
         padding: 3rem 0 15rem;
     `}
 
     ${media.bp440`
         padding: 3rem 0 10rem;
+    `}
+
+    ${media.bp384`
+        padding: 3rem 0 6rem;
     `}
 `;
 export const BackgroundImageContainer = styled.div`
@@ -32,6 +32,10 @@ export const BackgroundImageContainer = styled.div`
     overflow: hidden;
 
     ${media.bp1040`
+    clip-path: polygon(0% 0%, 100% 0%, 100% 64rem, 0% 64rem);
+    `}
+
+    ${media.bp600`
     clip-path: polygon(0% 0%, 100% 0%, 100% 60rem, 0% 60rem);
     `}
 `;
